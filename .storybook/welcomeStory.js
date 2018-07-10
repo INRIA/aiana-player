@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { storiesOf } from "@storybook/react";
-import { wInfo } from "./utils";
+import { storiesOf } from '@storybook/react';
+import { wInfo } from './utils';
 
-storiesOf("Welcome", module).addWithJSX(
-  "to your new Storybook🎊",
+storiesOf('Welcome', module).addWithJSX(
+  'to your new Storybook🎊',
   wInfo(`
     ### Notes
 
