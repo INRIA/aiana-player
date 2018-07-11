@@ -1,3 +1,5 @@
 {
-  "header.welcome": "Bienvenue"
+  "header.welcome": "Bienvenue",
+  "app.unsupported_media_type": "Le type de média {mediaType} n'est pas pris en charge.",
+  "app.undefined_media_type": "Le type de média n'est pas défini."
 }
