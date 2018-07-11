@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import App from './App';
+import Player from './Player';
 
 import { addLocaleData, IntlProvider } from 'react-intl';
 import * as locale_en from 'react-intl/locale-data/en';
 import * as locale_fr from 'react-intl/locale-data/fr';
-import * as messages_fr from './translations/fr.json';
+import * as messages_fr from '../translations/fr.json';
 
 interface IState {
   language: string;
@@ -41,7 +41,7 @@ class IntlWrapper extends React.Component<IProps, IState> {
 
     return (
       <IntlProvider locale={language} messages={messages[language]}>
-        <App />
+        <Player />
       </IntlProvider>
     );
   }

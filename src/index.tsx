@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom';
 
 import './index.css';
 
-import IntlWrapper from './IntlWrapper';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<IntlWrapper />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
