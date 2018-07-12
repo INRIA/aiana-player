@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DEFAULT_LANG } from '../constants';
+import { DEFAULT_LANG, DEFAULT_MEDIA_TYPE } from '../constants';
 import Player from './Player';
 
 import { addLocaleData, IntlProvider } from 'react-intl';
@@ -51,7 +51,7 @@ class IntlWrapper extends React.Component<IProps, IState> {
         <Player
           mediaSources={mediaSources}
           locale={language}
-          mediaType="unknown"
+          mediaType={DEFAULT_MEDIA_TYPE}
         />
       </IntlProvider>
     );

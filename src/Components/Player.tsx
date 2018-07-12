@@ -30,7 +30,7 @@ class Player extends React.Component<IProps, {}> {
     const { locale, mediaSources, mediaType, nativeControls } = this.props;
     console.log(mediaType);
     return (
-      <div className="aia-player" lang={locale}>
+      <div className="aiana-player" lang={locale}>
         {mediaType === MEDIA_TYPE_VIDEO ? (
           <video controls={nativeControls}>
             {mediaSources!.map(({ url, type }) => (

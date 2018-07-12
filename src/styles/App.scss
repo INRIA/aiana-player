@@ -1,0 +1,16 @@
+@font-face {
+  font-family: system;
+  src: local('system-ui'), local('.SFNSText-Light'), local('Segoe UI'),
+    local('Roboto'), local('Oxygen-Sans'), local('Ubuntu'), local('Cantarell'),
+    local('Helvetica Neue');
+}
+
+.aiana {
+  display: block;
+  box-sizing: border-box;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1;
+  font-family: system, sans-serif;
+}

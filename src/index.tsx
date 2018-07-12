@@ -1,10 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import './index.css';
-
-import App from './App';
+import Aiana from './components/Aiana';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Aiana />, document.getElementById('root'));
 registerServiceWorker();
