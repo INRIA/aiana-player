@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import UnsupportedMediaTypeMessage from './UnsupportedMediaTypeMessage';
+import Controls from './video/Controls';
 
 import {
   DEFAULT_MEDIA_TYPE,
@@ -20,7 +21,7 @@ interface IProps {
   locale?: string;
 }
 
-class Player extends React.Component<IProps, {}> {
+class Player extends React.Component<IProps> {
   public static defaultProps: IProps = {
     mediaType: DEFAULT_MEDIA_TYPE,
     nativeControls: DEFAULT_NATIVE_CONTROLS
@@ -28,15 +29,19 @@ class Player extends React.Component<IProps, {}> {
 
   public render() {
     const { locale, mediaSources, mediaType, nativeControls } = this.props;
-    console.log(mediaType);
+
     return (
       <div className="aiana-player" lang={locale}>
         {mediaType === MEDIA_TYPE_VIDEO ? (
-          <video controls={nativeControls}>
-            {mediaSources!.map(({ url, type }) => (
-              <source src={url} type={type} key={url} />
-            ))}
-          </video>
+          <div className="aiana-media">
+            <video controls={nativeControls}>
+              {mediaSources!.map(({ url, type }) => (
+                <source src={url} type={type} key={url} />
+              ))}
+            </video>
+
+            <Controls />
+          </div>
         ) : (
           <UnsupportedMediaTypeMessage mediaType={mediaType} />
         )}
