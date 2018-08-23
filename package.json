@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "@types/storybook-addon-jsx": "^5.3.1",
+    "@types/storybook__addon-actions": "^3.4.1",
     "@types/storybook__addon-knobs": "^3.4.1",
     "react": "^16.4.1",
+    "react-docgen-typescript-loader": "^2.2.0",
     "react-dom": "^16.4.1",
     "react-intl": "^2.4.0",
-    "react-scripts-ts": "2.16.0"
+    "react-scripts-ts": "2.17.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src/styles --include-path ./node_modules src/styles -o src/",
@@ -44,7 +46,9 @@
     "prettier": "^1.13.7",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "storybook-addon-jsx": "^5.3.0",
+    "ts-loader": "^3.5",
     "ts-jest": "^23.0.0",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "webpack": "^3.12.0"
   }
 }
