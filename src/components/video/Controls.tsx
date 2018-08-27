@@ -1,11 +1,11 @@
 import * as React from 'react';
-import PlayPause from '../buttons/PlayPause';
+import Play from '../buttons/Play';
 
 class Controls extends React.Component {
   public render() {
     return (
       <div className="aiana-control">
-        <PlayPause />
+        <Play />
       </div>
     );
   }
