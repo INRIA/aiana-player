@@ -8,5 +8,6 @@ import '../src/App.css';
 addDecorator(IntlDecorator);
 
 storiesOf('PlayPause', module)
+  .add('default', () => <PlayPause />)
   .add('when media is playing', () => <PlayPause isPlaying={true} />)
   .add('when media is paused', () => <PlayPause isPlaying={false} />);
