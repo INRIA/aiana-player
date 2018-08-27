@@ -8,7 +8,7 @@ interface IProps {
   onClick?: () => void;
 }
 
-class PlayButton extends React.Component<IProps & InjectedIntlProps> {
+export class PlayButton extends React.Component<IProps & InjectedIntlProps> {
   public static defaultProps: IProps = {
     isPlaying: false
   };

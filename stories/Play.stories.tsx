@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { storiesOf, addDecorator } from '@storybook/react';
-import IntlDecorator from './IntlDecorator';
-import Play from './components/buttons/Play';
+import { storiesOf } from '@storybook/react';
+import Play from '../src/components/buttons/Play';
 
 import '../src/App.css';
-
-addDecorator(IntlDecorator);
 
 storiesOf('Play Button', module)
   .add('default', () => <Play />)
