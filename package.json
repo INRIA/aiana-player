@@ -26,6 +26,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "devDependencies": {
+    "@storybook/addon-backgrounds": "^3.4.10",
     "@storybook/addon-info": "^3.4.8",
     "@storybook/addon-knobs": "^3.4.8",
     "@storybook/react": "^3.4.8",

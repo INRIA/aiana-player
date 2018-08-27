@@ -6,6 +6,7 @@ import { setIntlConfig, withIntl } from 'storybook-addon-intl';
 import JSXAddon from 'storybook-addon-jsx';
 import { withKnobs } from '@storybook/addon-knobs/react';
 import { setDefaults } from '@storybook/addon-info';
+import addonBackgrounds from '@storybook/addon-backgrounds';
 
 import messagesFr from '../src/translations/fr.json';
 
@@ -23,8 +24,16 @@ setIntlConfig({
   getMessages
 });
 
+const backgrounds = addonBackgrounds([
+  { name: 'Inria', value: '#384257', default: true },
+  { name: 'black', value: '#000' },
+  { name: 'dark gray', value: '#333' },
+  { name: 'light gray', value: '#ccc' }
+]);
+
 addDecorator(withKnobs);
 addDecorator(withIntl);
+addDecorator(backgrounds);
 setAddon(JSXAddon);
 
 setDefaults({
