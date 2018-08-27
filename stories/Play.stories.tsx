@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Play from '../src/components/buttons/Play';
+import MediaPlayButton from '../src/components/buttons/MediaPlayButton';
 
 import '../src/App.css';
 
-storiesOf('Play Button', module)
-  .add('default', () => <Play />)
-  .add('when media is playing', () => <Play isPlaying={true} />)
-  .add('when media is paused', () => <Play isPlaying={false} />);
+storiesOf('Media Play Button', module)
+  .add('default', () => <MediaPlayButton />)
+  .add('when media is playing', () => <MediaPlayButton isPlaying={true} />)
+  .add('when media is paused', () => <MediaPlayButton isPlaying={false} />);

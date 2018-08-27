@@ -8,7 +8,7 @@ interface IProps {
   onClick?: () => void;
 }
 
-export class PlayButton extends React.Component<IProps & InjectedIntlProps> {
+class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
   public static defaultProps: IProps = {
     isPlaying: false
   };
@@ -58,4 +58,4 @@ export class PlayButton extends React.Component<IProps & InjectedIntlProps> {
   };
 }
 
-export default injectIntl(PlayButton);
+export default injectIntl(MediaPlayButton);
