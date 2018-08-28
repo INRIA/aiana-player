@@ -14,9 +14,9 @@ function getProps(config) {
 module.exports = (code, config, state) => {
   const props = getProps(config);
 
-  let result = `import * as React from 'react';\n\n`;
-  result += `const ${state.componentName}: React.SFC = ${props} => ${code}\n\n`;
-  result += `export default ${state.componentName}`;
+  return `import * as React from 'react';
 
-  return result;
+const ${state.componentName}: React.SFC = ${props} => ${code}
+
+export default ${state.componentName}`;
 };
