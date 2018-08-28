@@ -1,12 +1,13 @@
 import { addLocaleData } from 'react-intl';
 import enLocaleData from 'react-intl/locale-data/en';
 import frLocaleData from 'react-intl/locale-data/fr';
-import { configure, setAddon, addDecorator } from '@storybook/react';
 import { setIntlConfig, withIntl } from 'storybook-addon-intl';
 import JSXAddon from 'storybook-addon-jsx';
-import { withKnobs } from '@storybook/addon-knobs/react';
-import { setDefaults } from '@storybook/addon-info';
+import { configureActions } from '@storybook/addon-actions';
 import addonBackgrounds from '@storybook/addon-backgrounds';
+import { setDefaults } from '@storybook/addon-info';
+import { withKnobs } from '@storybook/addon-knobs/react';
+import { configure, setAddon, addDecorator } from '@storybook/react';
 
 import messagesFr from '../src/translations/fr.json';
 
@@ -30,6 +31,11 @@ const backgrounds = addonBackgrounds([
   { name: 'dark gray', value: '#333' },
   { name: 'light gray', value: '#ccc' }
 ]);
+
+configureActions({
+  depth: 100,
+  limit: 20
+});
 
 addDecorator(withKnobs);
 addDecorator(withIntl);

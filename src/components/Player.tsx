@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import VideoPlayer from './video/VideoPlayer';
-import VideoControls from './video/VideoControls';
+import VideoPlayerControls from './video/VideoPlayerControls';
 
 import {
   DEFAULT_MEDIA_TYPE,
@@ -30,7 +30,7 @@ class Player extends React.Component<IProps> {
         {mediaType === MEDIA_TYPE_VIDEO && (
           <div className="aiana-media">
             <VideoPlayer controls={nativeControls} sources={mediaSources} />
-            <VideoControls />
+            <VideoPlayerControls />
           </div>
         )}
       </div>

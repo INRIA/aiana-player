@@ -9,11 +9,12 @@ interface IProps {
 }
 
 class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
-  public static defaultProps: IProps = {
-    isPlaying: false
+  public static defaultProps = {
+    isPlaying: false,
+    onClick() {}
   };
 
-  public render() {
+  render() {
     const controlText = this.getControlText();
     const controlIcon = this.getControlIcon();
 
@@ -49,7 +50,7 @@ class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
     });
   };
 
-  getControlIcon = () => {
+  private getControlIcon = () => {
     const { isPlaying } = this.props;
     if (isPlaying) {
       return <PauseIcon />;

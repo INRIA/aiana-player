@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MediaPlayButton from '../buttons/MediaPlayButton';
 
-class VideoControls extends React.Component {
+export default class VideoPlayerControls extends React.Component {
   public render() {
     return (
       <div className="aiana-video-controls">
@@ -10,5 +10,3 @@ class VideoControls extends React.Component {
     );
   }
 }
-
-export default VideoControls;
