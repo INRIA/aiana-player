@@ -18,7 +18,7 @@
     "watch-css": "npm run build-css && node-sass  --include-path ./src/styles --include-path ./node_modules src/styles -o src/ --watch",
     "start-js": "react-scripts-ts start",
     "start": "npm-run-all -p watch-css start-js",
-    "build-svg": "svgr --template ./.svgr/tsxTemplate.js --ext tsx -d ./src/components/svg/ ./src/svg/",
+    "svg": "svgr --template ./.svgr/tsxTemplate.js --icon --ext tsx -d ./src/components/svg/ ./svg/",
     "build-js": "react-scripts-ts build",
     "build": "npm-run-all build-svg build-css build-js",
     "test": "react-scripts-ts test --env=jsdom",
