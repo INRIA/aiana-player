@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import MediaPlayButton from '../src/components/buttons/MediaPlayButton';
 
 import '../src/App.css';
+import 'focus-visible';
 
 storiesOf('Media Play Button', module)
   .add('default', () => <MediaPlayButton />)

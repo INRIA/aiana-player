@@ -1,3 +1,4 @@
+import { FocusableProps, injectFocusable } from './focusable';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import PauseIcon from '../svg/Pause';
@@ -8,7 +9,9 @@ interface IProps {
   onClick?: () => void;
 }
 
-class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
+class MediaPlayButton extends React.Component<
+  IProps & InjectedIntlProps & FocusableProps
+> {
   public static defaultProps = {
     isPlaying: false,
     onClick() {}
@@ -37,6 +40,7 @@ class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
 
   private getControlText = () => {
     const { intl, isPlaying } = this.props;
+
     if (isPlaying) {
       return intl.formatMessage({
         defaultMessage: 'Pause',
@@ -52,6 +56,7 @@ class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
 
   private getControlIcon = () => {
     const { isPlaying } = this.props;
+
     if (isPlaying) {
       return <PauseIcon />;
     }
@@ -59,4 +64,4 @@ class MediaPlayButton extends React.Component<IProps & InjectedIntlProps> {
   };
 }
 
-export default injectIntl(MediaPlayButton);
+export default injectIntl(injectFocusable(MediaPlayButton));
