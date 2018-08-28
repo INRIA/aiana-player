@@ -1,6 +1,8 @@
 import { FocusableProps, injectFocusable } from './focusable';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import StyledButton from '../styled/StyledButton';
+import StyledSvg from '../styled/StyledSvg';
 import PauseIcon from '../svg/Pause';
 import PlayIcon from '../svg/PlayArrow';
 
@@ -8,6 +10,9 @@ interface IProps {
   isPlaying?: boolean;
   onClick?: () => void;
 }
+
+const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
+const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 
 class MediaPlayButton extends React.Component<
   IProps & InjectedIntlProps & FocusableProps
@@ -22,7 +27,7 @@ class MediaPlayButton extends React.Component<
     const controlIcon = this.getControlIcon();
 
     return (
-      <button
+      <StyledButton
         type="button"
         aria-label={controlText}
         className="aiana-control-btn"
@@ -30,7 +35,7 @@ class MediaPlayButton extends React.Component<
       >
         {controlIcon}
         <span className="aiana-control-text">{controlText}</span>
-      </button>
+      </StyledButton>
     );
   }
 
@@ -58,9 +63,9 @@ class MediaPlayButton extends React.Component<
     const { isPlaying } = this.props;
 
     if (isPlaying) {
-      return <PauseIcon />;
+      return <StyledPauseIcon />;
     }
-    return <PlayIcon />;
+    return <StyledPlayIcon />;
   };
 }
 

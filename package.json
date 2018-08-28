@@ -11,7 +11,8 @@
     "react-docgen-typescript-loader": "^2.2.0",
     "react-dom": "^16.4.2",
     "react-intl": "^2.4.0",
-    "react-scripts-ts": "2.17.0"
+    "react-scripts-ts": "2.17.0",
+    "styled-components": "^3.4.5"
   },
   "scripts": {
     "build-css": "node-sass --include-path ./src/styles --include-path ./node_modules src/styles -o src/",
