@@ -7,8 +7,8 @@ import Player from './Player';
 const StyledDiv = styled.div`
   display: block;
   box-sizing: border-box;
-  background-color: #000;
-  color: #fff;
+  background-color: ${(props) => props.theme.primaryColorInverted};
+  color: ${(props) => props.theme.primaryColor};
   font-size: 1rem;
   line-height: 1;
   font-family: system, sans-serif;
