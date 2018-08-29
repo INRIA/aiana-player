@@ -1,6 +1,8 @@
 import * as React from 'react';
 import IntlWrapper from './IntlWrapper';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from '../utils/styled-components';
+import { injectGlobalStyles } from '../utils/global-styles';
+import Player from './Player';
 
 const StyledDiv = styled.div`
   display: block;
@@ -18,12 +20,32 @@ const StyledDiv = styled.div`
   }
 `;
 
+const theme = {
+  primaryColor: '#fff',
+  primaryColorInverted: '#000'
+};
+
+const debugSources = [
+  {
+    src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',
+    type: 'video/mp4'
+  }
+];
+
 class Aiana extends React.Component {
+  componentWillMount() {
+    injectGlobalStyles();
+  }
+
   public render() {
     return (
-      <StyledDiv>
-        <IntlWrapper />
-      </StyledDiv>
+      <IntlWrapper>
+        <ThemeProvider theme={theme}>
+          <StyledDiv>
+            <Player mediaSources={debugSources} />
+          </StyledDiv>
+        </ThemeProvider>
+      </IntlWrapper>
     );
   }
 }

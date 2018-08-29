@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import styled from '../utils/styled-components';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 
@@ -16,6 +16,10 @@ interface IProps {
   locale?: string;
 }
 
+const StyledDiv = styled.div`
+  background-color: ${(props) => props.theme.primaryColorInverted};
+`;
+
 class Player extends React.Component<IProps> {
   public static defaultProps: IProps = {
     mediaType: DEFAULT_MEDIA_TYPE,
@@ -26,14 +30,14 @@ class Player extends React.Component<IProps> {
     const { locale, mediaSources, mediaType, nativeControls } = this.props;
 
     return (
-      <div className="aiana-player" lang={locale}>
+      <StyledDiv lang={locale}>
         {mediaType === MEDIA_TYPE_VIDEO && (
-          <div className="aiana-media">
+          <React.Component>
             <VideoPlayer controls={nativeControls} sources={mediaSources} />
             <VideoPlayerControls />
-          </div>
+          </React.Component>
         )}
-      </div>
+      </StyledDiv>
     );
   }
 }

@@ -1,12 +1,17 @@
 import * as React from 'react';
+import styled from '../../utils/styled-components';
 import MediaPlayButton from '../buttons/MediaPlayButton';
 
-export default class VideoPlayerControls extends React.Component {
-  render() {
-    return (
-      <div className="aiana-video-controls">
-        <MediaPlayButton />
-      </div>
-    );
-  }
-}
+const StyledDiv = styled.div`
+  position: absolute;
+  bottom: 0;
+  background-color: ${(props) => props.theme.primaryColorInverted};
+`;
+
+const VideoPlayerControls: React.SFC = () => (
+  <StyledDiv>
+    <MediaPlayButton />
+  </StyledDiv>
+);
+
+export default VideoPlayerControls;

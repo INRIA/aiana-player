@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import MediaPlayButton from '../src/components/buttons/MediaPlayButton';
-import { injectGlobalStyles } from '../src/utils/styles';
+import { injectGlobalStyles } from '../src/utils/global-styles';
 import 'focus-visible';
 
 injectGlobalStyles();

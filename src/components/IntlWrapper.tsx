@@ -1,16 +1,9 @@
 import * as React from 'react';
-import { DEFAULT_LANG, DEFAULT_MEDIA_TYPE } from '../constants';
-import Player from './Player';
+import { DEFAULT_LANG } from '../constants';
 
 import { addLocaleData, IntlProvider } from 'react-intl';
 import * as locale_en from 'react-intl/locale-data/en';
 import * as locale_fr from 'react-intl/locale-data/fr';
-const mediaSources = [
-  {
-    type: 'video/mp4',
-    url: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4'
-  }
-];
 import * as messagesFr from '../translations/fr.json';
 
 interface IState {
@@ -18,11 +11,12 @@ interface IState {
 }
 
 interface IProps {
-  readonly language?: string;
+  language?: string;
+  children?: any;
 }
 
 const messages: any = {
-  fr: messages_fr
+  fr: messagesFr
 };
 
 addLocaleData([...locale_en, ...locale_fr]);
@@ -32,10 +26,14 @@ class IntlWrapper extends React.Component<IProps, IState> {
     language: DEFAULT_LANG
   };
 
+  public static defaultProps: IProps = {
+    language: DEFAULT_LANG
+  };
+
   constructor(props: IProps) {
     super(props);
 
-    const { language = DEFAULT_LANG } = this.props;
+    const { language } = this.props;
 
     this.state = {
       language
@@ -44,14 +42,11 @@ class IntlWrapper extends React.Component<IProps, IState> {
 
   public render() {
     const { language } = this.state;
+    const { children } = this.props;
 
     return (
       <IntlProvider locale={language} messages={messages[language]}>
-        <Player
-          mediaSources={mediaSources}
-          locale={language}
-          mediaType={DEFAULT_MEDIA_TYPE}
-        />
+        {children}
       </IntlProvider>
     );
   }
