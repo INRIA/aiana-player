@@ -20,6 +20,10 @@ const StyledDiv = styled.div`
   background-color: ${(props) => props.theme.bg};
 `;
 
+const StyledRelative = styled.div`
+  position: relative;
+`;
+
 class Player extends React.Component<IProps> {
   public static defaultProps: IProps = {
     mediaType: DEFAULT_MEDIA_TYPE,
@@ -32,10 +36,10 @@ class Player extends React.Component<IProps> {
     return (
       <StyledDiv lang={locale}>
         {mediaType === MEDIA_TYPE_VIDEO && (
-          <React.Component>
+          <StyledRelative>
             <VideoPlayer controls={nativeControls} sources={mediaSources} />
             <VideoPlayerControls />
-          </React.Component>
+          </StyledRelative>
         )}
       </StyledDiv>
     );
