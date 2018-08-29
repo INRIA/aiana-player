@@ -23,7 +23,7 @@ class MediaPlayButton extends React.Component<
     onClick() {}
   };
 
-  render() {
+  public render() {
     const controlText = this.getControlText();
     const controlIcon = this.getControlIcon();
 

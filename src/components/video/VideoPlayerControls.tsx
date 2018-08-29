@@ -5,7 +5,7 @@ import MediaPlayButton from '../buttons/MediaPlayButton';
 const StyledDiv = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${(props) => props.theme.primaryColorInverted};
+  background-color: ${(props) => props.theme.bg};
 `;
 
 const VideoPlayerControls: React.SFC = () => (

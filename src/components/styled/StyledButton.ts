@@ -19,6 +19,6 @@ export default styled.button`
   }
 
   svg {
-    fill: ${(props) => props.theme.primaryColor};
+    fill: ${(props) => props.theme.fg};
   }
 `;

@@ -17,11 +17,9 @@ class VideoPlayer extends React.Component<IVideoProps> {
     controls: false
   };
 
-  render() {
+  public render() {
     const { props } = this;
     const { sources } = props;
-
-    console.log(sources);
 
     return (
       <video className="aiana-video-player" width="100%">

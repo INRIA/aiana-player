@@ -2,8 +2,8 @@ import * as styledComponents from 'styled-components';
 import { ThemedStyledComponentsModule } from 'styled-components';
 
 export interface ITheme {
-  primaryColor: string;
-  primaryColorInverted: string;
+  fg: string;
+  bg: string;
 }
 
 const {

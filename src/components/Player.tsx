@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const StyledDiv = styled.div`
-  background-color: ${(props) => props.theme.primaryColorInverted};
+  background-color: ${(props) => props.theme.bg};
 `;
 
 class Player extends React.Component<IProps> {
