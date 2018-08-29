@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export default styled.button`
   display: inline-block;
-  width: 2rem;
-  height: 2rem;
+  width: 2em;
+  height: 2em;
   padding: 0;
 
   border: 0;
