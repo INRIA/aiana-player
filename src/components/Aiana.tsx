@@ -3,6 +3,7 @@ import IntlWrapper from './IntlWrapper';
 import styled, { ThemeProvider } from '../utils/styled-components';
 import { injectGlobalStyles } from '../utils/global-styles';
 import Player from './Player';
+import themes from '../themes';
 
 const StyledDiv = styled.div`
   display: block;
@@ -20,10 +21,7 @@ const StyledDiv = styled.div`
   }
 `;
 
-const theme = {
-  primaryColor: '#fff',
-  primaryColorInverted: '#000'
-};
+const { inria } = themes;
 
 const debugSources = [
   {
@@ -42,7 +40,7 @@ class Aiana extends React.Component {
   public render() {
     return (
       <IntlWrapper>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={inria}>
           <StyledDiv>
             <Player mediaSources={debugSources} />
           </StyledDiv>
