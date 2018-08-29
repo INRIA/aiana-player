@@ -33,7 +33,7 @@ class IntlWrapper extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    const { language } = this.props;
+    const { language = DEFAULT_LANG } = this.props;
 
     this.state = {
       language
