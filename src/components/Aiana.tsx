@@ -33,7 +33,9 @@ const debugSources = [
 ];
 
 class Aiana extends React.Component {
-  componentWillMount() {
+  constructor(props: any) {
+    super(props);
+
     injectGlobalStyles();
   }
 
