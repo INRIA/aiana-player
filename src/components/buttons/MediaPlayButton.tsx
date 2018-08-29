@@ -8,7 +8,7 @@ import PlayIcon from '../svg/PlayArrow';
 
 interface IProps {
   isPlaying?: boolean;
-  onClick?: () => void;
+  onClick?(): void;
 }
 
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
@@ -43,7 +43,7 @@ class MediaPlayButton extends React.Component<
     this.props.onClick!();
   };
 
-  private getControlText = () => {
+  private getControlText = (): string => {
     const { intl, isPlaying } = this.props;
 
     if (isPlaying) {
@@ -59,7 +59,7 @@ class MediaPlayButton extends React.Component<
     });
   };
 
-  private getControlIcon = () => {
+  private getControlIcon = (): JSX.Element => {
     const { isPlaying } = this.props;
 
     if (isPlaying) {

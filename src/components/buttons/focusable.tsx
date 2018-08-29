@@ -14,11 +14,11 @@ export function injectFocusable(WrappedComponent: React.ComponentType) {
       super(props);
     }
 
-    public onFocus = () => {
+    public onFocus = (): void => {
       this.setState({ isFocused: true });
     };
 
-    public onBlur = () => {
+    public onBlur = (): void => {
       this.setState({ isFocused: false });
     };
 
