@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { storiesOf } from '@storybook/react';
+import 'focus-visible';
+import * as React from 'react';
 import MediaPlayButton from '../src/components/buttons/MediaPlayButton';
 import { injectGlobalStyles } from '../src/utils/global-styles';
-import 'focus-visible';
 
 injectGlobalStyles();
 

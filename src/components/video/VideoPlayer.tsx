@@ -22,7 +22,7 @@ class VideoPlayer extends React.Component<IVideoProps> {
     const { sources } = props;
 
     return (
-      <video className="aiana-video-player" width="100%">
+      <video width="100%">
         {sources &&
           sources.map(({ src, type }: ISource, index) => (
             <source key={index} src={src} type={type} />

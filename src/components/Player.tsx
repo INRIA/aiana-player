@@ -1,13 +1,12 @@
 import * as React from 'react';
-import styled from '../utils/styled-components';
-import VideoPlayer from './video/VideoPlayer';
-import VideoPlayerControls from './video/VideoPlayerControls';
-
 import {
   DEFAULT_MEDIA_TYPE,
   DEFAULT_NATIVE_CONTROLS,
   MEDIA_TYPE_VIDEO
 } from '../constants';
+import styled from '../utils/styled-components';
+import VideoPlayer from './video/VideoPlayer';
+import VideoPlayerControls from './video/VideoPlayerControls';
 
 interface IProps {
   mediaSources?: any[];

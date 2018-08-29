@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface FocusableProps {
+export interface IFocusableProps {
   isFocused: boolean;
   onFocus(): void;
   onBlur(): void;
@@ -22,7 +22,7 @@ export function injectFocusable(WrappedComponent: React.ComponentType) {
       this.setState({ isFocused: false });
     };
 
-    render() {
+    public render() {
       return <WrappedComponent {...this.props} />;
     }
   };

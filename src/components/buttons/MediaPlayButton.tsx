@@ -1,4 +1,3 @@
-import { FocusableProps, injectFocusable } from './focusable';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import ControlText from '../controls/ControlText';
@@ -6,6 +5,7 @@ import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import PauseIcon from '../svg/Pause';
 import PlayIcon from '../svg/PlayArrow';
+import { IFocusableProps, injectFocusable } from './focusable';
 
 interface IProps {
   isPlaying?: boolean;
@@ -16,11 +16,11 @@ const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 
 class MediaPlayButton extends React.Component<
-  IProps & InjectedIntlProps & FocusableProps
+  IProps & InjectedIntlProps & IFocusableProps
 > {
   public static defaultProps = {
     isPlaying: false,
-    onClick() {}
+    onClick: () => undefined
   };
 
   public render() {

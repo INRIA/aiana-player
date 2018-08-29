@@ -1,8 +1,8 @@
 import { ITheme } from '../utils/styled-components';
 
 const theme: ITheme = {
-  fg: '#eee',
-  bg: '#111'
+  bg: '#111',
+  fg: '#eee'
 };
 
 export default theme;

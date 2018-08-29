@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { DEFAULT_LANG } from '../constants';
-
 import { addLocaleData, IntlProvider } from 'react-intl';
-import * as locale_en from 'react-intl/locale-data/en';
-import * as locale_fr from 'react-intl/locale-data/fr';
+import * as localeEn from 'react-intl/locale-data/en';
+import * as localeFr from 'react-intl/locale-data/fr';
+import { DEFAULT_LANG } from '../constants';
 import * as messagesFr from '../translations/fr.json';
 
 interface IState {
@@ -19,7 +18,7 @@ const messages: any = {
   fr: messagesFr
 };
 
-addLocaleData([...locale_en, ...locale_fr]);
+addLocaleData([...localeEn, ...localeFr]);
 
 class IntlWrapper extends React.Component<IProps, IState> {
   public static defaultProps: IProps = {

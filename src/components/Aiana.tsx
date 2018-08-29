@@ -1,9 +1,10 @@
+import 'focus-visible';
 import * as React from 'react';
-import IntlWrapper from './IntlWrapper';
-import styled, { ThemeProvider } from '../utils/styled-components';
-import { injectGlobalStyles } from '../utils/global-styles';
-import Player from './Player';
 import themes from '../themes';
+import { injectGlobalStyles } from '../utils/global-styles';
+import styled, { ThemeProvider } from '../utils/styled-components';
+import IntlWrapper from './IntlWrapper';
+import Player from './Player';
 
 const StyledDiv = styled.div`
   display: block;

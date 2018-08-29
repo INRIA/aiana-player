@@ -1,7 +1,10 @@
-import { injectGlobal } from 'styled-components';
+import { injectGlobal } from './styled-components';
 
 export function injectGlobalStyles() {
-  injectGlobal`
+  console.log('hello');
+
+  injectGlobal([
+    `
     @font-face {
       font-family: system;
       src: local('system-ui'), local('.SFNSText-Light'), local('Segoe UI'),
@@ -17,5 +20,6 @@ export function injectGlobalStyles() {
       box-shadow: inset 0 0 0 2px #3B70BD;
       outline: none;
     }
-  `;
+  `
+  ] as any);
 }
