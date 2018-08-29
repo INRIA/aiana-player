@@ -22,10 +22,6 @@ const messages: any = {
 addLocaleData([...locale_en, ...locale_fr]);
 
 class IntlWrapper extends React.Component<IProps, IState> {
-  public static state = {
-    language: DEFAULT_LANG
-  };
-
   public static defaultProps: IProps = {
     language: DEFAULT_LANG
   };
