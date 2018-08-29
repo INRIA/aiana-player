@@ -1,6 +1,7 @@
 import { FocusableProps, injectFocusable } from './focusable';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import ControlText from '../controls/ControlText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import PauseIcon from '../svg/Pause';
@@ -30,11 +31,10 @@ class MediaPlayButton extends React.Component<
       <StyledButton
         type="button"
         aria-label={controlText}
-        className="aiana-control-btn"
         onClick={this.togglePlay}
       >
         {controlIcon}
-        <span className="aiana-control-text">{controlText}</span>
+        <ControlText>{controlText}</ControlText>
       </StyledButton>
     );
   }
