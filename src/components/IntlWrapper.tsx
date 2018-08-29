@@ -5,14 +5,13 @@ import Player from './Player';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import * as locale_en from 'react-intl/locale-data/en';
 import * as locale_fr from 'react-intl/locale-data/fr';
-import * as messages_fr from '../translations/fr.json';
-
 const mediaSources = [
   {
     type: 'video/mp4',
     url: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4'
   }
 ];
+import * as messagesFr from '../translations/fr.json';
 
 interface IState {
   language: string;

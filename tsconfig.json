@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["types"],
     "baseUrl": ".",
     "outDir": "build/dist",
     "module": "esnext",
@@ -28,6 +29,5 @@
     "src/setupTests.ts",
     "src/svg",
     ".storybook"
-  ],
-  "include": ["types"]
+  ]
 }
