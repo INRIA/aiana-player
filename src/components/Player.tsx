@@ -12,7 +12,6 @@ interface IProps {
   mediaSources?: any[];
   nativeControls?: boolean;
   mediaType?: string;
-  locale?: string;
 }
 
 const StyledDiv = styled.div`
@@ -30,10 +29,10 @@ class Player extends React.Component<IProps> {
   };
 
   public render() {
-    const { locale, mediaSources, mediaType, nativeControls } = this.props;
+    const { mediaSources, mediaType, nativeControls } = this.props;
 
     return (
-      <StyledDiv lang={locale}>
+      <StyledDiv>
         {mediaType === MEDIA_TYPE_VIDEO && (
           <StyledRelative>
             <VideoPlayer controls={nativeControls} sources={mediaSources} />
