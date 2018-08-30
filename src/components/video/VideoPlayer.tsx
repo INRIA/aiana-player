@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from '../../utils/styled-components';
 
 interface ISource {
   type?: string;
@@ -11,6 +12,11 @@ interface IVideoProps {
   autoPlay?: boolean;
 }
 
+const StyledVideo = styled.video`
+  width: 100%;
+  max-height: 100%;
+`;
+
 class VideoPlayer extends React.Component<IVideoProps> {
   public static defaultProps: IVideoProps = {
     autoPlay: false,
@@ -18,16 +24,15 @@ class VideoPlayer extends React.Component<IVideoProps> {
   };
 
   public render() {
-    const { props } = this;
-    const { sources } = props;
+    const { sources, controls, autoPlay } = this.props;
 
     return (
-      <video width="100%">
+      <StyledVideo autoPlay={autoPlay} controls={controls}>
         {sources &&
           sources.map(({ src, type }: ISource, index) => (
             <source key={index} src={src} type={type} />
           ))}
-      </video>
+      </StyledVideo>
     );
   }
 }
