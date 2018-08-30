@@ -36,7 +36,7 @@ class Player extends React.Component<IProps> {
         {mediaType === MEDIA_TYPE_VIDEO && (
           <StyledRelative>
             <VideoPlayer controls={nativeControls} sources={mediaSources} />
-            <VideoPlayerControls />
+            {!nativeControls && <VideoPlayerControls />}
           </StyledRelative>
         )}
       </StyledDiv>
