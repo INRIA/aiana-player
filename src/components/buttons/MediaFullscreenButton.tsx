@@ -68,10 +68,10 @@ class MediaFullscreenButton extends React.Component<
     const { isFullscreen } = this.props;
 
     if (isFullscreen) {
-      return <StyledFullscreenExitIcon />;
+      return <StyledFullscreenExitIcon aria-hidden={true} />;
     }
 
-    return <StyledFullscreenIcon />;
+    return <StyledFullscreenIcon aria-hidden={true} />;
   };
 }
 

@@ -63,9 +63,9 @@ class MediaPlayButton extends React.Component<
     const { isPlaying } = this.props;
 
     if (isPlaying) {
-      return <StyledPauseIcon />;
+      return <StyledPauseIcon aria-hidden={true} />;
     }
-    return <StyledPlayIcon />;
+    return <StyledPlayIcon aria-hidden={true} />;
   };
 }
 
