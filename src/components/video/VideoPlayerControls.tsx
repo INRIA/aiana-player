@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from '../../utils/styled-components';
+import MediaFullscreenButton from '../buttons/MediaFullscreenButton';
 import MediaPlayButton from '../buttons/MediaPlayButton';
 
 const StyledDiv = styled.div`
@@ -12,6 +13,7 @@ const StyledDiv = styled.div`
 const VideoPlayerControls: React.SFC = () => (
   <StyledDiv>
     <MediaPlayButton />
+    <MediaFullscreenButton />
   </StyledDiv>
 );
 
