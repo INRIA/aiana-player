@@ -2,25 +2,10 @@ import 'focus-visible';
 import * as React from 'react';
 import themes from '../themes';
 import { injectGlobalStyles } from '../utils/global-styles';
-import styled, { ThemeProvider } from '../utils/styled-components';
+import { ThemeProvider } from '../utils/styled-components';
 import IntlWrapper from './IntlWrapper';
 import Player from './Player';
-
-const StyledDiv = styled.div`
-  display: block;
-  box-sizing: border-box;
-  background-color: ${(props) => props.theme.bg};
-  color: ${(props) => props.theme.fg};
-  font-size: 1rem;
-  line-height: 1;
-  font-family: system, sans-serif;
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-`;
+import StyledAiana from './styled/StyledAiana';
 
 const { inria } = themes;
 
@@ -42,9 +27,9 @@ class Aiana extends React.Component {
     return (
       <IntlWrapper>
         <ThemeProvider theme={inria}>
-          <StyledDiv>
+          <StyledAiana>
             <Player mediaSources={debugSources} />
-          </StyledDiv>
+          </StyledAiana>
         </ThemeProvider>
       </IntlWrapper>
     );
