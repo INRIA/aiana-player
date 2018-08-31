@@ -1,8 +1,6 @@
 import { injectGlobal } from './styled-components';
 
 export function injectGlobalStyles() {
-  console.log('hello');
-
   injectGlobal([
     `
     @font-face {
