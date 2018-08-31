@@ -3,5 +3,7 @@
   "app.unsupported_media_type": "Le type de média {mediaType} n'est pas pris en charge.",
   "app.undefined_media_type": "Le type de média n'est pas défini.",
   "controls.play": "Lire",
-  "controls.pause": "Mettre en pause"
+  "controls.pause": "Mettre en pause",
+  "controls.fullscreen.enter": "Passer en mode plein écran",
+  "controls.fullscreen.exit": "Quitter le mode plein écran"
 }
