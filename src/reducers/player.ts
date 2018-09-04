@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { TOGGLE_FULLSCREEN } from '../actions/player';
+import { PLAYER_ELEMENT_MOUNTED, TOGGLE_FULLSCREEN } from '../actions/player';
 
 const player: Reducer = (state = {}, action) => {
   switch (action.type) {
@@ -7,6 +7,11 @@ const player: Reducer = (state = {}, action) => {
       return {
         ...state,
         isFullscreen: !state.isFullscreen
+      };
+    case PLAYER_ELEMENT_MOUNTED:
+      return {
+        ...state,
+        playerElement: action.playerElement
       };
     default:
       return state;

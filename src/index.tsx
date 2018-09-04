@@ -14,7 +14,8 @@ export interface IState {
 
 const initialState: IState = {
   player: {
-    isFullscreen: false
+    isFullscreen: false,
+    playerElement: null
   }
 };
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { toggleFullscreen } from '../../actions/player';
+import { handleToggleFullscreen } from '../../actions/player';
 import { IConnectedReduxProps } from '../../store';
 import ControlText from '../controls/ControlText';
 import StyledButton from '../styled/StyledButton';
@@ -12,7 +12,7 @@ import { IFocusableProps, injectFocusable } from './focusable';
 
 interface IProps {
   isFullscreen: boolean;
-  onClick?(): void;
+  playerElement: HTMLElement;
 }
 
 const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
@@ -21,10 +21,6 @@ const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);
 class MediaFullscreenButton extends React.Component<
   IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
 > {
-  public static defaultProps = {
-    onClick: () => undefined
-  };
-
   public render() {
     const controlText = this.getControlText();
     const controlIcon = this.getControlIcon();
@@ -42,10 +38,9 @@ class MediaFullscreenButton extends React.Component<
   }
 
   private toggleFullscreen = () => {
-    const { dispatch, onClick } = this.props;
+    const { dispatch, playerElement } = this.props;
 
-    dispatch(toggleFullscreen());
-    onClick!();
+    dispatch(handleToggleFullscreen(playerElement));
   };
 
   private getControlText = (): string => {
@@ -76,5 +71,6 @@ class MediaFullscreenButton extends React.Component<
 }
 
 export default connect((state: any) => ({
-  isFullscreen: state.player.isFullscreen
+  isFullscreen: state.player.isFullscreen,
+  playerElement: state.player.playerElement
 }))(injectIntl(injectFocusable(MediaFullscreenButton)));
