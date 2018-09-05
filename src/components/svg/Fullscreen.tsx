@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 const Fullscreen: React.SFC = (props) => (
-  <svg viewBox="0 0 48 48" width="1em" height="1em" {...props}>
-    <path d="M14 28h-4v10h10v-4h-6v-6zm-4-8h4v-6h6v-4H10v10zm24 14h-6v4h10V28h-4v6zm-6-24v4h6v6h4V10H28z" />
+  <svg {...props}>
+    <path d="M0 12h24v24H0z" fill="none" />
+    <path d="M10.5 21h-3v7.5H15v-3h-4.5zm-3-6h3v-4.5H15v-3H7.5zm18 10.5H21v3h7.5V21h-3zM21 7.5v3h4.5V15h3V7.5z" />
   </svg>
 );
 
