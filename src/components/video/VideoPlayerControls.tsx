@@ -7,6 +7,7 @@ const StyledDiv = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: 2.25em;
   background-color: ${(props) => props.theme.bg};
 `;
 
