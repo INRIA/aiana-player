@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { pauseVideo, playVideo } from '../../actions/player';
+import { IConnectedReduxProps } from '../../store/index';
 import ControlText from '../controls/ControlText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
@@ -9,14 +12,14 @@ import { IFocusableProps, injectFocusable } from './focusable';
 
 interface IProps {
   isPlaying?: boolean;
-  onClick?(): void;
+  videoElement?: HTMLVideoElement;
 }
 
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 
 class MediaPlayButton extends React.Component<
-  IProps & InjectedIntlProps & IFocusableProps
+  IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
 > {
   public static defaultProps = {
     isPlaying: false,
@@ -40,7 +43,12 @@ class MediaPlayButton extends React.Component<
   }
 
   private togglePlay = () => {
-    this.props.onClick!();
+    const { dispatch, isPlaying, videoElement } = this.props;
+    if (isPlaying && videoElement) {
+      dispatch(pauseVideo(videoElement));
+    } else if (!isPlaying && videoElement) {
+      dispatch(playVideo(videoElement));
+    }
   };
 
   private getControlText = (): string => {
@@ -69,4 +77,7 @@ class MediaPlayButton extends React.Component<
   };
 }
 
-export default injectIntl(injectFocusable(MediaPlayButton));
+export default connect((state: any) => ({
+  isPlaying: state.player.isPlaying,
+  videoElement: state.player.videoElement
+}))(injectIntl(injectFocusable(MediaPlayButton)));
