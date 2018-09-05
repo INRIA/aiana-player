@@ -27,14 +27,16 @@ export function playerElementMounted(playerElement: HTMLElement) {
 }
 
 export function handleToggleFullscreen(element: HTMLElement): any {
-  if (hasFullscreenElement()) {
+  const shouldExitFullscreen: boolean = hasFullscreenElement();
+
+  if (shouldExitFullscreen) {
     exitFullscreen();
   } else {
     enterFullscreen(element);
   }
 
   return (dispatch: Dispatch) => {
-    dispatch(toggleFullscreen(hasFullscreenElement()));
+    dispatch(toggleFullscreen(shouldExitFullscreen));
   };
 }
 

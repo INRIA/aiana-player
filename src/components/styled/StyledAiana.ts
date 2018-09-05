@@ -4,8 +4,6 @@ const StyledAiana = styled.div`
   display: block;
   width: 800px;
   height: 450px;
-  max-height: 100%;
-  max-width: 100%;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};

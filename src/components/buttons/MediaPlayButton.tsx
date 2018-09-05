@@ -22,8 +22,7 @@ class MediaPlayButton extends React.Component<
   IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
 > {
   public static defaultProps = {
-    isPlaying: false,
-    onClick: () => undefined
+    isPlaying: false
   };
 
   public render() {
@@ -42,8 +41,11 @@ class MediaPlayButton extends React.Component<
     );
   }
 
-  private togglePlay = () => {
+  private togglePlay = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
     const { dispatch, isPlaying, videoElement } = this.props;
+
     if (isPlaying && videoElement) {
       dispatch(pauseVideo(videoElement));
     } else if (!isPlaying && videoElement) {
@@ -73,6 +75,7 @@ class MediaPlayButton extends React.Component<
     if (isPlaying) {
       return <StyledPauseIcon aria-hidden={true} />;
     }
+
     return <StyledPlayIcon aria-hidden={true} />;
   };
 }

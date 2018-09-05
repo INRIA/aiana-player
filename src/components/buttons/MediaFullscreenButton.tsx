@@ -37,7 +37,9 @@ class MediaFullscreenButton extends React.Component<
     );
   }
 
-  private toggleFullscreen = () => {
+  private toggleFullscreen = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+
     const { dispatch, playerElement } = this.props;
 
     dispatch(handleToggleFullscreen(playerElement));
