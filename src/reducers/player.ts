@@ -13,7 +13,7 @@ const player: Reducer = (state = {}, action) => {
     case TOGGLE_FULLSCREEN:
       return {
         ...state,
-        isFullscreen: !state.isFullscreen
+        isFullscreen: action.isFullscreen
       };
     case PLAYER_ELEMENT_MOUNTED:
       return {

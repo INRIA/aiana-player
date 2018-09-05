@@ -21,3 +21,11 @@ export function hasFullscreenElement(): boolean {
 
   return false;
 }
+
+export function isFullscreenEnabled(): boolean {
+  return document.fullscreenEnabled || document.webkitFullscreenEnabled;
+}
+
+export function isDocumentFullscreen(): boolean {
+  return document.webkitIsFullScreen;
+}
