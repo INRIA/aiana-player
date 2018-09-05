@@ -7,19 +7,7 @@ import Aiana from './components/Aiana';
 import middleware from './middleware';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-
-export interface IState {
-  player: any;
-}
-
-const initialState: IState = {
-  player: {
-    isFullscreen: false,
-    isPlaying: false,
-    playerElement: null,
-    videoElement: null
-  }
-};
+import { initialState } from './store';
 
 const store = createStore(
   reducers,

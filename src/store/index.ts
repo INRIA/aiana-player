@@ -5,3 +5,16 @@ export interface IConnectedReduxProps {
   // Additional type information is given through generics.
   dispatch: Dispatch<AnyAction>;
 }
+
+export interface IState {
+  player: any;
+}
+
+export const initialState: IState = {
+  player: {
+    isFullscreen: false,
+    isPlaying: false,
+    playerElement: null,
+    videoElement: null
+  }
+};
