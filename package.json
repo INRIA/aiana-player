@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts-ts start",
-    "svg": "svgr --template ./.svgr/tsxTemplate.js --icon --ext tsx -d ./src/components/svg/ ./svg/",
+    "svg": "svgr --template ./.svgr/tsxTemplate.js --no-dimensions --ext tsx -d ./src/components/svg/ ./svg/",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
