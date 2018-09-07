@@ -7,7 +7,13 @@ import {
   VIDEO_PAUSE,
   VIDEO_PLAY
 } from '../actions/player';
-import { IPlayerState } from '../store/index';
+
+export interface IPlayerState {
+  isFullscreen: boolean;
+  isPlaying: boolean;
+  playerElement: HTMLElement | null;
+  videoElement: HTMLVideoElement | null;
+}
 
 const initialState: IPlayerState = {
   isFullscreen: false,

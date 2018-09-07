@@ -5,14 +5,3 @@ export interface IConnectedReduxProps {
   // Additional type information is given through generics.
   dispatch: Dispatch<AnyAction>;
 }
-
-export interface IState {
-  player: IPlayerState;
-}
-
-export interface IPlayerState {
-  isFullscreen: boolean;
-  isPlaying: boolean;
-  playerElement: HTMLElement | null;
-  videoElement: HTMLVideoElement | null;
-}
