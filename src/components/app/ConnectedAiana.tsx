@@ -23,11 +23,7 @@ const debugSources = [
   }
 ];
 
-interface IProps {
-  isFullscreen: boolean;
-}
-
-class Aiana extends React.Component<IProps & IConnectedReduxProps> {
+class Aiana extends React.Component<IConnectedReduxProps> {
   private fullscreenRef = React.createRef<HTMLElement>();
 
   constructor(props: any) {
