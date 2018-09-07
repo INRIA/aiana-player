@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-  DEFAULT_MEDIA_TYPE,
-  DEFAULT_NATIVE_CONTROLS,
-  MEDIA_TYPE_VIDEO
-} from '../constants';
+import { DEFAULT_MEDIA_TYPE, DEFAULT_NATIVE_CONTROLS } from '../constants';
 import styled from '../utils/styled-components';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
@@ -16,9 +12,6 @@ interface IProps {
 
 const StyledDiv = styled.div`
   background-color: ${(props) => props.theme.bg};
-`;
-
-const StyledRelative = styled.div`
   position: relative;
 `;
 
@@ -29,19 +22,25 @@ class Player extends React.Component<IProps> {
   };
 
   public render() {
-    const { mediaSources, mediaType, nativeControls } = this.props;
+    const { mediaSources, nativeControls } = this.props;
 
     return (
-      <StyledDiv>
-        {mediaType === MEDIA_TYPE_VIDEO && (
-          <StyledRelative>
-            <VideoPlayer controls={nativeControls} sources={mediaSources} />
-            {!nativeControls && <VideoPlayerControls />}
-          </StyledRelative>
-        )}
+      <StyledDiv className="aip-player">
+        <VideoPlayer controls={nativeControls} sources={mediaSources} />
+        {this.getPlayerControls()}
       </StyledDiv>
     );
   }
+
+  private getPlayerControls = () => {
+    const { nativeControls } = this.props;
+
+    if (nativeControls) {
+      return null;
+    }
+
+    return <VideoPlayerControls />;
+  };
 }
 
 export default Player;

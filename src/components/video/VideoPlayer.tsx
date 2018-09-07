@@ -52,6 +52,7 @@ class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
     return (
       <StyledVideo
         innerRef={this.videoRef}
+        className="aip-video"
         autoPlay={autoPlay}
         controls={controls}
       >

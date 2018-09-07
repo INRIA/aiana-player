@@ -2,8 +2,8 @@ import * as React from 'react';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import * as localeEn from 'react-intl/locale-data/en';
 import * as localeFr from 'react-intl/locale-data/fr';
-import { DEFAULT_LANG } from '../constants';
-import * as messagesFr from '../translations/fr.json';
+import { DEFAULT_LANG } from '../../constants';
+import * as messagesFr from '../../translations/fr.json';
 
 interface IState {
   language: string;

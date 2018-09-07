@@ -12,7 +12,7 @@ const StyledDiv = styled.div`
 `;
 
 const VideoPlayerControls: React.SFC = () => (
-  <StyledDiv>
+  <StyledDiv className="aip-controls">
     <MediaPlayButton />
     <MediaFullscreenButton />
   </StyledDiv>
