@@ -3,7 +3,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { handleToggleFullscreen } from '../../actions/player';
 import { IConnectedReduxProps } from '../../store';
-import ControlText from '../controls/ControlText';
+import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import FullscreenIcon from '../svg/Fullscreen';
@@ -32,7 +32,7 @@ class MediaFullscreenButton extends React.Component<
         onClick={this.toggleFullscreen}
       >
         {controlIcon}
-        <ControlText>{controlText}</ControlText>
+        <AssistiveText>{controlText}</AssistiveText>
       </StyledButton>
     );
   }

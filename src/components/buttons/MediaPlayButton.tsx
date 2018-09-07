@@ -3,7 +3,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { pauseVideo, playVideo } from '../../actions/player';
 import { IConnectedReduxProps } from '../../store/index';
-import ControlText from '../controls/ControlText';
+import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import PauseIcon from '../svg/Pause';
@@ -36,7 +36,7 @@ class MediaPlayButton extends React.Component<
         onClick={this.togglePlay}
       >
         {controlIcon}
-        <ControlText>{controlText}</ControlText>
+        <AssistiveText>{controlText}</AssistiveText>
       </StyledButton>
     );
   }
