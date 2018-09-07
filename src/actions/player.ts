@@ -1,4 +1,3 @@
-// import { Dispatch } from 'redux';
 import {
   enterFullscreen,
   exitFullscreen,
@@ -22,8 +21,6 @@ export function handleFullscreenChange(isFullscreen: boolean) {
 
 export function handleToggleFullscreen(fullscreenElement: HTMLElement): any {
   const shouldExitFullscreen = isDocumentFullscreen();
-
-  console.log(shouldExitFullscreen);
 
   if (shouldExitFullscreen) {
     exitFullscreen();
