@@ -2,15 +2,12 @@ import * as React from 'react';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import * as localeEn from 'react-intl/locale-data/en';
 import * as localeFr from 'react-intl/locale-data/fr';
-import { DEFAULT_LANG } from '../../constants';
+import { connect } from 'react-redux';
+import { IConnectedReduxProps } from '../../store';
 import * as messagesFr from '../../translations/fr.json';
 
-interface IState {
-  language: string;
-}
-
 interface IProps {
-  language?: string;
+  language: string;
   children?: any;
 }
 
@@ -20,31 +17,22 @@ const messages: any = {
 
 addLocaleData([...localeEn, ...localeFr]);
 
-class IntlWrapper extends React.Component<IProps, IState> {
-  public static defaultProps: IProps = {
-    language: DEFAULT_LANG
-  };
-
-  constructor(props: IProps) {
-    super(props);
-
-    const { language = DEFAULT_LANG } = this.props;
-
-    this.state = {
-      language
-    };
-  }
-
+class IntlWrapper extends React.Component<IProps & IConnectedReduxProps> {
   public render() {
-    const { language } = this.state;
-    const { children } = this.props;
+    const { children, language } = this.props;
 
     return (
-      <IntlProvider locale={language} messages={messages[language]}>
+      <IntlProvider
+        locale={language}
+        key={language}
+        messages={messages[language]}
+      >
         {children}
       </IntlProvider>
     );
   }
 }
 
-export default IntlWrapper;
+export default connect((state: any) => ({
+  language: state.preferences.language
+}))(IntlWrapper);

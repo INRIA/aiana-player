@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '../../utils/styled-components';
 import MediaFullscreenButton from '../buttons/MediaFullscreenButton';
 import MediaPlayButton from '../buttons/MediaPlayButton';
+import LanguageSwitch from '../preferences/LanguageSwitch';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -15,6 +16,7 @@ const VideoPlayerControls: React.SFC = () => (
   <StyledDiv className="aip-controls">
     <MediaPlayButton />
     <MediaFullscreenButton />
+    <LanguageSwitch />
   </StyledDiv>
 );
 
