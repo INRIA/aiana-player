@@ -7,8 +7,16 @@ import {
   VIDEO_PAUSE,
   VIDEO_PLAY
 } from '../actions/player';
+import { IPlayerState } from '../store/index';
 
-const player: Reducer = (state = {}, action) => {
+const initialState: IPlayerState = {
+  isFullscreen: false,
+  isPlaying: false,
+  playerElement: null,
+  videoElement: null
+};
+
+const player: Reducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_FULLSCREEN:
       return {

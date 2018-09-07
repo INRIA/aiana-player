@@ -7,14 +7,12 @@ export interface IConnectedReduxProps {
 }
 
 export interface IState {
-  player: any;
+  player: IPlayerState;
 }
 
-export const initialState: IState = {
-  player: {
-    isFullscreen: false,
-    isPlaying: false,
-    playerElement: null,
-    videoElement: null
-  }
-};
+export interface IPlayerState {
+  isFullscreen: boolean;
+  isPlaying: boolean;
+  playerElement: HTMLElement | null;
+  videoElement: HTMLVideoElement | null;
+}
