@@ -4,16 +4,14 @@ import * as localeEn from 'react-intl/locale-data/en';
 import * as localeFr from 'react-intl/locale-data/fr';
 import { connect } from 'react-redux';
 import { IConnectedReduxProps } from '../../store';
-import * as messagesFr from '../../translations/fr.json';
+import translations, { ITranslationsCollection } from '../../translations';
 
 interface IProps {
   language: string;
-  children?: any;
+  children: any;
 }
 
-const messages: any = {
-  fr: messagesFr
-};
+const messages: ITranslationsCollection = translations;
 
 addLocaleData([...localeEn, ...localeFr]);
 
