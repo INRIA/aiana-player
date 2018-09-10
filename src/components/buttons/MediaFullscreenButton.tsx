@@ -50,13 +50,11 @@ class MediaFullscreenButton extends React.Component<
 
     if (isFullscreen) {
       return intl.formatMessage({
-        defaultMessage: 'Exit full screen',
         id: 'controls.fullscreen.exit'
       });
     }
 
     return intl.formatMessage({
-      defaultMessage: 'Full screen',
       id: 'controls.fullscreen.enter'
     });
   };

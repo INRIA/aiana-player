@@ -58,13 +58,11 @@ class MediaPlayButton extends React.Component<
 
     if (isPlaying) {
       return intl.formatMessage({
-        defaultMessage: 'Pause',
         id: 'controls.pause'
       });
     }
 
     return intl.formatMessage({
-      defaultMessage: 'Play',
       id: 'controls.play'
     });
   };
