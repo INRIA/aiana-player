@@ -12,7 +12,11 @@ const StyledSpan = styled.span`
   width: 1px;
 `;
 
-const AssistiveText: React.SFC = ({ children }) => (
+interface IProps {
+  children: React.ReactNode;
+}
+
+const AssistiveText: React.SFC<IProps> = ({ children }) => (
   <StyledSpan className="assistive-text">{children}</StyledSpan>
 );
 
