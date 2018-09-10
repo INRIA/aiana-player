@@ -11,6 +11,7 @@ import { isDocumentFullscreen } from '../../utils/fullscreen';
 import { injectGlobalStyles } from '../../utils/global-styles';
 import { ThemeProvider } from '../../utils/styled-components';
 import Player from '../Player';
+import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
 import IntlWrapper from './IntlWrapper';
 
@@ -52,6 +53,7 @@ class Aiana extends React.Component<IConnectedReduxProps> {
         <ThemeProvider theme={inria}>
           <StyledAiana className="aip-app" innerRef={this.fullscreenRef}>
             <Player mediaSources={debugSources} />
+            <PreferencesPanel />
           </StyledAiana>
         </ThemeProvider>
       </IntlWrapper>

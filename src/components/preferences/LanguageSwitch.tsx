@@ -1,35 +1,46 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { changeLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
-import styled from '../../utils/styled-components';
-import LanguageSwitchButton from './LanguageSwitchButton';
 
 interface IProps {
   availableLanguages: string[];
   currentLanguage: string;
 }
 
-const StyledDiv = styled.div`
-  display: flex;
-  background-color: ${(props) => props.theme.bg};
-`;
-
 class LanguageSwitch extends React.Component<IProps & IConnectedReduxProps> {
+  private languageSelect = React.createRef<HTMLSelectElement>();
+
   public render() {
     const { availableLanguages, currentLanguage } = this.props;
 
     return (
-      <StyledDiv className="aip-language-switch">
-        <span>current: {currentLanguage}</span>
-        {availableLanguages
-          .filter((lang) => lang !== currentLanguage)
-          .map((language) => (
-            <LanguageSwitchButton key={language} language={language} />
-          ))}
-      </StyledDiv>
+      <div className="aip-language-switch">
+        <label>
+          <FormattedMessage id="preferences.language.label" />
+          <select
+            ref={this.languageSelect}
+            onChange={this.onLanguageChange}
+            value={currentLanguage}
+          >
+            {availableLanguages.map((language) => (
+              <option key={language} value={language}>
+                {language}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
     );
   }
+
+  private onLanguageChange = () => {
+    const languageKey = this.languageSelect.current!.value;
+
+    this.props.dispatch(changeLanguage(languageKey));
+  };
 }
 
 export default connect((state: IAianaState) => ({
