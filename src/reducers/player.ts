@@ -11,16 +11,20 @@ import {
 import { DEFAULT_NATIVE_CONTROLS, DEFAULT_PLAY_RATE } from '../constants';
 
 export interface IPlayerState {
+  autoPlay: boolean;
   isFullscreen: boolean;
   isPlaying: boolean;
+  nativeControls: boolean;
   playbackRate: number;
   playerElement: HTMLElement | null;
   videoElement: HTMLVideoElement | null;
 }
 
 const initialState: IPlayerState = {
+  autoPlay: false,
   isFullscreen: false,
   isPlaying: false,
+  nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
   videoElement: null

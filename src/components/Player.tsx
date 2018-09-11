@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { DEFAULT_NATIVE_CONTROLS } from '../constants';
+import { connect } from 'react-redux';
+import { IAianaState } from '../reducers/index';
 import styled from '../utils/styled-components';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 
 interface IProps {
   mediaSources?: any[];
-  nativeControls?: boolean;
+  nativeControls: boolean;
 }
 
 const StyledDiv = styled.div`
@@ -15,16 +16,12 @@ const StyledDiv = styled.div`
 `;
 
 class Player extends React.Component<IProps> {
-  public static defaultProps: IProps = {
-    nativeControls: DEFAULT_NATIVE_CONTROLS
-  };
-
   public render() {
-    const { mediaSources, nativeControls } = this.props;
+    const { mediaSources } = this.props;
 
     return (
       <StyledDiv className="aip-player">
-        <VideoPlayer controls={nativeControls} sources={mediaSources} />
+        <VideoPlayer sources={mediaSources} />
         {this.getPlayerControls()}
       </StyledDiv>
     );
@@ -41,4 +38,6 @@ class Player extends React.Component<IProps> {
   };
 }
 
-export default Player;
+export default connect((state: IAianaState) => ({
+  nativeControls: state.player.nativeControls
+}))(Player);

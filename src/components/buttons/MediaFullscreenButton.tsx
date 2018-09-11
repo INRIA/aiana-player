@@ -2,6 +2,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { handleToggleFullscreen } from '../../actions/player';
+import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
@@ -70,7 +71,7 @@ class MediaFullscreenButton extends React.Component<
   };
 }
 
-export default connect((state: any) => ({
+export default connect((state: IAianaState) => ({
   isFullscreen: state.player.isFullscreen,
   playerElement: state.player.playerElement
 }))(injectIntl(injectFocusable(MediaFullscreenButton)));

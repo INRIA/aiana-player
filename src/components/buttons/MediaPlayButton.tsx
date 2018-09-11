@@ -2,6 +2,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { pauseVideo, playVideo } from '../../actions/player';
+import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
@@ -78,7 +79,7 @@ class MediaPlayButton extends React.Component<
   };
 }
 
-export default connect((state: any) => ({
+export default connect((state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
   videoElement: state.player.videoElement
 }))(injectIntl(injectFocusable(MediaPlayButton)));

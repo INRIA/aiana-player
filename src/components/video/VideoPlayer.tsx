@@ -4,6 +4,7 @@ import {
   videoElementMounted,
   videoElementUnounted
 } from '../../actions/player';
+import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
 
@@ -14,8 +15,8 @@ interface ISource {
 
 interface IVideoProps {
   sources?: ISource[];
-  controls?: boolean;
-  autoPlay?: boolean;
+  controls: boolean;
+  autoPlay: boolean;
 }
 
 const StyledVideo = styled.video`
@@ -25,11 +26,6 @@ const StyledVideo = styled.video`
 `;
 
 class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
-  public static defaultProps: IVideoProps = {
-    autoPlay: false,
-    controls: false
-  };
-
   private videoRef = React.createRef<HTMLVideoElement>();
 
   public componentDidMount() {
@@ -47,7 +43,7 @@ class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
   }
 
   public render() {
-    const { sources, controls, autoPlay } = this.props;
+    const { autoPlay, controls, sources } = this.props;
 
     return (
       <StyledVideo
@@ -65,4 +61,7 @@ class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
   }
 }
 
-export default connect()(VideoPlayer);
+export default connect((state: IAianaState) => ({
+  autoPlay: state.player.autoPlay,
+  controls: state.player.nativeControls
+}))(VideoPlayer);
