@@ -8,15 +8,17 @@ import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
 
-interface ISource {
+export interface ISource {
   type?: string;
   src: string;
 }
 
 interface IVideoProps {
-  sources?: ISource[];
-  controls: boolean;
   autoPlay: boolean;
+  isMuted: boolean;
+  nativeControls: boolean;
+  sources: ISource[];
+  volume: number;
 }
 
 const StyledVideo = styled.video`
@@ -25,15 +27,19 @@ const StyledVideo = styled.video`
   max-height: 100%;
 `;
 
-class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
+class VideoPlayer extends React.PureComponent<
+  IVideoProps & IConnectedReduxProps
+> {
   private videoRef = React.createRef<HTMLVideoElement>();
 
   public componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, isMuted, volume } = this.props;
+    const video = this.videoRef.current!;
 
-    if (this.videoRef.current) {
-      dispatch(videoElementMounted(this.videoRef.current));
-    }
+    video.volume = volume;
+    video.muted = isMuted;
+
+    dispatch(videoElementMounted(this.videoRef.current!));
   }
 
   public componentWillUnmount() {
@@ -43,14 +49,14 @@ class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
   }
 
   public render() {
-    const { autoPlay, controls, sources } = this.props;
+    const { autoPlay, nativeControls, sources } = this.props;
 
     return (
       <StyledVideo
         innerRef={this.videoRef}
         className="aip-video"
         autoPlay={autoPlay}
-        controls={controls}
+        controls={nativeControls}
       >
         {sources &&
           sources.map(({ src, type }: ISource, index) => (
@@ -63,5 +69,8 @@ class VideoPlayer extends React.Component<IVideoProps & IConnectedReduxProps> {
 
 export default connect((state: IAianaState) => ({
   autoPlay: state.player.autoPlay,
-  controls: state.player.nativeControls
+  isMuted: state.player.isMuted,
+  nativeControls: state.player.nativeControls,
+  sources: state.player.sources,
+  volume: state.player.volume
 }))(VideoPlayer);

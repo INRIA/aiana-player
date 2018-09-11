@@ -17,13 +17,6 @@ import IntlWrapper from './IntlWrapper';
 
 const { inria } = themes;
 
-const debugSources = [
-  {
-    src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',
-    type: 'video/mp4'
-  }
-];
-
 class Aiana extends React.Component<IConnectedReduxProps> {
   private fullscreenRef = React.createRef<HTMLElement>();
 
@@ -52,7 +45,7 @@ class Aiana extends React.Component<IConnectedReduxProps> {
       <IntlWrapper>
         <ThemeProvider theme={inria}>
           <StyledAiana className="aip-app" innerRef={this.fullscreenRef}>
-            <Player mediaSources={debugSources} />
+            <Player />
             <PreferencesPanel />
           </StyledAiana>
         </ThemeProvider>

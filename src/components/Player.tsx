@@ -6,7 +6,6 @@ import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 
 interface IProps {
-  mediaSources?: any[];
   nativeControls: boolean;
 }
 
@@ -17,11 +16,9 @@ const StyledDiv = styled.div`
 
 class Player extends React.Component<IProps> {
   public render() {
-    const { mediaSources } = this.props;
-
     return (
       <StyledDiv className="aip-player">
-        <VideoPlayer sources={mediaSources} />
+        <VideoPlayer />
         {this.getPlayerControls()}
       </StyledDiv>
     );

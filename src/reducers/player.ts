@@ -10,6 +10,7 @@ import {
   VIDEO_TOGGLE_MUTE,
   VIDEO_VOLUME
 } from '../actions/player';
+import { ISource } from '../components/video/VideoPlayer';
 import {
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
@@ -24,6 +25,7 @@ export interface IPlayerState {
   nativeControls: boolean;
   playbackRate: number;
   playerElement: HTMLElement | null;
+  sources: ISource[];
   videoElement: HTMLVideoElement | null;
   volume: number;
 }
@@ -36,6 +38,12 @@ const initialState: IPlayerState = {
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
+  sources: [
+    {
+      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',
+      type: 'video/mp4'
+    }
+  ],
   videoElement: null,
   volume: DEFAULT_VOLUME
 };
