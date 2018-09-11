@@ -3,7 +3,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { handleToggleFullscreen } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
+import { IConnectedReduxProps } from '../../store/index';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
@@ -19,7 +19,7 @@ interface IProps {
 const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
 const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);
 
-class MediaFullscreenButton extends React.Component<
+class FullscreenButton extends React.Component<
   IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
 > {
   public render() {
@@ -74,4 +74,4 @@ class MediaFullscreenButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isFullscreen: state.player.isFullscreen,
   playerElement: state.player.playerElement
-}))(injectIntl(injectFocusable(MediaFullscreenButton)));
+}))(injectIntl(injectFocusable(FullscreenButton)));

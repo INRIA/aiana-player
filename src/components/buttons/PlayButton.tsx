@@ -19,7 +19,7 @@ interface IProps {
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 
-class MediaPlayButton extends React.Component<
+class PlayButton extends React.Component<
   IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
 > {
   public static defaultProps = {
@@ -82,4 +82,4 @@ class MediaPlayButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
   videoElement: state.player.videoElement
-}))(injectIntl(injectFocusable(MediaPlayButton)));
+}))(injectIntl(injectFocusable(PlayButton)));
