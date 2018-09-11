@@ -7,6 +7,7 @@ import {
   VIDEO_PAUSE,
   VIDEO_PLAY,
   VIDEO_PLAYBACK_RATE,
+  VIDEO_TOGGLE_MUTE,
   VIDEO_VOLUME
 } from '../actions/player';
 import {
@@ -18,6 +19,7 @@ import {
 export interface IPlayerState {
   autoPlay: boolean;
   isFullscreen: boolean;
+  isMuted: boolean;
   isPlaying: boolean;
   nativeControls: boolean;
   playbackRate: number;
@@ -29,6 +31,7 @@ export interface IPlayerState {
 const initialState: IPlayerState = {
   autoPlay: false,
   isFullscreen: false,
+  isMuted: false,
   isPlaying: false,
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
@@ -73,6 +76,11 @@ const player: Reducer = (state = initialState, action) => {
       return {
         ...state,
         playbackRate: action.playbackRate
+      };
+    case VIDEO_TOGGLE_MUTE:
+      return {
+        ...state,
+        isMuted: action.isMuted
       };
     case VIDEO_VOLUME:
       return {

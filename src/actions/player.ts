@@ -9,6 +9,7 @@ export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
 export const PLAYER_ELEMENT_MOUNTED = 'aiana/PLAYER_ELEMENT_MOUNTED';
 export const VIDEO_ELEMENT_MOUNTED = 'aiana/VIDEO_ELEMENT_MOUNTED';
 export const VIDEO_ELEMENT_UNMOUNTED = 'aiana/VIDEO_ELEMENT_UNMOUNTED';
+export const VIDEO_TOGGLE_MUTE = 'aiana/VIDEO_MUTE';
 export const VIDEO_PLAY = 'aiana/VIDEO_PLAY';
 export const VIDEO_PAUSE = 'aiana/VIDEO_PAUSE';
 export const VIDEO_PLAYBACK_RATE = 'aiana/VIDEO_PLAYBACK_RATE';
@@ -92,3 +93,11 @@ export function changeVolume(videoElement: HTMLVideoElement, volume: number) {
   };
 }
 
+export function toggleMute(videoElement: HTMLVideoElement) {
+  videoElement.muted = !videoElement.muted;
+
+  return {
+    isMuted: videoElement.muted,
+    type: VIDEO_TOGGLE_MUTE
+  };
+}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
+import MuteButton from '../buttons/MuteButton';
 import PlayButton from '../buttons/PlayButton';
 import VolumeSlider from '../buttons/VolumeSlider';
 
@@ -15,6 +16,7 @@ const StyledDiv = styled.div`
 const VideoPlayerControls: React.SFC = () => (
   <StyledDiv className="aip-controls">
     <PlayButton />
+    <MuteButton />
     <VolumeSlider />
     <FullscreenButton />
   </StyledDiv>
