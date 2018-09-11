@@ -10,14 +10,14 @@ interface IProps {
   currentLanguage: string;
 }
 
-class LanguageSwitch extends React.Component<IProps & IConnectedReduxProps> {
+class LanguageSelector extends React.Component<IProps & IConnectedReduxProps> {
   private languageSelect = React.createRef<HTMLSelectElement>();
 
   public render() {
     const { availableLanguages, currentLanguage } = this.props;
 
     return (
-      <div className="aip-language-switch">
+      <div className="aip-language-selector">
         <label>
           <FormattedMessage id="preferences.language.label" />
           <select
@@ -46,4 +46,4 @@ class LanguageSwitch extends React.Component<IProps & IConnectedReduxProps> {
 export default connect((state: IAianaState) => ({
   availableLanguages: state.preferences.availableLanguages,
   currentLanguage: state.preferences.language
-}))(LanguageSwitch);
+}))(LanguageSelector);
