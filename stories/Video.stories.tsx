@@ -11,10 +11,4 @@ const sources = [
 
 storiesOf('Video Player', module)
   .add('default', () => <VideoPlayer />)
-  .add('with media', () => <VideoPlayer sources={sources} />)
-  .add('with default controls', () => (
-    <VideoPlayer sources={sources} controls={true} />
-  ))
-  .add('with autoplay', () => (
-    <VideoPlayer sources={sources} autoPlay={true} />
-  ));
+  .add('with media', () => <VideoPlayer sources={sources} />);
