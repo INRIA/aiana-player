@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
@@ -10,16 +10,18 @@ interface IProps {
   currentLanguage: string;
 }
 
-class LanguageSelector extends React.Component<IProps & IConnectedReduxProps> {
+class LanguageSelector extends React.Component<
+  IProps & IConnectedReduxProps & InjectedTranslateProps
+> {
   private languageSelect = React.createRef<HTMLSelectElement>();
 
   public render() {
-    const { availableLanguages, currentLanguage } = this.props;
+    const { availableLanguages, currentLanguage, t } = this.props;
 
     return (
       <div className="aip-language-selector">
         <label>
-          <FormattedMessage id="preferences.language.label" />
+          <span>{t('preferences.language.label')}</span>
           <select
             ref={this.languageSelect}
             onChange={this.onLanguageChange}
@@ -46,4 +48,4 @@ class LanguageSelector extends React.Component<IProps & IConnectedReduxProps> {
 export default connect((state: IAianaState) => ({
   availableLanguages: state.preferences.availableLanguages,
   currentLanguage: state.preferences.language
-}))(LanguageSelector);
+}))(translate()(LanguageSelector));

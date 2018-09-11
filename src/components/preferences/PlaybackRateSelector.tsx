@@ -1,34 +1,36 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 
 interface IProps {
-  availablePlaybackRates: string[];
-  currentPlaybackRate: string;
+  availablePlaybackRates: number[];
+  currentPlaybackRate: number;
   videoElement: HTMLVideoElement;
 }
 
-class PlayRateSelector extends React.Component<IProps & IConnectedReduxProps> {
+class PlaybackRateSelector extends React.Component<
+  IProps & InjectedTranslateProps & IConnectedReduxProps
+> {
   private playbackRateSelect = React.createRef<HTMLSelectElement>();
 
   public render() {
-    const { availablePlaybackRates, currentPlaybackRate } = this.props;
+    const { availablePlaybackRates, currentPlaybackRate, t } = this.props;
 
     return (
       <div className="aip-playback-rate-selector">
         <label>
-          <FormattedMessage id="preferences.playbackrate.label" />
+          <span>{t('preferences.playbackrate.label')}</span>
           <select
             ref={this.playbackRateSelect}
-            onChange={this.onPlayRateChange}
             value={currentPlaybackRate}
+            onChange={this.onPlayRateChange}
           >
             {availablePlaybackRates.map((playbackRate) => (
               <option key={playbackRate} value={playbackRate}>
-                {playbackRate.toString()}
+                {playbackRate}
               </option>
             ))}
           </select>
@@ -48,5 +50,5 @@ class PlayRateSelector extends React.Component<IProps & IConnectedReduxProps> {
 export default connect((state: IAianaState) => ({
   availablePlaybackRates: state.preferences.availablePlaybackRates,
   currentPlaybackRate: state.player.playbackRate,
-  videoElement: state.player.videoElement
-}))(PlayRateSelector);
+  videoElement: state.player.videoElement!
+}))(translate()(PlaybackRateSelector));

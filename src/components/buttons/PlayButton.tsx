@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { pauseVideo, playVideo } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
@@ -20,7 +20,7 @@ const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 
 class PlayButton extends React.Component<
-  IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
+  IProps & InjectedTranslateProps & IFocusableProps & IConnectedReduxProps
 > {
   public render() {
     const controlText = this.getControlText();
@@ -51,17 +51,13 @@ class PlayButton extends React.Component<
   };
 
   private getControlText = (): string => {
-    const { intl, isPlaying } = this.props;
+    const { t, isPlaying } = this.props;
 
     if (isPlaying) {
-      return intl.formatMessage({
-        id: 'controls.pause'
-      });
+      return t('controls.pause');
     }
 
-    return intl.formatMessage({
-      id: 'controls.play'
-    });
+    return t('controls.play');
   };
 
   private getControlIcon = (): JSX.Element => {
@@ -78,4 +74,4 @@ class PlayButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
   videoElement: state.player.videoElement
-}))(injectIntl(injectFocusable(PlayButton)));
+}))(translate()(injectFocusable(PlayButton)));

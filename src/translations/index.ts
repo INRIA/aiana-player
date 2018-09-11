@@ -1,14 +1,21 @@
+import * as i18n from 'i18next';
 import en from './en';
 import fr from './fr';
 
-export interface ITranslation {
-  [key: string]: string;
-}
+const translationNS = 'aiana';
 
-export interface ITranslationsCollection {
-  [key: string]: ITranslation;
-}
+const config: i18n.InitOptions = {
+  debug: false,
+  defaultNS: translationNS,
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false
+  }
+};
 
-const translationsCollection: ITranslationsCollection = { en, fr };
+const i18nInstance = i18n.init(config);
 
-export default translationsCollection;
+i18nInstance.addResources('en', translationNS, en);
+i18nInstance.addResources('fr', translationNS, fr);
+
+export { i18nInstance, translationNS };

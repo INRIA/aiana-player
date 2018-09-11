@@ -1,5 +1,3 @@
-import { ITranslation } from './index';
-
 export default {
   'controls.fullscreen.enter': 'Passer en mode plein écran',
   'controls.fullscreen.exit': 'Quitter le mode plein écran',
@@ -11,4 +9,4 @@ export default {
   'preferences.language.title': 'Langue',
   'preferences.playbackrate.label': 'Vitesse',
   'preferences.title': 'Préférences'
-} as ITranslation;
+};

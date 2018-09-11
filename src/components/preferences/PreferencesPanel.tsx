@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import styled from '../../utils/styled-components';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
@@ -12,14 +12,12 @@ const StyledPanel = styled.div`
   color: #000;
 `;
 
-const PreferencesPanel: React.SFC = () => (
+const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
   <StyledPanel className="aip-preferences">
-    <div>
-      <FormattedMessage id="preferences.title" />
-    </div>
+    <div>{t('preferences.title')}</div>
     <LanguageSelector />
     <PlaybackRateSelector />
   </StyledPanel>
 );
 
-export default PreferencesPanel;
+export default translate()(PreferencesPanel);

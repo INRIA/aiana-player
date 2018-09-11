@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleMute } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
@@ -20,7 +20,7 @@ const StyledVolumeMutedIcon = StyledSvg.withComponent(VolumeMutedIcon);
 const StyledVolumeUnmutedIcon = StyledSvg.withComponent(VolumeUnmutedIcon);
 
 class MuteButton extends React.Component<
-  IProps & IConnectedReduxProps & InjectedIntlProps & IFocusableProps
+  IProps & IConnectedReduxProps & InjectedTranslateProps & IFocusableProps
 > {
   public render() {
     return (
@@ -50,21 +50,17 @@ class MuteButton extends React.Component<
   };
 
   private getControlText = () => {
-    const { intl, isMuted } = this.props;
+    const { t, isMuted } = this.props;
 
     if (isMuted) {
-      return intl.formatMessage({
-        id: 'controls.unmute'
-      });
+      return t('controls.unmute');
     }
 
-    return intl.formatMessage({
-      id: 'controls.mute'
-    });
+    return t('controls.mute');
   };
 }
 
 export default connect((state: IAianaState) => ({
   isMuted: state.player.isMuted,
   videoElement: state.player.videoElement
-}))(injectIntl(injectFocusable(MuteButton)));
+}))(translate()(injectFocusable(MuteButton)));

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { handleToggleFullscreen } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
@@ -20,7 +20,7 @@ const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
 const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);
 
 class FullscreenButton extends React.Component<
-  IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
+  IProps & IFocusableProps & IConnectedReduxProps & InjectedTranslateProps
 > {
   public render() {
     const controlText = this.getControlText();
@@ -47,17 +47,13 @@ class FullscreenButton extends React.Component<
   };
 
   private getControlText = (): string => {
-    const { intl, isFullscreen } = this.props;
+    const { t, isFullscreen } = this.props;
 
     if (isFullscreen) {
-      return intl.formatMessage({
-        id: 'controls.fullscreen.exit'
-      });
+      return t('controls.fullscreen.exit');
     }
 
-    return intl.formatMessage({
-      id: 'controls.fullscreen.enter'
-    });
+    return t('controls.fullscreen.enter');
   };
 
   private getControlIcon = (): JSX.Element => {
@@ -74,4 +70,4 @@ class FullscreenButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isFullscreen: state.player.isFullscreen,
   playerElement: state.player.playerElement
-}))(injectIntl(injectFocusable(FullscreenButton)));
+}))(translate()(injectFocusable(FullscreenButton)));

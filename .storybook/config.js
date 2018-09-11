@@ -1,7 +1,6 @@
 import { addLocaleData } from 'react-intl';
 import enLocaleData from 'react-intl/locale-data/en';
 import frLocaleData from 'react-intl/locale-data/fr';
-import { setIntlConfig, withIntl } from 'storybook-addon-intl';
 import JSXAddon from 'storybook-addon-jsx';
 import { configureActions } from '@storybook/addon-actions';
 import addonBackgrounds from '@storybook/addon-backgrounds';
@@ -19,12 +18,6 @@ const messages = {
 
 const getMessages = (locale) => messages[locale];
 
-setIntlConfig({
-  locales: ['en', 'fr'],
-  defaultLocale: 'en',
-  getMessages
-});
-
 const backgrounds = addonBackgrounds([
   { name: 'Inria', value: '#384257', default: true },
   { name: 'black', value: '#000' },
@@ -38,7 +31,6 @@ configureActions({
 });
 
 addDecorator(withKnobs);
-addDecorator(withIntl);
 addDecorator(backgrounds);
 setAddon(JSXAddon);
 
