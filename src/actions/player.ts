@@ -12,6 +12,7 @@ export const VIDEO_ELEMENT_UNMOUNTED = 'aiana/VIDEO_ELEMENT_UNMOUNTED';
 export const VIDEO_PLAY = 'aiana/VIDEO_PLAY';
 export const VIDEO_PAUSE = 'aiana/VIDEO_PAUSE';
 export const VIDEO_PLAYBACK_RATE = 'aiana/VIDEO_PLAYBACK_RATE';
+export const VIDEO_VOLUME = 'aiana/VIDEO_VOLUME';
 
 export function handleFullscreenChange(isFullscreen: boolean) {
   return {
@@ -81,3 +82,13 @@ export function changePlaybackRate(
     type: VIDEO_PLAYBACK_RATE
   };
 }
+
+export function changeVolume(videoElement: HTMLVideoElement, volume: number) {
+  videoElement.volume = volume;
+
+  return {
+    type: VIDEO_VOLUME,
+    volume
+  };
+}
+

@@ -6,9 +6,14 @@ import {
   VIDEO_ELEMENT_UNMOUNTED,
   VIDEO_PAUSE,
   VIDEO_PLAY,
-  VIDEO_PLAYBACK_RATE
+  VIDEO_PLAYBACK_RATE,
+  VIDEO_VOLUME
 } from '../actions/player';
-import { DEFAULT_NATIVE_CONTROLS, DEFAULT_PLAY_RATE } from '../constants';
+import {
+  DEFAULT_NATIVE_CONTROLS,
+  DEFAULT_PLAY_RATE,
+  DEFAULT_VOLUME
+} from '../constants';
 
 export interface IPlayerState {
   autoPlay: boolean;
@@ -18,6 +23,7 @@ export interface IPlayerState {
   playbackRate: number;
   playerElement: HTMLElement | null;
   videoElement: HTMLVideoElement | null;
+  volume: number;
 }
 
 const initialState: IPlayerState = {
@@ -27,7 +33,8 @@ const initialState: IPlayerState = {
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
-  videoElement: null
+  videoElement: null,
+  volume: DEFAULT_VOLUME
 };
 
 const player: Reducer = (state = initialState, action) => {
@@ -66,6 +73,11 @@ const player: Reducer = (state = initialState, action) => {
       return {
         ...state,
         playbackRate: action.playbackRate
+      };
+    case VIDEO_VOLUME:
+      return {
+        ...state,
+        volume: action.volume
       };
     default:
       return state;
