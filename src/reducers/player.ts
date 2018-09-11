@@ -60,6 +60,7 @@ const player: Reducer = (state = initialState, action) => {
     case VIDEO_ELEMENT_UNMOUNTED:
       return {
         ...state,
+        isPlaying: false,
         videoElement: null
       };
     case VIDEO_PLAY:
