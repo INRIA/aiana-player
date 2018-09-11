@@ -12,8 +12,8 @@ import PlayIcon from '../svg/PlayArrow';
 import { IFocusableProps, injectFocusable } from './focusable';
 
 interface IProps {
-  isPlaying?: boolean;
-  videoElement?: HTMLVideoElement;
+  isPlaying: boolean;
+  videoElement: HTMLVideoElement;
 }
 
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
@@ -22,10 +22,6 @@ const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 class PlayButton extends React.Component<
   IProps & InjectedIntlProps & IFocusableProps & IConnectedReduxProps
 > {
-  public static defaultProps = {
-    isPlaying: false
-  };
-
   public render() {
     const controlText = this.getControlText();
     const controlIcon = this.getControlIcon();
