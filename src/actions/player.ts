@@ -11,6 +11,7 @@ export const VIDEO_ELEMENT_MOUNTED = 'aiana/VIDEO_ELEMENT_MOUNTED';
 export const VIDEO_ELEMENT_UNMOUNTED = 'aiana/VIDEO_ELEMENT_UNMOUNTED';
 export const VIDEO_PLAY = 'aiana/VIDEO_PLAY';
 export const VIDEO_PAUSE = 'aiana/VIDEO_PAUSE';
+export const VIDEO_PLAYBACK_RATE = 'aiana/VIDEO_PLAYBACK_RATE';
 
 export function handleFullscreenChange(isFullscreen: boolean) {
   return {
@@ -55,6 +56,7 @@ export function videoElementUnounted() {
 
 export function playVideo(videoElement: HTMLVideoElement) {
   videoElement.play();
+
   return {
     type: VIDEO_PLAY
   };
@@ -62,7 +64,20 @@ export function playVideo(videoElement: HTMLVideoElement) {
 
 export function pauseVideo(videoElement: HTMLVideoElement) {
   videoElement.pause();
+
   return {
     type: VIDEO_PAUSE
+  };
+}
+
+export function changePlaybackRate(
+  videoElement: HTMLVideoElement,
+  playbackRate: number
+) {
+  videoElement.playbackRate = playbackRate;
+
+  return {
+    playbackRate,
+    type: VIDEO_PLAYBACK_RATE
   };
 }

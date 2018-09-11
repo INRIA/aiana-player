@@ -1,12 +1,13 @@
 import { ITranslation } from './index';
 
 export default {
-  'header.welcome': 'Bienvenue',
-  'controls.play': 'Lire',
-  'controls.pause': 'Mettre en pause',
   'controls.fullscreen.enter': 'Passer en mode plein écran',
   'controls.fullscreen.exit': 'Quitter le mode plein écran',
-  'preferences.title': 'Préférences',
+  'controls.pause': 'Mettre en pause',
+  'controls.play': 'Lire',
+  'header.welcome': 'Bienvenue',
+  'preferences.language.label': 'Choix de la langue',
   'preferences.language.title': 'Langue',
-  'preferences.language.label': 'Choix de la langue'
+  'preferences.playbackrate.label': 'Vitesse',
+  'preferences.title': 'Préférences'
 } as ITranslation;

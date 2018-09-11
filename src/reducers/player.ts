@@ -5,12 +5,15 @@ import {
   VIDEO_ELEMENT_MOUNTED,
   VIDEO_ELEMENT_UNMOUNTED,
   VIDEO_PAUSE,
-  VIDEO_PLAY
+  VIDEO_PLAY,
+  VIDEO_PLAYBACK_RATE
 } from '../actions/player';
+import { DEFAULT_NATIVE_CONTROLS, DEFAULT_PLAY_RATE } from '../constants';
 
 export interface IPlayerState {
   isFullscreen: boolean;
   isPlaying: boolean;
+  playbackRate: number;
   playerElement: HTMLElement | null;
   videoElement: HTMLVideoElement | null;
 }
@@ -18,6 +21,7 @@ export interface IPlayerState {
 const initialState: IPlayerState = {
   isFullscreen: false,
   isPlaying: false,
+  playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
   videoElement: null
 };
@@ -53,6 +57,11 @@ const player: Reducer = (state = initialState, action) => {
       return {
         ...state,
         isPlaying: false
+      };
+    case VIDEO_PLAYBACK_RATE:
+      return {
+        ...state,
+        playbackRate: action.playbackRate
       };
     default:
       return state;

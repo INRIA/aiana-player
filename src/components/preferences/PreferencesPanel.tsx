@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from '../../utils/styled-components';
 import LanguageSwitch from './LanguageSwitch';
+import PlaybackRateSelector from './PlaybackRateSelector';
 
 const StyledPanel = styled.div`
   background-color: white;
@@ -17,6 +18,7 @@ const PreferencesPanel: React.SFC = () => (
       <FormattedMessage id="preferences.title" />
     </div>
     <LanguageSwitch />
+    <PlaybackRateSelector />
   </StyledPanel>
 );
 
