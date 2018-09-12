@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { IAianaState } from '../../reducers/index';
+import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
 import MuteButton from '../buttons/MuteButton';
@@ -13,13 +16,27 @@ const StyledDiv = styled.div`
   background-color: ${(props) => props.theme.bg};
 `;
 
-const VideoPlayerControls: React.SFC = () => (
-  <StyledDiv className="aip-controls">
-    <PlayButton />
-    <MuteButton />
-    <VolumeSlider />
-    <FullscreenButton />
-  </StyledDiv>
-);
+interface IProps {
+  nativeControls: boolean;
+}
 
-export default VideoPlayerControls;
+const VideoPlayerControls: React.SFC<IProps & IConnectedReduxProps> = ({
+  nativeControls
+}) => {
+  if (nativeControls === true) {
+    return null;
+  }
+
+  return (
+    <StyledDiv className="aip-controls">
+      <PlayButton />
+      <MuteButton />
+      <VolumeSlider />
+      <FullscreenButton />
+    </StyledDiv>
+  );
+};
+
+export default connect((state: IAianaState) => ({
+  nativeControls: state.player.nativeControls
+}))(VideoPlayerControls);
