@@ -20,7 +20,7 @@ class NativeControlsSwitch extends React.Component<
         <span>{t('preferences.native_controls')}</span>
         <input
           type="checkbox"
-          checked={nativeControls}
+          defaultChecked={nativeControls}
           onClick={this.handleInputCheck}
         />
       </label>
