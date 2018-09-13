@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import styled from '../../utils/styled-components';
+import NativeControlsSwitch from '../buttons/NativeControlsSwitch';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
 
@@ -17,6 +18,7 @@ const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
     <div>{t('preferences.title')}</div>
     <LanguageSelector />
     <PlaybackRateSelector />
+    <NativeControlsSwitch />
   </StyledPanel>
 );
 

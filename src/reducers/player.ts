@@ -50,6 +50,11 @@ const initialState: IPlayerState = {
 
 const player: Reducer = (state = initialState, action) => {
   switch (action.type) {
+    case TOGGLE_NATIVE_CONTROLS:
+      return {
+        ...state,
+        nativeControls: action.nativeControls
+      };
     case TOGGLE_FULLSCREEN:
       return {
         ...state,

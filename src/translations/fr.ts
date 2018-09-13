@@ -7,6 +7,7 @@ export default {
   'controls.unmute': 'Activer le son',
   'preferences.language.label': 'Choix de la langue',
   'preferences.language.title': 'Langue',
+  'preferences.native_controls': 'Utiliser les contrôles natifs du lecteur',
   'preferences.playbackrate.label': 'Vitesse',
   'preferences.title': 'Préférences'
 };

@@ -9,6 +9,7 @@ export default {
   'languages.fr': 'Français',
   'preferences.language.label': 'Choose your language',
   'preferences.language.title': 'Language',
+  'preferences.native_controls': 'Use player native controls',
   'preferences.playbackrate.label': 'Speed',
   'preferences.title': 'Preferences'
 };
