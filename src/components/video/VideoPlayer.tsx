@@ -92,6 +92,8 @@ class VideoPlayer extends React.PureComponent<
 
     video.removeEventListener('playing', this.playingListener);
     video.removeEventListener('pause', this.pauseListener);
+    video.removeEventListener('volumechange', this.volumechangeListener);
+    video.removeEventListener('loadedmetadata', this.loadedmetadataListener);
   };
 
   private loadedmetadataListener = () => {
