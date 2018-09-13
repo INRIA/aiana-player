@@ -2,13 +2,15 @@ import { Reducer } from 'redux';
 import {
   PLAYER_ELEMENT_MOUNTED,
   TOGGLE_FULLSCREEN,
+  TOGGLE_NATIVE_CONTROLS,
   VIDEO_ELEMENT_MOUNTED,
   VIDEO_ELEMENT_UNMOUNTED,
   VIDEO_PAUSE,
   VIDEO_PLAY,
   VIDEO_PLAYBACK_RATE,
+  VIDEO_REQUEST_VOLUME_CHANGE,
   VIDEO_TOGGLE_MUTE,
-  VIDEO_VOLUME
+  VIDEO_VOLUME_CHANGE
 } from '../actions/player';
 import { ISource } from '../components/video/VideoPlayer';
 import {
@@ -77,14 +79,10 @@ const player: Reducer = (state = initialState, action) => {
         videoElement: null
       };
     case VIDEO_PLAY:
-      return {
-        ...state,
-        isPlaying: true
-      };
     case VIDEO_PAUSE:
       return {
         ...state,
-        isPlaying: false
+        isPlaying: action.isPlaying
       };
     case VIDEO_PLAYBACK_RATE:
       return {
@@ -96,7 +94,8 @@ const player: Reducer = (state = initialState, action) => {
         ...state,
         isMuted: action.isMuted
       };
-    case VIDEO_VOLUME:
+    case VIDEO_REQUEST_VOLUME_CHANGE:
+    case VIDEO_VOLUME_CHANGE:
       return {
         ...state,
         volume: action.volume

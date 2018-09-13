@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { changeVolume } from '../../actions/player';
+import { requestChangeVolume } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 
@@ -31,7 +31,8 @@ class VolumeSlider extends React.Component<IProps & IConnectedReduxProps> {
   private handleChangeVolume = () => {
     const { dispatch, videoElement } = this.props;
     const newVolume = Number(this.volumeInput.current!.value) / 100;
-    dispatch(changeVolume(videoElement, newVolume));
+
+    dispatch(requestChangeVolume(videoElement, newVolume));
   };
 
   private volumeToPercents = (volume: number) => {

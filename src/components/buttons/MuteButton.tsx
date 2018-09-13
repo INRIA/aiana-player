@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { toggleMute } from '../../actions/player';
+import { muteVideo, unmuteVideo } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import AssistiveText from '../a11y/AssistiveText';
@@ -19,34 +19,44 @@ interface IProps {
 const StyledVolumeMutedIcon = StyledSvg.withComponent(VolumeMutedIcon);
 const StyledVolumeUnmutedIcon = StyledSvg.withComponent(VolumeUnmutedIcon);
 
+interface IControlIcon {
+  isMuted: boolean;
+}
+
+const ControlIcon: React.SFC<IControlIcon> = ({ isMuted }): JSX.Element => {
+  if (isMuted) {
+    return <StyledVolumeMutedIcon />;
+  }
+
+  return <StyledVolumeUnmutedIcon />;
+};
+
 class MuteButton extends React.Component<
   IProps & IConnectedReduxProps & InjectedTranslateProps & IFocusableProps
 > {
   public render() {
+    const { isMuted } = this.props;
+    const controlText = this.getControlText();
     return (
       <StyledButton
         type="button"
-        aria-label={this.getControlText()}
+        aria-label={controlText}
         onClick={this.clickHandler}
       >
-        {this.getControlIcon()}
-        <AssistiveText>{this.getControlText()}</AssistiveText>
+        <ControlIcon isMuted={isMuted} />
+        <AssistiveText>{controlText}</AssistiveText>
       </StyledButton>
     );
   }
 
   private clickHandler = () => {
-    const { dispatch, videoElement } = this.props;
+    const { dispatch, isMuted, videoElement } = this.props;
 
-    dispatch(toggleMute(videoElement));
-  };
-
-  private getControlIcon = () => {
-    if (this.props.isMuted) {
-      return <StyledVolumeMutedIcon />;
+    if (isMuted) {
+      dispatch(unmuteVideo(videoElement));
+    } else {
+      dispatch(muteVideo(videoElement));
     }
-
-    return <StyledVolumeUnmutedIcon />;
   };
 
   private getControlText = () => {

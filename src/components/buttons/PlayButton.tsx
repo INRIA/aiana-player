@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { pauseVideo, playVideo } from '../../actions/player';
+import { requestVideoPause, requestVideoPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import AssistiveText from '../a11y/AssistiveText';
@@ -41,12 +41,12 @@ class PlayButton extends React.Component<
   private togglePlay = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    const { dispatch, isPlaying, videoElement } = this.props;
+    const { isPlaying, videoElement, dispatch } = this.props;
 
     if (isPlaying && videoElement) {
-      dispatch(pauseVideo(videoElement));
+      dispatch(requestVideoPause(videoElement));
     } else if (!isPlaying && videoElement) {
-      dispatch(playVideo(videoElement));
+      dispatch(requestVideoPlay(videoElement));
     }
   };
 

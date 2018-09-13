@@ -1,34 +1,48 @@
+import { AnyAction } from 'redux';
 import {
   enterFullscreen,
   exitFullscreen,
   isDocumentFullscreen
 } from '../utils/fullscreen';
 
+export const TOGGLE_NATIVE_CONTROLS = 'aiana/TOGGLE_NATIVE_CONTROLS';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
 export const PLAYER_ELEMENT_MOUNTED = 'aiana/PLAYER_ELEMENT_MOUNTED';
 export const VIDEO_ELEMENT_MOUNTED = 'aiana/VIDEO_ELEMENT_MOUNTED';
 export const VIDEO_ELEMENT_UNMOUNTED = 'aiana/VIDEO_ELEMENT_UNMOUNTED';
-export const VIDEO_TOGGLE_MUTE = 'aiana/VIDEO_MUTE';
+export const VIDEO_REQUEST_MUTE = 'aiana/VIDEO_REQUEST_MUTE';
+export const VIDEO_REQUEST_UNMUTE = 'aiana/VIDEO_REQUEST_UNMUTE';
+export const VIDEO_TOGGLE_MUTE = 'aiana/VIDEO_TOGGLE_MUTE';
 export const VIDEO_PLAY = 'aiana/VIDEO_PLAY';
 export const VIDEO_PAUSE = 'aiana/VIDEO_PAUSE';
 export const VIDEO_PLAYBACK_RATE = 'aiana/VIDEO_PLAYBACK_RATE';
-export const VIDEO_VOLUME = 'aiana/VIDEO_VOLUME';
+export const VIDEO_REQUEST_PAUSE = 'aiana/VIDEO_REQUEST_PAUSE';
+export const VIDEO_REQUEST_PLAY = 'aiana/VIDEO_REQUEST_PLAY';
+export const VIDEO_REQUEST_VOLUME_CHANGE = 'aianaREQUEST_VOLUME_CHANGE';
+export const VIDEO_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
 
-export function handleFullscreenChange(isFullscreen: boolean) {
+export function toggleNativeControls(nativeControls: boolean): AnyAction {
+  return {
+    nativeControls,
+    type: TOGGLE_NATIVE_CONTROLS
+  };
+}
+
+export function handleFullscreenChange(isFullscreen: boolean): AnyAction {
   return {
     isFullscreen,
     type: TOGGLE_FULLSCREEN
   };
 }
 
-export function handleToggleFullscreen(fullscreenElement: HTMLElement): any {
+export function handleToggleFullscreen(rootElement: HTMLElement): AnyAction {
   const shouldExitFullscreen = isDocumentFullscreen();
 
   if (shouldExitFullscreen) {
     exitFullscreen();
   } else {
-    enterFullscreen(fullscreenElement);
+    enterFullscreen(rootElement);
   }
 
   return {
@@ -36,47 +50,61 @@ export function handleToggleFullscreen(fullscreenElement: HTMLElement): any {
   };
 }
 
-export function playerElementMounted(playerElement: HTMLElement) {
+export function playerElementMounted(playerElement: HTMLElement): AnyAction {
   return {
     playerElement,
     type: PLAYER_ELEMENT_MOUNTED
   };
 }
 
-export function videoElementMounted(videoElement: HTMLVideoElement) {
+export function videoElementMounted(videoElement: HTMLVideoElement): AnyAction {
   return {
     type: VIDEO_ELEMENT_MOUNTED,
     videoElement
   };
 }
 
-export function videoElementUnounted() {
+export function videoElementUnounted(): AnyAction {
   return {
     type: VIDEO_ELEMENT_UNMOUNTED
   };
 }
 
-export function playVideo(videoElement: HTMLVideoElement) {
-  videoElement.play();
+export function requestVideoPlay(video: HTMLVideoElement): AnyAction {
+  video.play();
 
   return {
+    type: VIDEO_REQUEST_PLAY
+  };
+}
+
+export function playVideo(): AnyAction {
+  return {
+    isPlaying: true,
     type: VIDEO_PLAY
   };
 }
 
-export function pauseVideo(videoElement: HTMLVideoElement) {
-  videoElement.pause();
+export function requestVideoPause(video: HTMLVideoElement): AnyAction {
+  video.pause();
 
   return {
+    type: VIDEO_REQUEST_PAUSE
+  };
+}
+
+export function pauseVideo(): AnyAction {
+  return {
+    isPlaying: false,
     type: VIDEO_PAUSE
   };
 }
 
 export function changePlaybackRate(
-  videoElement: HTMLVideoElement,
+  video: HTMLVideoElement,
   playbackRate: number
-) {
-  videoElement.playbackRate = playbackRate;
+): AnyAction {
+  video.playbackRate = playbackRate;
 
   return {
     playbackRate,
@@ -84,20 +112,44 @@ export function changePlaybackRate(
   };
 }
 
-export function changeVolume(videoElement: HTMLVideoElement, volume: number) {
-  videoElement.volume = volume;
+export function requestChangeVolume(
+  video: HTMLVideoElement,
+  volume: number
+): AnyAction {
+  video.volume = volume;
 
   return {
-    type: VIDEO_VOLUME,
+    type: VIDEO_REQUEST_VOLUME_CHANGE,
     volume
   };
 }
 
-export function toggleMute(videoElement: HTMLVideoElement) {
-  videoElement.muted = !videoElement.muted;
+export function changeVolume(volume: number): AnyAction {
+  return {
+    type: VIDEO_VOLUME_CHANGE,
+    volume
+  };
+}
+
+export function muteVideo(video: HTMLVideoElement): AnyAction {
+  video.muted = true;
 
   return {
-    isMuted: videoElement.muted,
+    type: VIDEO_REQUEST_MUTE
+  };
+}
+
+export function unmuteVideo(video: HTMLVideoElement): AnyAction {
+  video.muted = false;
+
+  return {
+    type: VIDEO_REQUEST_UNMUTE
+  };
+}
+
+export function toggleMute(isMuted: boolean): AnyAction {
+  return {
+    isMuted,
     type: VIDEO_TOGGLE_MUTE
   };
 }
