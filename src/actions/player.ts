@@ -19,7 +19,8 @@ export const VIDEO_PAUSE = 'aiana/VIDEO_PAUSE';
 export const VIDEO_PLAYBACK_RATE = 'aiana/VIDEO_PLAYBACK_RATE';
 export const VIDEO_REQUEST_PAUSE = 'aiana/VIDEO_REQUEST_PAUSE';
 export const VIDEO_REQUEST_PLAY = 'aiana/VIDEO_REQUEST_PLAY';
-export const VIDEO_REQUEST_VOLUME_CHANGE = 'aianaREQUEST_VOLUME_CHANGE';
+export const VIDEO_REQUEST_VOLUME_CHANGE = 'aiana/REQUEST_VOLUME_CHANGE';
+export const VIDEO_UPDATE_DURATION = 'aiana/UPDATE_DURATION';
 export const VIDEO_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
 
 export function toggleNativeControls(nativeControls: boolean): AnyAction {
@@ -151,5 +152,12 @@ export function toggleMute(isMuted: boolean): AnyAction {
   return {
     isMuted,
     type: VIDEO_TOGGLE_MUTE
+  };
+}
+
+export function updateVideoDuration(duration: number): AnyAction {
+  return {
+    duration,
+    type: VIDEO_UPDATE_DURATION
   };
 }

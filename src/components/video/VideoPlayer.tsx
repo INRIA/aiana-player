@@ -5,6 +5,7 @@ import {
   pauseVideo,
   playVideo,
   toggleMute,
+  updateVideoDuration,
   videoElementMounted,
   videoElementUnounted
 } from '../../actions/player';
@@ -35,6 +36,10 @@ class VideoPlayer extends React.PureComponent<
   IVideoProps & IConnectedReduxProps
 > {
   private videoRef = React.createRef<HTMLVideoElement>();
+
+  private get video() {
+    return this.videoRef.current;
+  }
 
   public componentDidMount() {
     const { dispatch, volume, isMuted } = this.props;
@@ -78,7 +83,8 @@ class VideoPlayer extends React.PureComponent<
 
     video.addEventListener('playing', this.playingListener);
     video.addEventListener('pause', this.pauseListener);
-    video.addEventListener('volumechange', this.volumeListener);
+    video.addEventListener('volumechange', this.volumechangeListener);
+    video.addEventListener('loadedmetadata', this.loadedmetadataListener);
   };
 
   private removeListeners = () => {
@@ -88,7 +94,13 @@ class VideoPlayer extends React.PureComponent<
     video.removeEventListener('pause', this.pauseListener);
   };
 
-  private volumeListener = () => {
+  private loadedmetadataListener = () => {
+    const { dispatch } = this.props;
+
+    dispatch(updateVideoDuration(this.video!.duration));
+  };
+
+  private volumechangeListener = () => {
     const video = this.videoRef.current!;
     const { dispatch, isMuted, volume } = this.props;
 
