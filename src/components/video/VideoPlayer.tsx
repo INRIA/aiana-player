@@ -11,6 +11,7 @@ import {
 } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
+import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 
 export interface ISource {
@@ -85,6 +86,7 @@ class VideoPlayer extends React.PureComponent<
     video.addEventListener('pause', this.pauseListener);
     video.addEventListener('volumechange', this.volumechangeListener);
     video.addEventListener('loadedmetadata', this.loadedmetadataListener);
+    video.addEventListener('timeupdate', this.timeupdateListener);
   };
 
   private removeListeners = () => {
@@ -94,6 +96,14 @@ class VideoPlayer extends React.PureComponent<
     video.removeEventListener('pause', this.pauseListener);
     video.removeEventListener('volumechange', this.volumechangeListener);
     video.removeEventListener('loadedmetadata', this.loadedmetadataListener);
+    video.addEventListener('timeupdate', this.timeupdateListener);
+  };
+
+  private timeupdateListener = () => {
+    const { currentTime, duration } = this.video!;
+    const currentPercentage = unitToPercent(currentTime, duration);
+
+    console.log(currentPercentage);
   };
 
   private loadedmetadataListener = () => {
