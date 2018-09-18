@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestVideoPause, requestVideoPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
+import styled from '../../utils/styled-components';
 import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
@@ -25,6 +26,10 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
   return <StyledPlayIcon aria-hidden={true} />;
 };
 
+const StyledPlayButton = styled(StyledButton)`
+  width: 3em;
+`;
+
 interface IProps extends ITransnected {
   isPlaying: boolean;
   videoElement: HTMLVideoElement | null;
@@ -35,14 +40,14 @@ class PlayButton extends React.Component<IProps> {
     const controlText = this.getControlText();
 
     return (
-      <StyledButton
+      <StyledPlayButton
         type="button"
         aria-label={controlText}
         onClick={this.togglePlay}
       >
         <ControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{controlText}</AssistiveText>
-      </StyledButton>
+      </StyledPlayButton>
     );
   }
 
@@ -61,11 +66,7 @@ class PlayButton extends React.Component<IProps> {
   private getControlText = (): string => {
     const { t, isPlaying } = this.props;
 
-    if (isPlaying) {
-      return t('controls.pause');
-    }
-
-    return t('controls.play');
+    return isPlaying ? t('controls.pause') : t('controls.play');
   };
 }
 
