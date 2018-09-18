@@ -1,19 +1,17 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { ITransnected } from '../../utils/types';
 
-interface IProps {
+interface IProps extends ITransnected {
   availablePlaybackRates: number[];
   currentPlaybackRate: number;
-  videoElement: HTMLVideoElement;
+  videoElement: HTMLVideoElement | null;
 }
 
-class PlaybackRateSelector extends React.Component<
-  IProps & InjectedTranslateProps & IConnectedReduxProps
-> {
+class PlaybackRateSelector extends React.Component<IProps> {
   private playbackRateSelect = React.createRef<HTMLSelectElement>();
 
   public render() {
@@ -41,6 +39,9 @@ class PlaybackRateSelector extends React.Component<
 
   private onPlayRateChange = () => {
     const { dispatch, videoElement } = this.props;
+
+    if (!videoElement) { return; }
+
     const playbackRateValue = Number(this.playbackRateSelect.current!.value);
 
     dispatch(changePlaybackRate(videoElement, playbackRateValue));
@@ -50,5 +51,5 @@ class PlaybackRateSelector extends React.Component<
 export default connect((state: IAianaState) => ({
   availablePlaybackRates: state.preferences.availablePlaybackRates,
   currentPlaybackRate: state.player.playbackRate,
-  videoElement: state.player.videoElement!
+  videoElement: state.player.videoElement
 }))(translate()(PlaybackRateSelector));

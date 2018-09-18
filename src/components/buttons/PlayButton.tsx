@@ -1,20 +1,14 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestVideoPause, requestVideoPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import PauseIcon from '../svg/Pause';
 import PlayIcon from '../svg/PlayArrow';
-import { IFocusableProps, injectFocusable } from './focusable';
-
-interface IProps {
-  isPlaying: boolean;
-  videoElement: HTMLVideoElement;
-}
 
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
@@ -31,9 +25,12 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
   return <StyledPlayIcon aria-hidden={true} />;
 };
 
-class PlayButton extends React.Component<
-  IProps & InjectedTranslateProps & IFocusableProps & IConnectedReduxProps
-> {
+interface IProps extends ITransnected {
+  isPlaying: boolean;
+  videoElement: HTMLVideoElement | null;
+}
+
+class PlayButton extends React.Component<IProps> {
   public render() {
     const controlText = this.getControlText();
 
@@ -75,4 +72,4 @@ class PlayButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
   videoElement: state.player.videoElement
-}))(translate()(injectFocusable(PlayButton)));
+}))(translate()(PlayButton));

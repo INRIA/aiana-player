@@ -5,6 +5,8 @@ export default {
   'controls.pause': 'Pause',
   'controls.play': 'Play',
   'controls.unmute': 'Unmute',
+  'controls.volume.label': 'Volume level',
+  'controls.volume.valuetext': '{{ volumePct }}% volume',
   'languages.en': 'English',
   'languages.fr': 'Français',
   'preferences.language.label': 'Choose your language',

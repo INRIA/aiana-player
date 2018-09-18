@@ -1,18 +1,16 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { ITransnected } from '../../utils/types';
 
-interface IProps {
+interface IProps extends ITransnected {
   availableLanguages: string[];
   currentLanguage: string;
 }
 
-class LanguageSelector extends React.Component<
-  IProps & IConnectedReduxProps & InjectedTranslateProps
-> {
+class LanguageSelector extends React.Component<IProps> {
   private languageSelect = React.createRef<HTMLSelectElement>();
 
   public render() {

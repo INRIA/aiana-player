@@ -99,10 +99,12 @@ class VideoPlayer extends React.PureComponent<
     video.addEventListener('timeupdate', this.timeupdateListener);
   };
 
+  /**
+   * @todo
+   */
   private timeupdateListener = () => {
     const { currentTime, duration } = this.video!;
     const currentPercentage = unitToPercent(currentTime, duration);
-
     console.log(currentPercentage);
   };
 

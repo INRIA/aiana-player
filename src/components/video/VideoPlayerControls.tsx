@@ -4,9 +4,8 @@ import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
-import MuteButton from '../buttons/MuteButton';
 import PlayButton from '../buttons/PlayButton';
-import VolumeSlider from '../buttons/VolumeSlider';
+import VolumeControl from '../buttons/VolumeControl';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -30,8 +29,7 @@ const VideoPlayerControls: React.SFC<IProps & IConnectedReduxProps> = ({
   return (
     <StyledDiv className="aip-controls">
       <PlayButton />
-      <MuteButton />
-      <VolumeSlider />
+      <VolumeControl />
       <FullscreenButton />
     </StyledDiv>
   );

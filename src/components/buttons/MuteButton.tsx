@@ -1,20 +1,15 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { muteVideo, unmuteVideo } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import styled from '../../utils/styled-components';
+import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import VolumeUnmutedIcon from '../svg/VolumeFull';
 import VolumeMutedIcon from '../svg/VolumeMuted';
-import { IFocusableProps, injectFocusable } from './focusable';
-
-interface IProps {
-  isMuted: boolean;
-  videoElement: HTMLVideoElement;
-}
 
 const StyledVolumeMutedIcon = StyledSvg.withComponent(VolumeMutedIcon);
 const StyledVolumeUnmutedIcon = StyledSvg.withComponent(VolumeUnmutedIcon);
@@ -31,26 +26,40 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isMuted }): JSX.Element => {
   return <StyledVolumeUnmutedIcon />;
 };
 
-class MuteButton extends React.Component<
-  IProps & IConnectedReduxProps & InjectedTranslateProps & IFocusableProps
-> {
+const StyledMuteButton = styled(StyledButton)`
+  &:hover,
+  &.focus-visible {
+    & ~ .aip-volume {
+      width: 4em;
+    }
+  }
+`;
+
+interface IProps extends ITransnected {
+  isMuted: boolean;
+  videoElement: HTMLVideoElement | null;
+}
+
+class MuteButton extends React.Component<IProps> {
   public render() {
     const controlText = this.getControlText();
 
     return (
-      <StyledButton
+      <StyledMuteButton
         type="button"
         aria-label={controlText}
         onClick={this.clickHandler}
       >
         <ControlIcon isMuted={this.props.isMuted} />
         <AssistiveText>{controlText}</AssistiveText>
-      </StyledButton>
+      </StyledMuteButton>
     );
   }
 
   private clickHandler = () => {
     const { dispatch, isMuted, videoElement } = this.props;
+
+    if (!videoElement) { return; }
 
     if (isMuted) {
       dispatch(unmuteVideo(videoElement));
@@ -69,4 +78,4 @@ class MuteButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isMuted: state.player.isMuted,
   videoElement: state.player.videoElement
-}))(translate()(injectFocusable(MuteButton)));
+}))(translate()(MuteButton));

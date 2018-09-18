@@ -1,20 +1,14 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { handleToggleFullscreen } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
 import FullscreenIcon from '../svg/Fullscreen';
 import FullscreenExitIcon from '../svg/FullscreenExit';
-import { IFocusableProps, injectFocusable } from './focusable';
-
-interface IProps {
-  isFullscreen: boolean;
-  playerElement: HTMLElement;
-}
 
 const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
 const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);
@@ -31,9 +25,12 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
   return <StyledFullscreenIcon aria-hidden={true} />;
 };
 
-class FullscreenButton extends React.Component<
-  IProps & IFocusableProps & IConnectedReduxProps & InjectedTranslateProps
-> {
+interface IProps extends ITransnected {
+  isFullscreen: boolean;
+  playerElement: HTMLElement | null;
+}
+
+class FullscreenButton extends React.Component<IProps> {
   public render() {
     const controlText = this.getControlText();
 
@@ -54,7 +51,9 @@ class FullscreenButton extends React.Component<
 
     const { dispatch, playerElement } = this.props;
 
-    dispatch(handleToggleFullscreen(playerElement));
+    if (playerElement) {
+      dispatch(handleToggleFullscreen(playerElement));
+    }
   };
 
   private getControlText = (): string => {
@@ -71,4 +70,4 @@ class FullscreenButton extends React.Component<
 export default connect((state: IAianaState) => ({
   isFullscreen: state.player.isFullscreen,
   playerElement: state.player.playerElement
-}))(translate()(injectFocusable(FullscreenButton)));
+}))(translate()(FullscreenButton));

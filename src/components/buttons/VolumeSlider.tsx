@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
 import {
@@ -10,21 +11,20 @@ import {
   VOLUME_MINIMUM
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
-import { injectFocusable } from './focusable';
-
-export interface IVolumeSliderProps {
-  videoElement: HTMLVideoElement;
-  volume: number;
-}
+import { ITransnected } from '../../utils/types';
 
 const StyledDiv = styled.div`
   display: inline-block;
-  width: 4em;
+  width: 0em;
   height: 100%;
   cursor: pointer;
+
+  &.focus-visible,
+  &:hover {
+    width: 4em;
+  }
 
   .aip-volume-slider {
     height: 100%;
@@ -64,21 +64,23 @@ const StyledDiv = styled.div`
   }
 `;
 
-class VolumeSlider extends React.Component<
-  IVolumeSliderProps & IConnectedReduxProps
-> {
+export interface IVolumeSliderProps extends ITransnected {
+  videoElement: HTMLVideoElement | null;
+  volume: number;
+}
+
+class VolumeSlider extends React.Component<IVolumeSliderProps> {
   public sliderPosition = 0;
   public sliderWidth = 0;
-
   public sliderRef = React.createRef<HTMLDivElement>();
 
-  public get slider() {
-    return this.sliderRef.current;
-  }
-
   public render() {
-    const { volume } = this.props;
-    const volumePercents = 100 * volume;
+    const { t } = this.props;
+    const volumePercents = 100 * this.props.volume;
+
+    // element width is 4em, and we must ensure the handle will not go to far
+    // on the edges. The button width being 1em, it should be able to move on
+    // 75% of the element width;
     const position = 0.75 * volumePercents;
 
     return (
@@ -86,11 +88,13 @@ class VolumeSlider extends React.Component<
         className="aip-volume"
         role="slider"
         tabIndex={0}
-        aria-label="Volume level"
+        aria-label={t('controls.volume.label')}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={volumePercents}
-        aria-valuetext="TODO valeur courante"
+        aria-valuetext={t('controls.volume.valuetext', {
+          volumePct: volumePercents
+        })}
         onKeyDown={this.keyDownHandler}
       >
         <div
@@ -111,6 +115,8 @@ class VolumeSlider extends React.Component<
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const { dispatch, videoElement, volume } = this.props;
+
+    if (!videoElement) { return; }
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
@@ -136,7 +142,7 @@ class VolumeSlider extends React.Component<
     evt.preventDefault();
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    const { left, width } = this.slider!.getBoundingClientRect();
+    const { left, width } = this.sliderRef.current!.getBoundingClientRect();
 
     this.sliderPosition = left;
     this.sliderWidth = width;
@@ -163,6 +169,9 @@ class VolumeSlider extends React.Component<
     sliderWidth: number
   ) => {
     const { dispatch, videoElement, volume } = this.props;
+
+    if (!videoElement) { return; }
+
     const positionDifference = this.safePositionDifference(
       mouseX,
       sliderX,
@@ -221,4 +230,4 @@ class VolumeSlider extends React.Component<
 export default connect((state: IAianaState) => ({
   videoElement: state.player.videoElement,
   volume: state.player.volume
-}))(injectFocusable(VolumeSlider));
+}))(translate()(VolumeSlider));
