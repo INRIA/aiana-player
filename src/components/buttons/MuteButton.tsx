@@ -27,11 +27,8 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isMuted }): JSX.Element => {
 };
 
 const StyledMuteButton = styled(StyledButton)`
-  &:hover,
-  &.focus-visible {
-    & ~ .aip-volume {
-      width: 4em;
-    }
+  &:hover ~ .aip-volume {
+    width: 4em;
   }
 `;
 

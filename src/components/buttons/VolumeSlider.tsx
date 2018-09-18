@@ -20,11 +20,13 @@ const StyledDiv = styled.div`
   width: 0em;
   height: 100%;
   cursor: pointer;
+  transition: width 0.2s ease-in;
 
   &.focus-visible,
   &:focus,
   &:hover {
     width: 4em;
+    transition: width 0.2s cubic-bezier(0, 0, 0.2, 1);
   }
 
   .aip-volume-slider {
