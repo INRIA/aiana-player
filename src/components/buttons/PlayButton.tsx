@@ -19,12 +19,23 @@ interface IProps {
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);
 
+interface IControlIcon {
+  isPlaying: boolean;
+}
+
+const ControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
+  if (isPlaying) {
+    return <StyledPauseIcon aria-hidden={true} />;
+  }
+
+  return <StyledPlayIcon aria-hidden={true} />;
+};
+
 class PlayButton extends React.Component<
   IProps & InjectedTranslateProps & IFocusableProps & IConnectedReduxProps
 > {
   public render() {
     const controlText = this.getControlText();
-    const controlIcon = this.getControlIcon();
 
     return (
       <StyledButton
@@ -32,14 +43,14 @@ class PlayButton extends React.Component<
         aria-label={controlText}
         onClick={this.togglePlay}
       >
-        {controlIcon}
+        <ControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{controlText}</AssistiveText>
       </StyledButton>
     );
   }
 
-  private togglePlay = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  private togglePlay = (evt: React.MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
 
     const { isPlaying, videoElement, dispatch } = this.props;
 
@@ -58,16 +69,6 @@ class PlayButton extends React.Component<
     }
 
     return t('controls.play');
-  };
-
-  private getControlIcon = (): JSX.Element => {
-    const { isPlaying } = this.props;
-
-    if (isPlaying) {
-      return <StyledPauseIcon aria-hidden={true} />;
-    }
-
-    return <StyledPlayIcon aria-hidden={true} />;
   };
 }
 

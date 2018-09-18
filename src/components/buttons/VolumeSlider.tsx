@@ -5,7 +5,9 @@ import {
   END_KEY_CODE,
   HOME_KEY_CODE,
   LEFT_ARROW_KEY_CODE,
-  RIGHT_ARROW_KEY_CODE
+  RIGHT_ARROW_KEY_CODE,
+  VOLUME_MAXIMUM,
+  VOLUME_MINIMUM
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
@@ -113,18 +115,12 @@ class VolumeSlider extends React.Component<
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
         dispatch(
-          requestChangeVolume(
-            videoElement,
-            this.computeVolumeInRange(volume + 0.1)
-          )
+          requestChangeVolume(videoElement, this.safeVolume(volume + 0.1))
         );
         break;
       case LEFT_ARROW_KEY_CODE:
         dispatch(
-          requestChangeVolume(
-            videoElement,
-            this.computeVolumeInRange(volume - 0.1)
-          )
+          requestChangeVolume(videoElement, this.safeVolume(volume - 0.1))
         );
         break;
       case HOME_KEY_CODE:
@@ -146,7 +142,7 @@ class VolumeSlider extends React.Component<
     this.sliderWidth = width;
 
     // trigger first recomputation to simulate simple click.
-    this.diffPosition(this.sliderWidth, this.sliderPosition, evt.pageX);
+    this.diffPosition(evt.pageX, this.sliderPosition, this.sliderWidth);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
@@ -158,39 +154,64 @@ class VolumeSlider extends React.Component<
   };
 
   private mouseMoveHandler = (evt: MouseEvent) => {
-    this.diffPosition(this.sliderWidth, this.sliderPosition, evt.pageX);
+    this.diffPosition(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
   private diffPosition = (
-    sliderWidth: number,
+    mouseX: number,
     sliderX: number,
-    mouseX: number
+    sliderWidth: number
   ) => {
     const { dispatch, videoElement, volume } = this.props;
-    const recordedDifference = mouseX - sliderX;
-    let positionDifference;
-
-    if (recordedDifference < 0) {
-      positionDifference = 0;
-    } else if (recordedDifference > this.sliderWidth) {
-      positionDifference = this.sliderWidth;
-    } else {
-      positionDifference = recordedDifference;
-    }
-
+    const positionDifference = this.safePositionDifference(
+      mouseX,
+      sliderX,
+      sliderWidth
+    );
     const newVolume = unitToPercent(positionDifference, sliderWidth) / 100;
+
     if (newVolume !== volume) {
       dispatch(requestChangeVolume(videoElement, newVolume));
     }
   };
 
-  private computeVolumeInRange(inputVolume: number) {
+  /**
+   * Calculates a position relatively to an element, bound to the element
+   * position and width. It cannot be a negative value nor be greater than
+   * the element width.
+   *
+   * @param inputX Recorded value of the pointer
+   * @param elementX x axis position of the reference element
+   * @param elementWidth width of the reference element
+   */
+  private safePositionDifference(
+    inputX: number,
+    elementX: number,
+    elementWidth: number
+  ): number {
+    const relativeX = inputX - elementX;
+
+    if (relativeX < 0) {
+      return 0;
+    } else if (relativeX > elementWidth) {
+      return elementWidth;
+    }
+
+    return relativeX;
+  }
+
+  /**
+   * Ensures volume always has a valid value (between 0 and 1).
+   *
+   * @param inputVolume The unsafe wanted value for the volume
+   */
+  private safeVolume(inputVolume: number): number {
     let outputVolume = inputVolume;
 
-    if (inputVolume < 0) {
-      outputVolume = 0;
-    } else if (inputVolume > 1) {
-      outputVolume = 1;
+    if (inputVolume < VOLUME_MINIMUM) {
+      outputVolume = VOLUME_MINIMUM;
+    } else if (inputVolume > VOLUME_MAXIMUM) {
+      outputVolume = VOLUME_MAXIMUM;
     }
 
     return outputVolume;

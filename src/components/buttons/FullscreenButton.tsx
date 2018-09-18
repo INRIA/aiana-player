@@ -19,12 +19,23 @@ interface IProps {
 const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
 const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);
 
+interface IControlIcon {
+  isFullscreen: boolean;
+}
+
+const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
+  if (isFullscreen) {
+    return <StyledFullscreenExitIcon aria-hidden={true} />;
+  }
+
+  return <StyledFullscreenIcon aria-hidden={true} />;
+};
+
 class FullscreenButton extends React.Component<
   IProps & IFocusableProps & IConnectedReduxProps & InjectedTranslateProps
 > {
   public render() {
     const controlText = this.getControlText();
-    const controlIcon = this.getControlIcon();
 
     return (
       <StyledButton
@@ -32,14 +43,14 @@ class FullscreenButton extends React.Component<
         aria-label={controlText}
         onClick={this.toggleFullscreen}
       >
-        {controlIcon}
+        <ControlIcon isFullscreen={this.props.isFullscreen} />
         <AssistiveText>{controlText}</AssistiveText>
       </StyledButton>
     );
   }
 
-  private toggleFullscreen = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  private toggleFullscreen = (evt: React.MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
 
     const { dispatch, playerElement } = this.props;
 
@@ -54,16 +65,6 @@ class FullscreenButton extends React.Component<
     }
 
     return t('controls.fullscreen.enter');
-  };
-
-  private getControlIcon = (): JSX.Element => {
-    const { isFullscreen } = this.props;
-
-    if (isFullscreen) {
-      return <StyledFullscreenExitIcon aria-hidden={true} />;
-    }
-
-    return <StyledFullscreenIcon aria-hidden={true} />;
   };
 }
 

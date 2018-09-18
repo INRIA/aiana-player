@@ -35,15 +35,15 @@ class MuteButton extends React.Component<
   IProps & IConnectedReduxProps & InjectedTranslateProps & IFocusableProps
 > {
   public render() {
-    const { isMuted } = this.props;
     const controlText = this.getControlText();
+
     return (
       <StyledButton
         type="button"
         aria-label={controlText}
         onClick={this.clickHandler}
       >
-        <ControlIcon isMuted={isMuted} />
+        <ControlIcon isMuted={this.props.isMuted} />
         <AssistiveText>{controlText}</AssistiveText>
       </StyledButton>
     );
@@ -62,11 +62,7 @@ class MuteButton extends React.Component<
   private getControlText = () => {
     const { t, isMuted } = this.props;
 
-    if (isMuted) {
-      return t('controls.unmute');
-    }
-
-    return t('controls.mute');
+    return isMuted ? t('controls.unmute') : t('controls.mute');
   };
 }
 
