@@ -22,6 +22,7 @@ const StyledDiv = styled.div`
   cursor: pointer;
 
   &.focus-visible,
+  &:focus,
   &:hover {
     width: 4em;
   }
@@ -70,6 +71,7 @@ export interface IVolumeSliderProps extends ITransnected {
 }
 
 class VolumeSlider extends React.Component<IVolumeSliderProps> {
+  public elementRef = React.createRef<HTMLDivElement>();
   public sliderPosition = 0;
   public sliderWidth = 0;
   public sliderRef = React.createRef<HTMLDivElement>();
@@ -86,6 +88,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     return (
       <StyledDiv
         className="aip-volume"
+        innerRef={this.elementRef}
         role="slider"
         tabIndex={0}
         aria-label={t('controls.volume.label')}
@@ -116,7 +119,9 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const { dispatch, videoElement, volume } = this.props;
 
-    if (!videoElement) { return; }
+    if (!videoElement) {
+      return;
+    }
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
@@ -140,6 +145,11 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
   private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
+
+    // Force focus when element in being interacted with a pointer device.
+    // This triggers `:focus` state and prevents from hiding it from the user.
+    this.elementRef.current!.focus();
+
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
     const { left, width } = this.sliderRef.current!.getBoundingClientRect();
@@ -148,29 +158,32 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     this.sliderWidth = width;
 
     // trigger first recomputation to simulate simple click.
-    this.diffPosition(evt.pageX, this.sliderPosition, this.sliderWidth);
+    this.updateVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
   };
 
   private mouseUpHandler = () => {
+    this.elementRef.current!.blur();
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
 
   private mouseMoveHandler = (evt: MouseEvent) => {
-    this.diffPosition(evt.pageX, this.sliderPosition, this.sliderWidth);
+    this.updateVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
-  private diffPosition = (
+  private updateVolume = (
     mouseX: number,
     sliderX: number,
     sliderWidth: number
   ) => {
     const { dispatch, videoElement, volume } = this.props;
 
-    if (!videoElement) { return; }
+    if (!videoElement) {
+      return;
+    }
 
     const positionDifference = this.safePositionDifference(
       mouseX,

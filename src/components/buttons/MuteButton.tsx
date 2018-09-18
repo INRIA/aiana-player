@@ -59,7 +59,9 @@ class MuteButton extends React.Component<IProps> {
   private clickHandler = () => {
     const { dispatch, isMuted, videoElement } = this.props;
 
-    if (!videoElement) { return; }
+    if (!videoElement) {
+      return;
+    }
 
     if (isMuted) {
       dispatch(unmuteVideo(videoElement));
