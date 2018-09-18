@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
+import {
+  END_KEY_CODE,
+  HOME_KEY_CODE,
+  LEFT_ARROW_KEY_CODE,
+  RIGHT_ARROW_KEY_CODE
+} from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import { unitToPercent } from '../../utils/math';
@@ -105,7 +111,7 @@ class VolumeSlider extends React.Component<
     const { dispatch, videoElement, volume } = this.props;
 
     switch (evt.keyCode) {
-      case 39:
+      case RIGHT_ARROW_KEY_CODE:
         dispatch(
           requestChangeVolume(
             videoElement,
@@ -113,13 +119,19 @@ class VolumeSlider extends React.Component<
           )
         );
         break;
-      case 37:
+      case LEFT_ARROW_KEY_CODE:
         dispatch(
           requestChangeVolume(
             videoElement,
             this.computeVolumeInRange(volume - 0.1)
           )
         );
+        break;
+      case HOME_KEY_CODE:
+        dispatch(requestChangeVolume(videoElement, 0));
+        break;
+      case END_KEY_CODE:
+        dispatch(requestChangeVolume(videoElement, 1));
         break;
     }
   };
