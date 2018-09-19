@@ -11,6 +11,7 @@ import {
   VIDEO_REQUEST_VOLUME_CHANGE,
   VIDEO_TOGGLE_MUTE,
   VIDEO_UPDATE_DURATION,
+  VIDEO_UPDATE_TIME,
   VIDEO_VOLUME_CHANGE
 } from '../actions/player';
 import { ISource } from '../components/video/VideoPlayer';
@@ -22,18 +23,22 @@ import {
 
 export interface IPlayerState {
   autoPlay: boolean;
-  /**
-   * Duration of the video expressed in seconds.
-   */
+
+  /** The current position of the player, expressed in seconds */
+  currentTime: number;
+
+  /** Duration of the video expressed in seconds. */
   duration: number;
   isFullscreen: boolean;
   isMuted: boolean;
   isPlaying: boolean;
+
   /**
    * Determines if the video HTML element should use its own controls or those
    * provided by Aiana
    */
   nativeControls: boolean;
+
   /**
    * The current rate of speed for the media resource to play. This speed is
    * expressed as a multiple of the normal speed of the media resource.
@@ -42,6 +47,7 @@ export interface IPlayerState {
   playerElement: HTMLElement | null;
   sources: ISource[];
   videoElement: HTMLVideoElement | null;
+
   /**
    * Volume level for audio portions of the media element.
    * It varies from 0 to 1.
@@ -51,6 +57,7 @@ export interface IPlayerState {
 
 const initialState: IPlayerState = {
   autoPlay: false,
+  currentTime: 0,
   duration: 0,
   isFullscreen: false,
   isMuted: false,
@@ -122,6 +129,13 @@ const player: Reducer = (state = initialState, action) => {
       return {
         ...state,
         duration: action.duration
+      };
+    case VIDEO_UPDATE_TIME:
+      const roundedTime = Math.round(action.currentTime);
+
+      return {
+        ...state,
+        currentTime: roundedTime
       };
     default:
       return state;

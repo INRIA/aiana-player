@@ -22,6 +22,14 @@ export const VIDEO_REQUEST_PLAY = 'aiana/VIDEO_REQUEST_PLAY';
 export const VIDEO_REQUEST_VOLUME_CHANGE = 'aiana/REQUEST_VOLUME_CHANGE';
 export const VIDEO_UPDATE_DURATION = 'aiana/UPDATE_DURATION';
 export const VIDEO_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
+export const VIDEO_UPDATE_TIME = 'aiana/UPDATE_TIME';
+
+export function updateCurrentTime(currentTime: number): AnyAction {
+  return {
+    currentTime,
+    type: VIDEO_UPDATE_TIME
+  };
+}
 
 export function toggleNativeControls(nativeControls: boolean): AnyAction {
   return {
