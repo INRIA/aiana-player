@@ -22,6 +22,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "storybook": "start-storybook -p 9001 -c .storybook",
+    "doc": "typedoc --out docs --name 'Aiana Player' --target ES5 --exclude *.test.* src/**",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "devDependencies": {
@@ -57,6 +58,7 @@
   },
   "optionalDependencies": {
     "@svgr/cli": "^2.2.0",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "typedoc": "^0.12.0"
   }
 }
