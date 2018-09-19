@@ -67,7 +67,8 @@ const initialState: IPlayerState = {
   playerElement: null,
   sources: [
     {
-      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',
+      // src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',
+      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/A5rUA1tS5cqu/SD.mp4',
       type: 'video/mp4'
     }
   ],
@@ -131,11 +132,9 @@ const player: Reducer = (state = initialState, action) => {
         duration: action.duration
       };
     case VIDEO_UPDATE_TIME:
-      const roundedTime = Math.round(action.currentTime);
-
       return {
         ...state,
-        currentTime: roundedTime
+        currentTime: action.currentTime
       };
     default:
       return state;

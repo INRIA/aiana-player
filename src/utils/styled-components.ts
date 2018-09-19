@@ -4,6 +4,7 @@ import { ThemedStyledComponentsModule } from 'styled-components';
 export interface ITheme {
   fg: string;
   bg: string;
+  main: string;
 }
 
 const {

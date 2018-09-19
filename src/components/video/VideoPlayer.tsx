@@ -103,33 +103,15 @@ class VideoPlayer extends React.PureComponent<
    * @todo
    */
   private timeupdateListener = () => {
-    const { currentTime, dispatch } = this.props;
+    const { dispatch } = this.props;
     const currentPercentage = unitToPercent(
       this.video.currentTime,
       this.video.duration
     );
     console.log(currentPercentage);
 
-    if (this.shouldDispatchTimeUpdate(this.video.currentTime, currentTime)) {
-      dispatch(updateCurrentTime(this.video.currentTime));
-    }
+    dispatch(updateCurrentTime(this.video.currentTime));
   };
-
-  /**
-   * Defines the update time dispatch policy. It is mainly used to throttle
-   * dispatch and avoid unnecessary access to the store.
-   *
-   * @param realTime The video current time.
-   * @param storedTime Time in the application store.
-   */
-  private shouldDispatchTimeUpdate(
-    realTime: number,
-    storedTime: number
-  ): boolean {
-    const { round } = Math;
-
-    return round(realTime) !== round(storedTime);
-  }
 
   private loadedmetadataListener = () => {
     const { dispatch } = this.props;

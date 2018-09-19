@@ -4,6 +4,8 @@ export default {
   'controls.mute': 'Désactiver le son',
   'controls.pause': 'Mettre en pause',
   'controls.play': 'Lire',
+  'controls.seekbar.label': 'Position de la tête de lecture',
+  'controls.seekbar.valuetext': '{{ currentTime }} sur {{ duration }}',
   'controls.unmute': 'Activer le son',
   'controls.volume.label': 'Volume sonore',
   'controls.volume.valuetext': 'Volume à {{ volumePct }}%',
