@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from '../utils/styled-components';
-import SeekBarSlider from './buttons/SeekBarSlider';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 
@@ -16,7 +15,6 @@ const StyledDiv = styled.div`
 const Player: React.SFC = () => (
   <StyledDiv className="aip-player">
     <VideoPlayer />
-    <SeekBarSlider />
     <VideoPlayerControls />
   </StyledDiv>
 );
