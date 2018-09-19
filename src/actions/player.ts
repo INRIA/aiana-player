@@ -23,6 +23,19 @@ export const VIDEO_REQUEST_VOLUME_CHANGE = 'aiana/REQUEST_VOLUME_CHANGE';
 export const VIDEO_UPDATE_DURATION = 'aiana/UPDATE_DURATION';
 export const VIDEO_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
 export const VIDEO_UPDATE_TIME = 'aiana/UPDATE_TIME';
+export const VIDEO_REQUEST_SEEK = 'aiana/VIDEO_REQUEST_SEEK';
+
+export function requestSeek(
+  video: HTMLVideoElement,
+  currentTime: number
+): AnyAction {
+  video.currentTime = currentTime;
+
+  return {
+    currentTime,
+    type: VIDEO_REQUEST_SEEK
+  };
+}
 
 export function updateCurrentTime(currentTime: number): AnyAction {
   return {
