@@ -5,7 +5,7 @@ export function secondsToHMS(time: number, separator = ':'): string {
   const seconds = floor((time % 3600) % 60);
 
   const formattedHours = formatHours(hours);
-  const displayMinutes = leadingZero(minutes);
+  const displayMinutes = formatMinutes(minutes, hours);
   const displaySeconds = leadingZero(seconds);
 
   return `${
@@ -14,16 +14,28 @@ export function secondsToHMS(time: number, separator = ':'): string {
 }
 
 export function formatHours(hours: number): string | null {
+  if (hours < 0) {
+    throw new Error('Non negative value expected.');
+  }
+
   if (hours === 0) {
     return null;
   }
 
-  return leadingZero(hours);
+  return `${hours}`;
+}
+
+export function formatMinutes(minutes: number, hours: number) {
+  if (hours > 0) {
+    return leadingZero(minutes);
+  }
+
+  return `${minutes}`;
 }
 
 export function leadingZero(num: number): string {
   if (num < 0) {
-    throw new Error(`Cannot format negative value (${num} given)`);
+    throw new Error('Non negative value expected.');
   } else if (num < 10) {
     return `0${num}`;
   }
