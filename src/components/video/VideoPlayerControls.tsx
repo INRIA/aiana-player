@@ -6,6 +6,7 @@ import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
 import PlayButton from '../buttons/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';
+import TimeStatus from '../TimeStatus';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -33,6 +34,7 @@ const VideoPlayerControls: React.SFC<IProps & IConnectedReduxProps> = ({
       <div className="aip-controls-left">
         <PlayButton />
         <VolumeControl />
+        <TimeStatus />
       </div>
       <div className="aip-controls-right">
         <FullscreenButton />
