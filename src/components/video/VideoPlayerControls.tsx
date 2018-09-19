@@ -12,6 +12,8 @@ const StyledDiv = styled.div`
   bottom: 0;
   width: 100%;
   height: 2.25em;
+  display: flex;
+  justify-content: space-between;
   background-color: ${(props) => props.theme.bg};
 `;
 
@@ -28,9 +30,13 @@ const VideoPlayerControls: React.SFC<IProps & IConnectedReduxProps> = ({
 
   return (
     <StyledDiv className="aip-controls">
-      <PlayButton />
-      <VolumeControl />
-      <FullscreenButton />
+      <div className="aip-controls-left">
+        <PlayButton />
+        <VolumeControl />
+      </div>
+      <div className="aip-controls-right">
+        <FullscreenButton />
+      </div>
     </StyledDiv>
   );
 };
