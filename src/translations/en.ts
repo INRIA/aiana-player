@@ -15,5 +15,22 @@ export default {
   'preferences.language.title': 'Language',
   'preferences.native_controls': 'Use player native controls',
   'preferences.playbackrate.label': 'Speed',
-  'preferences.title': 'Preferences'
+  'preferences.title': 'Preferences',
+  'time.duration.h': '$t(time.hours, { "count": {{ hours }} })',
+  'time.duration.hm':
+    '$t(time.hours, { "count": {{ hours }} }) and $t(time.minutes, { "count": {{ minutes }} })',
+  'time.duration.hms':
+    '$t(time.hours, { "count": {{ hours }} }), $t(time.duration.ms, { "minutes": {{ minutes }}, { "seconds": {{ seconds }} })',
+  'time.duration.hs':
+    '$t(time.hours, { "count": {{ hours }} }) and $t(time.seconds, { "count": {{ seconds }} })',
+  'time.duration.m': '$t(time.minutes, { "count": {{ minutes }} })',
+  'time.duration.ms':
+    '$t(time.minutes, { "count": {{ minutes }} }) and $t(time.seconds, { "count": {{ seconds }} })',
+  'time.duration.s': '$t(time.seconds, { "count": {{ seconds }} })',
+  'time.hours': '{{ count }} hour',
+  'time.hours_plural': '{{ count }} hours',
+  'time.minutes': '{{ count }} minute',
+  'time.minutes_plural': '{{ count }} minutes',
+  'time.seconds': '{{ count }} second',
+  'time.seconds_plural': '{{ count }} seconds'
 };

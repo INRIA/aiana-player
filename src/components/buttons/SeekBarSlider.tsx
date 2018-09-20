@@ -11,6 +11,7 @@ import {
 import { IAianaState } from '../../reducers/index';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
+import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { ITransnected } from '../../utils/types';
 
 const { round } = Math;
@@ -64,10 +65,10 @@ class SeekBarSlider extends React.Component<IProps> {
           aria-valuemin={0}
           aria-valuemax={roundedDuration}
           aria-valuenow={roundedCurrentTime}
-          aria-valuetext={t('controls.seekbar.valuetext', {
-            currentTime: roundedCurrentTime,
-            duration: roundedDuration
-          })}
+          aria-valuetext={this.getAriaValueText(
+            roundedCurrentTime,
+            roundedDuration
+          )}
           tabIndex={0}
           onKeyDown={this.keyDownHandler}
         >
@@ -81,6 +82,21 @@ class SeekBarSlider extends React.Component<IProps> {
       </StyledDiv>
     );
   }
+
+  public getAriaValueText = (currentTime: number, duration: number): string => {
+    const { t } = this.props;
+
+    return t('controls.seekbar.valuetext', {
+      currentTime: t(
+        durationTranslationKey(currentTime),
+        secondsToHMSObject(currentTime)
+      ),
+      duration: t(
+        durationTranslationKey(duration),
+        secondsToHMSObject(duration)
+      )
+    });
+  };
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const {

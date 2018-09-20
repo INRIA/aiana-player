@@ -13,5 +13,19 @@ export default {
   'preferences.language.title': 'Langue',
   'preferences.native_controls': 'Utiliser les contrôles natifs du lecteur',
   'preferences.playbackrate.label': 'Vitesse',
-  'preferences.title': 'Préférences'
+  'preferences.title': 'Préférences',
+  'time.duration.hm':
+    '$t(time.hours, { "count": {{ hours }} }) et $t(time.minutes, { "count": {{ minutes }} })',
+  'time.duration.hms':
+    '$t(time.hours, { "count": {{ hours }} }), $t(time.duration.ms, { "minutes": {{ minutes }}, "seconds": {{ seconds }} })',
+  'time.duration.hs':
+    '$t(time.hours, { "count": {{ hours }} }) et $t(time.seconds, { "count": {{ seconds }} })',
+  'time.duration.ms':
+    '$t(time.minutes, { "count": {{ minutes }} }) et $t(time.seconds, { "count": {{ seconds }} })',
+  'time.hours': '{{ count }} heure',
+  'time.hours_plural': '{{ count }} heures',
+  'time.minutes': '{{ count }} minute',
+  'time.minutes_plural': '{{ count }} minutes',
+  'time.seconds': '{{ count }} seconde',
+  'time.seconds_plural': '{{ count }} secondes'
 };

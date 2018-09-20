@@ -1,10 +1,70 @@
-import { formatHours, formatMinutes, leadingZero, secondsToHMS } from './time';
+import {
+  I18N_DURATION_HOURS_KEY,
+  I18N_DURATION_HOURS_MINUTES_KEY,
+  I18N_DURATION_HOURS_MINUTES_SECONDS_KEY,
+  I18N_DURATION_HOURS_SECONDS_KEY,
+  I18N_DURATION_MINUTES_KEY,
+  I18N_DURATION_MINUTES_SECONDS_KEY,
+  I18N_DURATION_SECONDS_KEY
+} from '../constants';
+import {
+  durationTranslationKey,
+  formatHours,
+  formatMinutes,
+  leadingZero,
+  secondsToHMS,
+  secondsToHMSObject
+} from './time';
+
+describe('find translation key for a given time duration', () => {
+  test('should format as hours', () => {
+    expect(durationTranslationKey(3600)).toBe(I18N_DURATION_HOURS_KEY);
+    expect(durationTranslationKey(7200)).toBe(I18N_DURATION_HOURS_KEY);
+    expect(durationTranslationKey(36000)).toBe(I18N_DURATION_HOURS_KEY);
+  });
+
+  test('should format as minutes', () => {
+    expect(durationTranslationKey(60)).toBe(I18N_DURATION_MINUTES_KEY);
+    expect(durationTranslationKey(120)).toBe(I18N_DURATION_MINUTES_KEY);
+  });
+
+  test('should format as seconds', () => {
+    expect(durationTranslationKey(0)).toBe(I18N_DURATION_SECONDS_KEY);
+    expect(durationTranslationKey(1)).toBe(I18N_DURATION_SECONDS_KEY);
+    expect(durationTranslationKey(2)).toBe(I18N_DURATION_SECONDS_KEY);
+  });
+
+  test('should format as hours and minutes and seconds', () => {
+    expect(durationTranslationKey(3661)).toBe(
+      I18N_DURATION_HOURS_MINUTES_SECONDS_KEY
+    );
+    expect(durationTranslationKey(7322)).toBe(
+      I18N_DURATION_HOURS_MINUTES_SECONDS_KEY
+    );
+  });
+
+  test('should format as hours and minutes', () => {
+    expect(durationTranslationKey(3660)).toBe(I18N_DURATION_HOURS_MINUTES_KEY);
+    expect(durationTranslationKey(7320)).toBe(I18N_DURATION_HOURS_MINUTES_KEY);
+  });
+
+  test('should format as hours and seconds', () => {
+    expect(durationTranslationKey(3601)).toBe(I18N_DURATION_HOURS_SECONDS_KEY);
+    expect(durationTranslationKey(7202)).toBe(I18N_DURATION_HOURS_SECONDS_KEY);
+  });
+
+  test('should format as minutes and seconds', () => {
+    expect(durationTranslationKey(61)).toBe(I18N_DURATION_MINUTES_SECONDS_KEY);
+    expect(durationTranslationKey(122)).toBe(I18N_DURATION_MINUTES_SECONDS_KEY);
+  });
+});
 
 describe('leading zero', () => {
   test('with valid values', () => {
     expect(leadingZero(0)).toBe('00');
     expect(leadingZero(4)).toBe('04');
     expect(leadingZero(23)).toBe('23');
+    expect(leadingZero(1234)).toBe('1234');
   });
 
   test('negative value throws an error', () => {
@@ -35,6 +95,28 @@ describe('minutes formatting', () => {
     expect(formatMinutes(0, 1)).toBe('00');
     expect(formatMinutes(10, 0)).toBe('10');
     expect(formatMinutes(10, 1)).toBe('10');
+  });
+});
+
+describe('HMS representation of seconds', () => {
+  test('with valid values', () => {
+    expect(secondsToHMSObject(0)).toEqual({ hours: 0, minutes: 0, seconds: 0 });
+    expect(secondsToHMSObject(1)).toEqual({ hours: 0, minutes: 0, seconds: 1 });
+    expect(secondsToHMSObject(60)).toEqual({
+      hours: 0,
+      minutes: 1,
+      seconds: 0
+    });
+    expect(secondsToHMSObject(3600)).toEqual({
+      hours: 1,
+      minutes: 0,
+      seconds: 0
+    });
+    expect(secondsToHMSObject(864671)).toEqual({
+      hours: 240,
+      minutes: 11,
+      seconds: 11
+    });
   });
 });
 

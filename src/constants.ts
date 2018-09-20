@@ -6,7 +6,7 @@ export const LEFT_ARROW_KEY_CODE = 37;
 export const HOME_KEY_CODE = 36;
 export const END_KEY_CODE = 35;
 
-export const DEFAULT_LANG = 'fr';
+export const DEFAULT_LANG = 'en';
 export const DEFAULT_NATIVE_CONTROLS = false;
 export const DEFAULT_PLAY_RATE = 1.0;
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
@@ -23,3 +23,11 @@ export const AVAILABLE_PLAYBACK_RATES = [
   1.75,
   2
 ];
+
+export const I18N_DURATION_HOURS_MINUTES_SECONDS_KEY = 'time.duration.hms';
+export const I18N_DURATION_HOURS_MINUTES_KEY = 'time.duration.hm';
+export const I18N_DURATION_HOURS_SECONDS_KEY = 'time.duration.hs';
+export const I18N_DURATION_HOURS_KEY = 'time.duration.h';
+export const I18N_DURATION_MINUTES_SECONDS_KEY = 'time.duration.ms';
+export const I18N_DURATION_MINUTES_KEY = 'time.duration.m';
+export const I18N_DURATION_SECONDS_KEY = 'time.duration.s';
