@@ -45,6 +45,7 @@ export interface IPlayerState {
    */
   playbackRate: number;
   playerElement: HTMLElement | null;
+  preload: string;
   sources: ISource[];
   videoElement: HTMLVideoElement | null;
 
@@ -65,6 +66,7 @@ const initialState: IPlayerState = {
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
+  preload: 'auto',
   sources: [
     {
       // src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',

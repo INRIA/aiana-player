@@ -25,6 +25,7 @@ interface IVideoProps {
   currentTime: number;
   isMuted: boolean;
   nativeControls: boolean;
+  preload: string;
   sources: ISource[];
   volume: number;
 }
@@ -59,7 +60,7 @@ class VideoPlayer extends React.PureComponent<
   }
 
   public render() {
-    const { autoPlay, nativeControls, sources } = this.props;
+    const { autoPlay, nativeControls, preload, sources } = this.props;
 
     return (
       <StyledVideo
@@ -67,6 +68,7 @@ class VideoPlayer extends React.PureComponent<
         className="aip-video"
         autoPlay={autoPlay}
         controls={nativeControls}
+        preload={preload}
         onLoadedMetadata={this.loadedmetadataHandler}
         onPause={this.pauseHandler}
         onPlay={this.playHandler}
@@ -129,6 +131,7 @@ export default connect((state: IAianaState) => ({
   currentTime: state.player.currentTime,
   isMuted: state.player.isMuted,
   nativeControls: state.player.nativeControls,
+  preload: state.player.preload,
   sources: state.player.sources,
   volume: state.player.volume
 }))(VideoPlayer);
