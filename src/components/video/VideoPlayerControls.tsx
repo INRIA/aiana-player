@@ -9,14 +9,19 @@ import SeekBarSlider from '../buttons/SeekBarSlider';
 import VolumeControl from '../buttons/VolumeControl';
 import TimeStatus from '../TimeStatus';
 
-const StyledDiv = styled.div`
+const StyledControlsWrapper = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.25em;
+  height: 3.75em;
+  padding: 0.5em 1em 0;
+  background-color: ${(props) => props.theme.bg};
+`;
+
+const StyledControls = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.bg};
+  height: 2.25em;
 `;
 
 interface IProps {
@@ -31,17 +36,19 @@ const VideoPlayerControls: React.SFC<IProps & IConnectedReduxProps> = ({
   }
 
   return (
-    <StyledDiv className="aip-controls">
+    <StyledControlsWrapper>
       <SeekBarSlider />
-      <div className="aip-controls-left">
-        <PlayButton />
-        <VolumeControl />
-        <TimeStatus />
-      </div>
-      <div className="aip-controls-right">
-        <FullscreenButton />
-      </div>
-    </StyledDiv>
+      <StyledControls className="aip-controls">
+        <div className="aip-controls-left">
+          <PlayButton />
+          <VolumeControl />
+          <TimeStatus />
+        </div>
+        <div className="aip-controls-right">
+          <FullscreenButton />
+        </div>
+      </StyledControls>
+    </StyledControlsWrapper>
   );
 };
 

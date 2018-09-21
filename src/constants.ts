@@ -10,7 +10,7 @@ export const DEFAULT_LANG = 'en';
 export const DEFAULT_NATIVE_CONTROLS = false;
 export const DEFAULT_PLAY_RATE = 1.0;
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
-export const DEFAULT_SEEK_STEP = 10;
+export const DEFAULT_SEEK_STEP = 5;
 
 export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 export const AVAILABLE_PLAYBACK_RATES = [

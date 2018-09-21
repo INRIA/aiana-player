@@ -14,6 +14,7 @@ import { IAianaState } from '../../reducers/index';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 import { ITransnected } from '../../utils/types';
+import { bounded } from '../../utils/ui';
 
 const StyledDiv = styled.div`
   display: inline-block;
@@ -187,11 +188,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
       return;
     }
 
-    const positionDifference = this.safePositionDifference(
-      mouseX,
-      sliderX,
-      sliderWidth
-    );
+    const positionDifference = bounded(mouseX, sliderX, sliderWidth);
     const newVolume = unitToPercent(positionDifference, sliderWidth) / 100;
 
     if (newVolume !== volume) {
@@ -200,45 +197,12 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   };
 
   /**
-   * Calculates a position relatively to an element, bound to the element
-   * position and width. It cannot be a negative value nor be greater than
-   * the element width.
-   *
-   * @param inputX Recorded value of the pointer
-   * @param elementX x axis position of the reference element
-   * @param elementWidth width of the reference element
-   */
-  private safePositionDifference(
-    inputX: number,
-    elementX: number,
-    elementWidth: number
-  ): number {
-    const relativeX = inputX - elementX;
-
-    if (relativeX < 0) {
-      return 0;
-    } else if (relativeX > elementWidth) {
-      return elementWidth;
-    }
-
-    return relativeX;
-  }
-
-  /**
    * Ensures volume always has a valid value (between 0 and 1).
    *
    * @param inputVolume The unsafe wanted value for the volume
    */
   private safeVolume(inputVolume: number): number {
-    let outputVolume = inputVolume;
-
-    if (inputVolume < VOLUME_MINIMUM) {
-      outputVolume = VOLUME_MINIMUM;
-    } else if (inputVolume > VOLUME_MAXIMUM) {
-      outputVolume = VOLUME_MAXIMUM;
-    }
-
-    return outputVolume;
+    return bounded(inputVolume, VOLUME_MINIMUM, VOLUME_MAXIMUM);
   }
 }
 
