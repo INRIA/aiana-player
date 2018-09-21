@@ -8,6 +8,10 @@ export function unitToPercent(currentValue: number, unitTotal: number): number {
     throw new Error('currentValue should be positive');
   }
 
+  if (currentValue === 0 || unitTotal === 0) {
+    return 0;
+  }
+
   return (currentValue * 100) / unitTotal;
 }
 

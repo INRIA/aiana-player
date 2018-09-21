@@ -9,6 +9,10 @@ describe('convert unit to percentages', () => {
     expect(unitToPercent(25, unitTotal)).toBe(100);
   });
 
+  test('should accept 0 unit total', () => {
+    expect(unitToPercent(0, 0)).toBe(0);
+  });
+
   test('negative value throws an error', () => {
     expect(() => {
       unitToPercent(-10, unitTotal);
