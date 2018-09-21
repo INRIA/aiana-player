@@ -5,8 +5,8 @@ import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
 import PlayButton from '../buttons/PlayButton';
-import SeekBarSlider from '../buttons/SeekBarSlider';
 import VolumeControl from '../buttons/VolumeControl';
+import SeekBarSlider from '../seekbar/SeekBarSlider';
 import TimeStatus from '../TimeStatus';
 
 const StyledControlsWrapper = styled.div`

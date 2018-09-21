@@ -10,64 +10,12 @@ import {
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { unitToPercent } from '../../utils/math';
-import styled from '../../utils/styled-components';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { ITransnected } from '../../utils/types';
 import { bounded } from '../../utils/ui';
+import StyledDiv from './Styles';
 
 const { round } = Math;
-
-const StyledDiv = styled.div`
-  display: block;
-  position: relative;
-  height: 0.375em;
-  width: 100%;
-  cursor: pointer;
-
-  .aip-progress-slider {
-    height: 1em;
-    width: 100%;
-    cursor: pointer;
-  }
-
-  .aip-seekbar {
-    height: 0.375em;
-    width: 100%;
-    position: absolute;
-    top: calc(50% - 0.1875em);
-    background-color: hsla(0, 0%, 100%, 0.3);
-  }
-
-  .aip-seekbar-expander {
-    position: absolute;
-    top: -2em;
-    width: 100%;
-    height: 2em;
-  }
-
-  .aip-play-progress {
-    height: 0.375em;
-    width: 100%;
-    position: absolute:
-    top: calc(50% - 0.1875em);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.1s cubic-bezier(0.4, 0, 1, 1);
-    background-color: ${(props) => props.theme.main};
-    pointer-events: none;
-  }
-
-  .aip-progress-slider-handle {
-    position: absolute;
-    top: calc(50% - 0.5em);
-    left: 0;
-    height: 1em;
-    width: 1em;
-    border-radius: 0.5em;
-    background-color: ${(props) => props.theme.main};
-    pointer-events: none;
-  }
-`;
 
 interface IProps extends ITransnected {
   currentTime: number;
@@ -163,8 +111,10 @@ class SeekBarSlider extends React.Component<IProps> {
     document.addEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseUpHandler = () => {
+  private mouseUpHandler = (evt: MouseEvent) => {
     this.sliderRef.current!.blur();
+    this.updateCurrentTime(evt.pageX, this.sliderPosition, this.sliderWidth);
+
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
@@ -185,8 +135,9 @@ class SeekBarSlider extends React.Component<IProps> {
     }
 
     const positionDifference = bounded(mouseX, sliderX, sliderWidth);
-    const newCurrentTime =
-      (duration * unitToPercent(positionDifference, sliderWidth)) / 100;
+    const newCurrentTime = round(
+      (duration * unitToPercent(positionDifference, sliderWidth)) / 100
+    );
 
     if (newCurrentTime !== currentTime) {
       dispatch(requestSeek(videoElement, newCurrentTime));

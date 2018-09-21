@@ -52,12 +52,9 @@ class VideoPlayer extends React.PureComponent<
     video.muted = isMuted;
 
     dispatch(videoElementMounted(video));
-
-    this.addListeners();
   }
 
   public componentWillUnmount() {
-    this.removeListeners();
     this.props.dispatch(videoElementUnounted());
   }
 
@@ -70,6 +67,11 @@ class VideoPlayer extends React.PureComponent<
         className="aip-video"
         autoPlay={autoPlay}
         controls={nativeControls}
+        onLoadedMetadata={this.loadedmetadataHandler}
+        onPause={this.pauseHandler}
+        onPlay={this.playHandler}
+        onTimeUpdate={this.timeupdateHandler}
+        onVolumeChange={this.volumechangeHandler}
       >
         {sources &&
           sources.map(({ src, type }: ISource, index) => (
@@ -79,30 +81,10 @@ class VideoPlayer extends React.PureComponent<
     );
   }
 
-  private addListeners = () => {
-    const { video } = this;
-
-    video.addEventListener('playing', this.playingListener);
-    video.addEventListener('pause', this.pauseListener);
-    video.addEventListener('volumechange', this.volumechangeListener);
-    video.addEventListener('loadedmetadata', this.loadedmetadataListener);
-    video.addEventListener('timeupdate', this.timeupdateListener);
-  };
-
-  private removeListeners = () => {
-    const { video } = this;
-
-    video.removeEventListener('playing', this.playingListener);
-    video.removeEventListener('pause', this.pauseListener);
-    video.removeEventListener('volumechange', this.volumechangeListener);
-    video.removeEventListener('loadedmetadata', this.loadedmetadataListener);
-    video.removeEventListener('timeupdate', this.timeupdateListener);
-  };
-
   /**
    * @todo
    */
-  private timeupdateListener = () => {
+  private timeupdateHandler = () => {
     const { dispatch } = this.props;
     const currentPercentage = unitToPercent(
       this.video.currentTime,
@@ -113,13 +95,13 @@ class VideoPlayer extends React.PureComponent<
     dispatch(updateCurrentTime(this.video.currentTime));
   };
 
-  private loadedmetadataListener = () => {
+  private loadedmetadataHandler = () => {
     const { dispatch } = this.props;
 
     dispatch(updateVideoDuration(this.video.duration));
   };
 
-  private volumechangeListener = () => {
+  private volumechangeHandler = () => {
     const video = this.videoRef.current!;
     const { dispatch, isMuted, volume } = this.props;
 
@@ -133,11 +115,11 @@ class VideoPlayer extends React.PureComponent<
     }
   };
 
-  private playingListener = () => {
+  private playHandler = () => {
     this.props.dispatch(playVideo());
   };
 
-  private pauseListener = () => {
+  private pauseHandler = () => {
     this.props.dispatch(pauseVideo());
   };
 }
