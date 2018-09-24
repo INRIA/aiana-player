@@ -24,6 +24,21 @@ export const VIDEO_UPDATE_DURATION = 'aiana/UPDATE_DURATION';
 export const VIDEO_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
 export const VIDEO_UPDATE_TIME = 'aiana/UPDATE_TIME';
 export const VIDEO_REQUEST_SEEK = 'aiana/VIDEO_REQUEST_SEEK';
+export const VIDEO_SEEK_TOGGLE = 'aiana/VIDEO_SEEK_TOGGLE';
+
+export function startSeeking(): AnyAction {
+  return {
+    isSeeking: true,
+    type: VIDEO_SEEK_TOGGLE
+  };
+}
+
+export function stopSeeking(): AnyAction {
+  return {
+    isSeeking: false,
+    type: VIDEO_SEEK_TOGGLE
+  };
+}
 
 export function requestSeek(
   video: HTMLVideoElement,

@@ -4,6 +4,8 @@ import {
   changeVolume,
   pauseVideo,
   playVideo,
+  startSeeking,
+  stopSeeking,
   toggleMute,
   updateCurrentTime,
   updateVideoDuration,
@@ -20,7 +22,13 @@ export interface ISource {
   src: string;
 }
 
-interface IVideoProps {
+const StyledVideo = styled.video`
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+`;
+
+export interface IVideoProps {
   autoPlay: boolean;
   currentTime: number;
   isMuted: boolean;
@@ -30,20 +38,13 @@ interface IVideoProps {
   volume: number;
 }
 
-const StyledVideo = styled.video`
-  width: 100%;
-  max-width: 100%;
-  max-height: 100%;
-`;
-
 class VideoPlayer extends React.PureComponent<
   IVideoProps & IConnectedReduxProps
 > {
-  private videoRef = React.createRef<HTMLVideoElement>();
-
   private get video() {
     return this.videoRef.current!;
   }
+  private videoRef = React.createRef<HTMLVideoElement>();
 
   public componentDidMount() {
     const { dispatch, volume, isMuted } = this.props;
@@ -69,11 +70,13 @@ class VideoPlayer extends React.PureComponent<
         autoPlay={autoPlay}
         controls={nativeControls}
         preload={preload}
-        onLoadedMetadata={this.loadedmetadataHandler}
+        onLoadedMetadata={this.loadedMetadataHandler}
         onPause={this.pauseHandler}
         onPlay={this.playHandler}
-        onTimeUpdate={this.timeupdateHandler}
-        onVolumeChange={this.volumechangeHandler}
+        onTimeUpdate={this.timeUpdateHandler}
+        onVolumeChange={this.volumeChangeHandler}
+        onSeeked={this.seekedHandler}
+        onSeeking={this.seekingHandler}
       >
         {sources &&
           sources.map(({ src, type }: ISource, index) => (
@@ -83,10 +86,18 @@ class VideoPlayer extends React.PureComponent<
     );
   }
 
+  private seekedHandler = () => {
+    this.props.dispatch(stopSeeking());
+  };
+
+  private seekingHandler = () => {
+    this.props.dispatch(startSeeking());
+  };
+
   /**
    * @todo
    */
-  private timeupdateHandler = () => {
+  private timeUpdateHandler = () => {
     const { dispatch } = this.props;
     const currentPercentage = unitToPercent(
       this.video.currentTime,
@@ -97,13 +108,13 @@ class VideoPlayer extends React.PureComponent<
     dispatch(updateCurrentTime(this.video.currentTime));
   };
 
-  private loadedmetadataHandler = () => {
+  private loadedMetadataHandler = () => {
     const { dispatch } = this.props;
 
     dispatch(updateVideoDuration(this.video.duration));
   };
 
-  private volumechangeHandler = () => {
+  private volumeChangeHandler = () => {
     const video = this.videoRef.current!;
     const { dispatch, isMuted, volume } = this.props;
 

@@ -9,6 +9,7 @@ import {
   VIDEO_PLAY,
   VIDEO_PLAYBACK_RATE,
   VIDEO_REQUEST_VOLUME_CHANGE,
+  VIDEO_SEEK_TOGGLE,
   VIDEO_TOGGLE_MUTE,
   VIDEO_UPDATE_DURATION,
   VIDEO_UPDATE_TIME,
@@ -32,6 +33,8 @@ export interface IPlayerState {
   isFullscreen: boolean;
   isMuted: boolean;
   isPlaying: boolean;
+
+  isSeeking: boolean;
 
   /**
    * Determines if the video HTML element should use its own controls or those
@@ -63,6 +66,7 @@ const initialState: IPlayerState = {
   isFullscreen: false,
   isMuted: false,
   isPlaying: false,
+  isSeeking: false,
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
@@ -137,6 +141,11 @@ const player: Reducer = (state = initialState, action) => {
       return {
         ...state,
         currentTime: action.currentTime
+      };
+    case VIDEO_SEEK_TOGGLE:
+      return {
+        ...state,
+        isSeeking: action.isSeeking
       };
     default:
       return state;

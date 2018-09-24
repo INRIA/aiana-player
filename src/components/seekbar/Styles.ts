@@ -11,6 +11,12 @@ const StyledDiv = styled.div`
     height: 1em;
     width: 100%;
     cursor: pointer;
+
+    &.no-transition {
+      .aip-play-progress {
+        transition: none;
+      }
+    }
   }
 
   .aip-seekbar {
@@ -31,17 +37,13 @@ const StyledDiv = styled.div`
   .aip-play-progress {
     height: 0.375em;
     width: 100%;
-    position: absolute:
+    position: absolute;
     top: calc(50% - 0.1875em);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.1s cubic-bezier(0.4, 0, 1, 1);
     background-color: ${(props) => props.theme.main};
     pointer-events: none;
-
-    &.no-transition {
-      transition: none;
-    }
   }
 
   .aip-progress-slider-handle {

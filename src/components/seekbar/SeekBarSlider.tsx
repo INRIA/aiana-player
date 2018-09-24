@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -20,26 +21,52 @@ const { round } = Math;
 interface IProps extends ITransnected {
   currentTime: number;
   duration: number;
+  isSeeking: boolean;
   seekStep: number;
   videoElement: HTMLVideoElement | null;
 }
 
-class SeekBarSlider extends React.Component<IProps> {
+interface IState {
+  readonly seekingTime: number;
+}
+
+class SeekBarSlider extends React.Component<IProps, IState> {
+  public state: Readonly<IState> = {
+    seekingTime: 0
+  };
+
   public sliderRef = React.createRef<HTMLDivElement>();
-  public sliderPosition = 0;
-  public sliderWidth = 0;
+  public sliderPosition: number = 0;
+  public sliderWidth: number = 0;
 
   public render() {
-    const { currentTime, duration, t } = this.props;
-    const progressPct = unitToPercent(currentTime, duration);
+    const { currentTime, duration, isSeeking, t, videoElement } = this.props;
+
+    if (!videoElement) {
+      return null;
+    }
+
+    // If the slider is being used, its registered position should override
+    // the `currentTime`. However, once video has seeked (which does not mean
+    // enough data was loaded yet) and if the slider is not being used, its
+    // position should be the `currentTime`.
+    const { seekingTime } = this.state;
+    const sliderTime = isSeeking ? seekingTime : currentTime;
+
+    const progressPct = unitToPercent(sliderTime, duration);
     const roundedDuration = round(duration);
-    const roundedCurrentTime = round(currentTime);
+    const roundedCurrentTime = round(sliderTime);
+
+    const sliderClasses = classNames({
+      'aip-progress-slider': true,
+      'no-transition': isSeeking
+    });
 
     return (
       <StyledDiv className="aip-progress">
         <div
           ref={this.sliderRef}
-          className="aip-progress-slider"
+          className={sliderClasses}
           role="slider"
           aria-label={t('controls.seekbar.label')}
           aria-valuemin={0}
@@ -90,8 +117,39 @@ class SeekBarSlider extends React.Component<IProps> {
     });
   };
 
+  /**
+   * Unload events bound to `document` to prevent memory leaks.
+   */
+  public componentWillUnmount() {
+    document.removeEventListener('mousemove', this.mouseMoveHandler, true);
+    document.removeEventListener('mouseup', this.mouseUpHandler, true);
+  }
+
+  private calculateSeekingTime = (
+    mouseX: number,
+    sliderX: number,
+    sliderWidth: number,
+    duration: number
+  ) => {
+    const positionDifference = bounded(mouseX, sliderX, sliderWidth);
+    const newCurrentTime = round(
+      (duration * unitToPercent(positionDifference, this.sliderWidth)) / 100
+    );
+
+    return newCurrentTime;
+  };
+
   private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
+
+    this.setState({
+      seekingTime: this.calculateSeekingTime(
+        evt.pageX,
+        this.sliderPosition,
+        this.sliderWidth,
+        this.props.duration
+      )
+    });
 
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
@@ -120,6 +178,14 @@ class SeekBarSlider extends React.Component<IProps> {
   };
 
   private mouseMoveHandler = (evt: MouseEvent) => {
+    this.setState({
+      seekingTime: this.calculateSeekingTime(
+        evt.pageX,
+        this.sliderPosition,
+        this.sliderWidth,
+        this.props.duration
+      )
+    });
     this.updateCurrentTime(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
@@ -185,6 +251,7 @@ class SeekBarSlider extends React.Component<IProps> {
 export default connect((state: IAianaState) => ({
   currentTime: state.player.currentTime,
   duration: state.player.duration,
+  isSeeking: state.player.isSeeking,
   seekStep: state.preferences.seekStep,
   videoElement: state.player.videoElement
 }))(translate()(SeekBarSlider));
