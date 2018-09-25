@@ -24,6 +24,11 @@ const StyledDiv = styled.div`
   cursor: pointer;
   transition: width 0.2s ease-in;
 
+  &[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 2px ${(props) => props.theme.focus};
+    outline: none;
+  }
+
   &.focus-visible,
   &:focus,
   &:hover {

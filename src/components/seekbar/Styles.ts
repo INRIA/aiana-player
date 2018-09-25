@@ -3,7 +3,7 @@ import styled from '../../utils/styled-components';
 
 const StyledDiv = styled.div`
   display: block;
-  height: 1em;
+  height: 0.375em;
   width: 100%;
   cursor: pointer;
 
@@ -14,10 +14,15 @@ const StyledDiv = styled.div`
   }
 
   .aip-progress-slider {
-    height: 1em;
+    height: 0.375em;
     width: 100%;
     position: relative;
     cursor: pointer;
+
+    &[data-focus-visible-added] {
+      box-shadow: 0 0 0 2px ${(props) => props.theme.focus};
+      outline: none;
+    }
   }
 
   .aip-seekbar {
