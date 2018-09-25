@@ -1,8 +1,10 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import {
+  DEFAULT_SEEK_STEP_MULTIPLIER,
   END_KEY_CODE,
   HOME_KEY_CODE,
   LEFT_ARROW_KEY_CODE,
@@ -56,8 +58,13 @@ class SeekBarSlider extends React.Component<IProps, IState> {
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
+    const wrapperClassNames = classNames({
+      'aip-progress': true,
+      'no-transition': isSeeking
+    });
+
     return (
-      <StyledDiv className="aip-progress">
+      <StyledDiv className={wrapperClassNames}>
         <div
           ref={this.sliderRef}
           className="aip-progress-slider"
@@ -79,7 +86,7 @@ class SeekBarSlider extends React.Component<IProps, IState> {
           </div>
 
           <div
-            className="aip-play-progress"
+            className={`aip-play-progress ${isSeeking ? 'no-transition' : ''}`}
             style={{
               transform: `scaleX(${progressPct / 100})`
             }}
@@ -223,17 +230,19 @@ class SeekBarSlider extends React.Component<IProps, IState> {
     // To do so, `seekingTime` should be used when the video is still seeking,
     // or the video `currentTime` when it is not seeking.
     let nextTime: number;
+
     const { seekingTime } = this.state;
     const sliderTime = isSeeking ? seekingTime : currentTime;
+    const weightedSeekStep = this.weightedSeekStep(seekStep, evt.shiftKey);
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
-        nextTime = this.safeTime(sliderTime + seekStep);
+        nextTime = this.safeTime(sliderTime + weightedSeekStep);
         this.setState({ seekingTime: nextTime });
         dispatch(requestSeek(videoElement, nextTime));
         break;
       case LEFT_ARROW_KEY_CODE:
-        nextTime = this.safeTime(sliderTime - seekStep);
+        nextTime = this.safeTime(sliderTime - weightedSeekStep);
         this.setState({ seekingTime: nextTime });
         dispatch(requestSeek(videoElement, nextTime));
         break;
@@ -247,6 +256,14 @@ class SeekBarSlider extends React.Component<IProps, IState> {
         break;
     }
   };
+
+  private weightedSeekStep(seekStep: number, multiply: boolean): number {
+    if (multiply) {
+      return DEFAULT_SEEK_STEP_MULTIPLIER * seekStep;
+    }
+
+    return seekStep;
+  }
 
   private safeTime(seekTime: number): number {
     return bounded(seekTime, 0, this.props.duration);
