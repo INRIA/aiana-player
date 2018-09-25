@@ -11,12 +11,6 @@ const StyledDiv = styled.div`
     width: 100%;
     position: relative;
     cursor: pointer;
-
-    &.no-transition {
-      .aip-play-progress {
-        transition: none;
-      }
-    }
   }
 
   .aip-seekbar {

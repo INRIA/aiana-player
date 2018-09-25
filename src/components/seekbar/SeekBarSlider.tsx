@@ -1,4 +1,3 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -57,16 +56,11 @@ class SeekBarSlider extends React.Component<IProps, IState> {
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
-    const sliderClasses = classNames({
-      'aip-progress-slider': true,
-      'no-transition': isSeeking
-    });
-
     return (
       <StyledDiv className="aip-progress">
         <div
           ref={this.sliderRef}
-          className={sliderClasses}
+          className="aip-progress-slider"
           role="slider"
           aria-label={t('controls.seekbar.label')}
           aria-valuemin={0}
@@ -215,6 +209,7 @@ class SeekBarSlider extends React.Component<IProps, IState> {
       currentTime,
       dispatch,
       duration,
+      isSeeking,
       seekStep,
       videoElement
     } = this.props;
@@ -223,21 +218,31 @@ class SeekBarSlider extends React.Component<IProps, IState> {
       return;
     }
 
+    // User should be able to trigger this event multiple times before
+    // the video `seeked` event is fired.
+    // To do so, `seekingTime` should be used when the video is still seeking,
+    // or the video `currentTime` when it is not seeking.
+    let nextTime: number;
+    const { seekingTime } = this.state;
+    const sliderTime = isSeeking ? seekingTime : currentTime;
+
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
-        dispatch(
-          requestSeek(videoElement, this.safeTime(currentTime + seekStep))
-        );
+        nextTime = this.safeTime(sliderTime + seekStep);
+        this.setState({ seekingTime: nextTime });
+        dispatch(requestSeek(videoElement, nextTime));
         break;
       case LEFT_ARROW_KEY_CODE:
-        dispatch(
-          requestSeek(videoElement, this.safeTime(currentTime - seekStep))
-        );
+        nextTime = this.safeTime(sliderTime - seekStep);
+        this.setState({ seekingTime: nextTime });
+        dispatch(requestSeek(videoElement, nextTime));
         break;
       case HOME_KEY_CODE:
+        this.setState({ seekingTime: 0 });
         dispatch(requestSeek(videoElement, 0));
         break;
       case END_KEY_CODE:
+        this.setState({ seekingTime: duration });
         dispatch(requestSeek(videoElement, duration));
         break;
     }
