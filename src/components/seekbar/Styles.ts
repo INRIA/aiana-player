@@ -1,3 +1,4 @@
+import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 
 const StyledDiv = styled.div`
@@ -24,7 +25,7 @@ const StyledDiv = styled.div`
     width: 100%;
     position: absolute;
     top: calc(50% - 0.1875em);
-    background-color: hsla(0, 0%, 100%, 0.3);
+    background-color: ${(props) => hexToHsla(props.theme.fg, 0.3)};
   }
 
   .aip-seekbar-expander {

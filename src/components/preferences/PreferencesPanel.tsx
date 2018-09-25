@@ -4,6 +4,7 @@ import styled from '../../utils/styled-components';
 import NativeControlsSwitch from '../buttons/NativeControlsSwitch';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
+import ThemeSelector from './ThemeSelector';
 
 const StyledPanel = styled.div`
   background-color: white;
@@ -19,6 +20,7 @@ const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
     <LanguageSelector />
     <PlaybackRateSelector />
     <NativeControlsSwitch />
+    <ThemeSelector />
   </StyledPanel>
 );
 

@@ -13,6 +13,7 @@ export default {
   'preferences.language.title': 'Langue',
   'preferences.native_controls': 'Utiliser les contrôles natifs du lecteur',
   'preferences.playbackrate.label': 'Vitesse',
+  'preferences.theme-selector.label': 'Thème',
   'preferences.title': 'Préférences',
   'time.duration.hm':
     '$t(time.hours, { "count": {{ hours }} }) et $t(time.minutes, { "count": {{ minutes }} })',

@@ -12,6 +12,7 @@ export const DEFAULT_PLAY_RATE = 1.0;
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_SEEK_STEP = 5;
 export const DEFAULT_SEEK_STEP_MULTIPLIER = 2;
+export const DEFAULT_THEME = 'inria';
 
 export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 export const AVAILABLE_PLAYBACK_RATES = [
@@ -24,6 +25,7 @@ export const AVAILABLE_PLAYBACK_RATES = [
   1.75,
   2
 ];
+export const AVAILABLE_THEMES = ['inria', 'contrasted', 'inverted'];
 
 export const I18N_DURATION_HOURS_MINUTES_SECONDS_KEY = 'time.duration.hms';
 export const I18N_DURATION_HOURS_MINUTES_KEY = 'time.duration.hm';

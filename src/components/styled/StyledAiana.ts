@@ -21,7 +21,7 @@ const StyledAiana = styled.div`
   }
 
   *[data-focus-visible-added] {
-    box-shadow: inset 0 0 0 2px #3b70bd;
+    box-shadow: inset 0 0 0 2px ${(props) => props.theme.focus};
     outline: none;
   }
 `;

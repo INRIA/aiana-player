@@ -11,6 +11,7 @@ import {
   VOLUME_MINIMUM
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
+import { hexToHsla } from '../../utils/colors';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 import { ITransnected } from '../../utils/types';
@@ -43,7 +44,7 @@ const StyledDiv = styled.div`
     top: calc(50% - 0.5em);
     height: 1em;
     width: 1em;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.fg};
     border-radius: 0.5em;
 
     &:before,
@@ -57,12 +58,12 @@ const StyledDiv = styled.div`
     }
 
     &:before {
-      background-color: #fff;
+      background-color: ${(props) => props.theme.fg};
       right: 0.5em;
     }
 
     &:after {
-      background-color: hsla(0, 0%, 100%, 0.23);
+      background-color: ${(props) => hexToHsla(props.theme.fg, 0.3)};
       left: 0.5em;
     }
   }

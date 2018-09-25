@@ -5,6 +5,7 @@ import {
   handleFullscreenChange,
   playerElementMounted
 } from '../../actions/player';
+import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store';
 import themes from '../../themes';
 import { isDocumentFullscreen } from '../../utils/fullscreen';
@@ -15,9 +16,12 @@ import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
 import IntlWrapper from './IntlWrapper';
 
-const { inria } = themes;
+interface IAiana extends IConnectedReduxProps {
+  availableThemes: string[];
+  currentTheme: string;
+}
 
-class Aiana extends React.Component<IConnectedReduxProps> {
+class Aiana extends React.Component<IAiana> {
   private fullscreenRef = React.createRef<HTMLElement>();
 
   constructor(props: any) {
@@ -41,9 +45,11 @@ class Aiana extends React.Component<IConnectedReduxProps> {
   }
 
   public render() {
+    const currentTheme = themes[this.props.currentTheme];
+
     return (
       <IntlWrapper>
-        <ThemeProvider theme={inria}>
+        <ThemeProvider theme={currentTheme}>
           <StyledAiana className="aip-app" innerRef={this.fullscreenRef}>
             <Player />
             <PreferencesPanel />
@@ -77,4 +83,6 @@ class Aiana extends React.Component<IConnectedReduxProps> {
   };
 }
 
-export default connect()(Aiana);
+export default connect((state: IAianaState) => ({
+  currentTheme: state.preferences.currentTheme
+}))(Aiana);
