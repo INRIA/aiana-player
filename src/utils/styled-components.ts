@@ -1,7 +1,7 @@
 import * as styledComponents from 'styled-components';
 import { ThemedStyledComponentsModule } from 'styled-components';
 
-export interface ITheme {
+export interface IAianaTheme {
   fg: string;
   bg: string;
   main: string;
@@ -13,7 +13,7 @@ const {
   injectGlobal,
   keyframes,
   ThemeProvider
-} = styledComponents as ThemedStyledComponentsModule<ITheme>;
+} = styledComponents as ThemedStyledComponentsModule<IAianaTheme>;
 
 export { css, injectGlobal, keyframes, ThemeProvider };
 export default styled;

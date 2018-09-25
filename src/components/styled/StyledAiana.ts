@@ -15,6 +15,15 @@ const StyledAiana = styled.div`
   *::after {
     box-sizing: border-box;
   }
+
+  *:focus:not([data-focus-visible-added]) {
+    outline: none;
+  }
+
+  *[data-focus-visible-added] {
+    box-shadow: inset 0 0 0 2px #3b70bd;
+    outline: none;
+  }
 `;
 
 export default StyledAiana;
