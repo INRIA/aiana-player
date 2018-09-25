@@ -2,14 +2,14 @@ import styled from '../../utils/styled-components';
 
 const StyledDiv = styled.div`
   display: block;
-  position: relative;
-  height: 0.375em;
+  height: 1em;
   width: 100%;
   cursor: pointer;
 
   .aip-progress-slider {
     height: 1em;
     width: 100%;
+    position: relative;
     cursor: pointer;
 
     &.no-transition {
