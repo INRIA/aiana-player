@@ -5,6 +5,7 @@ export interface IAianaTheme {
   fg: string;
   bg: string;
   main: string;
+  focus: string;
 }
 
 const {

@@ -1,6 +1,6 @@
-import { ITheme } from '../utils/styled-components';
+import { IAianaTheme } from '../utils/styled-components';
 
-const theme: ITheme = {
+const theme: IAianaTheme = {
   bg: '#fff',
   fg: '#000',
   main: '#999'
