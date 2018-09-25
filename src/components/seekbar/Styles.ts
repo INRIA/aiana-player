@@ -6,6 +6,12 @@ const StyledDiv = styled.div`
   width: 100%;
   cursor: pointer;
 
+  &.no-transition {
+    .aip-play-progress {
+      transition: none;
+    }
+  }
+
   .aip-progress-slider {
     height: 1em;
     width: 100%;
