@@ -3,7 +3,7 @@ import styled from '../../utils/styled-components';
 const StyledAiana = styled.div`
   display: block;
   width: 800px;
-  /* height: 450px; */
+  height: calc(450px + 3.75em);
   box-sizing: border-box;
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};

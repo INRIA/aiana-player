@@ -16,6 +16,7 @@ import {
   VIDEO_VOLUME_CHANGE
 } from '../actions/player';
 import { ISource } from '../components/video/VideoPlayer';
+import { ITrack } from '../components/video/VideoTrack';
 import {
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
@@ -24,6 +25,8 @@ import {
 
 export interface IPlayerState {
   autoPlay: boolean;
+
+  tracks: ITrack[];
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -73,9 +76,14 @@ const initialState: IPlayerState = {
   preload: 'auto',
   sources: [
     {
-      // src: 'https://d381hmu4snvm3e.cloudfront.net/videos/w0z9Ik6mMj83/SD.mp4',
-      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/A5rUA1tS5cqu/SD.mp4',
+      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
       type: 'video/mp4'
+    }
+  ],
+  tracks: [
+    {
+      isDefault: true,
+      src: 'http://localhost:3000/dev/subtitles.vtt'
     }
   ],
   videoElement: null,

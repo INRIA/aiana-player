@@ -16,6 +16,7 @@ import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
+import VideoTrack, { ITrack } from './VideoTrack';
 
 export interface ISource {
   type?: string;
@@ -35,6 +36,7 @@ export interface IVideoProps {
   nativeControls: boolean;
   preload: string;
   sources: ISource[];
+  tracks: ITrack[];
   volume: number;
 }
 
@@ -61,7 +63,7 @@ class VideoPlayer extends React.PureComponent<
   }
 
   public render() {
-    const { autoPlay, nativeControls, preload, sources } = this.props;
+    const { autoPlay, nativeControls, preload, sources, tracks } = this.props;
 
     return (
       <StyledVideo
@@ -79,8 +81,13 @@ class VideoPlayer extends React.PureComponent<
         onSeeking={this.seekingHandler}
       >
         {sources &&
-          sources.map(({ src, type }: ISource, index) => (
-            <source key={index} src={src} type={type} />
+          sources.map((source: ISource, index) => (
+            <source key={index} {...source} />
+          ))}
+
+        {tracks &&
+          tracks.map((track: ITrack, index) => (
+            <VideoTrack key={index} {...track} />
           ))}
       </StyledVideo>
     );
@@ -98,20 +105,17 @@ class VideoPlayer extends React.PureComponent<
    * @todo
    */
   private timeUpdateHandler = () => {
-    const { dispatch } = this.props;
     const currentPercentage = unitToPercent(
       this.video.currentTime,
       this.video.duration
     );
     console.log(currentPercentage);
 
-    dispatch(updateCurrentTime(this.video.currentTime));
+    this.props.dispatch(updateCurrentTime(this.video.currentTime));
   };
 
   private loadedMetadataHandler = () => {
-    const { dispatch } = this.props;
-
-    dispatch(updateVideoDuration(this.video.duration));
+    this.props.dispatch(updateVideoDuration(this.video.duration));
   };
 
   private volumeChangeHandler = () => {
@@ -144,5 +148,6 @@ export default connect((state: IAianaState) => ({
   nativeControls: state.player.nativeControls,
   preload: state.player.preload,
   sources: state.player.sources,
+  tracks: state.player.tracks,
   volume: state.player.volume
 }))(VideoPlayer);
