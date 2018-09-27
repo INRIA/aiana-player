@@ -24,13 +24,11 @@ const StyledControls = styled.div`
   height: 2.25em;
 `;
 
-interface IProps {
+interface IProps extends IConnectedReduxProps {
   nativeControls: boolean;
 }
 
-const VideoPlayerControls: React.SFC<IProps & IConnectedReduxProps> = ({
-  nativeControls
-}) => {
+const VideoPlayerControls: React.SFC<IProps> = ({ nativeControls }) => {
   if (nativeControls === true) {
     return null;
   }

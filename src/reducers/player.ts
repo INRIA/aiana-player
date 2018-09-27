@@ -26,8 +26,6 @@ import {
 export interface IPlayerState {
   autoPlay: boolean;
 
-  tracks: ITrack[];
-
   /** The current position of the player, expressed in seconds */
   currentTime: number;
 
@@ -53,6 +51,7 @@ export interface IPlayerState {
   playerElement: HTMLElement | null;
   preload: string;
   sources: ISource[];
+  tracks: ITrack[];
   videoElement: HTMLVideoElement | null;
 
   /**

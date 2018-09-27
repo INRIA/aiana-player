@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleNativeControls } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { ITransnected } from '../../utils/types';
 
-interface IProps {
+interface IProps extends ITransnected {
   nativeControls: boolean;
 }
 
-class NativeControlsSwitch extends React.Component<
-  IProps & IConnectedReduxProps & InjectedTranslateProps
-> {
+class NativeControlsSwitch extends React.Component<IProps> {
   public render() {
     const { nativeControls, t } = this.props;
 

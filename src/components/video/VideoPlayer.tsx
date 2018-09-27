@@ -29,7 +29,7 @@ const StyledVideo = styled.video`
   max-height: 100%;
 `;
 
-export interface IVideoProps {
+export interface IVideoProps extends IConnectedReduxProps {
   autoPlay: boolean;
   currentTime: number;
   isMuted: boolean;
@@ -41,12 +41,11 @@ export interface IVideoProps {
   volume: number;
 }
 
-class VideoPlayer extends React.PureComponent<
-  IVideoProps & IConnectedReduxProps
-> {
+class VideoPlayer extends React.PureComponent<IVideoProps> {
   private get video() {
     return this.videoRef.current!;
   }
+
   private videoRef = React.createRef<HTMLVideoElement>();
 
   public componentDidMount() {

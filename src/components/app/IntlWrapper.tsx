@@ -5,15 +5,12 @@ import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store';
 import { i18nInstance } from '../../translations';
 
-interface IProps {
+interface IProps extends IConnectedReduxProps {
   language: string;
   children: any;
 }
 
-const IntlWrapper: React.SFC<IProps & IConnectedReduxProps> = ({
-  children,
-  language
-}) => (
+const IntlWrapper: React.SFC<IProps> = ({ children, language }) => (
   <I18nextProvider i18n={i18nInstance} initialLanguage={language}>
     {children}
   </I18nextProvider>
