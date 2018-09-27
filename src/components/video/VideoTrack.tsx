@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 
-const TEXT_TRACK_HIDDEN = 'hidden';
-
 export interface ITrack {
   isDefault?: boolean;
-  kind?: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata';
+  kind?: TextTrackKind;
   label?: string | undefined;
   src?: string | undefined;
   srcLang?: string | undefined;
@@ -68,7 +66,7 @@ class VideoTrack extends React.Component<IConnectedTrack, IState> {
 
   private toggleNativeTextTrack(nativeControls: boolean) {
     if (!nativeControls && this.trackRef.current) {
-      this.trackRef.current.track.mode = TEXT_TRACK_HIDDEN;
+      this.trackRef.current.track.mode = TextTrack.SHOWING;
     }
   }
 }
