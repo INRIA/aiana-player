@@ -18,7 +18,7 @@ interface IControlIcon {
   isPlaying: boolean;
 }
 
-const ControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
+export const PlayControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
   if (isPlaying) {
     return <StyledPauseIcon aria-hidden={true} />;
   }
@@ -30,12 +30,14 @@ const StyledPlayButton = styled(StyledButton)`
   width: 3em;
 `;
 
-interface IProps extends ITransnected {
+export interface IPlayButtonProps {
   isPlaying: boolean;
   videoElement: HTMLVideoElement | null;
 }
 
-class PlayButton extends React.Component<IProps> {
+interface ITransectedPlayButtonProps extends IPlayButtonProps, ITransnected {}
+
+class PlayButton extends React.Component<ITransectedPlayButtonProps> {
   public render() {
     const controlText = this.getControlText();
 
@@ -45,7 +47,7 @@ class PlayButton extends React.Component<IProps> {
         aria-label={controlText}
         onClick={this.togglePlay}
       >
-        <ControlIcon isPlaying={this.props.isPlaying} />
+        <PlayControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{controlText}</AssistiveText>
       </StyledPlayButton>
     );

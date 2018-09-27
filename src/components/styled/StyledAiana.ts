@@ -20,7 +20,7 @@ const StyledAiana = styled.div`
     outline: none;
   }
 
-  /* @todo: remove debug styles */
+  /* TODO: remove debug styles */
   input[type='checkbox'],
   select {
     &[data-focus-visible-added] {

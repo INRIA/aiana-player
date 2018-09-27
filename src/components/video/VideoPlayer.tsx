@@ -15,6 +15,7 @@ import {
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
+import FatPlayButton from '../buttons/FatPlayButton';
 import VideoTrack, { ITrack } from './VideoTrack';
 
 export interface ISource {
@@ -65,30 +66,33 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
     const { autoPlay, nativeControls, preload, sources, tracks } = this.props;
 
     return (
-      <StyledVideo
-        innerRef={this.videoRef}
-        className="aip-video"
-        autoPlay={autoPlay}
-        controls={nativeControls}
-        preload={preload}
-        onLoadedMetadata={this.loadedMetadataHandler}
-        onPause={this.pauseHandler}
-        onPlay={this.playHandler}
-        onTimeUpdate={this.timeUpdateHandler}
-        onVolumeChange={this.volumeChangeHandler}
-        onSeeked={this.seekedHandler}
-        onSeeking={this.seekingHandler}
-      >
-        {sources &&
-          sources.map((source: ISource, index) => (
-            <source key={index} {...source} />
-          ))}
+      <div>
+        <StyledVideo
+          innerRef={this.videoRef}
+          className="aip-video"
+          autoPlay={autoPlay}
+          controls={nativeControls}
+          preload={preload}
+          onLoadedMetadata={this.loadedMetadataHandler}
+          onPause={this.pauseHandler}
+          onPlay={this.playHandler}
+          onTimeUpdate={this.timeUpdateHandler}
+          onVolumeChange={this.volumeChangeHandler}
+          onSeeked={this.seekedHandler}
+          onSeeking={this.seekingHandler}
+        >
+          {sources &&
+            sources.map((source: ISource, index) => (
+              <source key={index} {...source} />
+            ))}
 
-        {tracks &&
-          tracks.map((track: ITrack, index) => (
-            <VideoTrack key={index} {...track} />
-          ))}
-      </StyledVideo>
+          {tracks &&
+            tracks.map((track: ITrack, index) => (
+              <VideoTrack key={index} {...track} />
+            ))}
+        </StyledVideo>
+        <FatPlayButton />
+      </div>
     );
   }
 
