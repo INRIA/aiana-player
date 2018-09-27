@@ -114,8 +114,13 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
     this.props.dispatch(updateVideoDuration(this.video.duration));
   };
 
+  /**
+   * `volumechange` covers both volume level and mute toggle. A couple of checks
+   * need to be performed to catch changes and dispatch them to update the
+   * application state.
+   */
   private volumeChangeHandler = () => {
-    const video = this.videoRef.current!;
+    const { video } = this;
     const { dispatch, isMuted, volume } = this.props;
 
     // only dispatch `toggleMute` when state is behind video object property
