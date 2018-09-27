@@ -14,7 +14,6 @@ import {
 } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
-import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 import VideoTrack, { ITrack } from './VideoTrack';
 
@@ -107,16 +106,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
     }
   };
 
-  /**
-   * @todo
-   */
   private timeUpdateHandler = () => {
-    const currentPercentage = unitToPercent(
-      this.video.currentTime,
-      this.video.duration
-    );
-    console.log(currentPercentage);
-
     this.props.dispatch(updateCurrentTime(this.video.currentTime));
   };
 
