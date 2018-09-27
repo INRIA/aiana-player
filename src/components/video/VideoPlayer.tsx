@@ -33,10 +33,11 @@ export interface IVideoProps {
   autoPlay: boolean;
   currentTime: number;
   isMuted: boolean;
+  isSeeking: boolean;
   nativeControls: boolean;
   preload: string;
   sources: ISource[];
-  tracks: ITrack[];
+  tracks?: ITrack[];
   volume: number;
 }
 
@@ -94,11 +95,17 @@ class VideoPlayer extends React.PureComponent<
   }
 
   private seekedHandler = () => {
-    this.props.dispatch(stopSeeking());
+    const { dispatch, isSeeking } = this.props;
+    if (isSeeking) {
+      dispatch(stopSeeking());
+    }
   };
 
   private seekingHandler = () => {
-    this.props.dispatch(startSeeking());
+    const { dispatch, isSeeking } = this.props;
+    if (!isSeeking) {
+      dispatch(startSeeking());
+    }
   };
 
   /**
@@ -145,6 +152,7 @@ export default connect((state: IAianaState) => ({
   autoPlay: state.player.autoPlay,
   currentTime: state.player.currentTime,
   isMuted: state.player.isMuted,
+  isSeeking: state.player.isSeeking,
   nativeControls: state.player.nativeControls,
   preload: state.player.preload,
   sources: state.player.sources,

@@ -82,7 +82,17 @@ const initialState: IPlayerState = {
   ],
   tracks: [
     {
-      isDefault: true,
+      label: 'Default subtitles',
+      src: 'http://localhost:3000/dev/subtitles.vtt'
+    },
+    {
+      label: 'Spanish subtitles',
+      src: 'http://localhost:3000/dev/subtitles.1.vtt',
+      srcLang: 'es'
+    },
+    {
+      kind: 'captions',
+      label: 'Should be captions',
       src: 'http://localhost:3000/dev/subtitles.vtt'
     }
   ],
