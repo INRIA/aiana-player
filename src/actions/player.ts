@@ -27,15 +27,16 @@ export const VIDEO_REQUEST_SEEK = 'aiana/VIDEO_REQUEST_SEEK';
 export const VIDEO_SEEK_TOGGLE = 'aiana/VIDEO_SEEK_TOGGLE';
 
 export function startSeeking(): AnyAction {
-  return {
-    isSeeking: true,
-    type: VIDEO_SEEK_TOGGLE
-  };
+  return toggleSeek(true);
 }
 
 export function stopSeeking(): AnyAction {
+  return toggleSeek(false);
+}
+
+function toggleSeek(isSeeking: boolean): AnyAction {
   return {
-    isSeeking: false,
+    isSeeking,
     type: VIDEO_SEEK_TOGGLE
   };
 }
