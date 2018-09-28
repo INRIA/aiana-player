@@ -72,7 +72,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
         controls={nativeControls}
         tabIndex={nativeControls ? 0 : -1}
         preload={preload}
-        onClick={this.onClickHandler}
+        onClick={this.clickHandler}
         onLoadedMetadata={this.loadedMetadataHandler}
         onPause={this.pauseHandler}
         onPlay={this.playHandler}
@@ -94,7 +94,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
     );
   }
 
-  private onClickHandler = () => {
+  private clickHandler = () => {
     const { video } = this;
 
     if (video.paused) {
