@@ -17,6 +17,7 @@ const StyledFatPlayButton = styled(StyledButton)`
   height: 100%;
 
   cursor: pointer;
+  pointer-events: none;
 
   &[data-focus-visible-added] {
     box-shadow: none;
