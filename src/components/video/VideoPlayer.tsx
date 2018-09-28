@@ -15,7 +15,6 @@ import {
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
-import FatPlayButton from '../buttons/FatPlayButton';
 import VideoTrack, { ITrack } from './VideoTrack';
 
 export interface ISource {
@@ -25,8 +24,8 @@ export interface ISource {
 
 const StyledVideo = styled.video`
   width: 100%;
-  max-width: 100%;
   max-height: 100%;
+  max-width: 100%;
 `;
 
 export interface IVideoProps extends IConnectedReduxProps {
@@ -66,35 +65,44 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
     const { autoPlay, nativeControls, preload, sources, tracks } = this.props;
 
     return (
-      <div>
-        <StyledVideo
-          innerRef={this.videoRef}
-          className="aip-video"
-          autoPlay={autoPlay}
-          controls={nativeControls}
-          preload={preload}
-          onLoadedMetadata={this.loadedMetadataHandler}
-          onPause={this.pauseHandler}
-          onPlay={this.playHandler}
-          onTimeUpdate={this.timeUpdateHandler}
-          onVolumeChange={this.volumeChangeHandler}
-          onSeeked={this.seekedHandler}
-          onSeeking={this.seekingHandler}
-        >
-          {sources &&
-            sources.map((source: ISource, index) => (
-              <source key={index} {...source} />
-            ))}
+      <StyledVideo
+        innerRef={this.videoRef}
+        className="aip-video"
+        autoPlay={autoPlay}
+        controls={nativeControls}
+        tabIndex={nativeControls ? 0 : -1}
+        preload={preload}
+        onClick={this.onClickHandler}
+        onLoadedMetadata={this.loadedMetadataHandler}
+        onPause={this.pauseHandler}
+        onPlay={this.playHandler}
+        onTimeUpdate={this.timeUpdateHandler}
+        onVolumeChange={this.volumeChangeHandler}
+        onSeeked={this.seekedHandler}
+        onSeeking={this.seekingHandler}
+      >
+        {sources &&
+          sources.map((source: ISource, index) => (
+            <source key={index} {...source} />
+          ))}
 
-          {tracks &&
-            tracks.map((track: ITrack, index) => (
-              <VideoTrack key={index} {...track} />
-            ))}
-        </StyledVideo>
-        <FatPlayButton />
-      </div>
+        {tracks &&
+          tracks.map((track: ITrack, index) => (
+            <VideoTrack key={index} {...track} />
+          ))}
+      </StyledVideo>
     );
   }
+
+  private onClickHandler = () => {
+    const { video } = this;
+
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  };
 
   private seekedHandler = () => {
     const { dispatch, isSeeking } = this.props;
