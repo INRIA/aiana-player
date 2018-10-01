@@ -66,7 +66,7 @@ class VideoTrack extends React.Component<IConnectedTrack, IState> {
 
   private toggleNativeTextTrack(nativeControls: boolean) {
     if (!nativeControls && this.trackRef.current) {
-      this.trackRef.current.track.mode = 'showing';
+      this.trackRef.current.track.mode = 'hidden';
     }
   }
 }
