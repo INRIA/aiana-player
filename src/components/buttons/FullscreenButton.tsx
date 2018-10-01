@@ -19,10 +19,10 @@ interface IControlIcon {
 
 const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
   if (isFullscreen) {
-    return <StyledFullscreenExitIcon aria-hidden={true} />;
+    return <StyledFullscreenExitIcon aria-hidden="true" />;
   }
 
-  return <StyledFullscreenIcon aria-hidden={true} />;
+  return <StyledFullscreenIcon aria-hidden="true" />;
 };
 
 interface IProps extends ITransnected {

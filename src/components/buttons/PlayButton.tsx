@@ -20,10 +20,10 @@ interface IControlIcon {
 
 export const PlayControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
   if (isPlaying) {
-    return <StyledPauseIcon aria-hidden={true} />;
+    return <StyledPauseIcon aria-hidden="true" />;
   }
 
-  return <StyledPlayIcon aria-hidden={true} />;
+  return <StyledPlayIcon aria-hidden="true" />;
 };
 
 const StyledPlayButton = styled(StyledButton)`

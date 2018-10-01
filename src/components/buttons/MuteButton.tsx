@@ -20,10 +20,10 @@ interface IControlIcon {
 
 const ControlIcon: React.SFC<IControlIcon> = ({ isMuted }): JSX.Element => {
   if (isMuted) {
-    return <StyledVolumeMutedIcon />;
+    return <StyledVolumeMutedIcon aria-hidden="true" />;
   }
 
-  return <StyledVolumeUnmutedIcon />;
+  return <StyledVolumeUnmutedIcon aria-hidden="true" />;
 };
 
 const StyledMuteButton = styled(StyledButton)`

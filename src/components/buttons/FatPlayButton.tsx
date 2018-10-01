@@ -31,7 +31,7 @@ class FatPlayButton extends React.Component<IFatPlayButtonProps> {
     return (
       <StyledFatPlayButton
         type="button"
-        aria-hidden={true}
+        aria-hidden="true"
         tabIndex={-1}
         onClick={this.togglePlay}
       >
