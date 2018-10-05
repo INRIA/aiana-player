@@ -11,8 +11,6 @@ interface IProps extends ITransnected {
 }
 
 class LanguageSelector extends React.Component<IProps> {
-  private languageSelect = React.createRef<HTMLSelectElement>();
-
   public render() {
     const { availableLanguages, currentLanguage, t } = this.props;
 
@@ -20,11 +18,7 @@ class LanguageSelector extends React.Component<IProps> {
       <div className="aip-language-selector">
         <label>
           <span>{t('preferences.language.label')}</span>
-          <select
-            ref={this.languageSelect}
-            onChange={this.onLanguageChange}
-            value={currentLanguage}
-          >
+          <select onChange={this.onLanguageChange} value={currentLanguage}>
             {availableLanguages.map((language) => (
               <option key={language} value={language}>
                 {language}
@@ -36,10 +30,8 @@ class LanguageSelector extends React.Component<IProps> {
     );
   }
 
-  private onLanguageChange = () => {
-    const languageKey = this.languageSelect.current!.value;
-
-    this.props.dispatch(changeLanguage(languageKey));
+  private onLanguageChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    this.props.dispatch(changeLanguage(evt.currentTarget.value));
   };
 }
 

@@ -11,8 +11,6 @@ interface IThemeSelector extends ITransnected {
 }
 
 class ThemeSelector extends React.Component<IThemeSelector> {
-  private selectRef = React.createRef<HTMLSelectElement>();
-
   public render() {
     const { availableThemes, currentTheme, t } = this.props;
     return (
@@ -20,7 +18,6 @@ class ThemeSelector extends React.Component<IThemeSelector> {
         <label>
           <span>{t('preferences.theme-selector.label')}</span>
           <select
-            ref={this.selectRef}
             defaultValue={currentTheme}
             onChange={this.selectChangeHandler}
           >
@@ -33,14 +30,9 @@ class ThemeSelector extends React.Component<IThemeSelector> {
     );
   }
 
-  private selectChangeHandler = () => {
+  private selectChangeHandler = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     const { dispatch } = this.props;
-
-    if (!this.selectRef.current) {
-      return;
-    }
-
-    const selectedTheme = this.selectRef.current.value;
+    const selectedTheme = evt.currentTarget.value;
 
     dispatch(changeCurrentTheme(selectedTheme));
   };

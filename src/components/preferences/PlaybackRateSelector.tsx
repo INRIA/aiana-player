@@ -12,8 +12,6 @@ interface IProps extends ITransnected {
 }
 
 class PlaybackRateSelector extends React.Component<IProps> {
-  private playbackRateSelect = React.createRef<HTMLSelectElement>();
-
   public render() {
     const { availablePlaybackRates, currentPlaybackRate, t } = this.props;
 
@@ -21,11 +19,7 @@ class PlaybackRateSelector extends React.Component<IProps> {
       <div className="aip-playback-rate-selector">
         <label>
           <span>{t('preferences.playbackrate.label')}</span>
-          <select
-            ref={this.playbackRateSelect}
-            value={currentPlaybackRate}
-            onChange={this.onPlayRateChange}
-          >
+          <select value={currentPlaybackRate} onChange={this.onPlayRateChange}>
             {availablePlaybackRates.map((playbackRate) => (
               <option key={playbackRate} value={playbackRate}>
                 {playbackRate}
@@ -37,12 +31,14 @@ class PlaybackRateSelector extends React.Component<IProps> {
     );
   }
 
-  private onPlayRateChange = () => {
+  private onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     const { dispatch, videoElement } = this.props;
 
-    if (!videoElement) { return; }
+    if (!videoElement) {
+      return;
+    }
 
-    const playbackRateValue = Number(this.playbackRateSelect.current!.value);
+    const playbackRateValue = Number(evt.currentTarget.value);
 
     dispatch(changePlaybackRate(videoElement, playbackRateValue));
   };
