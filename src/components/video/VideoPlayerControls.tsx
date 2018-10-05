@@ -13,8 +13,8 @@ const StyledControlsWrapper = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 3.75em;
-  padding: 0.5em 1em 0;
+  /* 0.5 + 0.3125 */
+  padding: 0.8125em 1em 0.5em;
   background-color: ${(props) => props.theme.bg};
 `;
 
@@ -22,6 +22,7 @@ const StyledControls = styled.div`
   display: flex;
   justify-content: space-between;
   height: 2.25em;
+  margin-top: 0.3125em;
 `;
 
 interface IProps extends IConnectedReduxProps {
