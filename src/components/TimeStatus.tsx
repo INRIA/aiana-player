@@ -5,7 +5,7 @@ import { IConnectedReduxProps } from '../store/index';
 import styled from '../utils/styled-components';
 import { secondsToHMS } from '../utils/time';
 
-const { round } = Math;
+const { floor } = Math;
 
 const StyledDiv = styled.div`
   display: inline-block;
@@ -27,9 +27,9 @@ interface IProps extends IConnectedReduxProps {
 
 const TimeStatus: React.SFC<IProps> = ({ currentTime, duration }) => (
   <StyledDiv className="aip-time-status">
-    <span className="aip-time-current">{secondsToHMS(round(currentTime))}</span>
+    <span className="aip-time-current">{secondsToHMS(floor(currentTime))}</span>
     <span> / </span>
-    <span className="aip-time-duration">{secondsToHMS(round(duration))}</span>
+    <span className="aip-time-duration">{secondsToHMS(floor(duration))}</span>
   </StyledDiv>
 );
 
