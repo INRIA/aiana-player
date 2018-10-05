@@ -53,9 +53,17 @@ export interface IPlayerState {
   playbackRate: number;
   playerElement: HTMLElement | null;
   preload: string;
-  sourceTracks: ITrack[];
-  sources: ISource[];
+  readonly sourceTracks: ITrack[];
+  readonly sources: ISource[];
 
+  /**
+   * HTMLMediaElement already parses vtt files and manage its own tracks state
+   * living inside a TextTrackList. However, the list elements have some
+   * properties that are unnecessary to us. The elements will also lose some of
+   * the HTML attributes such as `default`.
+   * `textTracks` is a collection of lightweight objects with properties from
+   * `sources` and `sourceTracks`.
+   */
   textTracks: IRawTextTrack[];
 
   videoElement: HTMLVideoElement | null;

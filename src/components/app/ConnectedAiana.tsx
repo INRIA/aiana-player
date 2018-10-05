@@ -31,10 +31,8 @@ class Aiana extends React.Component<IAiana> {
   }
 
   public componentDidMount() {
-    const { dispatch } = this.props;
-
     if (this.fullscreenRef.current) {
-      dispatch(playerElementMounted(this.fullscreenRef.current));
+      this.props.dispatch(playerElementMounted(this.fullscreenRef.current));
     }
 
     this.bindDocumentFullscreenEvents();
@@ -77,9 +75,7 @@ class Aiana extends React.Component<IAiana> {
   };
 
   private fullscreenHandler = () => {
-    const { dispatch } = this.props;
-
-    dispatch(handleFullscreenChange(isDocumentFullscreen()));
+    this.props.dispatch(handleFullscreenChange(isDocumentFullscreen()));
   };
 }
 
