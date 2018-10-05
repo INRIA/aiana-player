@@ -13,6 +13,7 @@ export default {
   'preferences.language.title': 'Langue',
   'preferences.native_controls': 'Utiliser les contrôles natifs du lecteur',
   'preferences.playbackrate.label': 'Vitesse',
+  'preferences.subtitlestrack.label': 'Choix de la piste de sous-titres',
   'preferences.theme-selector.label': 'Thème',
   'preferences.title': 'Préférences',
   'time.duration.hm':

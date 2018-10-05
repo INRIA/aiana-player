@@ -4,6 +4,7 @@ import {
   exitFullscreen,
   isDocumentFullscreen
 } from '../utils/fullscreen';
+import { IRawTextTrack } from '../utils/text-tracks';
 
 export const TOGGLE_NATIVE_CONTROLS = 'aiana/TOGGLE_NATIVE_CONTROLS';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
@@ -25,6 +26,22 @@ export const VIDEO_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
 export const VIDEO_UPDATE_TIME = 'aiana/UPDATE_TIME';
 export const VIDEO_REQUEST_SEEK = 'aiana/VIDEO_REQUEST_SEEK';
 export const VIDEO_SEEK_TOGGLE = 'aiana/VIDEO_SEEK_TOGGLE';
+export const UPDATE_TRACKS_LIST = 'aiana/CHANGE_TRACKS_LIST';
+export const UPDATE_ACTIVE_TEXT_TRACK = 'aiana/UPDATE_ACTIVE_TEXT_TRACK';
+
+export function updateActiveTextTrack(textTrackLabel: string): AnyAction {
+  return {
+    activeTrack: textTrackLabel,
+    type: UPDATE_ACTIVE_TEXT_TRACK
+  };
+}
+
+export function updateTracksList(textTracks: IRawTextTrack[]): AnyAction {
+  return {
+    textTracks,
+    type: UPDATE_TRACKS_LIST
+  };
+}
 
 export function startSeeking(): AnyAction {
   return toggleSeek(true);

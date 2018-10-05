@@ -3,6 +3,8 @@ import {
   PLAYER_ELEMENT_MOUNTED,
   TOGGLE_FULLSCREEN,
   TOGGLE_NATIVE_CONTROLS,
+  UPDATE_ACTIVE_TEXT_TRACK,
+  UPDATE_TRACKS_LIST,
   VIDEO_ELEMENT_MOUNTED,
   VIDEO_ELEMENT_UNMOUNTED,
   VIDEO_PAUSE,
@@ -16,12 +18,13 @@ import {
   VIDEO_VOLUME_CHANGE
 } from '../actions/player';
 import { ISource } from '../components/video/VideoPlayer';
-import { ITrack } from '../components/video/VideoTrack';
+import { ITrack } from '../components/video/VideoTextTrack';
 import {
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
   DEFAULT_VOLUME
 } from '../constants';
+import { IRawTextTrack } from '../utils/text-tracks';
 
 export interface IPlayerState {
   autoPlay: boolean;
@@ -50,8 +53,11 @@ export interface IPlayerState {
   playbackRate: number;
   playerElement: HTMLElement | null;
   preload: string;
+  sourceTracks: ITrack[];
   sources: ISource[];
-  tracks: ITrack[];
+
+  textTracks: IRawTextTrack[];
+
   videoElement: HTMLVideoElement | null;
 
   /**
@@ -73,33 +79,34 @@ const initialState: IPlayerState = {
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
   preload: 'auto',
+  sourceTracks: [
+    {
+      label: 'Default subtitles',
+      src: 'http://localhost:3000/dev/subtitles.vtt'
+    },
+    {
+      label: 'Alternative subtitles',
+      src: 'http://localhost:3000/dev/subtitles.1.vtt',
+      srcLang: 'es'
+    },
+    {
+      kind: 'captions',
+      label: 'Captions',
+      src: 'http://localhost:3000/dev/subtitles.vtt'
+    }
+  ],
   sources: [
     {
       src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
       type: 'video/mp4'
     }
   ],
-  tracks: [
-    {
-      label: 'Default subtitles',
-      src: 'http://localhost:3000/dev/subtitles.vtt'
-    },
-    {
-      label: 'Spanish subtitles',
-      src: 'http://localhost:3000/dev/subtitles.1.vtt',
-      srcLang: 'es'
-    },
-    {
-      kind: 'captions',
-      label: 'Should be captions',
-      src: 'http://localhost:3000/dev/subtitles.vtt'
-    }
-  ],
+  textTracks: [],
   videoElement: null,
   volume: DEFAULT_VOLUME
 };
 
-const player: Reducer = (state = initialState, action) => {
+const player: Reducer = (state: IPlayerState = initialState, action) => {
   switch (action.type) {
     case TOGGLE_NATIVE_CONTROLS:
       return {
@@ -163,6 +170,26 @@ const player: Reducer = (state = initialState, action) => {
       return {
         ...state,
         isSeeking: action.isSeeking
+      };
+    case UPDATE_TRACKS_LIST:
+      return {
+        ...state,
+        textTracks: action.textTracks
+      };
+    case UPDATE_ACTIVE_TEXT_TRACK:
+      const textTracks = state.textTracks.map((track) => {
+        if (track.label === action.activeTrack) {
+          return { ...track, active: true };
+        }
+        if (track.active === true) {
+          return { ...track, active: false };
+        }
+        return { ...track };
+      });
+
+      return {
+        ...state,
+        textTracks
       };
     default:
       return state;

@@ -11,24 +11,14 @@ export interface ITrack {
   srcLang?: string | undefined;
 }
 
-interface IState {
-  isActive: boolean;
-}
-
 export interface IConnectedTrack extends ITrack, IConnectedReduxProps {
   nativeControls: boolean;
 }
 
-// TODO: there should be a way to "resume" text tracks `mode`. May be maintaining each one in player state?
-
-class VideoTrack extends React.Component<IConnectedTrack, IState> {
+class VideoTextTrack extends React.Component<IConnectedTrack> {
   public static defaultProps: ITrack = {
     isDefault: false,
     kind: 'subtitles'
-  };
-
-  public state = {
-    isActive: false
   };
 
   private trackRef = React.createRef<HTMLTrackElement>();
@@ -73,4 +63,4 @@ class VideoTrack extends React.Component<IConnectedTrack, IState> {
 
 export default connect((state: IAianaState) => ({
   nativeControls: state.player.nativeControls
-}))(VideoTrack);
+}))(VideoTextTrack);

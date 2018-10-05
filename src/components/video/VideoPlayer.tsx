@@ -8,6 +8,7 @@ import {
   stopSeeking,
   toggleMute,
   updateCurrentTime,
+  updateTracksList,
   updateVideoDuration,
   videoElementMounted,
   videoElementUnounted
@@ -15,7 +16,12 @@ import {
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import styled from '../../utils/styled-components';
-import VideoTrack, { ITrack } from './VideoTrack';
+import {
+  IRawTextTrack,
+  isDisplayableTrack,
+  rawTextTrack
+} from '../../utils/text-tracks';
+import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
 export interface ISource {
   type?: string;
@@ -35,8 +41,9 @@ export interface IVideoProps extends IConnectedReduxProps {
   isSeeking: boolean;
   nativeControls: boolean;
   preload: string;
+  sourceTracks?: ITrack[];
   sources: ISource[];
-  tracks?: ITrack[];
+  textTracks: IRawTextTrack[];
   volume: number;
 }
 
@@ -51,10 +58,12 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
     const { dispatch, volume, isMuted } = this.props;
     const { video } = this;
 
+    dispatch(videoElementMounted(video));
+
     video.volume = volume;
     video.muted = isMuted;
 
-    dispatch(videoElementMounted(video));
+    this.populateTextTracks();
   }
 
   public componentWillUnmount() {
@@ -62,7 +71,13 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
   }
 
   public render() {
-    const { autoPlay, nativeControls, preload, sources, tracks } = this.props;
+    const {
+      autoPlay,
+      nativeControls,
+      preload,
+      sources,
+      sourceTracks
+    } = this.props;
 
     return (
       <StyledVideo
@@ -76,32 +91,53 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
         onLoadedMetadata={this.loadedMetadataHandler}
         onPause={this.pauseHandler}
         onPlay={this.playHandler}
-        onTimeUpdate={this.timeUpdateHandler}
-        onVolumeChange={this.volumeChangeHandler}
         onSeeked={this.seekedHandler}
         onSeeking={this.seekingHandler}
+        onTimeUpdate={this.timeUpdateHandler}
+        onVolumeChange={this.volumeChangeHandler}
       >
         {sources &&
           sources.map((source: ISource, index) => (
             <source key={index} {...source} />
           ))}
 
-        {tracks &&
-          tracks.map((track: ITrack, index) => (
-            <VideoTrack key={index} {...track} />
+        {sourceTracks &&
+          sourceTracks.map((track: ITrack, index) => (
+            <VideoTextTrack key={index} {...track} />
           ))}
       </StyledVideo>
     );
   }
 
-  private clickHandler = () => {
-    const { video } = this;
-
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
+  /**
+   * Handles any changes made to the text tracks (selected, etc).
+   */
+  private populateTextTracks = () => {
+    if (!this.video || !this.props.sourceTracks) {
+      return;
     }
+
+    const videoTracks = [...this.video.textTracks[Symbol.iterator]()];
+    const defaultTrack = this.props.sourceTracks.find((track) => {
+      return track.isDefault === true;
+    });
+
+    const visibleTracks = videoTracks
+      .filter(isDisplayableTrack)
+      .map((track) => {
+        return {
+          ...rawTextTrack(track),
+          active: track.label === (defaultTrack ? defaultTrack.label : false)
+        };
+      });
+
+    if (visibleTracks.length) {
+      this.props.dispatch(updateTracksList(visibleTracks));
+    }
+  };
+
+  private clickHandler = () => {
+    this.video.paused ? this.video.play() : this.video.pause();
   };
 
   private seekedHandler = () => {
@@ -161,7 +197,8 @@ export default connect((state: IAianaState) => ({
   isSeeking: state.player.isSeeking,
   nativeControls: state.player.nativeControls,
   preload: state.player.preload,
+  sourceTracks: state.player.sourceTracks,
   sources: state.player.sources,
-  tracks: state.player.tracks,
+  textTracks: state.player.textTracks,
   volume: state.player.volume
 }))(VideoPlayer);
