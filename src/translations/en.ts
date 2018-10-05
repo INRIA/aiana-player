@@ -16,6 +16,7 @@ export default {
   'preferences.native_controls': 'Use player native controls',
   'preferences.playbackrate.label': 'Speed',
   'preferences.subtitlestrack.label': 'Choose a subtitles track',
+  'preferences.subtitlestrack.no_subtitle': 'No subtitles',
   'preferences.theme-selector.label': 'Theme',
   'preferences.title': 'Preferences',
   'time.duration.h': '$t(time.hours, { "count": {{ hours }} })',

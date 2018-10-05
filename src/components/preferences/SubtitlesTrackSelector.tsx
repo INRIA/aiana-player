@@ -31,7 +31,9 @@ class SubtitlesTrackSelector extends React.Component<ISubtitlesTrackSelector> {
             onChange={this.selectedTrackChangedHandler}
             value={selectedValue}
           >
-            <option value="">None</option>
+            <option value="">
+              {t('preferences.subtitlestrack.no_subtitle')}
+            </option>
             {textTracks
               .filter((track) => {
                 return track.kind === 'subtitles' || track.kind === 'captions';
