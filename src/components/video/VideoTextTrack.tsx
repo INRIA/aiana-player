@@ -1,18 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { setSubtitleText } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
+import { IRawTextTrack } from '../../utils/text-tracks';
 
 export interface ITrack {
   isDefault?: boolean;
   kind?: TextTrackKind;
   label?: string | undefined;
-  src?: string | undefined;
+  src?: string;
   srcLang?: string | undefined;
 }
 
 export interface IConnectedTrack extends ITrack, IConnectedReduxProps {
   nativeControls: boolean;
+  textTracks: IRawTextTrack[];
 }
 
 class VideoTextTrack extends React.Component<IConnectedTrack> {
@@ -44,6 +47,13 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
 
   public componentDidMount() {
     this.toggleNativeTextTrack(this.props.nativeControls);
+    const t = this.trackRef.current!.track;
+    t.addEventListener('cuechange', this.cueChangeHandler);
+  }
+
+  public componentWillUnmount() {
+    const t = this.trackRef.current!.track;
+    t.removeEventListener('cuechange', this.cueChangeHandler);
   }
 
   public componentDidUpdate(prevProps: IConnectedTrack) {
@@ -54,6 +64,30 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
     }
   }
 
+  private isActive() {
+    if (!this.trackRef.current) {
+      return false;
+    }
+
+    const activeTrack = this.props.textTracks.find((track) => track.active);
+
+    if (!activeTrack) {
+      return false;
+    }
+
+    return activeTrack.label === this.trackRef.current.label;
+  }
+
+  private cueChangeHandler = () => {
+    if (!this.isActive()) {
+      return;
+    }
+
+    const currentCue = this.trackRef.current!.track.activeCues[0];
+    const currentText = currentCue ? currentCue.text : undefined;
+    this.props.dispatch(setSubtitleText(currentText));
+  };
+
   private toggleNativeTextTrack(nativeControls: boolean) {
     if (!nativeControls && this.trackRef.current) {
       this.trackRef.current.track.mode = 'hidden';
@@ -62,5 +96,6 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
 }
 
 export default connect((state: IAianaState) => ({
-  nativeControls: state.player.nativeControls
+  nativeControls: state.player.nativeControls,
+  textTracks: state.player.textTracks
 }))(VideoTextTrack);

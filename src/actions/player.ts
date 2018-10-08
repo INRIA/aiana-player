@@ -29,6 +29,15 @@ export const VIDEO_SEEK_TOGGLE = 'aiana/VIDEO_SEEK_TOGGLE';
 export const UPDATE_TRACKS_LIST = 'aiana/CHANGE_TRACKS_LIST';
 export const UPDATE_ACTIVE_TEXT_TRACK = 'aiana/UPDATE_ACTIVE_TEXT_TRACK';
 
+export const SET_SUBTITLE_TEXT = 'aiana/SET_SUBTITLE_TEXT';
+
+export function setSubtitleText(text: string | undefined): AnyAction {
+  return {
+    subtitleText: text,
+    type: SET_SUBTITLE_TEXT
+  };
+}
+
 export function updateActiveTextTrack(textTrackLabel: string): AnyAction {
   return {
     activeTrack: textTrackLabel,

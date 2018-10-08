@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import {
   PLAYER_ELEMENT_MOUNTED,
+  SET_SUBTITLE_TEXT,
   TOGGLE_FULLSCREEN,
   TOGGLE_NATIVE_CONTROLS,
   UPDATE_ACTIVE_TEXT_TRACK,
@@ -28,6 +29,8 @@ import { IRawTextTrack } from '../utils/text-tracks';
 
 export interface IPlayerState {
   autoPlay: boolean;
+
+  subtitleText: string | undefined;
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -109,6 +112,7 @@ const initialState: IPlayerState = {
       type: 'video/mp4'
     }
   ],
+  subtitleText: undefined,
   textTracks: [],
   videoElement: null,
   volume: DEFAULT_VOLUME
@@ -198,6 +202,11 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       return {
         ...state,
         textTracks
+      };
+    case SET_SUBTITLE_TEXT:
+      return {
+        ...state,
+        subtitleText: action.subtitleText
       };
     default:
       return state;

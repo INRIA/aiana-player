@@ -113,14 +113,14 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
    * Handles any changes made to the text tracks (selected, etc).
    */
   private populateTextTracks = () => {
-    if (!this.video || !this.props.sourceTracks) {
+    const { dispatch, sourceTracks } = this.props;
+
+    if (!this.video || !sourceTracks) {
       return;
     }
 
     const videoTracks = [...this.video.textTracks[Symbol.iterator]()];
-    const defaultTrack = this.props.sourceTracks.find((track) => {
-      return track.isDefault === true;
-    });
+    const defaultTrack = sourceTracks.find((track) => track.isDefault === true);
 
     const visibleTracks = videoTracks
       .filter(isDisplayableTrack)
@@ -132,7 +132,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
       });
 
     if (visibleTracks.length) {
-      this.props.dispatch(updateTracksList(visibleTracks));
+      dispatch(updateTracksList(visibleTracks));
     }
   };
 

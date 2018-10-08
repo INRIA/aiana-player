@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '../utils/styled-components';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
+import VideoSubtitles from './video/VideoSubtitles';
 
 const StyledDiv = styled.div`
   background-color: ${(props) => props.theme.bg};
@@ -15,6 +16,7 @@ const StyledDiv = styled.div`
 const Player: React.SFC = () => (
   <StyledDiv className="aip-player">
     <VideoPlayer />
+    <VideoSubtitles />
     <VideoPlayerControls />
   </StyledDiv>
 );
