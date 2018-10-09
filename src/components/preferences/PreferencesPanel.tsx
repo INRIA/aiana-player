@@ -8,6 +8,11 @@ import SubtitlesTrackSelector from './SubtitlesTrackSelector';
 import ThemeSelector from './ThemeSelector';
 
 const StyledPanel = styled.div`
+  /* TODO: remove debug styles */
+  position: absolute;
+  bottom: 4rem;
+  right: 4rem;
+
   background-color: white;
   margin-top: 16px;
   padding: 16px;

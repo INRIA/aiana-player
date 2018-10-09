@@ -29,6 +29,7 @@ export interface ISource {
 }
 
 const StyledVideo = styled.video`
+  display: block;
   width: 100%;
   max-height: 100%;
   max-width: 100%;

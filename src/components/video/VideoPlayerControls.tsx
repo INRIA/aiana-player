@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
+import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
 import PlayButton from '../buttons/PlayButton';
@@ -15,7 +16,7 @@ const StyledControlsWrapper = styled.div`
   width: 100%;
   /* 0.5 + 0.3125 */
   padding: 0.8125em 1em 0.5em;
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 `;
 
 const StyledControls = styled.div`
