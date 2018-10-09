@@ -44,8 +44,8 @@ class VideoSubtitles extends React.Component<IVideoSubtitles> {
 
     return (
       <StyledSubtitles>
-        {text.map((line) => (
-          <StyledSpan>
+        {text.map((line, index) => (
+          <StyledSpan key={index}>
             <span>{line}</span>
           </StyledSpan>
         ))}

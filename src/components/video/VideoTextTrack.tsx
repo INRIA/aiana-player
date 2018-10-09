@@ -57,10 +57,28 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
   }
 
   public componentDidUpdate(prevProps: IConnectedTrack) {
-    const { nativeControls: prevNativeControls } = prevProps;
+    const { nativeControls } = prevProps;
 
-    if (prevNativeControls) {
+    if (!this.trackRef.current) {
+      return;
+    }
+
+    if (nativeControls) {
       this.toggleNativeTextTrack(this.props.nativeControls);
+    }
+
+    const prevActiveTrack = prevProps.textTracks.find((track) => track.active);
+    const activeTrack = this.props.textTracks.find((track) => track.active);
+
+    // this track is active, but wasn't so at previous state.
+    if (
+      this.isActive() &&
+      prevActiveTrack &&
+      prevActiveTrack.label !== activeTrack!.label
+    ) {
+      const currentCue = this.trackRef.current.track.activeCues[0];
+      const currentText = currentCue ? currentCue.text : undefined;
+      this.props.dispatch(setSubtitleText(currentText));
     }
   }
 

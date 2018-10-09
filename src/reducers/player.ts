@@ -96,7 +96,7 @@ const initialState: IPlayerState = {
       src: 'http://localhost:3000/dev/subtitles.vtt'
     },
     {
-      label: 'Alternative subtitles',
+      label: 'LOLSpanish subtitles',
       src: 'http://localhost:3000/dev/subtitles.1.vtt',
       srcLang: 'es'
     },
