@@ -97,12 +97,10 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
         onVolumeChange={this.volumeChangeHandler}
       >
         {sources &&
-          sources.map((source: ISource, index) => (
-            <source key={index} {...source} />
-          ))}
+          sources.map((source, index) => <source key={index} {...source} />)}
 
         {sourceTracks &&
-          sourceTracks.map((track: ITrack, index) => (
+          sourceTracks.map((track, index) => (
             <VideoTextTrack key={index} {...track} />
           ))}
       </StyledVideo>
