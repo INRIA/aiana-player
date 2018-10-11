@@ -77,12 +77,12 @@ function toggleSeek(isSeeking: boolean): AnyAction {
 
 export function requestSeek(
   video: HTMLVideoElement,
-  currentTime: number
+  seekingTime: number
 ): AnyAction {
-  video.currentTime = currentTime;
+  video.currentTime = seekingTime;
 
   return {
-    currentTime,
+    seekingTime,
     type: VIDEO_REQUEST_SEEK
   };
 }

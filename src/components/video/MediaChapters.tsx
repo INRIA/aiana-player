@@ -5,14 +5,17 @@ import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
 import { IRawChapterTrack } from '../../utils/media-tracks';
 import styled from '../../utils/styled-components';
+import MediaChapterButton from './MediaChapterButton';
 
 const StyledChapters = styled.div`
+  width: 260px;
   position: absolute;
-  right: 2rem;
-  top: 2rem;
-  border: 1px solid #000;
-  padding: 1em;
-  color: #000;
+  left: 100%;
+  top: 0;
+  border: 1px solid ${(props) => props.theme.fg};
+  padding: 1em 0.5em;
+  color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.fg};
 `;
 
 interface IMediaChapters extends IConnectedReduxProps {
@@ -38,7 +41,9 @@ class MediaChapters extends React.Component<IMediaChapters> {
       <StyledChapters className="aip-chapters">
         <h3>{activeTrack.label}</h3>
         {cues.map((vttCue, index) => (
-          <li key={index}>{vttCue.text}</li>
+          <MediaChapterButton key={index} startTime={vttCue.startTime}>
+            {vttCue.text}
+          </MediaChapterButton>
         ))}
       </StyledChapters>
     );

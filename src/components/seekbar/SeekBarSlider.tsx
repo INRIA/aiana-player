@@ -24,24 +24,24 @@ interface IProps extends ITransnected {
   duration: number;
   isSeeking: boolean;
   seekStep: number;
+  seekingTime: number;
   videoElement: HTMLVideoElement | null;
 }
 
-interface IState {
-  readonly seekingTime: number;
-}
-
-class SeekBarSlider extends React.Component<IProps, IState> {
-  public state: Readonly<IState> = {
-    seekingTime: 0
-  };
-
+class SeekBarSlider extends React.Component<IProps> {
   public sliderRef = React.createRef<HTMLDivElement>();
   public sliderPosition: number = 0;
   public sliderWidth: number = 0;
 
   public render() {
-    const { currentTime, duration, isSeeking, t, videoElement } = this.props;
+    const {
+      currentTime,
+      duration,
+      isSeeking,
+      seekingTime,
+      t,
+      videoElement
+    } = this.props;
 
     if (!videoElement) {
       return null;
@@ -51,7 +51,6 @@ class SeekBarSlider extends React.Component<IProps, IState> {
     // the `currentTime`. However, once video has seeked (which does not mean
     // enough data was loaded yet) and if the slider is not being used, its
     // position should be the `currentTime`.
-    const { seekingTime } = this.state;
     const sliderTime = isSeeking ? seekingTime : currentTime;
 
     const progressPct = unitToPercent(sliderTime, duration);
@@ -217,6 +216,7 @@ class SeekBarSlider extends React.Component<IProps, IState> {
       dispatch,
       duration,
       isSeeking,
+      seekingTime,
       seekStep,
       videoElement
     } = this.props;
@@ -231,27 +231,22 @@ class SeekBarSlider extends React.Component<IProps, IState> {
     // or the video `currentTime` when it is not seeking.
     let nextTime: number;
 
-    const { seekingTime } = this.state;
     const sliderTime = isSeeking ? seekingTime : currentTime;
     const weightedSeekStep = this.weightedSeekStep(seekStep, evt.shiftKey);
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
         nextTime = this.safeTime(sliderTime + weightedSeekStep);
-        this.setState({ seekingTime: nextTime });
         dispatch(requestSeek(videoElement, nextTime));
         break;
       case LEFT_ARROW_KEY_CODE:
         nextTime = this.safeTime(sliderTime - weightedSeekStep);
-        this.setState({ seekingTime: nextTime });
         dispatch(requestSeek(videoElement, nextTime));
         break;
       case HOME_KEY_CODE:
-        this.setState({ seekingTime: 0 });
         dispatch(requestSeek(videoElement, 0));
         break;
       case END_KEY_CODE:
-        this.setState({ seekingTime: duration });
         dispatch(requestSeek(videoElement, duration));
         break;
     }
@@ -275,5 +270,6 @@ export default connect((state: IAianaState) => ({
   duration: state.player.duration,
   isSeeking: state.player.isSeeking,
   seekStep: state.preferences.seekStep,
+  seekingTime: state.player.seekingTime,
   videoElement: state.player.videoElement
 }))(translate()(SeekBarSlider));

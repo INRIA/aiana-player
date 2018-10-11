@@ -14,7 +14,6 @@ import { ThemeProvider } from '../../utils/styled-components';
 import Player from '../Player';
 import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
-import MediaChapters from '../video/MediaChapters';
 import IntlWrapper from './IntlWrapper';
 
 interface IAiana extends IConnectedReduxProps {
@@ -51,7 +50,6 @@ class Aiana extends React.Component<IAiana> {
         <ThemeProvider theme={currentTheme}>
           <StyledAiana className="aip-app" innerRef={this.fullscreenRef}>
             <Player />
-            <MediaChapters />
             <PreferencesPanel />
           </StyledAiana>
         </ThemeProvider>

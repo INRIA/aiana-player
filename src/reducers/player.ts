@@ -12,6 +12,7 @@ import {
   VIDEO_PAUSE,
   VIDEO_PLAY,
   VIDEO_PLAYBACK_RATE,
+  VIDEO_REQUEST_SEEK,
   VIDEO_REQUEST_VOLUME_CHANGE,
   VIDEO_SEEK_TOGGLE,
   VIDEO_TOGGLE_MUTE,
@@ -62,6 +63,8 @@ export interface IPlayerState {
   playerElement: HTMLElement | null;
   preload: string;
 
+  seekingTime: number;
+
   readonly sources: ISource[];
 
   subtitleText: string | undefined;
@@ -100,6 +103,7 @@ const initialState: IPlayerState = {
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
   preload: 'auto',
+  seekingTime: 0,
   sources: [
     {
       src:
@@ -201,10 +205,18 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         currentTime: action.currentTime
       };
-    case VIDEO_SEEK_TOGGLE:
+    case VIDEO_REQUEST_SEEK:
       return {
         ...state,
-        isSeeking: action.isSeeking
+        seekingTime: action.seekingTime
+      };
+    case VIDEO_SEEK_TOGGLE:
+      const seekingTime = action.isSeeking ? state.seekingTime : 0;
+
+      return {
+        ...state,
+        isSeeking: action.isSeeking,
+        seekingTime
       };
     case UPDATE_TRACKS_LIST:
       return {
