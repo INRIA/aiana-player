@@ -3,18 +3,29 @@ import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
+import styled from '../../utils/styled-components';
 
 interface IMediaChapterButton extends IConnectedReduxProps {
   startTime: number;
   video: HTMLVideoElement | null;
 }
 
+const StyledButton = styled.button`
+  display: block;
+  border: 0;
+  background-color: transparent;
+  text-decoration: underline;
+  font-size: 100%;
+  font-family: inherit;
+  cursor: pointer;
+`;
+
 class MediaChapterButton extends React.Component<IMediaChapterButton> {
   public render() {
     return (
-      <button type="button" onClick={this.clickHandler}>
+      <StyledButton type="button" onClick={this.clickHandler}>
         {this.props.children}
-      </button>
+      </StyledButton>
     );
   }
 
