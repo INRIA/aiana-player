@@ -34,3 +34,7 @@ export const I18N_DURATION_HOURS_KEY = 'time.duration.h';
 export const I18N_DURATION_MINUTES_SECONDS_KEY = 'time.duration.ms';
 export const I18N_DURATION_MINUTES_KEY = 'time.duration.m';
 export const I18N_DURATION_SECONDS_KEY = 'time.duration.s';
+
+export const TRACK_KIND_SUBTITLES = 'subtitles';
+export const TRACK_KIND_CAPTIONS = 'captions';
+export const TRACK_KIND_CHAPTERS = 'chapters';

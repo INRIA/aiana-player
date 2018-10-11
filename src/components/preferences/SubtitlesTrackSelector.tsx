@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveTextTrack } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IRawTextTrack } from '../../utils/text-tracks';
+import { IRawTextTrack } from '../../utils/media-tracks';
 import { ITransnected } from '../../utils/types';
 
 interface ISubtitlesTrackSelector extends ITransnected {

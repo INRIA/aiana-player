@@ -6,7 +6,7 @@ const StyledAiana = styled.div`
   box-sizing: border-box;
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};
-  font-size: 1rem;
+  font-size: 1em;
   font-family: system, sans-serif;
 
   *,

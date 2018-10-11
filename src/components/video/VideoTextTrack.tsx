@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { setSubtitleText } from '../../actions/player';
+import { DEFAULT_LANG } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
-import { IRawTextTrack } from '../../utils/text-tracks';
+import { IRawTextTrack } from '../../utils/media-tracks';
 
 export interface ITrack {
   isDefault?: boolean;
@@ -21,7 +22,8 @@ export interface IConnectedTrack extends ITrack, IConnectedReduxProps {
 class VideoTextTrack extends React.Component<IConnectedTrack> {
   public static defaultProps: ITrack = {
     isDefault: false,
-    kind: 'subtitles'
+    kind: 'subtitles',
+    srcLang: DEFAULT_LANG
   };
 
   private trackRef = React.createRef<HTMLTrackElement>();

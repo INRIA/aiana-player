@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
 import {
+  ADD_CHAPTER_TRACK,
   PLAYER_ELEMENT_MOUNTED,
   SET_SUBTITLE_TEXT,
   TOGGLE_FULLSCREEN,
@@ -25,12 +26,16 @@ import {
   DEFAULT_PLAY_RATE,
   DEFAULT_VOLUME
 } from '../constants';
-import { IRawTextTrack } from '../utils/text-tracks';
+import { IRawChapterTrack, IRawTextTrack } from '../utils/media-tracks';
 
 export interface IPlayerState {
   autoPlay: boolean;
 
-  subtitleText: string | undefined;
+  /**
+   * Chapters tracks are gathered asynchronously when their HTMLTrackElement
+   * has successfuly loaded.
+   */
+  chaptersTracks: IRawChapterTrack[];
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -56,8 +61,12 @@ export interface IPlayerState {
   playbackRate: number;
   playerElement: HTMLElement | null;
   preload: string;
-  readonly sourceTracks: ITrack[];
+
   readonly sources: ISource[];
+
+  subtitleText: string | undefined;
+
+  readonly subtitlesTracks: ITrack[];
 
   /**
    * HTMLMediaElement already parses vtt files and manage its own tracks state
@@ -80,6 +89,7 @@ export interface IPlayerState {
 
 const initialState: IPlayerState = {
   autoPlay: false,
+  chaptersTracks: [],
   currentTime: 0,
   duration: 0,
   isFullscreen: false,
@@ -90,13 +100,21 @@ const initialState: IPlayerState = {
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
   preload: 'auto',
-  sourceTracks: [
+  sources: [
     {
-      label: 'Default subtitles',
+      src:
+        'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4#t=10,15',
+      type: 'video/mp4'
+    }
+  ],
+  subtitleText: undefined,
+  subtitlesTracks: [
+    {
+      label: 'Default subtitles (English)',
       src: 'http://localhost:3000/dev/subtitles.vtt'
     },
     {
-      label: 'LOLSpanish subtitles',
+      label: 'Sous-titres',
       src: 'http://localhost:3000/dev/subtitles.1.vtt',
       srcLang: 'es'
     },
@@ -104,15 +122,20 @@ const initialState: IPlayerState = {
       kind: 'captions',
       label: 'Captions',
       src: 'http://localhost:3000/dev/subtitles.vtt'
-    }
-  ],
-  sources: [
+    },
     {
-      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
-      type: 'video/mp4'
+      kind: 'chapters',
+      label: 'Chapters',
+      src: 'http://localhost:3000/dev/chapters.en.vtt',
+      srcLang: 'en'
+    },
+    {
+      kind: 'chapters',
+      label: 'Chapitres',
+      src: 'http://localhost:3000/dev/chapters.fr.vtt',
+      srcLang: 'fr'
     }
   ],
-  subtitleText: undefined,
   textTracks: [],
   videoElement: null,
   volume: DEFAULT_VOLUME
@@ -207,6 +230,16 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       return {
         ...state,
         subtitleText: action.subtitleText
+      };
+    case ADD_CHAPTER_TRACK:
+      const chaptersTracks = [].concat(
+        state.chaptersTracks as any,
+        action.chaptersTrack
+      );
+
+      return {
+        ...state,
+        chaptersTracks
       };
     default:
       return state;
