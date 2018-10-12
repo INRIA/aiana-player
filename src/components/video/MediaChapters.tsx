@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { DEFAULT_LANG } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store/index';
-import { IRawChapterTrack } from '../../utils/media-tracks';
+import { IMediaCue, IRawChapterTrack } from '../../utils/media-tracks';
 import styled from '../../utils/styled-components';
 import MediaChapterButton from './MediaChapterButton';
 
@@ -23,6 +23,28 @@ interface IMediaChapters extends IConnectedReduxProps {
   language: string;
 }
 
+interface ICuesList {
+  cues: IMediaCue[];
+}
+
+const CuesList: React.SFC<ICuesList> = ({ cues }) => {
+  if (cues.length === 0) {
+    return null;
+  }
+
+  return (
+    <ol>
+      {cues.map((vttCue, index) => (
+        <li key={index}>
+          <MediaChapterButton startTime={vttCue.startTime}>
+            {vttCue.text}
+          </MediaChapterButton>
+        </li>
+      ))}
+    </ol>
+  );
+};
+
 class MediaChapters extends React.Component<IMediaChapters> {
   public render() {
     const { chaptersTracks, language } = this.props;
@@ -40,11 +62,7 @@ class MediaChapters extends React.Component<IMediaChapters> {
     return (
       <StyledChapters className="aip-chapters">
         <h3>{activeTrack.label}</h3>
-        {cues.map((vttCue, index) => (
-          <MediaChapterButton key={index} startTime={vttCue.startTime}>
-            {vttCue.text}
-          </MediaChapterButton>
-        ))}
+        <CuesList cues={cues} />
       </StyledChapters>
     );
   }
