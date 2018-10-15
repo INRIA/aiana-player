@@ -106,8 +106,7 @@ const initialState: IPlayerState = {
   seekingTime: 0,
   sources: [
     {
-      src:
-        'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4#t=10,15',
+      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
       type: 'video/mp4'
     }
   ],
