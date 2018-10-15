@@ -3,19 +3,17 @@ export function enterFullscreen(element: HTMLElement): void {
     element.requestFullscreen();
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
   }
 }
 
 export function exitFullscreen(): void {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
+  document.exitFullscreen();
 }
 
 export function hasFullscreenElement(): boolean {
-  if (document.fullscreenElement || document.webkitFullscreenElement) {
+  if (document.fullscreenElement) {
     return true;
   }
 
@@ -23,9 +21,9 @@ export function hasFullscreenElement(): boolean {
 }
 
 export function isFullscreenEnabled(): boolean {
-  return document.fullscreenEnabled || document.webkitFullscreenEnabled;
+  return document.fullscreenEnabled;
 }
 
 export function isDocumentFullscreen(): boolean {
-  return document.webkitIsFullScreen;
+  return document.fullscreen;
 }
