@@ -48,7 +48,7 @@ export function setSubtitleText(text: string | undefined): AnyAction {
 
 export function updateActiveTextTrack(textTrackLabel: string): AnyAction {
   return {
-    activeTrack: textTrackLabel,
+    textTrackLabel,
     type: UPDATE_ACTIVE_TEXT_TRACK
   };
 }

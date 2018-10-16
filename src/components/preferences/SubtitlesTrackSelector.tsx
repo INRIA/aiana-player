@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { updateActiveTextTrack } from '../../actions/player';
+import { setSubtitleText, updateActiveTextTrack } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { IRawTextTrack } from '../../utils/media-tracks';
 import { ITransnected } from '../../utils/types';
@@ -52,7 +52,12 @@ class SubtitlesTrackSelector extends React.Component<ISubtitlesTrackSelector> {
   private selectedTrackChangedHandler = (
     evt: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    this.props.dispatch(updateActiveTextTrack(evt.currentTarget.value));
+    const { dispatch } = this.props;
+    const trackLabel = evt.currentTarget.value;
+    dispatch(updateActiveTextTrack(trackLabel));
+    if (trackLabel === '') {
+      dispatch(setSubtitleText(undefined));
+    }
   };
 }
 

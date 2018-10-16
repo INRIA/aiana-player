@@ -224,7 +224,7 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       };
     case UPDATE_ACTIVE_TEXT_TRACK:
       const textTracks = state.textTracks.map((track) => {
-        if (track.label === action.activeTrack) {
+        if (track.label === action.textTrackLabel) {
           return { ...track, active: true };
         }
         if (track.active === true) {
