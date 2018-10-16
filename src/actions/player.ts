@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import { ExtendedHTMLElement, ThunkResult } from 'src/types';
 import {
   enterFullscreen,
   exitFullscreen,
@@ -39,17 +40,24 @@ export function addChaptersTrack(chaptersTrack: IRawChapterTrack): AnyAction {
   };
 }
 
-export function setSubtitleText(text: string | undefined): AnyAction {
+export function setSubtitleText(text: string | undefined) {
   return {
     subtitleText: text,
     type: SET_SUBTITLE_TEXT
   };
 }
 
-export function updateActiveTextTrack(textTrackLabel: string): AnyAction {
-  return {
-    textTrackLabel,
-    type: UPDATE_ACTIVE_TEXT_TRACK
+export function updateActiveTextTrack(
+  textTrackLabel: string
+): ThunkResult<void> {
+  return (dispatch) => {
+    dispatch({
+      textTrackLabel,
+      type: UPDATE_ACTIVE_TEXT_TRACK
+    });
+    if (textTrackLabel === '') {
+      dispatch(setSubtitleText(undefined));
+    }
   };
 }
 
@@ -108,9 +116,12 @@ export function handleFullscreenChange(isFullscreen: boolean): AnyAction {
   };
 }
 
-export function handleToggleFullscreen(rootElement: HTMLElement): AnyAction {
+export function handleToggleFullscreen(
+  rootElement: ExtendedHTMLElement
+): AnyAction {
   const shouldExitFullscreen = isDocumentFullscreen();
 
+  // TODO: this should return Promise.
   if (shouldExitFullscreen) {
     exitFullscreen();
   } else {

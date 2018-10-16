@@ -1,4 +1,5 @@
 import { Reducer } from 'redux';
+import { ExtendedHTMLElement } from 'src/types';
 import {
   ADD_CHAPTER_TRACK,
   PLAYER_ELEMENT_MOUNTED,
@@ -60,7 +61,7 @@ export interface IPlayerState {
    * expressed as a multiple of the normal speed of the media resource.
    */
   playbackRate: number;
-  playerElement: HTMLElement | null;
+  playerElement: ExtendedHTMLElement | null;
   preload: string;
 
   seekingTime: number;

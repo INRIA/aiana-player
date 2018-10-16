@@ -1,4 +1,6 @@
-export function enterFullscreen(element: HTMLElement): void {
+import { ExtendedDocument, ExtendedHTMLElement } from 'src/types';
+
+export function enterFullscreen(element: ExtendedHTMLElement): void {
   if (element.requestFullscreen) {
     element.requestFullscreen();
   } else if (element.webkitRequestFullscreen) {
@@ -9,11 +11,28 @@ export function enterFullscreen(element: HTMLElement): void {
 }
 
 export function exitFullscreen(): void {
-  document.exitFullscreen();
+  const doc = document as ExtendedDocument;
+
+  if (doc.exitFullscreen) {
+    doc.exitFullscreen();
+  } else if (doc.webkitExitFullscreen) {
+    doc.webkitExitFullscreen();
+  } else if (doc.mozCancelFullScreen) {
+    doc.mozCancelFullScreen();
+  } else if (doc.msExitFullscreen) {
+    doc.msExitFullscreen();
+  }
 }
 
-export function hasFullscreenElement(): boolean {
-  if (document.fullscreenElement) {
+export function isDocumentFullscreen(): boolean {
+  const doc = document as ExtendedDocument;
+
+  if (
+    doc.fullscreenElement ||
+    doc.mozFullScreenElement ||
+    doc.msFullScreenElement ||
+    doc.webkitFullscreenElement
+  ) {
     return true;
   }
 
@@ -21,9 +40,12 @@ export function hasFullscreenElement(): boolean {
 }
 
 export function isFullscreenEnabled(): boolean {
-  return document.fullscreenEnabled;
-}
+  const doc = document as ExtendedDocument;
 
-export function isDocumentFullscreen(): boolean {
-  return document.fullscreen;
+  return (
+    doc.fullscreenEnabled ||
+    doc.webkitFullscreenEnabled ||
+    doc.mozFullScreenEnabled ||
+    doc.msFullscreenEnabled
+  );
 }

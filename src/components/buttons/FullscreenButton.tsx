@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { ExtendedHTMLElement } from 'src/types';
 import { handleToggleFullscreen } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import { ITransnected } from '../../utils/types';
@@ -27,7 +28,7 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
 
 interface IProps extends ITransnected {
   isFullscreen: boolean;
-  playerElement: HTMLElement | null;
+  playerElement: ExtendedHTMLElement | null;
 }
 
 class FullscreenButton extends React.Component<IProps> {
