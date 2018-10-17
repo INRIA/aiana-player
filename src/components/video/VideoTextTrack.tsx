@@ -25,16 +25,16 @@ interface IDispatchProps {
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
 
 class VideoTextTrack extends React.Component<ITrackProps> {
+  public static defaultProps: ITrack = {
+    isDefault: false,
+    kind: 'subtitles',
+    srcLang: DEFAULT_LANG
+  };
+
   private trackRef = React.createRef<HTMLTrackElement>();
 
   public render() {
-    const {
-      isDefault = false,
-      kind = 'subtitle',
-      label,
-      src,
-      srcLang = DEFAULT_LANG
-    } = this.props;
+    const { isDefault, kind, label, src, srcLang } = this.props;
 
     if (!src) {
       return null;
