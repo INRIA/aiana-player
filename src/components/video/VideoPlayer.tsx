@@ -14,7 +14,6 @@ import {
   updateTracksList
 } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
 import {
   IRawTextTrack,
   isChapterTrack,
@@ -25,11 +24,6 @@ import styled from '../../utils/styled-components';
 import MediaChapterTrack from './MediaChapterTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
-export interface ISource {
-  type?: string;
-  src: string;
-}
-
 const StyledVideo = styled.video`
   display: block;
   width: 100%;
@@ -37,7 +31,26 @@ const StyledVideo = styled.video`
   max-width: 100%;
 `;
 
-export interface IVideoProps extends IConnectedReduxProps {
+export interface ISource {
+  type?: string;
+  src: string;
+}
+
+interface IDispatchProps {
+  changeVolume: (volume: number) => void;
+  mediaElementMounted: (media: HTMLMediaElement) => void;
+  mediaElementUnounted: () => void;
+  pauseHandler: () => void;
+  playHandler: () => void;
+  startSeeking: () => void;
+  stopSeeking: () => void;
+  toggleMute: (muted: boolean) => void;
+  updateCurrentTime: (time: number) => void;
+  updateMediaDuration: (duration: number) => void;
+  updateTracksList: (textTracks: IRawTextTrack[]) => void;
+}
+
+interface IVideoProps {
   autoPlay: boolean;
   currentTime: number;
   isMuted: boolean;
@@ -51,33 +64,37 @@ export interface IVideoProps extends IConnectedReduxProps {
   volume: number;
 }
 
-class VideoPlayer extends React.PureComponent<IVideoProps> {
-  private videoRef = React.createRef<HTMLMediaElement>();
+interface IProps extends IVideoProps, IDispatchProps {}
+
+class VideoPlayer extends React.Component<IProps> {
+  private mediaRef = React.createRef<HTMLMediaElement>();
 
   public componentDidMount() {
-    const { dispatch, volume, isMuted } = this.props;
-    const video = this.videoRef.current;
+    const { volume, isMuted } = this.props;
+    const media = this.mediaRef.current;
 
-    if (!video) {
+    if (!media) {
       return;
     }
 
-    dispatch(mediaElementMounted(video));
+    this.props.mediaElementMounted(media);
 
-    video.volume = volume;
-    video.muted = isMuted;
+    media.volume = volume;
+    media.muted = isMuted;
 
     this.populateTextTracks();
   }
 
   public componentWillUnmount() {
-    this.props.dispatch(mediaElementUnounted());
+    this.props.mediaElementUnounted();
   }
 
   public render() {
     const {
       autoPlay,
       nativeControls,
+      pauseHandler,
+      playHandler,
       preload,
       sources,
       subtitlesTracks
@@ -85,7 +102,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
 
     return (
       <StyledVideo
-        innerRef={this.videoRef}
+        innerRef={this.mediaRef}
         className="aip-video"
         autoPlay={autoPlay}
         controls={nativeControls}
@@ -93,8 +110,8 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
         preload={preload}
         onClick={this.clickHandler}
         onLoadedMetadata={this.loadedMetadataHandler}
-        onPause={this.pauseHandler}
-        onPlay={this.playHandler}
+        onPause={pauseHandler}
+        onPlay={playHandler}
         onSeeked={this.seekedHandler}
         onSeeking={this.seekingHandler}
         onTimeUpdate={this.timeUpdateHandler}
@@ -122,14 +139,14 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
    * Handles any changes made to the text tracks (selected, etc).
    */
   private populateTextTracks = () => {
-    const { dispatch, subtitlesTracks } = this.props;
+    const { subtitlesTracks } = this.props;
 
-    if (!this.videoRef.current || !subtitlesTracks) {
+    if (!this.mediaRef.current || !subtitlesTracks) {
       return;
     }
 
     const videoTracks = [
-      ...this.videoRef.current.textTracks[Symbol.iterator]()
+      ...this.mediaRef.current.textTracks[Symbol.iterator]()
     ];
     const defaultTrack = subtitlesTracks.find(
       (track) => track.isDefault === true
@@ -145,37 +162,37 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
       });
 
     if (visibleTracks.length) {
-      dispatch(updateTracksList(visibleTracks));
+      this.props.updateTracksList(visibleTracks);
     }
   };
 
   private clickHandler = () => {
-    const video = this.videoRef.current!;
-    video.paused ? video.play() : video.pause();
+    const media = this.mediaRef.current!;
+    media.paused ? media.play() : media.pause();
   };
 
   private seekedHandler = () => {
-    const { dispatch, isSeeking } = this.props;
+    const { isSeeking } = this.props;
     if (isSeeking) {
-      dispatch(stopSeeking());
+      this.props.stopSeeking();
     }
   };
 
   private seekingHandler = () => {
-    const { dispatch, isSeeking } = this.props;
+    const { isSeeking } = this.props;
     if (!isSeeking) {
-      dispatch(startSeeking());
+      this.props.startSeeking();
     }
   };
 
   private timeUpdateHandler = () => {
-    const video = this.videoRef.current!;
-    this.props.dispatch(updateCurrentTime(video.currentTime));
+    const media = this.mediaRef.current!;
+    this.props.updateCurrentTime(media.currentTime);
   };
 
   private loadedMetadataHandler = () => {
-    const video = this.videoRef.current!;
-    this.props.dispatch(updateMediaDuration(video.duration));
+    const media = this.mediaRef.current!;
+    this.props.updateMediaDuration(media.duration);
   };
 
   /**
@@ -184,29 +201,21 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
    * application state.
    */
   private volumeChangeHandler = () => {
-    const video = this.videoRef.current!;
-    const { dispatch, isMuted, volume } = this.props;
+    const media = this.mediaRef.current!;
+    const { isMuted, volume } = this.props;
 
     // only dispatch `toggleMute` when state is behind video object property
-    if ((!isMuted && video.muted) || (isMuted && !video.muted)) {
-      dispatch(toggleMute(video.muted));
+    if ((!isMuted && media.muted) || (isMuted && !media.muted)) {
+      this.props.toggleMute(media.muted);
     }
 
-    if (video.volume !== volume) {
-      dispatch(changeVolume(video.volume));
+    if (media.volume !== volume) {
+      this.props.changeVolume(media.volume);
     }
-  };
-
-  private playHandler = () => {
-    this.props.dispatch(playMedia());
-  };
-
-  private pauseHandler = () => {
-    this.props.dispatch(pauseMedia());
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   autoPlay: state.player.autoPlay,
   currentTime: state.player.currentTime,
   isMuted: state.player.isMuted,
@@ -218,4 +227,23 @@ export default connect((state: IAianaState) => ({
   subtitlesTracks: state.player.subtitlesTracks,
   textTracks: state.player.textTracks,
   volume: state.player.volume
-}))(VideoPlayer);
+});
+
+const mapDispatchToProps = {
+  changeVolume,
+  mediaElementMounted,
+  mediaElementUnounted,
+  pauseHandler: pauseMedia,
+  playHandler: playMedia,
+  startSeeking,
+  stopSeeking,
+  toggleMute,
+  updateCurrentTime,
+  updateMediaDuration,
+  updateTracksList
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VideoPlayer);

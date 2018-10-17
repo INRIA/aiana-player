@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { CDispatch } from 'src/store';
 import { requestMediaPause, requestMediaPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
@@ -85,14 +84,10 @@ const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement
 });
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  pauseMedia: (media: HTMLMediaElement) => {
-    dispatch(requestMediaPause(media));
-  },
-  playMedia: (media: HTMLMediaElement) => {
-    dispatch(requestMediaPlay(media));
-  }
-});
+const mapDispatchToProps = {
+  pauseMedia: requestMediaPause,
+  playMedia: requestMediaPlay
+};
 
 export default connect<IPlayButtonProps, IDispatchProps, void>(
   mapStateToProps,

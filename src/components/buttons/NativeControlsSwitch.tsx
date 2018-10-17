@@ -1,15 +1,24 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { AnyAction } from 'redux';
 import { toggleNativeControls } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { ITransnected } from '../../utils/types';
 
-interface IProps extends ITransnected {
+interface IProps {
   nativeControls: boolean;
 }
 
-class NativeControlsSwitch extends React.Component<IProps> {
+interface IDispatchProps {
+  toggleNativeControls(nativeControls: boolean): AnyAction;
+}
+
+interface INativeControlsSwitch
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
+
+class NativeControlsSwitch extends React.Component<INativeControlsSwitch> {
   public render() {
     const { nativeControls, t } = this.props;
 
@@ -26,12 +35,19 @@ class NativeControlsSwitch extends React.Component<IProps> {
   }
 
   private handleInputCheck = () => {
-    const { dispatch, nativeControls } = this.props;
-
-    dispatch(toggleNativeControls(!nativeControls));
+    this.props.toggleNativeControls(!this.props.nativeControls);
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   nativeControls: state.player.nativeControls
-}))(translate()(NativeControlsSwitch));
+});
+
+const mapDispatchToProps = {
+  toggleNativeControls
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(NativeControlsSwitch));

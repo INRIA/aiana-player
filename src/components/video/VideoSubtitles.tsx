@@ -34,26 +34,24 @@ const StyledSpan = styled.span`
   }
 `;
 
-class VideoSubtitles extends React.Component<IVideoSubtitles> {
-  public render() {
-    if (!this.props.subtitleText) {
-      return null;
-    }
-
-    const text = formatSubtitles(this.props.subtitleText);
-
-    return (
-      <StyledSubtitles>
-        {text.map((line, index) => (
-          <StyledSpan key={index}>
-            <span>{line}</span>
-          </StyledSpan>
-        ))}
-      </StyledSubtitles>
-    );
+const VideoSubtitles: React.SFC<IVideoSubtitles> = ({ subtitleText }) => {
+  if (!subtitleText) {
+    return null;
   }
-}
 
-export default connect((state: IAianaState) => ({
+  return (
+    <StyledSubtitles>
+      {formatSubtitles(subtitleText).map((line, index) => (
+        <StyledSpan key={index}>
+          <span>{line}</span>
+        </StyledSpan>
+      ))}
+    </StyledSubtitles>
+  );
+};
+
+const mapStateToProps = (state: IAianaState) => ({
   subtitleText: state.player.subtitleText
-}))(VideoSubtitles);
+});
+
+export default connect(mapStateToProps)(VideoSubtitles);

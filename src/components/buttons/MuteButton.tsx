@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { muteMedia, unmuteMedia } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
-import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
@@ -32,12 +31,19 @@ const StyledMuteButton = styled(StyledButton)`
   }
 `;
 
-interface IProps extends ITransnected {
+interface IProps {
   isMuted: boolean;
   mediaElement: HTMLMediaElement | null;
 }
 
-class MuteButton extends React.Component<IProps> {
+interface IDispatchProps {
+  mute(media: HTMLMediaElement): void;
+  unmute(media: HTMLMediaElement): void;
+}
+
+interface IMuteButton extends IProps, IDispatchProps, InjectedTranslateProps {}
+
+class MuteButton extends React.Component<IMuteButton> {
   public render() {
     const controlText = this.getControlText();
 
@@ -54,16 +60,16 @@ class MuteButton extends React.Component<IProps> {
   }
 
   private clickHandler = () => {
-    const { dispatch, isMuted, mediaElement } = this.props;
+    const { isMuted, mediaElement, mute, unmute } = this.props;
 
     if (!mediaElement) {
       return;
     }
 
     if (isMuted) {
-      dispatch(unmuteMedia(mediaElement));
+      unmute(mediaElement);
     } else {
-      dispatch(muteMedia(mediaElement));
+      mute(mediaElement);
     }
   };
 
@@ -74,7 +80,17 @@ class MuteButton extends React.Component<IProps> {
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   isMuted: state.player.isMuted,
   mediaElement: state.player.mediaElement
-}))(translate()(MuteButton));
+});
+
+const mapDispatchToProps = {
+  mute: muteMedia,
+  unmute: unmuteMedia
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(MuteButton));

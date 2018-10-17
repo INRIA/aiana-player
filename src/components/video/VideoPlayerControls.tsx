@@ -31,7 +31,7 @@ interface IProps extends IConnectedReduxProps {
 }
 
 const VideoPlayerControls: React.SFC<IProps> = ({ nativeControls }) => {
-  if (nativeControls === true) {
+  if (nativeControls) {
     return null;
   }
 
@@ -52,6 +52,8 @@ const VideoPlayerControls: React.SFC<IProps> = ({ nativeControls }) => {
   );
 };
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   nativeControls: state.player.nativeControls
-}))(VideoPlayerControls);
+});
+
+export default connect(mapStateToProps)(VideoPlayerControls);

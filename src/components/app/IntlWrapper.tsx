@@ -2,10 +2,9 @@ import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
 import { i18nInstance } from '../../translations';
 
-interface IProps extends IConnectedReduxProps {
+interface IProps {
   language: string;
   children: any;
 }
@@ -16,6 +15,8 @@ const IntlWrapper: React.SFC<IProps> = ({ children, language }) => (
   </I18nextProvider>
 );
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   language: state.preferences.language
-}))(IntlWrapper);
+});
+
+export default connect(mapStateToProps)(IntlWrapper);

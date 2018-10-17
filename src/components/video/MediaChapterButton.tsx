@@ -2,13 +2,18 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
 import styled from '../../utils/styled-components';
 
-interface IMediaChapterButton extends IConnectedReduxProps {
+interface IProps {
   startTime: number;
-  video: HTMLMediaElement | null;
+  media: HTMLMediaElement | null;
 }
+
+interface IDispatchProps {
+  requestSeek(media: HTMLMediaElement, seekingTime: number): void;
+}
+
+interface IMediaChapterButton extends IProps, IDispatchProps {}
 
 const StyledButton = styled.button`
   display: block;
@@ -30,14 +35,23 @@ class MediaChapterButton extends React.Component<IMediaChapterButton> {
   }
 
   private clickHandler = () => {
-    const { dispatch, startTime, video } = this.props;
-    if (!video) {
+    const { requestSeek: requestSeekAction, startTime, media } = this.props;
+    if (!media) {
       return;
     }
-    dispatch(requestSeek(video, startTime));
+    requestSeekAction(media, startTime);
   };
 }
 
-export default connect((state: IAianaState) => ({
-  video: state.player.mediaElement
-}))(MediaChapterButton);
+const mapStateToProps = (state: IAianaState) => ({
+  media: state.player.mediaElement
+});
+
+const mapDispatchToProps = {
+  requestSeek
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MediaChapterButton);

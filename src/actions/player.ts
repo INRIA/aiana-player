@@ -83,10 +83,10 @@ function toggleSeek(isSeeking: boolean): AnyAction {
 }
 
 export function requestSeek(
-  video: HTMLMediaElement,
+  media: HTMLMediaElement,
   seekingTime: number
 ): AnyAction {
-  video.currentTime = seekingTime;
+  media.currentTime = seekingTime;
 
   return {
     seekingTime,

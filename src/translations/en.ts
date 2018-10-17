@@ -4,7 +4,7 @@ export default {
   'controls.mute': 'Mute',
   'controls.pause': 'Pause',
   'controls.play': 'Play',
-  'controls.seekbar.label': 'Video progress',
+  'controls.seekbar.label': 'Media progress',
   'controls.seekbar.valuetext': '{{ currentTime }} of {{ duration }}',
   'controls.unmute': 'Unmute',
   'controls.volume.label': 'Volume level',

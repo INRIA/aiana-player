@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { ExtendedHTMLElement } from 'src/types';
 import { handleToggleFullscreen } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
@@ -26,12 +25,21 @@ const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
   return <StyledFullscreenIcon aria-hidden="true" />;
 };
 
-interface IProps extends ITransnected {
+interface IProps {
   isFullscreen: boolean;
   playerElement: ExtendedHTMLElement | null;
 }
 
-class FullscreenButton extends React.Component<IProps> {
+interface IDispatchProps {
+  toggleFullscreen(element: ExtendedHTMLElement): void;
+}
+
+interface IFullscreenButton
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
+
+class FullscreenButton extends React.Component<IFullscreenButton> {
   public render() {
     const controlText = this.getControlText();
 
@@ -50,10 +58,10 @@ class FullscreenButton extends React.Component<IProps> {
   private toggleFullscreen = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    const { dispatch, playerElement } = this.props;
+    const { playerElement, toggleFullscreen } = this.props;
 
     if (playerElement) {
-      dispatch(handleToggleFullscreen(playerElement));
+      toggleFullscreen(playerElement);
     }
   };
 
@@ -68,7 +76,16 @@ class FullscreenButton extends React.Component<IProps> {
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   isFullscreen: state.player.isFullscreen,
   playerElement: state.player.playerElement
-}))(translate()(FullscreenButton));
+});
+
+const mapDispatchToProps = {
+  toggleFullscreen: handleToggleFullscreen
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(FullscreenButton));

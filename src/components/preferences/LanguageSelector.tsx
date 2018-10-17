@@ -1,16 +1,25 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { AnyAction } from 'redux';
 import { changeLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
-import { ITransnected } from '../../utils/types';
 
-interface IProps extends ITransnected {
+interface IProps {
   availableLanguages: string[];
   currentLanguage: string;
 }
 
-class LanguageSelector extends React.Component<IProps> {
+interface IDispatchProps {
+  changeLanguage(language: string): AnyAction;
+}
+
+interface ILanguageSelector
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
+
+class LanguageSelector extends React.Component<ILanguageSelector> {
   public render() {
     const { availableLanguages, currentLanguage, t } = this.props;
 
@@ -31,11 +40,20 @@ class LanguageSelector extends React.Component<IProps> {
   }
 
   private onLanguageChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    this.props.dispatch(changeLanguage(evt.currentTarget.value));
+    this.props.changeLanguage(evt.currentTarget.value);
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   availableLanguages: state.preferences.availableLanguages,
   currentLanguage: state.preferences.language
-}))(translate()(LanguageSelector));
+});
+
+const mapDispatchToProps = {
+  changeLanguage
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(LanguageSelector));

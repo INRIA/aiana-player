@@ -1,17 +1,25 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { ITransnected } from '../../utils/types';
 
-interface IProps extends ITransnected {
+interface IProps {
   availablePlaybackRates: number[];
   currentPlaybackRate: number;
   mediaElement: HTMLMediaElement | null;
 }
 
-class PlaybackRateSelector extends React.Component<IProps> {
+interface IDispatchProps {
+  changePlaybackRate(media: HTMLMediaElement, playbackRate: number): void;
+}
+
+interface IPlaybackRateSelector
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
+
+class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   public render() {
     const { availablePlaybackRates, currentPlaybackRate, t } = this.props;
 
@@ -32,7 +40,10 @@ class PlaybackRateSelector extends React.Component<IProps> {
   }
 
   private onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    const { dispatch, mediaElement } = this.props;
+    const {
+      changePlaybackRate: changePlaybackRateAction,
+      mediaElement
+    } = this.props;
 
     if (!mediaElement) {
       return;
@@ -40,12 +51,21 @@ class PlaybackRateSelector extends React.Component<IProps> {
 
     const playbackRateValue = Number(evt.currentTarget.value);
 
-    dispatch(changePlaybackRate(mediaElement, playbackRateValue));
+    changePlaybackRateAction(mediaElement, playbackRateValue);
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   availablePlaybackRates: state.preferences.availablePlaybackRates,
   currentPlaybackRate: state.player.playbackRate,
   mediaElement: state.player.mediaElement
-}))(translate()(PlaybackRateSelector));
+});
+
+const mapDispatchToProps = {
+  changePlaybackRate
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(PlaybackRateSelector));

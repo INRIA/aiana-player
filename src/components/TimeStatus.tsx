@@ -33,7 +33,9 @@ const TimeStatus: React.SFC<IProps> = ({ currentTime, duration }) => (
   </StyledDiv>
 );
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   currentTime: state.player.currentTime,
   duration: state.player.duration
-}))(TimeStatus);
+});
+
+export default connect(mapStateToProps)(TimeStatus);

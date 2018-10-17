@@ -6,7 +6,6 @@ import {
   playerElementMounted
 } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
 import themes from '../../themes';
 import { isDocumentFullscreen } from '../../utils/fullscreen';
 import { injectGlobalStyles } from '../../utils/global-styles';
@@ -16,23 +15,29 @@ import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
 import IntlWrapper from './IntlWrapper';
 
-interface IAiana extends IConnectedReduxProps {
+interface IProps {
   availableThemes: string[];
   currentTheme: string;
 }
+
+interface IDispatchProps {
+  handleFullscreenChange: (isFullscreen: boolean) => void;
+  playerElementMounted: (playerElement: HTMLElement) => void;
+}
+
+interface IAiana extends IProps, IDispatchProps {}
 
 class Aiana extends React.Component<IAiana> {
   private fullscreenRef = React.createRef<HTMLElement>();
 
   constructor(props: any) {
     super(props);
-
     injectGlobalStyles();
   }
 
   public componentDidMount() {
     if (this.fullscreenRef.current) {
-      this.props.dispatch(playerElementMounted(this.fullscreenRef.current));
+      this.props.playerElementMounted(this.fullscreenRef.current);
     }
 
     this.bindDocumentFullscreenEvents();
@@ -75,10 +80,20 @@ class Aiana extends React.Component<IAiana> {
   };
 
   private fullscreenHandler = () => {
-    this.props.dispatch(handleFullscreenChange(isDocumentFullscreen()));
+    this.props.handleFullscreenChange(isDocumentFullscreen());
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   currentTheme: state.preferences.currentTheme
-}))(Aiana);
+});
+
+const mapDispatchToProps = {
+  handleFullscreenChange,
+  playerElementMounted
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Aiana);

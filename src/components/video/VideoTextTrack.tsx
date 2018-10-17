@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { setSubtitleText } from '../../actions/player';
 import { DEFAULT_LANG } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
 import { IRawTextTrack } from '../../utils/media-tracks';
 
 export interface ITrack {
@@ -14,22 +13,28 @@ export interface ITrack {
   srcLang?: string | undefined;
 }
 
-export interface IConnectedTrack extends ITrack, IConnectedReduxProps {
+interface IStateProps {
   nativeControls: boolean;
   textTracks: IRawTextTrack[];
 }
 
-class VideoTextTrack extends React.Component<IConnectedTrack> {
-  public static defaultProps: ITrack = {
-    isDefault: false,
-    kind: 'subtitles',
-    srcLang: DEFAULT_LANG
-  };
+interface IDispatchProps {
+  updateSubtitleText(text: string | undefined): void;
+}
 
+interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
+
+class VideoTextTrack extends React.Component<ITrackProps> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
   public render() {
-    const { isDefault, kind, label, src, srcLang } = this.props;
+    const {
+      isDefault = false,
+      kind = 'subtitle',
+      label,
+      src,
+      srcLang = DEFAULT_LANG
+    } = this.props;
 
     if (!src) {
       return null;
@@ -58,7 +63,7 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
     t.removeEventListener('cuechange', this.cueChangeHandler);
   }
 
-  public componentDidUpdate(prevProps: IConnectedTrack) {
+  public componentDidUpdate(prevProps: ITrackProps) {
     const { nativeControls } = prevProps;
 
     if (!this.trackRef.current) {
@@ -80,7 +85,7 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
     ) {
       const currentCue = this.trackRef.current.track.activeCues[0];
       const currentText = currentCue ? currentCue.text : undefined;
-      this.props.dispatch(setSubtitleText(currentText));
+      this.props.updateSubtitleText(currentText);
     }
   }
 
@@ -105,7 +110,7 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
 
     const currentCue = this.trackRef.current!.track.activeCues[0];
     const currentText = currentCue ? currentCue.text : undefined;
-    this.props.dispatch(setSubtitleText(currentText));
+    this.props.updateSubtitleText(currentText);
   };
 
   private toggleNativeTextTrack(nativeControls: boolean) {
@@ -115,7 +120,16 @@ class VideoTextTrack extends React.Component<IConnectedTrack> {
   }
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   nativeControls: state.player.nativeControls,
   textTracks: state.player.textTracks
-}))(VideoTextTrack);
+});
+
+const mapDispatchToProps = {
+  updateSubtitleText: setSubtitleText
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VideoTextTrack);

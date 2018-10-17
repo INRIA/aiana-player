@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { CDispatch } from 'src/store';
 import { requestChangeVolume } from '../../actions/player';
 import {
   END_KEY_CODE,
@@ -14,7 +15,6 @@ import { IAianaState } from '../../reducers/index';
 import { hexToHsla } from '../../utils/colors';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
-import { ITransnected } from '../../utils/types';
 import { bounded } from '../../utils/ui';
 
 const StyledDiv = styled.div`
@@ -74,10 +74,19 @@ const StyledDiv = styled.div`
   }
 `;
 
-export interface IVolumeSliderProps extends ITransnected {
+interface IProps {
   mediaElement: HTMLMediaElement | null;
   volume: number;
 }
+
+interface IDispatchProps {
+  updateVolume(media: HTMLMediaElement, volume: number): void;
+}
+
+export interface IVolumeSliderProps
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
 
 class VolumeSlider extends React.Component<IVolumeSliderProps> {
   public elementRef = React.createRef<HTMLDivElement>();
@@ -126,7 +135,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   }
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
-    const { dispatch, mediaElement, volume } = this.props;
+    const { mediaElement, updateVolume, volume } = this.props;
 
     if (!mediaElement) {
       return;
@@ -134,20 +143,16 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
-        dispatch(
-          requestChangeVolume(mediaElement, this.safeVolume(volume + 0.1))
-        );
+        updateVolume(mediaElement, this.safeVolume(volume + 0.1));
         break;
       case LEFT_ARROW_KEY_CODE:
-        dispatch(
-          requestChangeVolume(mediaElement, this.safeVolume(volume - 0.1))
-        );
+        updateVolume(mediaElement, this.safeVolume(volume - 0.1));
         break;
       case HOME_KEY_CODE:
-        dispatch(requestChangeVolume(mediaElement, 0));
+        updateVolume(mediaElement, 0);
         break;
       case END_KEY_CODE:
-        dispatch(requestChangeVolume(mediaElement, 1));
+        updateVolume(mediaElement, 1);
         break;
     }
   };
@@ -188,7 +193,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     sliderX: number,
     sliderWidth: number
   ) => {
-    const { dispatch, mediaElement, volume } = this.props;
+    const { mediaElement, updateVolume, volume } = this.props;
 
     if (!mediaElement) {
       return;
@@ -198,7 +203,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     const newVolume = unitToPercent(positionDifference, sliderWidth) / 100;
 
     if (newVolume !== volume) {
-      dispatch(requestChangeVolume(mediaElement, newVolume));
+      updateVolume(mediaElement, newVolume);
     }
   };
 
@@ -212,7 +217,18 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   }
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement,
   volume: state.player.volume
-}))(translate()(VolumeSlider));
+});
+
+const mapDispatchToProps = (dispatch: CDispatch) => ({
+  updateVolume: (media: HTMLMediaElement, volume: number) => {
+    dispatch(requestChangeVolume(media, volume));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(VolumeSlider));

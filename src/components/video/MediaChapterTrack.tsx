@@ -3,20 +3,22 @@ import { connect } from 'react-redux';
 import { addChaptersTrack } from '../../actions/player';
 import { TRACK_KIND_CHAPTERS } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
 import { IRawChapterTrack, rawChapterTrack } from '../../utils/media-tracks';
 
-export interface IChapterTrack {
+interface IProps {
+  chaptersTracks: IRawChapterTrack[];
   label?: string | undefined;
   src?: string;
   srcLang?: string | undefined;
 }
 
-interface IConnectedChaptersTrack extends IChapterTrack, IConnectedReduxProps {
-  chaptersTracks: IRawChapterTrack[];
+interface IDispatchProps {
+  addChaptersTrack(chaptersTrack: IRawChapterTrack): void;
 }
 
-class ChapterTrack extends React.Component<IConnectedChaptersTrack> {
+export interface IChapterTrack extends IProps, IDispatchProps {}
+
+class ChapterTrack extends React.Component<IChapterTrack> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
   public render() {
@@ -44,7 +46,6 @@ class ChapterTrack extends React.Component<IConnectedChaptersTrack> {
 
     // browser will set track `mode` to disabled.
     this.trackRef.current.track.mode = 'hidden';
-
     this.trackRef.current.addEventListener('load', this.loadHandler);
   }
 
@@ -57,16 +58,26 @@ class ChapterTrack extends React.Component<IConnectedChaptersTrack> {
   }
 
   private loadHandler = () => {
-    const { dispatch } = this.props;
+    const { addChaptersTrack: addChaptersTrackAction } = this.props;
 
     if (!this.trackRef.current) {
       return;
     }
 
-    dispatch(addChaptersTrack(rawChapterTrack(this.trackRef.current.track)));
+    const chaptersTrack = rawChapterTrack(this.trackRef.current.track);
+    addChaptersTrackAction(chaptersTrack);
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.player.chaptersTracks
-}))(ChapterTrack);
+});
+
+const mapDispatchToProps = {
+  addChaptersTrack
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChapterTrack);

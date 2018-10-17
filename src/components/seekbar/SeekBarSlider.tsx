@@ -1,7 +1,8 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { AnyAction } from 'redux';
 import { requestSeek } from '../../actions/player';
 import {
   DEFAULT_SEEK_STEP_MULTIPLIER,
@@ -13,13 +14,12 @@ import {
 import { IAianaState } from '../../reducers/index';
 import { unitToPercent } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
-import { ITransnected } from '../../utils/types';
 import { bounded } from '../../utils/ui';
 import StyledDiv from './Styles';
 
 const { round } = Math;
 
-interface IProps extends ITransnected {
+interface IProps {
   currentTime: number;
   duration: number;
   isSeeking: boolean;
@@ -28,7 +28,16 @@ interface IProps extends ITransnected {
   mediaElement: HTMLMediaElement | null;
 }
 
-class SeekBarSlider extends React.Component<IProps> {
+interface IDispatchProps {
+  requestSeek(media: HTMLMediaElement, time: number): AnyAction;
+}
+
+interface ISeekBarSlider
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
+
+class SeekBarSlider extends React.Component<ISeekBarSlider> {
   public sliderRef = React.createRef<HTMLDivElement>();
   public sliderPosition: number = 0;
   public sliderWidth: number = 0;
@@ -48,7 +57,7 @@ class SeekBarSlider extends React.Component<IProps> {
     }
 
     // If the slider is being used, its registered position should override
-    // the `currentTime`. However, once video has seeked (which does not mean
+    // the `currentTime`. However, once media has seeked (which does not mean
     // enough data was loaded yet) and if the slider is not being used, its
     // position should be the `currentTime`.
     const sliderTime = isSeeking ? seekingTime : currentTime;
@@ -118,38 +127,15 @@ class SeekBarSlider extends React.Component<IProps> {
   };
 
   /**
-   * Unload events bound to `document` to prevent memory leaks.
+   * Unloads events bound to `document` to prevent memory leaks.
    */
   public componentWillUnmount() {
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   }
 
-  private calculateSeekingTime = (
-    mouseX: number,
-    sliderX: number,
-    sliderWidth: number,
-    duration: number
-  ) => {
-    const positionDifference = bounded(mouseX, sliderX, sliderWidth);
-    const newCurrentTime = round(
-      (duration * unitToPercent(positionDifference, this.sliderWidth)) / 100
-    );
-
-    return newCurrentTime;
-  };
-
   private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
-
-    this.setState({
-      seekingTime: this.calculateSeekingTime(
-        evt.pageX,
-        this.sliderPosition,
-        this.sliderWidth,
-        this.props.duration
-      )
-    });
 
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
@@ -178,14 +164,6 @@ class SeekBarSlider extends React.Component<IProps> {
   };
 
   private mouseMoveHandler = (evt: MouseEvent) => {
-    this.setState({
-      seekingTime: this.calculateSeekingTime(
-        evt.pageX,
-        this.sliderPosition,
-        this.sliderWidth,
-        this.props.duration
-      )
-    });
     this.updateCurrentTime(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
@@ -194,7 +172,12 @@ class SeekBarSlider extends React.Component<IProps> {
     sliderX: number,
     sliderWidth: number
   ) => {
-    const { currentTime, dispatch, duration, mediaElement } = this.props;
+    const {
+      currentTime,
+      duration,
+      mediaElement,
+      requestSeek: requestSeekAction
+    } = this.props;
 
     if (!mediaElement) {
       return;
@@ -206,19 +189,19 @@ class SeekBarSlider extends React.Component<IProps> {
     );
 
     if (newCurrentTime !== currentTime) {
-      dispatch(requestSeek(mediaElement, newCurrentTime));
+      requestSeekAction(mediaElement, newCurrentTime);
     }
   };
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const {
       currentTime,
-      dispatch,
       duration,
       isSeeking,
-      seekingTime,
+      mediaElement,
+      requestSeek: requestSeekAction,
       seekStep,
-      mediaElement
+      seekingTime
     } = this.props;
 
     if (!mediaElement) {
@@ -226,9 +209,9 @@ class SeekBarSlider extends React.Component<IProps> {
     }
 
     // User should be able to trigger this event multiple times before
-    // the video `seeked` event is fired.
-    // To do so, `seekingTime` should be used when the video is still seeking,
-    // or the video `currentTime` when it is not seeking.
+    // the media `seeked` event is fired.
+    // To do so, `seekingTime` should be used when the media is still seeking,
+    // or the media `currentTime` when it is not seeking.
     let nextTime: number;
 
     const sliderTime = isSeeking ? seekingTime : currentTime;
@@ -237,17 +220,17 @@ class SeekBarSlider extends React.Component<IProps> {
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
         nextTime = this.safeTime(sliderTime + weightedSeekStep);
-        dispatch(requestSeek(mediaElement, nextTime));
+        requestSeekAction(mediaElement, nextTime);
         break;
       case LEFT_ARROW_KEY_CODE:
         nextTime = this.safeTime(sliderTime - weightedSeekStep);
-        dispatch(requestSeek(mediaElement, nextTime));
+        requestSeekAction(mediaElement, nextTime);
         break;
       case HOME_KEY_CODE:
-        dispatch(requestSeek(mediaElement, 0));
+        requestSeekAction(mediaElement, 0);
         break;
       case END_KEY_CODE:
-        dispatch(requestSeek(mediaElement, duration));
+        requestSeekAction(mediaElement, duration);
         break;
     }
   };
@@ -265,11 +248,20 @@ class SeekBarSlider extends React.Component<IProps> {
   }
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   currentTime: state.player.currentTime,
   duration: state.player.duration,
   isSeeking: state.player.isSeeking,
   mediaElement: state.player.mediaElement,
   seekStep: state.preferences.seekStep,
   seekingTime: state.player.seekingTime
-}))(translate()(SeekBarSlider));
+});
+
+const mapDispatchToProps = {
+  requestSeek
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(SeekBarSlider));
