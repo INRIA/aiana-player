@@ -35,7 +35,6 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "doc": "typedoc --out docs --name 'Aiana Player' --target ES5 --exclude *.test.* src/**",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "devDependencies": {
@@ -62,6 +61,7 @@
     "awesome-typescript-loader": "^5.2.0",
     "husky": "^1.1.2",
     "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
     "react-docgen-typescript-loader": "^2.2.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "redux-devtools-extension": "^2.13.5",
@@ -74,8 +74,6 @@
     "webpack": "^3.12.0"
   },
   "optionalDependencies": {
-    "@svgr/cli": "^2.2.0",
-    "prettier": "^1.14.2",
-    "typedoc": "^0.12.0"
+    "@svgr/cli": "^2.2.0"
   }
 }
