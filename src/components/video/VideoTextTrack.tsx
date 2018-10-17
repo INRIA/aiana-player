@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { setSubtitleText } from '../../actions/player';
-import { DEFAULT_LANG } from '../../constants';
+import { DEFAULT_LANG, TRACK_KIND_SUBTITLES } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { IRawTextTrack } from '../../utils/media-tracks';
 
@@ -27,7 +27,7 @@ interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
 class VideoTextTrack extends React.Component<ITrackProps> {
   public static defaultProps: ITrack = {
     isDefault: false,
-    kind: 'subtitles',
+    kind: TRACK_KIND_SUBTITLES,
     srcLang: DEFAULT_LANG
   };
 

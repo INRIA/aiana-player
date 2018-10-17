@@ -50,10 +50,8 @@ export function updateActiveTextTrack(
   textTrackLabel: string
 ): ThunkResult<void> {
   return (dispatch) => {
-    dispatch({
-      textTrackLabel,
-      type: UPDATE_ACTIVE_TEXT_TRACK
-    });
+    dispatch({ textTrackLabel, type: UPDATE_ACTIVE_TEXT_TRACK });
+
     if (textTrackLabel === '') {
       dispatch(setSubtitleText(undefined));
     }

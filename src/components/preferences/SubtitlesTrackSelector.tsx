@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { CDispatch } from 'src/store';
 import { updateActiveTextTrack } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IRawTextTrack } from '../../utils/media-tracks';
+import { IRawTextTrack, isDisplayableTrack } from '../../utils/media-tracks';
 
 interface IProps {
   nativeControls: boolean;
@@ -42,15 +42,11 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
           <option value="">
             {t('preferences.subtitlestrack.no_subtitle')}
           </option>
-          {textTracks
-            .filter((track) => {
-              return track.kind === 'subtitles' || track.kind === 'captions';
-            })
-            .map((track) => (
-              <option key={track.label} value={track.label}>
-                {track.label}
-              </option>
-            ))}
+          {textTracks.filter(isDisplayableTrack).map((track) => (
+            <option key={track.label} value={track.label}>
+              {track.label}
+            </option>
+          ))}
         </select>
       </label>
     </div>
