@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { translate } from 'react-i18next';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { CDispatch } from 'src/store';
 import { requestMediaPause, requestMediaPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
-import { ITransnected } from '../../utils/types';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledButton from '../styled/StyledButton';
 import StyledSvg from '../styled/StyledSvg';
@@ -35,9 +35,17 @@ export interface IPlayButtonProps {
   mediaElement: HTMLMediaElement | null;
 }
 
-interface ITransectedPlayButtonProps extends IPlayButtonProps, ITransnected {}
+interface IDispatchProps {
+  pauseMedia: (media: HTMLMediaElement) => void;
+  playMedia: (media: HTMLMediaElement) => void;
+}
 
-class PlayButton extends React.Component<ITransectedPlayButtonProps> {
+interface IProps
+  extends IPlayButtonProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
+
+class PlayButton extends React.Component<IProps> {
   public render() {
     const controlText = this.getControlText();
 
@@ -56,12 +64,12 @@ class PlayButton extends React.Component<ITransectedPlayButtonProps> {
   private togglePlay = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    const { isPlaying, mediaElement, dispatch } = this.props;
+    const { isPlaying, mediaElement, pauseMedia, playMedia } = this.props;
 
     if (isPlaying && mediaElement) {
-      dispatch(requestMediaPause(mediaElement));
+      pauseMedia(mediaElement);
     } else if (!isPlaying && mediaElement) {
-      dispatch(requestMediaPlay(mediaElement));
+      playMedia(mediaElement);
     }
   };
 
@@ -72,7 +80,21 @@ class PlayButton extends React.Component<ITransectedPlayButtonProps> {
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
   mediaElement: state.player.mediaElement
-}))(translate()(PlayButton));
+});
+
+const mapDispatchToProps = (dispatch: CDispatch) => ({
+  pauseMedia: (media: HTMLMediaElement) => {
+    dispatch(requestMediaPause(media));
+  },
+  playMedia: (media: HTMLMediaElement) => {
+    dispatch(requestMediaPlay(media));
+  }
+});
+
+export default connect<IPlayButtonProps, IDispatchProps, void>(
+  mapStateToProps,
+  mapDispatchToProps
+)(translate()(PlayButton));

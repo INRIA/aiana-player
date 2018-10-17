@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { addChaptersTrack } from '../../actions/player';
 import { TRACK_KIND_CHAPTERS } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import { IRawChapterTrack, rawChapterTrack } from '../../utils/media-tracks';
 
 export interface IChapterTrack {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import { hexToHsla } from '../../utils/colors';
 import { formatSubtitles } from '../../utils/strings';
 import styled from '../../utils/styled-components';

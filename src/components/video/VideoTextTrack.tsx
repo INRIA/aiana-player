@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setSubtitleText } from '../../actions/player';
 import { DEFAULT_LANG } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import { IRawTextTrack } from '../../utils/media-tracks';
 
 export interface ITrack {

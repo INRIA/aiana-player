@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { DEFAULT_LANG } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import { IMediaCue, IRawChapterTrack } from '../../utils/media-tracks';
 import styled from '../../utils/styled-components';
 import MediaChapterButton from './MediaChapterButton';

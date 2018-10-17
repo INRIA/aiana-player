@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../reducers/index';
-import { IConnectedReduxProps } from '../store/index';
+import { IConnectedReduxProps } from '../store';
 import styled from '../utils/styled-components';
 import { secondsToHMS } from '../utils/time';
 

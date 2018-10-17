@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { requestMediaPause, requestMediaPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
+import { CDispatch, IConnectedReduxProps } from '../../store';
 import styled from '../../utils/styled-components';
 import StyledButton from '../styled/StyledButton';
 import { IPlayButtonProps, PlayControlIcon } from './PlayButton';
@@ -62,7 +61,7 @@ const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: CDispatch) => ({
   pauseMedia: (media: HTMLMediaElement) => {
     dispatch(requestMediaPause(media));
   },
