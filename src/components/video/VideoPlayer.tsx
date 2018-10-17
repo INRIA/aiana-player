@@ -2,19 +2,19 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import {
   changeVolume,
-  pauseVideo,
-  playVideo,
+  mediaElementMounted,
+  mediaElementUnounted,
+  pauseMedia,
+  playMedia,
   startSeeking,
   stopSeeking,
   toggleMute,
   updateCurrentTime,
-  updateTracksList,
-  updateVideoDuration,
-  videoElementMounted,
-  videoElementUnounted
+  updateMediaDuration,
+  updateTracksList
 } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import {
   IRawTextTrack,
   isChapterTrack,
@@ -52,7 +52,7 @@ export interface IVideoProps extends IConnectedReduxProps {
 }
 
 class VideoPlayer extends React.PureComponent<IVideoProps> {
-  private videoRef = React.createRef<HTMLVideoElement>();
+  private videoRef = React.createRef<HTMLMediaElement>();
 
   public componentDidMount() {
     const { dispatch, volume, isMuted } = this.props;
@@ -62,7 +62,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
       return;
     }
 
-    dispatch(videoElementMounted(video));
+    dispatch(mediaElementMounted(video));
 
     video.volume = volume;
     video.muted = isMuted;
@@ -71,7 +71,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
   }
 
   public componentWillUnmount() {
-    this.props.dispatch(videoElementUnounted());
+    this.props.dispatch(mediaElementUnounted());
   }
 
   public render() {
@@ -175,7 +175,7 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
 
   private loadedMetadataHandler = () => {
     const video = this.videoRef.current!;
-    this.props.dispatch(updateVideoDuration(video.duration));
+    this.props.dispatch(updateMediaDuration(video.duration));
   };
 
   /**
@@ -198,11 +198,11 @@ class VideoPlayer extends React.PureComponent<IVideoProps> {
   };
 
   private playHandler = () => {
-    this.props.dispatch(playVideo());
+    this.props.dispatch(playMedia());
   };
 
   private pauseHandler = () => {
-    this.props.dispatch(pauseVideo());
+    this.props.dispatch(pauseMedia());
   };
 }
 

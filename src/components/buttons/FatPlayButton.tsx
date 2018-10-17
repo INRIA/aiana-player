@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { requestVideoPause, requestVideoPlay } from '../../actions/player';
+import { Dispatch } from 'redux';
+import { requestMediaPause, requestMediaPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import styled from '../../utils/styled-components';
 import StyledButton from '../styled/StyledButton';
 import { IPlayButtonProps, PlayControlIcon } from './PlayButton';
@@ -24,7 +25,10 @@ const StyledFatPlayButton = styled(StyledButton)`
   }
 `;
 
-interface IFatPlayButtonProps extends IPlayButtonProps, IConnectedReduxProps {}
+interface IFatPlayButtonProps extends IPlayButtonProps, IConnectedReduxProps {
+  playMedia(media: HTMLMediaElement): void;
+  pauseMedia(media: HTMLMediaElement): void;
+}
 
 class FatPlayButton extends React.Component<IFatPlayButtonProps> {
   public render() {
@@ -43,17 +47,31 @@ class FatPlayButton extends React.Component<IFatPlayButtonProps> {
   private togglePlay = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    const { isPlaying, videoElement, dispatch } = this.props;
+    const { isPlaying, mediaElement, pauseMedia, playMedia } = this.props;
 
-    if (isPlaying && videoElement) {
-      dispatch(requestVideoPause(videoElement));
-    } else if (!isPlaying && videoElement) {
-      dispatch(requestVideoPlay(videoElement));
+    if (isPlaying && mediaElement) {
+      pauseMedia(mediaElement);
+    } else if (!isPlaying && mediaElement) {
+      playMedia(mediaElement);
     }
   };
 }
 
-export default connect((state: IAianaState) => ({
+const mapStateToProps = (state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
-  videoElement: state.player.videoElement
-}))(FatPlayButton);
+  mediaElement: state.player.mediaElement
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  pauseMedia: (media: HTMLMediaElement) => {
+    dispatch(requestMediaPause(media));
+  },
+  playMedia: (media: HTMLMediaElement) => {
+    dispatch(requestMediaPlay(media));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FatPlayButton);

@@ -2,12 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
+import { IConnectedReduxProps } from '../../store';
 import styled from '../../utils/styled-components';
 
 interface IMediaChapterButton extends IConnectedReduxProps {
   startTime: number;
-  video: HTMLVideoElement | null;
+  video: HTMLMediaElement | null;
 }
 
 const StyledButton = styled.button`
@@ -39,5 +39,5 @@ class MediaChapterButton extends React.Component<IMediaChapterButton> {
 }
 
 export default connect((state: IAianaState) => ({
-  video: state.player.videoElement
+  video: state.player.mediaElement
 }))(MediaChapterButton);

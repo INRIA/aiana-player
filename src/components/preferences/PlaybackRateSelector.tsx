@@ -8,7 +8,7 @@ import { ITransnected } from '../../utils/types';
 interface IProps extends ITransnected {
   availablePlaybackRates: number[];
   currentPlaybackRate: number;
-  videoElement: HTMLVideoElement | null;
+  mediaElement: HTMLMediaElement | null;
 }
 
 class PlaybackRateSelector extends React.Component<IProps> {
@@ -32,20 +32,20 @@ class PlaybackRateSelector extends React.Component<IProps> {
   }
 
   private onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    const { dispatch, videoElement } = this.props;
+    const { dispatch, mediaElement } = this.props;
 
-    if (!videoElement) {
+    if (!mediaElement) {
       return;
     }
 
     const playbackRateValue = Number(evt.currentTarget.value);
 
-    dispatch(changePlaybackRate(videoElement, playbackRateValue));
+    dispatch(changePlaybackRate(mediaElement, playbackRateValue));
   };
 }
 
 export default connect((state: IAianaState) => ({
   availablePlaybackRates: state.preferences.availablePlaybackRates,
   currentPlaybackRate: state.player.playbackRate,
-  videoElement: state.player.videoElement
+  mediaElement: state.player.mediaElement
 }))(translate()(PlaybackRateSelector));

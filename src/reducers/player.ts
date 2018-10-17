@@ -2,24 +2,24 @@ import { Reducer } from 'redux';
 import { ExtendedHTMLElement } from 'src/types';
 import {
   ADD_CHAPTER_TRACK,
+  MEDIA_ELEMENT_MOUNTED,
+  MEDIA_ELEMENT_UNMOUNTED,
+  MEDIA_PAUSE,
+  MEDIA_PLAY,
+  MEDIA_PLAYBACK_RATE,
+  MEDIA_REQUEST_SEEK,
+  MEDIA_REQUEST_VOLUME_CHANGE,
+  MEDIA_SEEK_TOGGLE,
+  MEDIA_TOGGLE_MUTE,
+  MEDIA_UPDATE_DURATION,
+  MEDIA_UPDATE_TIME,
+  MEDIA_VOLUME_CHANGE,
   PLAYER_ELEMENT_MOUNTED,
   SET_SUBTITLE_TEXT,
   TOGGLE_FULLSCREEN,
   TOGGLE_NATIVE_CONTROLS,
   UPDATE_ACTIVE_TEXT_TRACK,
-  UPDATE_TRACKS_LIST,
-  VIDEO_ELEMENT_MOUNTED,
-  VIDEO_ELEMENT_UNMOUNTED,
-  VIDEO_PAUSE,
-  VIDEO_PLAY,
-  VIDEO_PLAYBACK_RATE,
-  VIDEO_REQUEST_SEEK,
-  VIDEO_REQUEST_VOLUME_CHANGE,
-  VIDEO_SEEK_TOGGLE,
-  VIDEO_TOGGLE_MUTE,
-  VIDEO_UPDATE_DURATION,
-  VIDEO_UPDATE_TIME,
-  VIDEO_VOLUME_CHANGE
+  UPDATE_TRACKS_LIST
 } from '../actions/player';
 import { ISource } from '../components/video/VideoPlayer';
 import { ITrack } from '../components/video/VideoTextTrack';
@@ -49,6 +49,8 @@ export interface IPlayerState {
   isPlaying: boolean;
 
   isSeeking: boolean;
+
+  mediaElement: HTMLMediaElement | null;
 
   /**
    * Determines if the video HTML element should use its own controls or those
@@ -82,8 +84,6 @@ export interface IPlayerState {
    */
   textTracks: IRawTextTrack[];
 
-  videoElement: HTMLVideoElement | null;
-
   /**
    * Volume level for audio portions of the media element.
    * It varies from 0 to 1.
@@ -100,6 +100,7 @@ const initialState: IPlayerState = {
   isMuted: false,
   isPlaying: false,
   isSeeking: false,
+  mediaElement: null,
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
@@ -141,7 +142,6 @@ const initialState: IPlayerState = {
     }
   ],
   textTracks: [],
-  videoElement: null,
   volume: DEFAULT_VOLUME
 };
 
@@ -162,55 +162,55 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         playerElement: action.playerElement
       };
-    case VIDEO_ELEMENT_MOUNTED:
+    case MEDIA_ELEMENT_MOUNTED:
       return {
         ...state,
-        videoElement: action.videoElement
+        mediaElement: action.mediaElement
       };
-    case VIDEO_ELEMENT_UNMOUNTED:
+    case MEDIA_ELEMENT_UNMOUNTED:
       return {
         ...state,
         isPlaying: false,
-        videoElement: null
+        mediaElement: null
       };
-    case VIDEO_PLAY:
-    case VIDEO_PAUSE:
+    case MEDIA_PLAY:
+    case MEDIA_PAUSE:
       return {
         ...state,
         isPlaying: action.isPlaying
       };
-    case VIDEO_PLAYBACK_RATE:
+    case MEDIA_PLAYBACK_RATE:
       return {
         ...state,
         playbackRate: action.playbackRate
       };
-    case VIDEO_TOGGLE_MUTE:
+    case MEDIA_TOGGLE_MUTE:
       return {
         ...state,
         isMuted: action.isMuted
       };
-    case VIDEO_REQUEST_VOLUME_CHANGE:
-    case VIDEO_VOLUME_CHANGE:
+    case MEDIA_REQUEST_VOLUME_CHANGE:
+    case MEDIA_VOLUME_CHANGE:
       return {
         ...state,
         volume: action.volume
       };
-    case VIDEO_UPDATE_DURATION:
+    case MEDIA_UPDATE_DURATION:
       return {
         ...state,
         duration: action.duration
       };
-    case VIDEO_UPDATE_TIME:
+    case MEDIA_UPDATE_TIME:
       return {
         ...state,
         currentTime: action.currentTime
       };
-    case VIDEO_REQUEST_SEEK:
+    case MEDIA_REQUEST_SEEK:
       return {
         ...state,
         seekingTime: action.seekingTime
       };
-    case VIDEO_SEEK_TOGGLE:
+    case MEDIA_SEEK_TOGGLE:
       const seekingTime = action.isSeeking ? state.seekingTime : 0;
 
       return {

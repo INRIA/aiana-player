@@ -75,7 +75,7 @@ const StyledDiv = styled.div`
 `;
 
 export interface IVolumeSliderProps extends ITransnected {
-  videoElement: HTMLVideoElement | null;
+  mediaElement: HTMLMediaElement | null;
   volume: number;
 }
 
@@ -126,28 +126,28 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   }
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
-    const { dispatch, videoElement, volume } = this.props;
+    const { dispatch, mediaElement, volume } = this.props;
 
-    if (!videoElement) {
+    if (!mediaElement) {
       return;
     }
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
         dispatch(
-          requestChangeVolume(videoElement, this.safeVolume(volume + 0.1))
+          requestChangeVolume(mediaElement, this.safeVolume(volume + 0.1))
         );
         break;
       case LEFT_ARROW_KEY_CODE:
         dispatch(
-          requestChangeVolume(videoElement, this.safeVolume(volume - 0.1))
+          requestChangeVolume(mediaElement, this.safeVolume(volume - 0.1))
         );
         break;
       case HOME_KEY_CODE:
-        dispatch(requestChangeVolume(videoElement, 0));
+        dispatch(requestChangeVolume(mediaElement, 0));
         break;
       case END_KEY_CODE:
-        dispatch(requestChangeVolume(videoElement, 1));
+        dispatch(requestChangeVolume(mediaElement, 1));
         break;
     }
   };
@@ -188,9 +188,9 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     sliderX: number,
     sliderWidth: number
   ) => {
-    const { dispatch, videoElement, volume } = this.props;
+    const { dispatch, mediaElement, volume } = this.props;
 
-    if (!videoElement) {
+    if (!mediaElement) {
       return;
     }
 
@@ -198,7 +198,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     const newVolume = unitToPercent(positionDifference, sliderWidth) / 100;
 
     if (newVolume !== volume) {
-      dispatch(requestChangeVolume(videoElement, newVolume));
+      dispatch(requestChangeVolume(mediaElement, newVolume));
     }
   };
 
@@ -213,6 +213,6 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 }
 
 export default connect((state: IAianaState) => ({
-  videoElement: state.player.videoElement,
+  mediaElement: state.player.mediaElement,
   volume: state.player.volume
 }))(translate()(VolumeSlider));

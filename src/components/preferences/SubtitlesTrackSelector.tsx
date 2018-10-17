@@ -9,14 +9,14 @@ import { ITransnected } from '../../utils/types';
 interface ISubtitlesTrackSelector extends ITransnected {
   nativeControls: boolean;
   textTracks: IRawTextTrack[];
-  videoElement: HTMLVideoElement | null;
+  mediaElement: HTMLMediaElement | null;
 }
 
 class SubtitlesTrackSelector extends React.Component<ISubtitlesTrackSelector> {
   public render() {
-    const { t, textTracks, videoElement } = this.props;
+    const { mediaElement, t, textTracks } = this.props;
 
-    if (!videoElement) {
+    if (!mediaElement) {
       return null;
     }
 
@@ -59,7 +59,7 @@ class SubtitlesTrackSelector extends React.Component<ISubtitlesTrackSelector> {
 }
 
 export default connect((state: IAianaState) => ({
+  mediaElement: state.player.mediaElement,
   nativeControls: state.player.nativeControls,
-  textTracks: state.player.textTracks,
-  videoElement: state.player.videoElement
+  textTracks: state.player.textTracks
 }))(translate()(SubtitlesTrackSelector));

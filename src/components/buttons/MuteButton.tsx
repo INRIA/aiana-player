@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { muteVideo, unmuteVideo } from '../../actions/player';
+import { muteMedia, unmuteMedia } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
 import { ITransnected } from '../../utils/types';
@@ -34,7 +34,7 @@ const StyledMuteButton = styled(StyledButton)`
 
 interface IProps extends ITransnected {
   isMuted: boolean;
-  videoElement: HTMLVideoElement | null;
+  mediaElement: HTMLMediaElement | null;
 }
 
 class MuteButton extends React.Component<IProps> {
@@ -54,16 +54,16 @@ class MuteButton extends React.Component<IProps> {
   }
 
   private clickHandler = () => {
-    const { dispatch, isMuted, videoElement } = this.props;
+    const { dispatch, isMuted, mediaElement } = this.props;
 
-    if (!videoElement) {
+    if (!mediaElement) {
       return;
     }
 
     if (isMuted) {
-      dispatch(unmuteVideo(videoElement));
+      dispatch(unmuteMedia(mediaElement));
     } else {
-      dispatch(muteVideo(videoElement));
+      dispatch(muteMedia(mediaElement));
     }
   };
 
@@ -76,5 +76,5 @@ class MuteButton extends React.Component<IProps> {
 
 export default connect((state: IAianaState) => ({
   isMuted: state.player.isMuted,
-  videoElement: state.player.videoElement
+  mediaElement: state.player.mediaElement
 }))(translate()(MuteButton));

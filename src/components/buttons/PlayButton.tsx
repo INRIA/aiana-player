@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestVideoPause, requestVideoPlay } from '../../actions/player';
+import { requestMediaPause, requestMediaPlay } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
 import { ITransnected } from '../../utils/types';
@@ -32,7 +32,7 @@ const StyledPlayButton = styled(StyledButton)`
 
 export interface IPlayButtonProps {
   isPlaying: boolean;
-  videoElement: HTMLVideoElement | null;
+  mediaElement: HTMLMediaElement | null;
 }
 
 interface ITransectedPlayButtonProps extends IPlayButtonProps, ITransnected {}
@@ -56,12 +56,12 @@ class PlayButton extends React.Component<ITransectedPlayButtonProps> {
   private togglePlay = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    const { isPlaying, videoElement, dispatch } = this.props;
+    const { isPlaying, mediaElement, dispatch } = this.props;
 
-    if (isPlaying && videoElement) {
-      dispatch(requestVideoPause(videoElement));
-    } else if (!isPlaying && videoElement) {
-      dispatch(requestVideoPlay(videoElement));
+    if (isPlaying && mediaElement) {
+      dispatch(requestMediaPause(mediaElement));
+    } else if (!isPlaying && mediaElement) {
+      dispatch(requestMediaPlay(mediaElement));
     }
   };
 
@@ -74,5 +74,5 @@ class PlayButton extends React.Component<ITransectedPlayButtonProps> {
 
 export default connect((state: IAianaState) => ({
   isPlaying: state.player.isPlaying,
-  videoElement: state.player.videoElement
+  mediaElement: state.player.mediaElement
 }))(translate()(PlayButton));
