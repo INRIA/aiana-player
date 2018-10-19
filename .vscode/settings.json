@@ -1,0 +1,9 @@
+{
+  "eslint.enable": false,
+  "prettier.tslintIntegration": true,
+  "javascript.validate.enable": false,
+  "editor.rulers": [80],
+  "html.format.endWithNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.trimAutoWhitespace": true
+}
