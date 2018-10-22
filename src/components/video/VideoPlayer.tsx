@@ -102,12 +102,10 @@ class VideoPlayer extends React.Component<IProps> {
 
     return (
       <StyledVideo
-        innerRef={this.mediaRef}
-        className="aip-video"
         autoPlay={autoPlay}
+        className="aip-video"
         controls={nativeControls}
-        tabIndex={nativeControls ? 0 : -1}
-        preload={preload}
+        innerRef={this.mediaRef}
         onClick={this.clickHandler}
         onLoadedMetadata={this.loadedMetadataHandler}
         onPause={pauseHandler}
@@ -116,6 +114,9 @@ class VideoPlayer extends React.Component<IProps> {
         onSeeking={this.seekingHandler}
         onTimeUpdate={this.timeUpdateHandler}
         onVolumeChange={this.volumeChangeHandler}
+        playsInline={true}
+        preload={preload}
+        tabIndex={nativeControls ? 0 : -1}
       >
         {sources &&
           sources.map((source, index) => <source key={index} {...source} />)}
