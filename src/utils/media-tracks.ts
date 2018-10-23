@@ -14,6 +14,18 @@ export interface IRawTextTrack {
   active: boolean;
 }
 
+export interface IRawChapterTrack {
+  readonly cues: IMediaCue[];
+  readonly label: string;
+  readonly language: string;
+}
+
+export interface IMediaCue {
+  endTime: number;
+  startTime: number;
+  text: string;
+}
+
 export function rawTextTrack(textTrack: TextTrack): IRawTextTrack {
   const { activeCues, cues, kind, label, language, mode } = textTrack;
 
@@ -45,7 +57,14 @@ export function rawChapterTrack(track: TextTrack): IRawChapterTrack {
   };
 }
 
-export function isDisplayableTrack(track: TextTrack | IRawTextTrack | ITrack) {
+/**
+ * Tests if a track should be displayed as a subtitles.
+ *
+ * @param track
+ */
+export function isDisplayableTrack(
+  track: TextTrack | IRawTextTrack | ITrack
+): boolean {
   return (
     track.kind === undefined ||
     track.kind === TRACK_KIND_SUBTITLES ||
@@ -53,18 +72,10 @@ export function isDisplayableTrack(track: TextTrack | IRawTextTrack | ITrack) {
   );
 }
 
+/**
+ * Tests if a track should be used as a collection of chapters.
+ * @param track
+ */
 export function isChapterTrack(track: TextTrack | ITrack) {
   return track.kind === TRACK_KIND_CHAPTERS;
-}
-
-export interface IRawChapterTrack {
-  readonly cues: IMediaCue[];
-  readonly label: string;
-  readonly language: string;
-}
-
-export interface IMediaCue {
-  endTime: number;
-  startTime: number;
-  text: string;
 }

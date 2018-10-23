@@ -1,7 +1,12 @@
 import { ThunkAction } from 'redux-thunk';
 import { IAianaState } from 'src/reducers';
 
-// tslint:disable-next-line interface-name no-unused-variable
+/**
+ * Default `Document` interface is missing proprietary implementations and some
+ * of the recently improved properties.
+ * This interface adds the missing ones and enables compatibility with
+ * all browsers.
+ */
 interface IDocument extends Document {
   mozFullScreenEnabled: boolean;
   msFullscreenEnabled: boolean;
@@ -17,7 +22,6 @@ interface IDocument extends Document {
   mozCancelFullScreen(): Promise<void>;
 }
 
-// tslint:disable-next-line interface-name
 interface IHTMLElement {
   msRequestFullscreen(): Promise<void>;
   webkitRequestFullscreen(): Promise<void>;
