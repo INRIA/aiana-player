@@ -2,10 +2,12 @@ import { formatSubtitles } from './strings';
 
 describe('format subtitles', () => {
   test('with single line string', () => {
-    expect(formatSubtitles('hello')).toEqual(['hello']);
-    expect(formatSubtitles('hello   ')).toEqual(['hello']);
-    expect(formatSubtitles('   hello')).toEqual(['hello']);
-    expect(formatSubtitles('   hello   ')).toEqual(['hello']);
+    const word = 'hello';
+    const result = [word];
+    expect(formatSubtitles(word)).toEqual(result);
+    expect(formatSubtitles(`${word}   `)).toEqual(result);
+    expect(formatSubtitles(`   ${word}`)).toEqual(result);
+    expect(formatSubtitles(`   ${word}   `)).toEqual(result);
   });
 
   test('with multiline string', () => {

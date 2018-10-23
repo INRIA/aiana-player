@@ -1,12 +1,12 @@
 /**
- * Takes a value and constrains it to boundaries.
- * For example, this can be used to ensure a slider recorded value is never
+ * Constrains input value to boundaries.
+ * This can be used to ensure a slider recorded value is never
  * less than slider's minimum value nor more than slider's maximum value.
  *
  * @param x {number} The value to apply boundaries on
  * @param lowerBound {number} The lower bound
  * @param upperBound {number} The upper bound
- * @returns {number}
+ * @returns The bounded value
  */
 export function bounded(
   x: number,
