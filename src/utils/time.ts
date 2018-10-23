@@ -5,7 +5,9 @@ import {
   I18N_DURATION_HOURS_SECONDS_KEY,
   I18N_DURATION_MINUTES_KEY,
   I18N_DURATION_MINUTES_SECONDS_KEY,
-  I18N_DURATION_SECONDS_KEY
+  I18N_DURATION_SECONDS_KEY,
+  MINUTES_PER_HOUR,
+  SECONDS_PER_HOUR
 } from '../constants';
 
 interface ITimeObject {
@@ -35,16 +37,23 @@ export function durationTranslationKey(time: number): string {
 }
 
 export function secondsToHMSObject(time: number): ITimeObject {
-  const { floor } = Math;
-  const hours = floor(time / 3600);
-  const minutes = floor((time % 3600) / 60);
-  const seconds = floor((time % 3600) % 60);
-
   return {
-    hours,
-    minutes,
-    seconds
+    hours: extractHours(time),
+    minutes: extractMinutes(time),
+    seconds: extractSeconds(time)
   };
+}
+
+export function extractHours(time: number): number {
+  return Math.floor(time / SECONDS_PER_HOUR);
+}
+
+export function extractMinutes(time: number): number {
+  return Math.floor((time % SECONDS_PER_HOUR) / MINUTES_PER_HOUR);
+}
+
+export function extractSeconds(time: number): number {
+  return Math.floor((time % SECONDS_PER_HOUR) % MINUTES_PER_HOUR);
 }
 
 export function secondsToHMS(time: number, separator = ':'): string {

@@ -5,10 +5,15 @@ import {
   I18N_DURATION_HOURS_SECONDS_KEY,
   I18N_DURATION_MINUTES_KEY,
   I18N_DURATION_MINUTES_SECONDS_KEY,
-  I18N_DURATION_SECONDS_KEY
+  I18N_DURATION_SECONDS_KEY,
+  SECONDS_PER_HOUR,
+  SECONDS_PER_MINUTE
 } from '../constants';
 import {
   durationTranslationKey,
+  extractHours,
+  extractMinutes,
+  extractSeconds,
   formatHours,
   formatMinutes,
   leadingZero,
@@ -59,8 +64,8 @@ describe('find translation key for a given time duration', () => {
   });
 });
 
-describe('leading zero', () => {
-  test('with valid values', () => {
+describe('leading zero for display purpose', () => {
+  test('with positive integer values', () => {
     expect(leadingZero(0)).toBe('00');
     expect(leadingZero(4)).toBe('04');
     expect(leadingZero(23)).toBe('23');
@@ -140,5 +145,30 @@ describe('convert seconds to clock display format HH:mm:ss', () => {
     expect(secondsToHMS(864671, '-')).toBe('240-11-11');
     expect(secondsToHMS(864671, '__')).toBe('240__11__11');
     expect(secondsToHMS(864671, '')).toBe('2401111');
+  });
+});
+
+describe('time extraction', () => {
+  test('hours extraction', () => {
+    expect(extractHours(0)).toBe(0);
+    expect(extractHours(1800)).toBe(0);
+    expect(extractHours(3600)).toBe(1);
+    expect(extractHours(3610)).toBe(1);
+  });
+
+  test('minutes extraction', () => {
+    expect(extractMinutes(0)).toBe(0);
+    expect(extractMinutes(3600)).toBe(0);
+    expect(extractMinutes(60)).toBe(1);
+    expect(extractMinutes(70)).toBe(1);
+  });
+
+  test('seconds extraction', () => {
+    expect(extractSeconds(0)).toBe(0);
+    expect(extractSeconds(1)).toBe(1);
+    expect(extractSeconds(10.1234)).toBe(10);
+    expect(extractSeconds(SECONDS_PER_MINUTE)).toBe(0);
+    expect(extractSeconds(2 * SECONDS_PER_MINUTE)).toBe(0);
+    expect(extractSeconds(2 * SECONDS_PER_HOUR)).toBe(0);
   });
 });

@@ -1,10 +1,15 @@
-export const VOLUME_MINIMUM = 0;
-export const VOLUME_MAXIMUM = 1.0;
+export const SECONDS_PER_HOUR = 3600;
+export const MINUTES_PER_HOUR = 60;
+export const SECONDS_PER_MINUTE = 60;
 
+// Key codes
 export const RIGHT_ARROW_KEY_CODE = 39;
 export const LEFT_ARROW_KEY_CODE = 37;
 export const HOME_KEY_CODE = 36;
 export const END_KEY_CODE = 35;
+
+export const VOLUME_MINIMUM = 0;
+export const VOLUME_MAXIMUM = 1.0;
 
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_NATIVE_CONTROLS = false;
