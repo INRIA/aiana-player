@@ -11,9 +11,9 @@ import {
 } from '../constants';
 
 interface ITimeObject {
-  hours: number;
-  minutes: number;
-  seconds: number;
+  readonly hours: number;
+  readonly minutes: number;
+  readonly seconds: number;
 }
 
 export function durationTranslationKey(time: number): string {
