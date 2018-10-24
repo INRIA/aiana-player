@@ -14,11 +14,12 @@ import {
 import { IAianaState } from '../../reducers/index';
 import { unitToPercent } from '../../utils/math';
 import { bounded } from '../../utils/ui';
-import StyledVolumeSlider from '../styled/StyledVolumeSlider';
+import StyledVolumeSlider from './Styles';
 
 interface IProps {
   mediaElement: HTMLMediaElement | null;
   volume: number;
+  volumeStep: number;
 }
 
 interface IDispatchProps {
@@ -77,7 +78,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   }
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
-    const { mediaElement, updateVolume, volume } = this.props;
+    const { mediaElement, updateVolume, volume, volumeStep } = this.props;
 
     if (!mediaElement) {
       return;
@@ -85,10 +86,10 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
     switch (evt.keyCode) {
       case RIGHT_ARROW_KEY_CODE:
-        updateVolume(mediaElement, this.safeVolume(volume + 0.1));
+        updateVolume(mediaElement, this.safeVolume(volume + volumeStep));
         break;
       case LEFT_ARROW_KEY_CODE:
-        updateVolume(mediaElement, this.safeVolume(volume - 0.1));
+        updateVolume(mediaElement, this.safeVolume(volume - volumeStep));
         break;
       case HOME_KEY_CODE:
         updateVolume(mediaElement, 0);
@@ -161,7 +162,8 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
 const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement,
-  volume: state.player.volume
+  volume: state.player.volume,
+  volumeStep: state.preferences.volumeStep
 });
 
 const mapDispatchToProps = (dispatch: CDispatch) => ({

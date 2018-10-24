@@ -6,7 +6,8 @@ import {
   AVAILABLE_THEMES,
   DEFAULT_LANG,
   DEFAULT_SEEK_STEP,
-  DEFAULT_THEME
+  DEFAULT_THEME,
+  DEFAULT_VOLUME_STEP
 } from '../constants';
 import InriaTheme from '../themes/inria';
 import { IAianaTheme } from '../utils/styled-components';
@@ -23,6 +24,7 @@ export interface IPreferencesState {
    * event on seek bar.
    */
   seekStep: number;
+  volumeStep: number;
 }
 
 const initialState: IPreferencesState = {
@@ -32,7 +34,8 @@ const initialState: IPreferencesState = {
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
   language: DEFAULT_LANG,
-  seekStep: DEFAULT_SEEK_STEP
+  seekStep: DEFAULT_SEEK_STEP,
+  volumeStep: DEFAULT_VOLUME_STEP
 };
 
 const preferences: Reducer = (state = initialState, action) => {

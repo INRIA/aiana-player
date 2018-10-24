@@ -18,6 +18,7 @@ export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_SEEK_STEP = 5;
 export const DEFAULT_SEEK_STEP_MULTIPLIER = 2;
 export const DEFAULT_THEME = 'inria';
+export const DEFAULT_VOLUME_STEP = 0.1;
 
 export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 export const AVAILABLE_PLAYBACK_RATES = [
