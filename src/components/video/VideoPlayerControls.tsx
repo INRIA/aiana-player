@@ -4,11 +4,11 @@ import { IAianaState } from '../../reducers/index';
 import { IConnectedReduxProps } from '../../store';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
-import FullscreenButton from '../buttons/FullscreenButton';
+import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
 import PlayButton from '../buttons/play/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
-import TimeStatus from '../TimeStatus';
+import TimeStatus from '../time-status/TimeStatus';
 
 const StyledControlsWrapper = styled.div`
   position: absolute;
