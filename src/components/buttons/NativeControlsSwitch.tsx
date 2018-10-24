@@ -28,13 +28,13 @@ class NativeControlsSwitch extends React.Component<INativeControlsSwitch> {
         <input
           type="checkbox"
           defaultChecked={nativeControls}
-          onClick={this.handleInputCheck}
+          onClick={this.clickHandler}
         />
       </label>
     );
   }
 
-  private handleInputCheck = () => {
+  private clickHandler = () => {
     this.props.toggleNativeControls(!this.props.nativeControls);
   };
 }
