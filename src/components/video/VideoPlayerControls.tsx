@@ -5,7 +5,7 @@ import { IConnectedReduxProps } from '../../store';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import FullscreenButton from '../buttons/FullscreenButton';
-import PlayButton from '../buttons/PlayButton';
+import PlayButton from '../buttons/play/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
 import TimeStatus from '../TimeStatus';
