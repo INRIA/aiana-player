@@ -89,11 +89,12 @@ export function formatMinutes(minutes: number, hours: number) {
 }
 
 export function leadingZero(num: number): string {
-  if (num < 0) {
+  const flooredNum = Math.floor(num);
+  if (flooredNum < 0) {
     throw new Error('Non negative value expected.');
-  } else if (num < 10) {
-    return `0${num}`;
+  } else if (flooredNum < 10) {
+    return `0${flooredNum}`;
   }
 
-  return `${num}`;
+  return `${flooredNum}`;
 }

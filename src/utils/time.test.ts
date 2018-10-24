@@ -70,6 +70,10 @@ describe('leading zero for display purpose', () => {
     expect(leadingZero(4)).toBe('04');
     expect(leadingZero(23)).toBe('23');
     expect(leadingZero(1234)).toBe('1234');
+    expect(leadingZero(1.4)).toBe('01');
+    expect(leadingZero(1.4321)).toBe('01');
+    expect(leadingZero(10.4321)).toBe('10');
+    expect(leadingZero(123.4321)).toBe('123');
   });
 
   test('negative value throws an error', () => {
