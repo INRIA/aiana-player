@@ -35,7 +35,7 @@ class PlayButton extends React.Component<IProps> {
       <StyledPlayButton
         type="button"
         aria-label={controlText}
-        onClick={this.togglePlay}
+        onClick={this.clickHandler}
       >
         <PlayControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{controlText}</AssistiveText>
@@ -43,7 +43,7 @@ class PlayButton extends React.Component<IProps> {
     );
   }
 
-  private togglePlay = (evt: React.MouseEvent<HTMLElement>) => {
+  private clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     const { isPlaying, mediaElement, pauseMedia, playMedia } = this.props;

@@ -2,28 +2,11 @@ import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { ExtendedHTMLElement } from 'src/types';
-import { handleToggleFullscreen } from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
-import AssistiveText from '../a11y/AssistiveText';
-import StyledButton from '../styled/StyledButton';
-import StyledSvg from '../styled/StyledSvg';
-import FullscreenIcon from '../svg/Fullscreen';
-import FullscreenExitIcon from '../svg/FullscreenExit';
-
-const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
-const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);
-
-interface IControlIcon {
-  isFullscreen: boolean;
-}
-
-const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
-  if (isFullscreen) {
-    return <StyledFullscreenExitIcon aria-hidden="true" />;
-  }
-
-  return <StyledFullscreenIcon aria-hidden="true" />;
-};
+import { handleToggleFullscreen } from '../../../actions/player';
+import { IAianaState } from '../../../reducers/index';
+import AssistiveText from '../../a11y/AssistiveText';
+import StyledButton from '../../styled/StyledButton';
+import ControlIcon from './ControlIcon';
 
 interface IProps {
   isFullscreen: boolean;
