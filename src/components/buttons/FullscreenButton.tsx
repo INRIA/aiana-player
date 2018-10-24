@@ -47,7 +47,7 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
       <StyledButton
         type="button"
         aria-label={controlText}
-        onClick={this.toggleFullscreen}
+        onClick={this.clickHandler}
       >
         <ControlIcon isFullscreen={this.props.isFullscreen} />
         <AssistiveText>{controlText}</AssistiveText>
@@ -55,7 +55,7 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
     );
   }
 
-  private toggleFullscreen = (evt: React.MouseEvent<HTMLElement>) => {
+  private clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     const { playerElement, toggleFullscreen } = this.props;
