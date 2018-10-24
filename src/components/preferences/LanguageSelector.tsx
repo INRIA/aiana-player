@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { AnyAction } from 'redux';
+import { CDispatch } from 'src/store';
 import { changeLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
 
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 interface IDispatchProps {
-  changeLanguage(language: string): AnyAction;
+  changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 interface ILanguageSelector
@@ -27,7 +27,7 @@ class LanguageSelector extends React.Component<ILanguageSelector> {
       <div className="aip-language-selector">
         <label>
           <span>{t('preferences.language.label')}</span>
-          <select onChange={this.onLanguageChange} value={currentLanguage}>
+          <select onChange={this.props.changeHandler} value={currentLanguage}>
             {availableLanguages.map((language) => (
               <option key={language} value={language}>
                 {language}
@@ -38,10 +38,6 @@ class LanguageSelector extends React.Component<ILanguageSelector> {
       </div>
     );
   }
-
-  private onLanguageChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    this.props.changeLanguage(evt.currentTarget.value);
-  };
 }
 
 const mapStateToProps = (state: IAianaState) => ({
@@ -49,9 +45,11 @@ const mapStateToProps = (state: IAianaState) => ({
   currentLanguage: state.preferences.language
 });
 
-const mapDispatchToProps = {
-  changeLanguage
-};
+const mapDispatchToProps = (dispatch: CDispatch) => ({
+  changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(changeLanguage(evt.currentTarget.value));
+  }
+});
 
 export default connect(
   mapStateToProps,

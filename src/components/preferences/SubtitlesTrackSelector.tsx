@@ -61,8 +61,7 @@ const mapStateToProps = (state: IAianaState) => ({
 
 const mapDispatchToProps = (dispatch: CDispatch) => ({
   selectedTrackChangedHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    const trackLabel = evt.currentTarget.value;
-    dispatch(updateActiveTextTrack(trackLabel));
+    dispatch(updateActiveTextTrack(evt.currentTarget.value));
   }
 });
 
