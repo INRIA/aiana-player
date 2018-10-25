@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { muteMedia, unmuteMedia } from '../../../actions/player';
-import { IAianaState } from '../../../reducers/index';
-import styled from '../../../utils/styled-components';
-import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../styled/StyledButton';
+import { muteMedia, unmuteMedia } from 'src/actions/player';
+import AssistiveText from 'src/components/a11y/AssistiveText';
+import StyledButton from 'src/components/styled/StyledButton';
+import { IAianaState } from 'src/reducers/index';
+import styled from 'src/utils/styled-components';
 import ControlIcon from './ControlIcon';
 
 const StyledMuteButton = styled(StyledButton)`

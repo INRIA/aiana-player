@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { handleToggleFullscreen } from 'src/actions/player';
+import AssistiveText from 'src/components/a11y/AssistiveText';
+import StyledButton from 'src/components/styled/StyledButton';
+import { IAianaState } from 'src/reducers/index';
 import { ExtendedHTMLElement } from 'src/types';
 import { isFullscreenEnabled } from 'src/utils/fullscreen';
-import { handleToggleFullscreen } from '../../../actions/player';
-import { IAianaState } from '../../../reducers/index';
-import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../styled/StyledButton';
 import ControlIcon from './ControlIcon';
 
 interface IProps {

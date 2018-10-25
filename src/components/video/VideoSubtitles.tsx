@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
-import { hexToHsla } from '../../utils/colors';
-import { formatSubtitles } from '../../utils/strings';
-import styled from '../../utils/styled-components';
+import { IAianaState } from 'src/reducers/index';
+import { IConnectedReduxProps } from 'src/store';
+import { hexToHsla } from 'src/utils/colors';
+import { formatSubtitles } from 'src/utils/strings';
+import styled from 'src/utils/styled-components';
 
 interface IVideoSubtitles extends IConnectedReduxProps {
   subtitleText: string | undefined;

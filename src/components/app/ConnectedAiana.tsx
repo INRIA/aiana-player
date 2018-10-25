@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import {
   handleFullscreenChange,
   playerElementMounted
-} from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
-import themes from '../../themes';
-import { isDocumentFullscreen } from '../../utils/fullscreen';
-import { injectGlobalStyles } from '../../utils/global-styles';
-import { ThemeProvider } from '../../utils/styled-components';
+} from 'src/actions/player';
+import { IAianaState } from 'src/reducers/index';
+import themes from 'src/themes';
+import { isDocumentFullscreen } from 'src/utils/fullscreen';
+import { injectGlobalStyles } from 'src/utils/global-styles';
+import { ThemeProvider } from 'src/utils/styled-components';
 import Player from '../Player';
 import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';

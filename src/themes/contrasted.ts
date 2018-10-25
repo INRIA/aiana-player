@@ -1,4 +1,4 @@
-import { IAianaTheme } from '../utils/styled-components';
+import { IAianaTheme } from 'src/utils/styled-components';
 
 const theme: IAianaTheme = {
   bg: '#000',

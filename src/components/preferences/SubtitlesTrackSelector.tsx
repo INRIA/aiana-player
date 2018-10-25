@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { updateActiveTextTrack } from 'src/actions/player';
+import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
-import { updateActiveTextTrack } from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
-import { IRawTextTrack, isDisplayableTrack } from '../../utils/media-tracks';
+import { IRawTextTrack, isDisplayableTrack } from 'src/utils/media-tracks';
 
 interface IProps {
   nativeControls: boolean;

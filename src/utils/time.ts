@@ -8,7 +8,7 @@ import {
   I18N_DURATION_SECONDS_KEY,
   MINUTES_PER_HOUR,
   SECONDS_PER_HOUR
-} from '../constants';
+} from 'src/constants';
 
 interface ITimeObject {
   readonly hours: number;

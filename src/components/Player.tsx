@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from '../utils/styled-components';
+import styled from 'src/utils/styled-components';
 import MediaChapters from './video/MediaChapters';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';

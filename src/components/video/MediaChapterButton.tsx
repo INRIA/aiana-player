@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { requestSeek } from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
-import styled from '../../utils/styled-components';
+import { requestSeek } from 'src/actions/player';
+import { IAianaState } from 'src/reducers/index';
+import styled from 'src/utils/styled-components';
 
 interface IProps {
   startTime: number;

@@ -1,5 +1,5 @@
-import { hexToHsla } from '../../utils/colors';
-import styled from '../../utils/styled-components';
+import { hexToHsla } from 'src/utils/colors';
+import styled from 'src/utils/styled-components';
 
 const StyledDiv = styled.div`
   display: block;

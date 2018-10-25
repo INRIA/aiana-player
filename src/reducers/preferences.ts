@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { CHANGE_LANGUAGE, CHANGE_THEME } from '../actions/preferences';
+import { CHANGE_LANGUAGE, CHANGE_THEME } from 'src/actions/preferences';
 import {
   AVAILABLE_LANGUAGES,
   AVAILABLE_PLAYBACK_RATES,
@@ -8,9 +8,9 @@ import {
   DEFAULT_SEEK_STEP,
   DEFAULT_THEME,
   DEFAULT_VOLUME_STEP
-} from '../constants';
-import InriaTheme from '../themes/inria';
-import { IAianaTheme } from '../utils/styled-components';
+} from 'src/constants';
+import InriaTheme from 'src/themes/inria';
+import { IAianaTheme } from 'src/utils/styled-components';
 
 export interface IPreferencesState {
   availableLanguages: string[];

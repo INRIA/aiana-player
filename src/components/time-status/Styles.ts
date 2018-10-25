@@ -1,4 +1,4 @@
-import styled from '../../utils/styled-components';
+import styled from 'src/utils/styled-components';
 
 export default styled.div`
   display: inline-block;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { changePlaybackRate } from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
+import { changePlaybackRate } from 'src/actions/player';
+import { IAianaState } from 'src/reducers/index';
 
 interface IProps {
   availablePlaybackRates: number[];

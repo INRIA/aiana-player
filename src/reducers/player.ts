@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { ExtendedHTMLElement } from 'src/types';
 import {
   ADD_CHAPTER_TRACK,
   MEDIA_ELEMENT_MOUNTED,
@@ -20,15 +19,16 @@ import {
   TOGGLE_NATIVE_CONTROLS,
   UPDATE_ACTIVE_TEXT_TRACK,
   UPDATE_TRACKS_LIST
-} from '../actions/player';
-import { ISource } from '../components/video/VideoPlayer';
-import { ITrack } from '../components/video/VideoTextTrack';
+} from 'src/actions/player';
+import { ISource } from 'src/components/video/VideoPlayer';
+import { ITrack } from 'src/components/video/VideoTextTrack';
+import { ExtendedHTMLElement } from 'src/types';
+import { IRawChapterTrack, IRawTextTrack } from 'src/utils/media-tracks';
 import {
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
   DEFAULT_VOLUME
 } from '../constants';
-import { IRawChapterTrack, IRawTextTrack } from '../utils/media-tracks';
 
 export interface IPlayerState {
   autoPlay: boolean;

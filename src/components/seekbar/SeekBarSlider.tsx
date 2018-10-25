@@ -3,18 +3,18 @@ import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
-import { requestSeek } from '../../actions/player';
+import { requestSeek } from 'src/actions/player';
 import {
   DEFAULT_SEEK_STEP_MULTIPLIER,
   END_KEY_CODE,
   HOME_KEY_CODE,
   LEFT_ARROW_KEY_CODE,
   RIGHT_ARROW_KEY_CODE
-} from '../../constants';
-import { IAianaState } from '../../reducers/index';
-import { unitToPercent } from '../../utils/math';
-import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
-import { bounded } from '../../utils/ui';
+} from 'src/constants';
+import { IAianaState } from 'src/reducers/index';
+import { unitToPercent } from 'src/utils/math';
+import { durationTranslationKey, secondsToHMSObject } from 'src/utils/time';
+import { bounded } from 'src/utils/ui';
 import StyledDiv from './Styles';
 
 const { round } = Math;

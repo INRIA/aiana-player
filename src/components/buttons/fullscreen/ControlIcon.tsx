@@ -1,7 +1,7 @@
 import * as React from 'react';
-import StyledSvg from '../../styled/StyledSvg';
-import FullscreenIcon from '../../svg/Fullscreen';
-import FullscreenExitIcon from '../../svg/FullscreenExit';
+import StyledSvg from 'src/components/styled/StyledSvg';
+import FullscreenIcon from 'src/components/svg/Fullscreen';
+import FullscreenExitIcon from 'src/components/svg/FullscreenExit';
 
 const StyledFullscreenIcon = StyledSvg.withComponent(FullscreenIcon);
 const StyledFullscreenExitIcon = StyledSvg.withComponent(FullscreenExitIcon);

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
-import { toggleNativeControls } from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
+import { toggleNativeControls } from 'src/actions/player';
+import { IAianaState } from 'src/reducers/index';
 
 interface IProps {
   nativeControls: boolean;

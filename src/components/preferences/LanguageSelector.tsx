@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
+import { changeLanguage } from 'src/actions/preferences';
+import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
-import { changeLanguage } from '../../actions/preferences';
-import { IAianaState } from '../../reducers/index';
 
 interface IProps {
   availableLanguages: string[];

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store';
-import { hexToHsla } from '../../utils/colors';
-import styled from '../../utils/styled-components';
+import { IAianaState } from 'src/reducers/index';
+import { IConnectedReduxProps } from 'src/store';
+import { hexToHsla } from 'src/utils/colors';
+import styled from 'src/utils/styled-components';
 import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
 import PlayButton from '../buttons/play/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import styled from '../../utils/styled-components';
-import VolumeSlider from '../volume-slider/VolumeSlider';
+import VolumeSlider from 'src/components/volume-slider/VolumeSlider';
+import styled from 'src/utils/styled-components';
 import MuteButton from './mute/MuteButton';
 
 const StyledDiv = styled.div`

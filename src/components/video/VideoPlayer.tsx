@@ -12,15 +12,15 @@ import {
   updateCurrentTime,
   updateMediaDuration,
   updateTracksList
-} from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
+} from 'src/actions/player';
+import { IAianaState } from 'src/reducers/index';
 import {
   IRawTextTrack,
   isChapterTrack,
   isDisplayableTrack,
   rawTextTrack
-} from '../../utils/media-tracks';
-import styled from '../../utils/styled-components';
+} from 'src/utils/media-tracks';
+import styled from 'src/utils/styled-components';
 import MediaChapterTrack from './MediaChapterTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 

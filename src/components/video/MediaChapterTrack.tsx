@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addChaptersTrack } from '../../actions/player';
-import { TRACK_KIND_CHAPTERS } from '../../constants';
-import { IAianaState } from '../../reducers/index';
-import { IRawChapterTrack, rawChapterTrack } from '../../utils/media-tracks';
+import { addChaptersTrack } from 'src/actions/player';
+import { TRACK_KIND_CHAPTERS } from 'src/constants';
+import { IAianaState } from 'src/reducers/index';
+import { IRawChapterTrack, rawChapterTrack } from 'src/utils/media-tracks';
 
 interface IProps {
   chaptersTracks: IRawChapterTrack[];

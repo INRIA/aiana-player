@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { connect } from 'react-redux';
-import { IAianaState } from '../../reducers/index';
-import { i18nInstance } from '../../translations';
+import { IAianaState } from 'src/reducers';
+import { i18nInstance } from 'src/translations';
 
 interface IProps {
   language: string;

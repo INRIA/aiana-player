@@ -1,7 +1,7 @@
 import * as React from 'react';
-import StyledSvg from '../../styled/StyledSvg';
-import VolumeUnmutedIcon from '../../svg/VolumeFull';
-import VolumeMutedIcon from '../../svg/VolumeMuted';
+import StyledSvg from 'src/components/styled/StyledSvg';
+import VolumeUnmutedIcon from 'src/components/svg/VolumeFull';
+import VolumeMutedIcon from 'src/components/svg/VolumeMuted';
 
 const StyledVolumeMutedIcon = StyledSvg.withComponent(VolumeMutedIcon);
 const StyledVolumeUnmutedIcon = StyledSvg.withComponent(VolumeUnmutedIcon);

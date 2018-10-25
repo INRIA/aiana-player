@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { CDispatch } from 'src/store';
-import { requestChangeVolume } from '../../actions/player';
+import { requestChangeVolume } from 'src/actions/player';
 import {
   END_KEY_CODE,
   HOME_KEY_CODE,
@@ -10,10 +9,11 @@ import {
   RIGHT_ARROW_KEY_CODE,
   VOLUME_MAXIMUM,
   VOLUME_MINIMUM
-} from '../../constants';
-import { IAianaState } from '../../reducers/index';
-import { unitToPercent } from '../../utils/math';
-import { bounded } from '../../utils/ui';
+} from 'src/constants';
+import { IAianaState } from 'src/reducers/index';
+import { CDispatch } from 'src/store';
+import { unitToPercent } from 'src/utils/math';
+import { bounded } from 'src/utils/ui';
 import StyledVolumeSlider from './Styles';
 
 interface IProps {

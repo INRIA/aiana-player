@@ -1,9 +1,9 @@
-import { ITrack } from '../components/video/VideoTextTrack';
+import { ITrack } from 'src/components/video/VideoTextTrack';
 import {
   TRACK_KIND_CAPTIONS,
   TRACK_KIND_CHAPTERS,
   TRACK_KIND_SUBTITLES
-} from '../constants';
+} from 'src/constants';
 
 export interface IRawTextTrack {
   activeCues: TextTrackCueList;

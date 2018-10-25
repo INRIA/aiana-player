@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { DEFAULT_LANG } from '../../constants';
-import { IAianaState } from '../../reducers/index';
-import { IMediaCue, IRawChapterTrack } from '../../utils/media-tracks';
-import styled from '../../utils/styled-components';
+import { DEFAULT_LANG } from 'src/constants';
+import { IAianaState } from 'src/reducers/index';
+import { IMediaCue, IRawChapterTrack } from 'src/utils/media-tracks';
+import styled from 'src/utils/styled-components';
 import MediaChapterButton from './MediaChapterButton';
 
 const StyledChapters = styled.div`

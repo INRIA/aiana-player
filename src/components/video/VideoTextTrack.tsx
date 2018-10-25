@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { setSubtitleText } from '../../actions/player';
-import { DEFAULT_LANG, TRACK_KIND_SUBTITLES } from '../../constants';
-import { IAianaState } from '../../reducers/index';
-import { IRawTextTrack } from '../../utils/media-tracks';
+import { setSubtitleText } from 'src/actions/player';
+import { DEFAULT_LANG, TRACK_KIND_SUBTITLES } from 'src/constants';
+import { IAianaState } from 'src/reducers/index';
+import { IRawTextTrack } from 'src/utils/media-tracks';
 
 export interface ITrack {
   isDefault?: boolean;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from '../../reducers/index';
-import { IConnectedReduxProps } from '../../store/index';
-import { secondsToHMS } from '../../utils/time';
+import { IAianaState } from 'src/reducers/index';
+import { IConnectedReduxProps } from 'src/store/index';
+import { secondsToHMS } from 'src/utils/time';
 import StyledElement from './Styles';
 
 interface IProps extends IConnectedReduxProps {
