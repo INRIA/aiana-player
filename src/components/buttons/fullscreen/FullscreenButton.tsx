@@ -2,6 +2,7 @@ import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { ExtendedHTMLElement } from 'src/types';
+import { isFullscreenEnabled } from 'src/utils/fullscreen';
 import { handleToggleFullscreen } from '../../../actions/player';
 import { IAianaState } from '../../../reducers/index';
 import AssistiveText from '../../a11y/AssistiveText';
@@ -24,6 +25,10 @@ interface IFullscreenButton
 
 class FullscreenButton extends React.Component<IFullscreenButton> {
   public render() {
+    if (!isFullscreenEnabled()) {
+      return;
+    }
+
     const controlText = this.getControlText();
 
     return (

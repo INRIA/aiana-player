@@ -173,15 +173,13 @@ class VideoPlayer extends React.Component<IProps> {
   };
 
   private seekedHandler = () => {
-    const { isSeeking } = this.props;
-    if (isSeeking) {
+    if (this.props.isSeeking) {
       this.props.stopSeeking();
     }
   };
 
   private seekingHandler = () => {
-    const { isSeeking } = this.props;
-    if (!isSeeking) {
+    if (!this.props.isSeeking) {
       this.props.startSeeking();
     }
   };
