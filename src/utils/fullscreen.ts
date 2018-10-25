@@ -1,27 +1,27 @@
 import { ExtendedDocument, ExtendedHTMLElement } from 'src/types';
 
-export function enterFullscreen(element: ExtendedHTMLElement): void {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
+export function enterFullscreen(element: ExtendedHTMLElement): Promise<void> {
+  if (element.webkitRequestFullscreen) {
+    return element.webkitRequestFullscreen();
   } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
+    return element.msRequestFullscreen();
   }
+
+  return element.requestFullscreen();
 }
 
-export function exitFullscreen(): void {
+export function exitFullscreen(): Promise<void> {
   const doc = document as ExtendedDocument;
 
-  if (doc.exitFullscreen) {
-    doc.exitFullscreen();
-  } else if (doc.webkitExitFullscreen) {
-    doc.webkitExitFullscreen();
+  if (doc.webkitExitFullscreen) {
+    return doc.webkitExitFullscreen();
   } else if (doc.mozCancelFullScreen) {
-    doc.mozCancelFullScreen();
+    return doc.mozCancelFullScreen();
   } else if (doc.msExitFullscreen) {
-    doc.msExitFullscreen();
+    return doc.msExitFullscreen();
   }
+
+  return doc.exitFullscreen();
 }
 
 export function isDocumentFullscreen(): boolean {

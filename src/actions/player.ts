@@ -118,7 +118,6 @@ export function handleToggleFullscreen(
 ): AnyAction {
   const shouldExitFullscreen = isDocumentFullscreen();
 
-  // TODO: this should return Promise.
   if (shouldExitFullscreen) {
     exitFullscreen();
   } else {
