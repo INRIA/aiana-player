@@ -4,6 +4,7 @@ import { IAianaState } from 'src/reducers/index';
 import { IConnectedReduxProps } from 'src/store';
 import { hexToHsla } from 'src/utils/colors';
 import styled from 'src/utils/styled-components';
+import AddBookmarkButton from '../buttons/add-bookmark/AddBookmarkButton';
 import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
 import PlayButton from '../buttons/play/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';
@@ -43,6 +44,7 @@ const VideoPlayerControls: React.SFC<IProps> = ({ nativeControls }) => {
           <PlayButton />
           <VolumeControl />
           <TimeStatus />
+          <AddBookmarkButton />
         </div>
         <div className="aip-controls-right">
           <FullscreenButton />
