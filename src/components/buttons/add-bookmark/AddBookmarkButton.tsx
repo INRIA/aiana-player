@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addBookmark } from 'src/actions/bookmarks';
 import StyledButton from 'src/components/styled/StyledButton';
 import { IAianaState } from 'src/reducers';
+import ControlIcon from './ControlIcon';
 
 interface IProps {
   currentTime: number;
@@ -16,7 +17,11 @@ interface IAddBookmarkButton extends IProps, IDispatchProps {}
 
 class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
   public render() {
-    return <StyledButton onClick={this.clickHandler}>BK</StyledButton>;
+    return (
+      <StyledButton onClick={this.clickHandler}>
+        <ControlIcon />
+      </StyledButton>
+    );
   }
 
   private clickHandler = () => {
