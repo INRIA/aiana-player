@@ -6,7 +6,7 @@ const StyledAdditionalInfos = styled.aside`
   left: 100%;
   bottom: 0;
   border: 1px solid ${(props) => props.theme.fg};
-  padding: 1em 0.5em;
+  padding: 1em;
   color: ${(props) => props.theme.bg};
   background-color: ${(props) => props.theme.fg};
 `;

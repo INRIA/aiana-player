@@ -6,7 +6,7 @@ const StyledChapters = styled.nav`
   top: 0;
 
   width: 260px;
-  padding: 1em 0.5em;
+  padding: 1em;
   border: 1px solid ${(props) => props.theme.fg};
 
   line-height: 1.5;
