@@ -35,7 +35,7 @@ const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({
 };
 
 const mapStateToProps = (state: IAianaState) => ({
-  text: state.player.additionalInfosText
+  text: state.player.additionalInformationsText
 });
 
 export default connect(mapStateToProps)(translate()(MediaAdditionalInfos));

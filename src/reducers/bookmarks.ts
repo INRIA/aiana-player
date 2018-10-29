@@ -5,11 +5,11 @@ interface IBookmark {
   readonly time: number;
 }
 
-export type IBookmarks = IBookmark[];
+export type IBookmarksState = IBookmark[];
 
-const initialState: IBookmarks = [{ time: 13 }, { time: 50 }];
+const initialState: IBookmarksState = [{ time: 13 }, { time: 50 }];
 
-const bookmarks: Reducer = (state: IBookmarks = initialState, action) => {
+const bookmarks: Reducer = (state: IBookmarksState = initialState, action) => {
   switch (action.type) {
     case ADD_BOOKMARK:
       if (state.find((mark) => mark.time === action.time)) {

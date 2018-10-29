@@ -2,7 +2,6 @@ import { ITrack } from 'src/components/video/VideoTextTrack';
 import {
   TRACK_KIND_CAPTIONS,
   TRACK_KIND_CHAPTERS,
-  TRACK_KIND_METADATA,
   TRACK_KIND_SUBTITLES
 } from 'src/constants';
 
@@ -81,17 +80,4 @@ export function isDisplayableTrack(
  */
 export function isChapterTrack(track: TextTrack | ITrack) {
   return track.kind === TRACK_KIND_CHAPTERS;
-}
-
-/**
- * TODO: Just using metadata is wrong, but will work temporarily.
- *
- * Tests if a track should be used as additional infos track.
- *
- * @param track The additional info VTT track
- */
-export function isAdditionalInfoTrack(
-  track: TextTrack | IRawTextTrack | ITrack
-): boolean {
-  return track.kind === TRACK_KIND_METADATA;
 }

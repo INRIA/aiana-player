@@ -14,16 +14,17 @@ import {
   updateTracksList
 } from 'src/actions/player';
 import { IAianaState } from 'src/reducers/index';
+import { ISlidesTrack } from 'src/reducers/slides';
 import {
   IRawTextTrack,
-  isAdditionalInfoTrack,
   isChapterTrack,
   isDisplayableTrack,
   rawTextTrack
 } from 'src/utils/media-tracks';
 import styled from 'src/utils/styled-components';
+import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaChapterTrack from './MediaChapterTrack';
-import MediaMetadataTrack from './MediaMetadataTrack';
+import SlidesTrack from './SlidesTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
 const StyledVideo = styled.div`
@@ -62,6 +63,7 @@ interface IDispatchProps {
 }
 
 interface IVideoProps {
+  additionalInformationsTracks?: ITrack[];
   autoPlay: boolean;
   currentTime: number;
   isMuted: boolean;
@@ -69,6 +71,7 @@ interface IVideoProps {
   language: string;
   nativeControls: boolean;
   preload: string;
+  slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
   subtitlesTracks?: ITrack[];
   textTracks: IRawTextTrack[];
@@ -102,11 +105,13 @@ class VideoPlayer extends React.Component<IProps> {
 
   public render() {
     const {
+      additionalInformationsTracks,
       autoPlay,
       nativeControls,
       pauseHandler,
       playHandler,
       preload,
+      slidesTracksSources,
       sources,
       subtitlesTracks
     } = this.props;
@@ -142,10 +147,15 @@ class VideoPlayer extends React.Component<IProps> {
               .filter(isChapterTrack)
               .map((track, idx) => <MediaChapterTrack key={idx} {...track} />)}
 
-          {subtitlesTracks &&
-            subtitlesTracks
-              .filter(isAdditionalInfoTrack)
-              .map((track, idx) => <MediaMetadataTrack key={idx} {...track} />)}
+          {additionalInformationsTracks &&
+            additionalInformationsTracks.map((track, idx) => (
+              <AdditionalInfosTrack key={idx} {...track} />
+            ))}
+
+          {slidesTracksSources &&
+            slidesTracksSources.map((track, idx) => (
+              <SlidesTrack key={idx} {...track} />
+            ))}
         </video>
       </StyledVideo>
     );
@@ -230,6 +240,7 @@ class VideoPlayer extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state: IAianaState) => ({
+  additionalInformationsTracks: state.player.additionalInformationsTracks,
   autoPlay: state.player.autoPlay,
   currentTime: state.player.currentTime,
   isMuted: state.player.isMuted,
@@ -237,8 +248,9 @@ const mapStateToProps = (state: IAianaState) => ({
   language: state.preferences.language,
   nativeControls: state.player.nativeControls,
   preload: state.player.preload,
+  slidesTracksSources: state.slides.sourceTracks,
   sources: state.player.sources,
-  subtitlesTracks: state.player.subtitlesTracks,
+  subtitlesTracks: state.player.sourceTracks,
   textTracks: state.player.textTracks,
   volume: state.player.volume
 });

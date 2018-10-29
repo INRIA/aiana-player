@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addMetadataTrack, setAdditionalInfosText } from 'src/actions/player';
+import {
+  addMetadataTrack,
+  setAdditionalInformationsText
+} from 'src/actions/player';
 import { DEFAULT_LANG, TRACK_KIND_METADATA } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media-tracks';
@@ -99,7 +102,7 @@ const mapStateToProps = (state: IAianaState) => ({
 
 const mapDispatchToProps = {
   addMetadataTrack,
-  updateAdditionalInfosText: setAdditionalInfosText
+  updateAdditionalInfosText: setAdditionalInformationsText
 };
 
 export default connect(

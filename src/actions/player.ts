@@ -38,13 +38,14 @@ export const ADD_CHAPTER_TRACK = 'aiana/ADD_CHAPTER_TRACK';
 export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFOS_TEXT = 'aiana/SET_ADDITIONAL_INFOS_TEXT';
 
-export function setAdditionalInfosText(text: string | undefined) {
+export function setAdditionalInformationsText(text: string | undefined) {
   return {
     text,
     type: SET_ADDITIONAL_INFOS_TEXT
   };
 }
 
+// TODO: rename to add infos
 export function addMetadataTrack(track: IRawMetadataTrack): AnyAction {
   return {
     track,

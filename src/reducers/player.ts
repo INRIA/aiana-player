@@ -37,7 +37,8 @@ import {
 } from '../constants';
 
 export interface IPlayerState {
-  additionalInfosText: string | null;
+  additionalInformationsText: string | null;
+  readonly additionalInformationsTracks: ITrack[];
 
   autoPlay: boolean;
 
@@ -82,7 +83,7 @@ export interface IPlayerState {
 
   subtitleText: string | undefined;
 
-  readonly subtitlesTracks: ITrack[];
+  readonly sourceTracks: ITrack[];
 
   /**
    * HTMLMediaElement already parses vtt files and manage its own tracks state
@@ -102,7 +103,15 @@ export interface IPlayerState {
 }
 
 const initialState: IPlayerState = {
-  additionalInfosText: null,
+  additionalInformationsText: null,
+  additionalInformationsTracks: [
+    {
+      kind: 'metadata',
+      label: 'Additional info',
+      src: 'http://localhost:3000/dev/additional.en.vtt',
+      srcLang: 'en'
+    }
+  ],
   autoPlay: false,
   chaptersTracks: [],
   currentTime: 0,
@@ -118,14 +127,7 @@ const initialState: IPlayerState = {
   playerElement: null,
   preload: 'auto',
   seekingTime: 0,
-  sources: [
-    {
-      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
-      type: 'video/mp4'
-    }
-  ],
-  subtitleText: undefined,
-  subtitlesTracks: [
+  sourceTracks: [
     {
       label: 'Default subtitles (English)',
       src: 'http://localhost:3000/dev/subtitles.vtt'
@@ -151,14 +153,15 @@ const initialState: IPlayerState = {
       label: 'Chapitres',
       src: 'http://localhost:3000/dev/chapters.fr.vtt',
       srcLang: 'fr'
-    },
-    {
-      kind: 'metadata',
-      label: 'Additional info',
-      src: 'http://localhost:3000/dev/additional.en.vtt',
-      srcLang: 'en'
     }
   ],
+  sources: [
+    {
+      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
+      type: 'video/mp4'
+    }
+  ],
+  subtitleText: undefined,
   textTracks: [],
   volume: DEFAULT_VOLUME
 };
@@ -264,7 +267,7 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
     case SET_ADDITIONAL_INFOS_TEXT:
       return {
         ...state,
-        additionalInfosText: action.text
+        additionalInformationsText: action.text
       };
     case ADD_CHAPTER_TRACK: {
       const chaptersTracks = [].concat(
