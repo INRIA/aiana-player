@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import {
   ADD_CHAPTER_TRACK,
+  ADD_METADATA_TRACK,
   MEDIA_ELEMENT_MOUNTED,
   MEDIA_ELEMENT_UNMOUNTED,
   MEDIA_PAUSE,
@@ -14,6 +15,7 @@ import {
   MEDIA_UPDATE_TIME,
   MEDIA_VOLUME_CHANGE,
   PLAYER_ELEMENT_MOUNTED,
+  SET_ADDITIONAL_INFOS_TEXT,
   SET_SUBTITLE_TEXT,
   TOGGLE_FULLSCREEN,
   TOGGLE_NATIVE_CONTROLS,
@@ -23,7 +25,11 @@ import {
 import { ISource } from 'src/components/video/VideoPlayer';
 import { ITrack } from 'src/components/video/VideoTextTrack';
 import { ExtendedHTMLElement } from 'src/types';
-import { IRawChapterTrack, IRawTextTrack } from 'src/utils/media-tracks';
+import {
+  IRawChapterTrack,
+  IRawMetadataTrack,
+  IRawTextTrack
+} from 'src/utils/media-tracks';
 import {
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
@@ -31,6 +37,8 @@ import {
 } from '../constants';
 
 export interface IPlayerState {
+  additionalInfosText: string | null;
+
   autoPlay: boolean;
 
   /**
@@ -51,6 +59,8 @@ export interface IPlayerState {
   isSeeking: boolean;
 
   mediaElement: HTMLMediaElement | null;
+
+  metadataTracks: IRawMetadataTrack[];
 
   /**
    * Determines if the video HTML element should use its own controls or those
@@ -92,6 +102,7 @@ export interface IPlayerState {
 }
 
 const initialState: IPlayerState = {
+  additionalInfosText: null,
   autoPlay: false,
   chaptersTracks: [],
   currentTime: 0,
@@ -101,6 +112,7 @@ const initialState: IPlayerState = {
   isPlaying: false,
   isSeeking: false,
   mediaElement: null,
+  metadataTracks: [],
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
@@ -139,6 +151,12 @@ const initialState: IPlayerState = {
       label: 'Chapitres',
       src: 'http://localhost:3000/dev/chapters.fr.vtt',
       srcLang: 'fr'
+    },
+    {
+      kind: 'metadata',
+      label: 'Additional info',
+      src: 'http://localhost:3000/dev/additional.en.vtt',
+      srcLang: 'en'
     }
   ],
   textTracks: [],
@@ -243,7 +261,12 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         subtitleText: action.subtitleText
       };
-    case ADD_CHAPTER_TRACK:
+    case SET_ADDITIONAL_INFOS_TEXT:
+      return {
+        ...state,
+        additionalInfosText: action.text
+      };
+    case ADD_CHAPTER_TRACK: {
       const chaptersTracks = [].concat(
         state.chaptersTracks as any,
         action.chaptersTrack
@@ -252,6 +275,17 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       return {
         ...state,
         chaptersTracks
+      };
+    }
+    case ADD_METADATA_TRACK:
+      const metadataTracks = [].concat(
+        state.metadataTracks as any,
+        action.track
+      );
+
+      return {
+        ...state,
+        metadataTracks
       };
     default:
       return state;

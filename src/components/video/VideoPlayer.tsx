@@ -16,12 +16,14 @@ import {
 import { IAianaState } from 'src/reducers/index';
 import {
   IRawTextTrack,
+  isAdditionalInfoTrack,
   isChapterTrack,
   isDisplayableTrack,
   rawTextTrack
 } from 'src/utils/media-tracks';
 import styled from 'src/utils/styled-components';
 import MediaChapterTrack from './MediaChapterTrack';
+import MediaMetadataTrack from './MediaMetadataTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
 const StyledVideo = styled.video`
@@ -119,19 +121,22 @@ class VideoPlayer extends React.Component<IProps> {
         tabIndex={nativeControls ? 0 : -1}
       >
         {sources &&
-          sources.map((source, index) => <source key={index} {...source} />)}
+          sources.map((source, idx) => <source key={idx} {...source} />)}
 
         {subtitlesTracks &&
           subtitlesTracks
             .filter(isDisplayableTrack)
-            .map((track, index) => <VideoTextTrack key={index} {...track} />)}
+            .map((track, idx) => <VideoTextTrack key={idx} {...track} />)}
 
         {subtitlesTracks &&
           subtitlesTracks
             .filter(isChapterTrack)
-            .map((track, index) => (
-              <MediaChapterTrack key={index} {...track} />
-            ))}
+            .map((track, idx) => <MediaChapterTrack key={idx} {...track} />)}
+
+        {subtitlesTracks &&
+          subtitlesTracks
+            .filter(isAdditionalInfoTrack)
+            .map((track, idx) => <MediaMetadataTrack key={idx} {...track} />)}
       </StyledVideo>
     );
   }
