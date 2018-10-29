@@ -13,6 +13,11 @@
       "git add"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^src/(.*)": "<rootDir>/src/$1"
+    }
+  },
   "dependencies": {
     "classnames": "^2.2.6",
     "color-convert": "^1.9.3",
