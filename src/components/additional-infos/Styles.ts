@@ -1,6 +1,6 @@
 import styled from 'src/utils/styled-components';
 
-const StyledAdditionalInfos = styled.div`
+const StyledAdditionalInfos = styled.aside`
   width: 260px;
   position: absolute;
   left: 100%;
