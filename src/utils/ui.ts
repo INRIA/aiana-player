@@ -6,7 +6,6 @@
  * @param x {number} The value to apply boundaries on
  * @param lowerBound {number} The lower bound
  * @param upperBound {number} The upper bound
- * @returns The bounded value
  */
 export function bounded(
   x: number,
@@ -31,6 +30,11 @@ function randString(length: number = 4): string {
   return str;
 }
 
+/**
+ * Generates a unique string identifer.
+ *
+ * @param length {number} the length of the identifier
+ */
 export function uuid(length: number = 6): string {
   const len = length / 2;
   const head = randString(Math.floor(len));
