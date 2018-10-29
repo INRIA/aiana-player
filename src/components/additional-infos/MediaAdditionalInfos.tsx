@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from 'src/reducers';
+import { markdownToJSX } from 'src/utils/strings';
 import StyledAdditionalInfos from './Styles';
 
 interface IMediaAdditionalInfos {
@@ -14,10 +15,9 @@ const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({ text }) => {
   }
 
   return (
-    <StyledAdditionalInfos
-      className="aip-additional-infos"
-      dangerouslySetInnerHTML={{ __html: text }}
-    />
+    <StyledAdditionalInfos className="aip-additional-infos">
+      {markdownToJSX(text)}
+    </StyledAdditionalInfos>
   );
 };
 
