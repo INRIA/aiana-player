@@ -27,8 +27,11 @@ import MediaMetadataTrack from './MediaMetadataTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
 const StyledVideo = styled.video`
+  position: absolute;
+  left: 0;
+  top: 0;
   display: block;
-  width: 100%;
+  width: 50%;
   max-height: 100%;
   max-width: 100%;
 `;
