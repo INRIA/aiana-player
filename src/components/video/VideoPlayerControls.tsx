@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from 'src/reducers/index';
-import { IConnectedReduxProps } from 'src/store';
 import { hexToHsla } from 'src/utils/colors';
 import styled from 'src/utils/styled-components';
 import AddBookmarkButton from '../buttons/add-bookmark/AddBookmarkButton';
@@ -27,7 +26,7 @@ const StyledControls = styled.div`
   margin-top: 0.3125em;
 `;
 
-interface IProps extends IConnectedReduxProps {
+interface IProps {
   nativeControls: boolean;
 }
 

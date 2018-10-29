@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from 'src/reducers/index';
-import { IConnectedReduxProps } from 'src/store/index';
 import { secondsToHMS } from 'src/utils/time';
 import StyledElement from './Styles';
 
-interface IProps extends IConnectedReduxProps {
+interface IProps {
   currentTime: number;
   duration: number;
 }
