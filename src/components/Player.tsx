@@ -17,11 +17,11 @@ const StyledDiv = styled.div`
 
 const Player: React.SFC = () => (
   <StyledDiv className="aip-player">
-    <VideoPlayer />
     <MediaChapters />
-    <MediaAdditionalInfos />
+    <VideoPlayer />
     <VideoSubtitles />
     <VideoPlayerControls />
+    <MediaAdditionalInfos />
   </StyledDiv>
 );
 

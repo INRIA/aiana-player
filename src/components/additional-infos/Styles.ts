@@ -1,10 +1,11 @@
 import styled from 'src/utils/styled-components';
 
 const StyledAdditionalInfos = styled.aside`
-  width: 260px;
+  width: 49%;
+  height: calc(49% - 2.125em);
   position: absolute;
-  left: 100%;
-  bottom: 0;
+  right: 0;
+  top: 0;
   border: 1px solid ${(props) => props.theme.fg};
   padding: 1em;
   color: ${(props) => props.theme.bg};

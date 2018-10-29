@@ -2,10 +2,11 @@ import styled from 'src/utils/styled-components';
 
 const StyledChapters = styled.nav`
   position: absolute;
-  left: 100%;
+  left: 0;
   top: 0;
 
-  width: 260px;
+  width: 49%;
+  height: calc(49% - 2.125em);
   padding: 1em;
   border: 1px solid ${(props) => props.theme.fg};
 

@@ -26,14 +26,20 @@ import MediaChapterTrack from './MediaChapterTrack';
 import MediaMetadataTrack from './MediaMetadataTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
-const StyledVideo = styled.video`
+const StyledVideo = styled.div`
   position: absolute;
   left: 0;
-  top: 0;
+  bottom: 4.25em;
   display: block;
   width: 50%;
-  max-height: 100%;
-  max-width: 100%;
+  height: calc(49% - 2.125em);
+
+  video {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+  }
 `;
 
 export interface ISource {
@@ -72,7 +78,7 @@ interface IVideoProps {
 interface IProps extends IVideoProps, IDispatchProps {}
 
 class VideoPlayer extends React.Component<IProps> {
-  private mediaRef = React.createRef<HTMLMediaElement>();
+  private mediaRef = React.createRef<HTMLVideoElement>();
 
   public componentDidMount() {
     const { volume, isMuted } = this.props;
@@ -106,40 +112,41 @@ class VideoPlayer extends React.Component<IProps> {
     } = this.props;
 
     return (
-      <StyledVideo
-        autoPlay={autoPlay}
-        className="aip-video"
-        controls={nativeControls}
-        innerRef={this.mediaRef}
-        onClick={this.clickHandler}
-        onLoadedMetadata={this.loadedMetadataHandler}
-        onPause={pauseHandler}
-        onPlay={playHandler}
-        onSeeked={this.seekedHandler}
-        onSeeking={this.seekingHandler}
-        onTimeUpdate={this.timeUpdateHandler}
-        onVolumeChange={this.volumeChangeHandler}
-        playsInline={true}
-        preload={preload}
-        tabIndex={nativeControls ? 0 : -1}
-      >
-        {sources &&
-          sources.map((source, idx) => <source key={idx} {...source} />)}
+      <StyledVideo className="aip-video">
+        <video
+          autoPlay={autoPlay}
+          controls={nativeControls}
+          ref={this.mediaRef}
+          onClick={this.clickHandler}
+          onLoadedMetadata={this.loadedMetadataHandler}
+          onPause={pauseHandler}
+          onPlay={playHandler}
+          onSeeked={this.seekedHandler}
+          onSeeking={this.seekingHandler}
+          onTimeUpdate={this.timeUpdateHandler}
+          onVolumeChange={this.volumeChangeHandler}
+          playsInline={true}
+          preload={preload}
+          tabIndex={nativeControls ? 0 : -1}
+        >
+          {sources &&
+            sources.map((source, idx) => <source key={idx} {...source} />)}
 
-        {subtitlesTracks &&
-          subtitlesTracks
-            .filter(isDisplayableTrack)
-            .map((track, idx) => <VideoTextTrack key={idx} {...track} />)}
+          {subtitlesTracks &&
+            subtitlesTracks
+              .filter(isDisplayableTrack)
+              .map((track, idx) => <VideoTextTrack key={idx} {...track} />)}
 
-        {subtitlesTracks &&
-          subtitlesTracks
-            .filter(isChapterTrack)
-            .map((track, idx) => <MediaChapterTrack key={idx} {...track} />)}
+          {subtitlesTracks &&
+            subtitlesTracks
+              .filter(isChapterTrack)
+              .map((track, idx) => <MediaChapterTrack key={idx} {...track} />)}
 
-        {subtitlesTracks &&
-          subtitlesTracks
-            .filter(isAdditionalInfoTrack)
-            .map((track, idx) => <MediaMetadataTrack key={idx} {...track} />)}
+          {subtitlesTracks &&
+            subtitlesTracks
+              .filter(isAdditionalInfoTrack)
+              .map((track, idx) => <MediaMetadataTrack key={idx} {...track} />)}
+        </video>
       </StyledVideo>
     );
   }
