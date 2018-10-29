@@ -23,3 +23,18 @@ export function bounded(
 
   return relativeX;
 }
+
+function randString(length: number = 4): string {
+  const str = Math.random()
+    .toString(36)
+    .substring(2, length + 2);
+  return str;
+}
+
+export function uuid(length: number = 6): string {
+  const len = length / 2;
+  const head = randString(Math.floor(len));
+  const tail = randString(Math.ceil(len));
+
+  return `${head}${tail}`;
+}
