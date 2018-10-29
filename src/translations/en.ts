@@ -1,4 +1,5 @@
 export default {
+  'additional-infos.title': 'Additional information',
   'controls.fullscreen.enter': 'Full screen',
   'controls.fullscreen.exit': 'Exit full screen',
   'controls.mute': 'Mute',

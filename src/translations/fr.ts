@@ -1,4 +1,5 @@
 export default {
+  'additional-infos.title': 'Additional information',
   'controls.fullscreen.enter': 'Passer en mode plein écran',
   'controls.fullscreen.exit': 'Quitter le mode plein écran',
   'controls.mute': 'Désactiver le son',

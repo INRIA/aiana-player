@@ -41,15 +41,15 @@ const MediaChapters: React.SFC<IMediaChapters> = ({
   chaptersTracks,
   language
 }) => {
-  const activeTrack =
+  const activeChaptersTrack =
     chaptersTracks.find((track) => track.language === language) ||
     chaptersTracks.find((track) => track.language === DEFAULT_LANG);
 
-  if (!activeTrack) {
+  if (!activeChaptersTrack) {
     return null;
   }
 
-  const cues = [...activeTrack.cues[Symbol.iterator]()];
+  const cues = [...activeChaptersTrack.cues[Symbol.iterator]()];
   const chapters = cues.map((cue) => ({
     startTime: cue.startTime,
     text: cue.text
@@ -58,7 +58,7 @@ const MediaChapters: React.SFC<IMediaChapters> = ({
 
   return (
     <StyledChapters className="aip-chapters" aria-labelledby={uid}>
-      <div id={uid}>{activeTrack.label}</div>
+      <div id={uid}>{activeChaptersTrack.label}</div>
       <ChaptersList chapters={chapters} />
     </StyledChapters>
   );

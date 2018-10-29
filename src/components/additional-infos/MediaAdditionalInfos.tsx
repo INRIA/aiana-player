@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { IAianaState } from 'src/reducers';
 import { markdownToJSX } from 'src/utils/strings';
@@ -6,12 +7,14 @@ import { uuid } from 'src/utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledAdditionalInfos from './Styles';
 
-interface IMediaAdditionalInfos {
+interface IMediaAdditionalInfos extends InjectedTranslateProps {
   text: string | null;
 }
 
-// TODO: find a better secure way in replacement of dangerouslySetInnerHTML.
-const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({ text }) => {
+const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({
+  t,
+  text
+}) => {
   if (!text) {
     return null;
   }
@@ -24,7 +27,7 @@ const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({ text }) => {
       aria-labelledby={uid}
     >
       <div id={uid}>
-        <AssistiveText>Additional Information</AssistiveText>
+        <AssistiveText>{t('additional-infos.title')}</AssistiveText>
       </div>
       {markdownToJSX(text)}
     </StyledAdditionalInfos>
@@ -35,4 +38,4 @@ const mapStateToProps = (state: IAianaState) => ({
   text: state.player.additionalInfosText
 });
 
-export default connect(mapStateToProps)(MediaAdditionalInfos);
+export default connect(mapStateToProps)(translate()(MediaAdditionalInfos));
