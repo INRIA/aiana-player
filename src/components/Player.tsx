@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'src/utils/styled-components';
 import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
-import MediaChapters from './video/MediaChapters';
+import MediaChapters from './chapters/MediaChapters';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 import VideoSubtitles from './video/VideoSubtitles';

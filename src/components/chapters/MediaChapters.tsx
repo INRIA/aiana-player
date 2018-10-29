@@ -2,37 +2,30 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { DEFAULT_LANG } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
-import { IMediaCue, IRawChapterTrack } from 'src/utils/media-tracks';
-import styled from 'src/utils/styled-components';
+import { IRawChapterTrack } from 'src/utils/media-tracks';
+import { uuid } from 'src/utils/ui';
 import MediaChapterButton from './MediaChapterButton';
+import StyledChapters from './Styles';
 
-const StyledChapters = styled.div`
-  width: 260px;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  border: 1px solid ${(props) => props.theme.fg};
-  padding: 1em 0.5em;
-  color: ${(props) => props.theme.bg};
-  background-color: ${(props) => props.theme.fg};
-`;
-
-interface ICuesList {
-  cues: IMediaCue[];
+interface IChapter {
+  startTime: number;
+  text: string;
 }
 
-const CuesList: React.SFC<ICuesList> = ({ cues }) => {
-  if (cues.length === 0) {
+interface IChaptersList {
+  chapters: IChapter[];
+}
+
+const ChaptersList: React.SFC<IChaptersList> = ({ chapters }) => {
+  if (chapters.length === 0) {
     return null;
   }
 
   return (
     <ol>
-      {cues.map((vttCue, index) => (
-        <li key={index}>
-          <MediaChapterButton startTime={vttCue.startTime}>
-            {vttCue.text}
-          </MediaChapterButton>
+      {chapters.map(({ startTime, text }, idx) => (
+        <li key={idx}>
+          <MediaChapterButton startTime={startTime}>{text}</MediaChapterButton>
         </li>
       ))}
     </ol>
@@ -57,11 +50,16 @@ const MediaChapters: React.SFC<IMediaChapters> = ({
   }
 
   const cues = [...activeTrack.cues[Symbol.iterator]()];
+  const chapters = cues.map((cue) => ({
+    startTime: cue.startTime,
+    text: cue.text
+  }));
+  const uid = uuid();
 
   return (
-    <StyledChapters className="aip-chapters">
-      <h3>{activeTrack.label}</h3>
-      <CuesList cues={cues} />
+    <StyledChapters className="aip-chapters" aria-labelledby={uid}>
+      <div id={uid}>{activeTrack.label}</div>
+      <ChaptersList chapters={chapters} />
     </StyledChapters>
   );
 };
