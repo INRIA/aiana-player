@@ -13,8 +13,6 @@ const Slides: React.SFC<IProps> = ({ text }) => {
     return null;
   }
 
-  console.log(text);
-
   return (
     <SlidesStyles className="aip-slides">{markdownToJSX(text)}</SlidesStyles>
   );
