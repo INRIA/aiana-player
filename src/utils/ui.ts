@@ -36,6 +36,10 @@ function randString(length: number = 4): string {
  * @param length {number} the length of the identifier
  */
 export function uuid(length: number = 6): string {
+  if (length < 1) {
+    return '';
+  }
+
   const len = length / 2;
   const head = randString(Math.floor(len));
   const tail = randString(Math.ceil(len));
