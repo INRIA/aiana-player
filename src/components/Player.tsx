@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { IAianaState } from 'src/reducers';
 import styled from 'src/utils/styled-components';
 import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
 import ChaptersMenu from './chapters/ChaptersMenu';
@@ -16,9 +18,13 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-const Player: React.SFC = () => (
+interface IPlayerProps {
+  chaptersMenu: boolean;
+}
+
+const Player: React.SFC<IPlayerProps> = ({ chaptersMenu }) => (
   <StyledDiv className="aip-player">
-    <ChaptersMenu />
+    {chaptersMenu && <ChaptersMenu />}
     <VideoPlayer />
     <Slides />
     <MediaSubtitles />
@@ -27,4 +33,8 @@ const Player: React.SFC = () => (
   </StyledDiv>
 );
 
-export default Player;
+const mapStateToProps = (state: IAianaState) => ({
+  chaptersMenu: state.chapters.menuEnabled
+});
+
+export default connect(mapStateToProps)(Player);

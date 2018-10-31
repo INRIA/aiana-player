@@ -10,11 +10,13 @@ export interface IChaptersTrack {
 
 export interface IChaptersState {
   chaptersTracks: IRawChapterTrack[];
+  menuEnabled: boolean;
   readonly sources: IChaptersTrack[];
 }
 
 const initialState = {
   chaptersTracks: [],
+  menuEnabled: false,
   sources: [
     {
       label: 'Chapitres',
