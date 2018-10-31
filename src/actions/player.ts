@@ -33,7 +33,7 @@ export const SET_SUBTITLE_TEXT = 'aiana/SET_SUBTITLE_TEXT';
 export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFOS_TEXT = 'aiana/SET_ADDITIONAL_INFOS_TEXT';
 
-export function setAdditionalInformationsText(text: string | undefined) {
+export function setAdditionalInformationsText(text?: string) {
   return {
     text,
     type: SET_ADDITIONAL_INFOS_TEXT
@@ -48,7 +48,7 @@ export function addMetadataTrack(track: IRawMetadataTrack): AnyAction {
   };
 }
 
-export function setSubtitleText(text: string | undefined) {
+export function setSubtitleText(text?: string) {
   return {
     subtitleText: text,
     type: SET_SUBTITLE_TEXT

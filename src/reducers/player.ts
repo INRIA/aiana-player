@@ -70,7 +70,7 @@ export interface IPlayerState {
 
   readonly sources: ISource[];
 
-  subtitleText: string | undefined;
+  subtitleText?: string;
 
   readonly sourceTracks: ITrack[];
 

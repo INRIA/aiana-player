@@ -13,9 +13,9 @@ import { IAianaState } from 'src/reducers/index';
 import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media-tracks';
 
 interface IProps {
-  label?: string | undefined;
+  label?: string;
   src?: string;
-  srcLang?: string | undefined;
+  srcLang?: string;
 }
 
 interface IStateProps {
@@ -24,7 +24,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   addMetadataTrack(track: IRawMetadataTrack): void;
-  updateAdditionalInfosText(text: string | undefined): void;
+  updateAdditionalInfosText(text?: string): void;
 }
 
 export interface IChapterTrack extends IProps, IStateProps, IDispatchProps {}

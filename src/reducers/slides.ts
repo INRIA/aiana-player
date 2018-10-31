@@ -3,9 +3,9 @@ import { ADD_SLIDES_TRACK, SET_SLIDES_TEXT } from 'src/actions/slides';
 import { IRawTextTrack } from 'src/utils/media-tracks';
 
 export interface ISlidesTrack {
-  label?: string | undefined;
+  label?: string;
   src?: string;
-  srcLang?: string | undefined;
+  srcLang?: string;
 }
 
 export interface ISlidesState {

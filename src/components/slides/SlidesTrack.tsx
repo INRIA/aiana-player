@@ -9,14 +9,14 @@ import {
 import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media-tracks';
 
 interface IProps {
-  label?: string | undefined;
+  label?: string;
   src?: string;
-  srcLang?: string | undefined;
+  srcLang?: string;
 }
 
 interface IDispatchProps {
   addSlidesTrack(track: IRawMetadataTrack): void;
-  setSlidesText(text: string | undefined): void;
+  setSlidesText(text?: string): void;
 }
 
 export interface ISlideTrack extends IProps, IDispatchProps {}

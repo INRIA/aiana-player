@@ -5,7 +5,7 @@ import { formatSubtitles } from 'src/utils/strings';
 import { StyledSpan, StyledSubtitles } from './Styles';
 
 interface IVideoSubtitles {
-  subtitleText: string | undefined;
+  subtitleText?: string;
 }
 
 const MediaSubtitles: React.SFC<IVideoSubtitles> = ({ subtitleText }) => {

@@ -12,9 +12,9 @@ import { IRawTextTrack, isActiveTrack } from 'src/utils/media-tracks';
 export interface ITrack {
   isDefault?: boolean;
   kind?: TextTrackKind;
-  label?: string | undefined;
+  label?: string;
   src?: string;
-  srcLang?: string | undefined;
+  srcLang?: string;
 }
 
 interface IStateProps {
@@ -23,7 +23,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  updateSubtitleText(text: string | undefined): void;
+  updateSubtitleText(text?: string): void;
 }
 
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
