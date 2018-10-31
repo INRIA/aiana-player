@@ -26,6 +26,7 @@ import { ITrack } from 'src/components/video/VideoTextTrack';
 import { ExtendedHTMLElement } from 'src/types';
 import { IRawMetadataTrack, IRawTextTrack } from 'src/utils/media-tracks';
 import {
+  DEFAULT_AUTOLOAD,
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
   DEFAULT_VOLUME
@@ -113,7 +114,7 @@ const initialState: IPlayerState = {
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
-  preload: 'auto',
+  preload: DEFAULT_AUTOLOAD,
   seekingTime: 0,
   sourceTracks: [
     {
