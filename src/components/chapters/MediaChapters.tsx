@@ -65,7 +65,7 @@ const MediaChapters: React.SFC<IMediaChapters> = ({
 };
 
 const mapStateToProps = (state: IAianaState) => ({
-  chaptersTracks: state.player.chaptersTracks,
+  chaptersTracks: state.chapters.chaptersTracks,
   language: state.preferences.language
 });
 

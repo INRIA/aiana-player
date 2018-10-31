@@ -1,6 +1,5 @@
 import { Reducer } from 'redux';
 import {
-  ADD_CHAPTER_TRACK,
   ADD_METADATA_TRACK,
   MEDIA_ELEMENT_MOUNTED,
   MEDIA_ELEMENT_UNMOUNTED,
@@ -25,11 +24,7 @@ import {
 import { ISource } from 'src/components/video/VideoPlayer';
 import { ITrack } from 'src/components/video/VideoTextTrack';
 import { ExtendedHTMLElement } from 'src/types';
-import {
-  IRawChapterTrack,
-  IRawMetadataTrack,
-  IRawTextTrack
-} from 'src/utils/media-tracks';
+import { IRawMetadataTrack, IRawTextTrack } from 'src/utils/media-tracks';
 import {
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
@@ -41,12 +36,6 @@ export interface IPlayerState {
   readonly additionalInformationsTracks: ITrack[];
 
   autoPlay: boolean;
-
-  /**
-   * Chapters tracks are gathered asynchronously when their HTMLTrackElement
-   * has successfuly loaded.
-   */
-  chaptersTracks: IRawChapterTrack[];
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -113,7 +102,6 @@ const initialState: IPlayerState = {
     }
   ],
   autoPlay: false,
-  chaptersTracks: [],
   currentTime: 0,
   duration: 0,
   isFullscreen: false,
@@ -141,18 +129,6 @@ const initialState: IPlayerState = {
       kind: 'captions',
       label: 'Captions',
       src: 'http://localhost:3000/dev/subtitles.vtt'
-    },
-    {
-      kind: 'chapters',
-      label: 'Chapters',
-      src: 'http://localhost:3000/dev/chapters.en.vtt',
-      srcLang: 'en'
-    },
-    {
-      kind: 'chapters',
-      label: 'Chapitres',
-      src: 'http://localhost:3000/dev/chapters.fr.vtt',
-      srcLang: 'fr'
     }
   ],
   sources: [
@@ -269,17 +245,6 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         additionalInformationsText: action.text
       };
-    case ADD_CHAPTER_TRACK: {
-      const chaptersTracks = [].concat(
-        state.chaptersTracks as any,
-        action.chaptersTrack
-      );
-
-      return {
-        ...state,
-        chaptersTracks
-      };
-    }
     case ADD_METADATA_TRACK:
       const metadataTracks = [].concat(
         state.metadataTracks as any,

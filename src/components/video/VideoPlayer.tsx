@@ -13,11 +13,11 @@ import {
   updateMediaDuration,
   updateTracksList
 } from 'src/actions/player';
+import { IChaptersTrack } from 'src/reducers/chapters';
 import { IAianaState } from 'src/reducers/index';
 import { ISlidesTrack } from 'src/reducers/slides';
 import {
   IRawTextTrack,
-  isChapterTrack,
   isDisplayableTrack,
   rawTextTrack
 } from 'src/utils/media-tracks';
@@ -65,6 +65,7 @@ interface IDispatchProps {
 interface IVideoProps {
   additionalInformationsTracks?: ITrack[];
   autoPlay: boolean;
+  chaptersSources: IChaptersTrack[];
   currentTime: number;
   isMuted: boolean;
   isSeeking: boolean;
@@ -107,6 +108,7 @@ class VideoPlayer extends React.Component<IProps> {
     const {
       additionalInformationsTracks,
       autoPlay,
+      chaptersSources,
       nativeControls,
       pauseHandler,
       playHandler,
@@ -142,10 +144,9 @@ class VideoPlayer extends React.Component<IProps> {
               .filter(isDisplayableTrack)
               .map((track, idx) => <VideoTextTrack key={idx} {...track} />)}
 
-          {subtitlesTracks &&
-            subtitlesTracks
-              .filter(isChapterTrack)
-              .map((track, idx) => <MediaChapterTrack key={idx} {...track} />)}
+          {chaptersSources.map((track, idx) => (
+            <MediaChapterTrack key={idx} {...track} />
+          ))}
 
           {additionalInformationsTracks &&
             additionalInformationsTracks.map((track, idx) => (
@@ -242,6 +243,7 @@ class VideoPlayer extends React.Component<IProps> {
 const mapStateToProps = (state: IAianaState) => ({
   additionalInformationsTracks: state.player.additionalInformationsTracks,
   autoPlay: state.player.autoPlay,
+  chaptersSources: state.chapters.sources,
   currentTime: state.player.currentTime,
   isMuted: state.player.isMuted,
   isSeeking: state.player.isSeeking,

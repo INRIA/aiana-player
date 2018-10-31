@@ -1,30 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addChaptersTrack } from 'src/actions/player';
+import { addChaptersTrack } from 'src/actions/chapters';
 import { TRACK_KIND_CHAPTERS } from 'src/constants';
+import { IChaptersTrack } from 'src/reducers/chapters';
 import { IRawChapterTrack, rawChapterTrack } from 'src/utils/media-tracks';
-
-interface IProps {
-  label?: string | undefined;
-  src?: string;
-  srcLang?: string | undefined;
-}
 
 interface IDispatchProps {
   addChaptersTrack(chaptersTrack: IRawChapterTrack): void;
 }
 
-export interface IChapterTrack extends IProps, IDispatchProps {}
+export interface IMediaChapterTrack extends IChaptersTrack, IDispatchProps {}
 
-class ChapterTrack extends React.Component<IChapterTrack> {
+class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
   public render() {
     const { label, src, srcLang } = this.props;
-
-    if (!src) {
-      return null;
-    }
 
     return (
       <track
@@ -74,4 +65,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(ChapterTrack);
+)(MediaChapterTrack);

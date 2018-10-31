@@ -5,11 +5,7 @@ import {
   exitFullscreen,
   isDocumentFullscreen
 } from '../utils/fullscreen';
-import {
-  IRawChapterTrack,
-  IRawMetadataTrack,
-  IRawTextTrack
-} from '../utils/media-tracks';
+import { IRawMetadataTrack, IRawTextTrack } from '../utils/media-tracks';
 
 export const TOGGLE_NATIVE_CONTROLS = 'aiana/TOGGLE_NATIVE_CONTROLS';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
@@ -34,7 +30,6 @@ export const MEDIA_SEEK_TOGGLE = 'aiana/MEDIA_SEEK_TOGGLE';
 export const UPDATE_TRACKS_LIST = 'aiana/UPDATE_TRACKS_LIST';
 export const UPDATE_ACTIVE_TEXT_TRACK = 'aiana/UPDATE_ACTIVE_TEXT_TRACK';
 export const SET_SUBTITLE_TEXT = 'aiana/SET_SUBTITLE_TEXT';
-export const ADD_CHAPTER_TRACK = 'aiana/ADD_CHAPTER_TRACK';
 export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFOS_TEXT = 'aiana/SET_ADDITIONAL_INFOS_TEXT';
 
@@ -50,13 +45,6 @@ export function addMetadataTrack(track: IRawMetadataTrack): AnyAction {
   return {
     track,
     type: ADD_METADATA_TRACK
-  };
-}
-
-export function addChaptersTrack(chaptersTrack: IRawChapterTrack): AnyAction {
-  return {
-    chaptersTrack,
-    type: ADD_CHAPTER_TRACK
   };
 }
 
