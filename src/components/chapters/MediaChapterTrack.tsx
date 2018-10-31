@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { addChaptersTrack } from 'src/actions/chapters';
-import { TRACK_KIND_CHAPTERS } from 'src/constants';
+import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from 'src/constants';
 import { IChaptersTrack } from 'src/reducers/chapters';
 import { IRawChapterTrack, rawChapterTrack } from 'src/utils/media-tracks';
 
@@ -15,15 +15,13 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
   public render() {
-    const { label, src, srcLang } = this.props;
-
     return (
       <track
         kind={TRACK_KIND_CHAPTERS}
-        label={label}
+        label={this.props.label}
         ref={this.trackRef}
-        src={src}
-        srcLang={srcLang}
+        src={this.props.src}
+        srcLang={this.props.srcLang}
       />
     );
   }
@@ -34,7 +32,7 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
     }
 
     // browser will set track `mode` to disabled.
-    this.trackRef.current.track.mode = 'hidden';
+    this.trackRef.current.track.mode = TRACK_MODE_HIDDEN;
     this.trackRef.current.addEventListener('load', this.loadHandler);
   }
 
@@ -47,14 +45,12 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
   }
 
   private loadHandler = () => {
-    const { addChaptersTrack: addChaptersTrackAction } = this.props;
-
     if (!this.trackRef.current) {
       return;
     }
 
     const chaptersTrack = rawChapterTrack(this.trackRef.current.track);
-    addChaptersTrackAction(chaptersTrack);
+    this.props.addChaptersTrack(chaptersTrack);
   };
 }
 

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styled from 'src/utils/styled-components';
 import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
-import MediaChapters from './chapters/MediaChapters';
+import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';
+import MediaSubtitles from './subtitles/MediaSubtitles';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
-import VideoSubtitles from './video/VideoSubtitles';
 
 const StyledDiv = styled.div`
   background-color: ${(props) => props.theme.bg};
@@ -18,10 +18,10 @@ const StyledDiv = styled.div`
 
 const Player: React.SFC = () => (
   <StyledDiv className="aip-player">
-    <MediaChapters />
+    <ChaptersMenu />
     <VideoPlayer />
     <Slides />
-    <VideoSubtitles />
+    <MediaSubtitles />
     <VideoPlayerControls />
     <MediaAdditionalInfos />
   </StyledDiv>

@@ -37,7 +37,7 @@ interface IMediaChapters {
   language: string;
 }
 
-const MediaChapters: React.SFC<IMediaChapters> = ({
+const ChaptersMenu: React.SFC<IMediaChapters> = ({
   chaptersTracks,
   language
 }) => {
@@ -69,4 +69,4 @@ const mapStateToProps = (state: IAianaState) => ({
   language: state.preferences.language
 });
 
-export default connect(mapStateToProps)(MediaChapters);
+export default connect(mapStateToProps)(ChaptersMenu);

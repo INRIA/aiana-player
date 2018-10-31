@@ -22,9 +22,9 @@ import {
   rawTextTrack
 } from 'src/utils/media-tracks';
 import styled from 'src/utils/styled-components';
+import MediaChapterTrack from '../chapters/MediaChapterTrack';
+import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
-import MediaChapterTrack from './MediaChapterTrack';
-import SlidesTrack from './SlidesTrack';
 import VideoTextTrack, { ITrack } from './VideoTextTrack';
 
 const StyledVideo = styled.div`

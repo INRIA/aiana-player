@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { setSubtitleText } from 'src/actions/player';
-import { DEFAULT_LANG, TRACK_KIND_SUBTITLES } from 'src/constants';
+import {
+  DEFAULT_LANG,
+  TRACK_KIND_SUBTITLES,
+  TRACK_MODE_HIDDEN
+} from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
-import { IRawTextTrack } from 'src/utils/media-tracks';
+import { IRawTextTrack, isActiveTrack } from 'src/utils/media-tracks';
 
 export interface ITrack {
   isDefault?: boolean;
@@ -53,18 +57,24 @@ class VideoTextTrack extends React.Component<ITrackProps> {
   }
 
   public componentDidMount() {
+    if (!this.trackRef.current) {
+      return;
+    }
     this.toggleNativeTextTrack(this.props.nativeControls);
-    const t = this.trackRef.current!.track;
+    const t = this.trackRef.current.track;
     t.addEventListener('cuechange', this.cueChangeHandler);
   }
 
   public componentWillUnmount() {
-    const t = this.trackRef.current!.track;
+    if (!this.trackRef.current) {
+      return;
+    }
+    const t = this.trackRef.current.track;
     t.removeEventListener('cuechange', this.cueChangeHandler);
   }
 
   public componentDidUpdate(prevProps: ITrackProps) {
-    const { nativeControls } = prevProps;
+    const { nativeControls, textTracks } = prevProps;
 
     if (!this.trackRef.current) {
       return;
@@ -74,8 +84,8 @@ class VideoTextTrack extends React.Component<ITrackProps> {
       this.toggleNativeTextTrack(this.props.nativeControls);
     }
 
-    const prevActiveTrack = prevProps.textTracks.find((track) => track.active);
-    const activeTrack = this.props.textTracks.find((track) => track.active);
+    const prevActiveTrack = textTracks.find(isActiveTrack);
+    const activeTrack = this.props.textTracks.find(isActiveTrack);
 
     // this track is active, but wasn't so at previous state.
     if (
@@ -94,7 +104,7 @@ class VideoTextTrack extends React.Component<ITrackProps> {
       return false;
     }
 
-    const activeTrack = this.props.textTracks.find((track) => track.active);
+    const activeTrack = this.props.textTracks.find(isActiveTrack);
 
     if (!activeTrack) {
       return false;
@@ -115,7 +125,7 @@ class VideoTextTrack extends React.Component<ITrackProps> {
 
   private toggleNativeTextTrack(nativeControls: boolean) {
     if (!nativeControls && this.trackRef.current) {
-      this.trackRef.current.track.mode = 'hidden';
+      this.trackRef.current.track.mode = TRACK_MODE_HIDDEN;
     }
   }
 }

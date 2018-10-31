@@ -4,7 +4,11 @@ import {
   addMetadataTrack,
   setAdditionalInformationsText
 } from 'src/actions/player';
-import { DEFAULT_LANG, TRACK_KIND_METADATA } from 'src/constants';
+import {
+  DEFAULT_LANG,
+  TRACK_KIND_METADATA,
+  TRACK_MODE_HIDDEN
+} from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media-tracks';
 
@@ -56,7 +60,7 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
     }
 
     // browser will set track `mode` to disabled.
-    this.trackRef.current.track.mode = 'hidden';
+    this.trackRef.current.track.mode = TRACK_MODE_HIDDEN;
     this.trackRef.current.addEventListener('load', this.loadHandler);
     this.trackRef.current.track.addEventListener(
       'cuechange',

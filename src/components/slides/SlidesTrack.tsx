@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { addSlidesTrack, setSlidesText } from 'src/actions/slides';
-import { DEFAULT_LANG, TRACK_KIND_METADATA } from 'src/constants';
+import {
+  DEFAULT_LANG,
+  TRACK_KIND_METADATA,
+  TRACK_MODE_HIDDEN
+} from 'src/constants';
 import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media-tracks';
 
 interface IProps {
@@ -48,7 +52,7 @@ class SlidesTrack extends React.Component<ISlideTrack> {
     }
 
     // browser will set track `mode` to disabled.
-    this.trackRef.current.track.mode = 'hidden';
+    this.trackRef.current.track.mode = TRACK_MODE_HIDDEN;
     this.trackRef.current.addEventListener('load', this.loadHandler);
     this.trackRef.current.track.addEventListener(
       'cuechange',

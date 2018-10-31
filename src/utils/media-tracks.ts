@@ -2,7 +2,8 @@ import { ITrack } from 'src/components/video/VideoTextTrack';
 import {
   TRACK_KIND_CAPTIONS,
   TRACK_KIND_CHAPTERS,
-  TRACK_KIND_SUBTITLES
+  TRACK_KIND_SUBTITLES,
+  TRACK_MODE_ACTIVE
 } from 'src/constants';
 
 export interface IRawTextTrack {
@@ -32,7 +33,7 @@ export function rawTextTrack(textTrack: TextTrack): IRawTextTrack {
   const { activeCues, cues, kind, label, language, mode } = textTrack;
 
   return {
-    active: mode === 'showing',
+    active: mode === TRACK_MODE_ACTIVE,
     activeCues,
     cues,
     kind,
@@ -41,6 +42,10 @@ export function rawTextTrack(textTrack: TextTrack): IRawTextTrack {
   };
 }
 
+/**
+ * Strips unwanted properties from a TextTrack.
+ * @param track {TextTrack}
+ */
 export function rawChapterTrack(track: TextTrack): IRawChapterTrack {
   const { cues: trackCues, label, language } = track;
 
@@ -80,4 +85,12 @@ export function isDisplayableTrack(
  */
 export function isChapterTrack(track: TextTrack | ITrack) {
   return track.kind === TRACK_KIND_CHAPTERS;
+}
+
+/**
+ * Tests if a subtitles track is active
+ * @param track {IRawTextTrack}
+ */
+export function isActiveTrack(track: IRawTextTrack): boolean {
+  return track.active === true;
 }
