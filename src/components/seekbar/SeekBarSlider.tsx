@@ -5,11 +5,15 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { requestSeek } from 'src/actions/player';
 import {
+  ARROW_DOWN_KEY,
+  ARROW_LEFT_KEY,
+  ARROW_RIGHT_KEY,
+  ARROW_UP_KEY,
   DEFAULT_SEEK_STEP_MULTIPLIER,
-  END_KEY_CODE,
-  HOME_KEY_CODE,
-  LEFT_ARROW_KEY_CODE,
-  RIGHT_ARROW_KEY_CODE
+  END_KEY,
+  HOME_KEY,
+  PAGE_DOWN_KEY,
+  PAGE_UP_KEY
 } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import { unitToPercent } from 'src/utils/math';
@@ -215,33 +219,38 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
     let nextTime: number;
 
     const sliderTime = isSeeking ? seekingTime : currentTime;
-    const weightedSeekStep = this.weightedSeekStep(seekStep, evt.shiftKey);
 
-    switch (evt.keyCode) {
-      case RIGHT_ARROW_KEY_CODE:
-        nextTime = this.safeTime(sliderTime + weightedSeekStep);
+    switch (evt.key) {
+      case ARROW_RIGHT_KEY:
+      case ARROW_UP_KEY:
+        nextTime = this.safeTime(sliderTime + seekStep);
         requestSeekAction(mediaElement, nextTime);
         break;
-      case LEFT_ARROW_KEY_CODE:
-        nextTime = this.safeTime(sliderTime - weightedSeekStep);
+      case ARROW_LEFT_KEY:
+      case ARROW_DOWN_KEY:
+        nextTime = this.safeTime(sliderTime - seekStep);
         requestSeekAction(mediaElement, nextTime);
         break;
-      case HOME_KEY_CODE:
+      case PAGE_UP_KEY:
+        nextTime = this.safeTime(
+          sliderTime + DEFAULT_SEEK_STEP_MULTIPLIER * seekStep
+        );
+        requestSeekAction(mediaElement, nextTime);
+        break;
+      case PAGE_DOWN_KEY:
+        nextTime = this.safeTime(
+          sliderTime - DEFAULT_SEEK_STEP_MULTIPLIER * seekStep
+        );
+        requestSeekAction(mediaElement, nextTime);
+        break;
+      case HOME_KEY:
         requestSeekAction(mediaElement, 0);
         break;
-      case END_KEY_CODE:
+      case END_KEY:
         requestSeekAction(mediaElement, duration);
         break;
     }
   };
-
-  private weightedSeekStep(seekStep: number, multiply: boolean): number {
-    if (multiply) {
-      return DEFAULT_SEEK_STEP_MULTIPLIER * seekStep;
-    }
-
-    return seekStep;
-  }
 
   private safeTime(seekTime: number): number {
     return bounded(seekTime, 0, this.props.duration);

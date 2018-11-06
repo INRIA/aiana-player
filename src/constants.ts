@@ -3,22 +3,27 @@ export const MINUTES_PER_HOUR = 60;
 export const SECONDS_PER_MINUTE = 60;
 
 // Key codes
-export const RIGHT_ARROW_KEY_CODE = 39;
-export const LEFT_ARROW_KEY_CODE = 37;
-export const HOME_KEY_CODE = 36;
-export const END_KEY_CODE = 35;
+export const ARROW_UP_KEY = 'ArrowUp';
+export const ARROW_RIGHT_KEY = 'ArrowRight';
+export const ARROW_DOWN_KEY = 'ArrowDown';
+export const ARROW_LEFT_KEY = 'ArrowLeft';
+export const HOME_KEY = 'Home';
+export const END_KEY = 'End';
+export const PAGE_UP_KEY = 'PageUp';
+export const PAGE_DOWN_KEY = 'PageDOWN';
 
 export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1.0;
 
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_NATIVE_CONTROLS = false;
-export const DEFAULT_PLAY_RATE = 1.0;
+export const DEFAULT_PLAY_RATE = 1;
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_SEEK_STEP = 5;
 export const DEFAULT_SEEK_STEP_MULTIPLIER = 2;
 export const DEFAULT_THEME = 'inria';
 export const DEFAULT_VOLUME_STEP = 0.1;
+export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
 export const DEFAULT_AUTOLOAD = 'auto';
 
 export const AVAILABLE_LANGUAGES = ['en', 'fr'];

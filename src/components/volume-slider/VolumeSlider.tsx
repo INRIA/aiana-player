@@ -3,10 +3,15 @@ import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from 'src/actions/player';
 import {
-  END_KEY_CODE,
-  HOME_KEY_CODE,
-  LEFT_ARROW_KEY_CODE,
-  RIGHT_ARROW_KEY_CODE,
+  ARROW_DOWN_KEY,
+  ARROW_LEFT_KEY,
+  ARROW_RIGHT_KEY,
+  ARROW_UP_KEY,
+  DEFAULT_VOLUME_STEP_MULTIPLIER,
+  END_KEY,
+  HOME_KEY,
+  PAGE_DOWN_KEY,
+  PAGE_UP_KEY,
   VOLUME_MAXIMUM,
   VOLUME_MINIMUM
 } from 'src/constants';
@@ -84,17 +89,31 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
       return;
     }
 
-    switch (evt.keyCode) {
-      case RIGHT_ARROW_KEY_CODE:
+    switch (evt.key) {
+      case ARROW_RIGHT_KEY:
+      case ARROW_UP_KEY:
         updateVolume(mediaElement, this.safeVolume(volume + volumeStep));
         break;
-      case LEFT_ARROW_KEY_CODE:
+      case ARROW_LEFT_KEY:
+      case ARROW_DOWN_KEY:
         updateVolume(mediaElement, this.safeVolume(volume - volumeStep));
         break;
-      case HOME_KEY_CODE:
+      case PAGE_UP_KEY:
+        updateVolume(
+          mediaElement,
+          this.safeVolume(volume + DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
+        );
+        break;
+      case PAGE_DOWN_KEY:
+        updateVolume(
+          mediaElement,
+          this.safeVolume(volume - DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
+        );
+        break;
+      case HOME_KEY:
         updateVolume(mediaElement, 0);
         break;
-      case END_KEY_CODE:
+      case END_KEY:
         updateVolume(mediaElement, 1);
         break;
     }
