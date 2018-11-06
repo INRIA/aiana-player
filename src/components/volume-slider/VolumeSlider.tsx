@@ -111,10 +111,10 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
         );
         break;
       case HOME_KEY:
-        updateVolume(mediaElement, 0);
+        updateVolume(mediaElement, VOLUME_MINIMUM);
         break;
       case END_KEY:
-        updateVolume(mediaElement, 1);
+        updateVolume(mediaElement, VOLUME_MAXIMUM);
         break;
     }
   };

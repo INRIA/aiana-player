@@ -13,7 +13,7 @@ export const PAGE_UP_KEY = 'PageUp';
 export const PAGE_DOWN_KEY = 'PageDOWN';
 
 export const VOLUME_MINIMUM = 0;
-export const VOLUME_MAXIMUM = 1.0;
+export const VOLUME_MAXIMUM = 1;
 
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_NATIVE_CONTROLS = false;
