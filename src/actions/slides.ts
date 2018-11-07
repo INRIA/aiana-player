@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { IRawMetadataTrack } from 'src/utils/media-tracks';
+import { IRawMetadataTrack } from 'src/utils/media';
 
 export const SET_SLIDES_TEXT = 'aiana/SET_SLIDES_TEXT';
 export const ADD_SLIDES_TRACK = 'aiana/ADD_SLIDES_TRACK';

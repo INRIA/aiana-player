@@ -7,7 +7,7 @@ import {
   TRACK_MODE_HIDDEN
 } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
-import { IRawTextTrack, isActiveTrack } from 'src/utils/media-tracks';
+import { IRawTextTrack, isActiveTrack } from 'src/utils/media';
 
 export interface ITrack {
   isDefault?: boolean;

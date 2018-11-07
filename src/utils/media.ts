@@ -29,6 +29,13 @@ export interface IMediaCue {
   text: string;
 }
 
+export interface IBufferedRange {
+  end: number;
+  start: number;
+}
+
+export type BufferedRanges = IBufferedRange[];
+
 export function rawTextTrack(textTrack: TextTrack): IRawTextTrack {
   const { activeCues, cues, kind, label, language, mode } = textTrack;
 
@@ -93,4 +100,18 @@ export function isChapterTrack(track: TextTrack | ITrack) {
  */
 export function isActiveTrack(track: IRawTextTrack): boolean {
   return track.active === true;
+}
+
+export function convertTimeRanges(timeRanges: TimeRanges): BufferedRanges {
+  const { length } = timeRanges;
+  const ranges = [];
+
+  for (let i = 0; i < length; i++) {
+    ranges.push({
+      end: timeRanges.end(i),
+      start: timeRanges.start(i)
+    });
+  }
+
+  return ranges;
 }

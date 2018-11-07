@@ -10,7 +10,7 @@ import {
   TRACK_MODE_HIDDEN
 } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
-import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media-tracks';
+import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media';
 
 interface IProps {
   label?: string;

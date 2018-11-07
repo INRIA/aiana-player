@@ -9,6 +9,7 @@ import {
   startSeeking,
   stopSeeking,
   toggleMute,
+  updateBufferedRanges,
   updateCurrentTime,
   updateMediaDuration,
   updateTracksList
@@ -20,7 +21,7 @@ import {
   IRawTextTrack,
   isDisplayableTrack,
   rawTextTrack
-} from 'src/utils/media-tracks';
+} from 'src/utils/media';
 import styled from 'src/utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
 import SlidesTrack from '../slides/SlidesTrack';
@@ -57,6 +58,7 @@ interface IDispatchProps {
   startSeeking: () => void;
   stopSeeking: () => void;
   toggleMute: (muted: boolean) => void;
+  updateBufferedRanges: (timeRanges: TimeRanges) => void;
   updateCurrentTime: (time: number) => void;
   updateMediaDuration: (duration: number) => void;
   updateTracksList: (textTracks: IRawTextTrack[]) => void;
@@ -128,6 +130,7 @@ class VideoPlayer extends React.Component<IProps> {
           onLoadedMetadata={this.loadedMetadataHandler}
           onPause={pauseHandler}
           onPlay={playHandler}
+          onProgress={this.progressHandler}
           onSeeked={this.seekedHandler}
           onSeeking={this.seekingHandler}
           onTimeUpdate={this.timeUpdateHandler}
@@ -161,6 +164,14 @@ class VideoPlayer extends React.Component<IProps> {
       </StyledVideo>
     );
   }
+
+  private progressHandler = () => {
+    if (!this.mediaRef.current) {
+      return;
+    }
+
+    this.props.updateBufferedRanges(this.mediaRef.current.buffered);
+  };
 
   /**
    * Handles any changes made to the text tracks (selected, etc).
@@ -266,6 +277,7 @@ const mapDispatchToProps = {
   startSeeking,
   stopSeeking,
   toggleMute,
+  updateBufferedRanges,
   updateCurrentTime,
   updateMediaDuration,
   updateTracksList

@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { IRawChapterTrack } from 'src/utils/media-tracks';
+import { IRawChapterTrack } from 'src/utils/media';
 
 export const ADD_CHAPTER_TRACK = 'aiana/ADD_CHAPTER_TRACK';
 

@@ -15,6 +15,7 @@ import {
   MEDIA_VOLUME_CHANGE,
   PLAYER_ELEMENT_MOUNTED,
   SET_ADDITIONAL_INFOS_TEXT,
+  SET_BUFFERED_RANGES,
   SET_SUBTITLE_TEXT,
   TOGGLE_FULLSCREEN,
   TOGGLE_NATIVE_CONTROLS,
@@ -24,7 +25,11 @@ import {
 import { ISource } from 'src/components/video/VideoPlayer';
 import { ITrack } from 'src/components/video/VideoTextTrack';
 import { ExtendedHTMLElement } from 'src/types';
-import { IRawMetadataTrack, IRawTextTrack } from 'src/utils/media-tracks';
+import {
+  BufferedRanges,
+  IRawMetadataTrack,
+  IRawTextTrack
+} from 'src/utils/media';
 import {
   DEFAULT_AUTOLOAD,
   DEFAULT_NATIVE_CONTROLS,
@@ -37,6 +42,8 @@ export interface IPlayerState {
   readonly additionalInformationsTracks: ITrack[];
 
   autoPlay: boolean;
+
+  bufferedRanges: BufferedRanges;
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -103,6 +110,7 @@ const initialState: IPlayerState = {
     }
   ],
   autoPlay: false,
+  bufferedRanges: [],
   currentTime: 0,
   duration: 0,
   isFullscreen: false,
@@ -145,6 +153,11 @@ const initialState: IPlayerState = {
 
 const player: Reducer = (state: IPlayerState = initialState, action) => {
   switch (action.type) {
+    case SET_BUFFERED_RANGES:
+      return {
+        ...state,
+        bufferedRanges: action.bufferedRanges
+      };
     case TOGGLE_NATIVE_CONTROLS:
       return {
         ...state,

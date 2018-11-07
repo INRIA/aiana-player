@@ -5,7 +5,11 @@ import {
   exitFullscreen,
   isDocumentFullscreen
 } from '../utils/fullscreen';
-import { IRawMetadataTrack, IRawTextTrack } from '../utils/media-tracks';
+import {
+  convertTimeRanges,
+  IRawMetadataTrack,
+  IRawTextTrack
+} from '../utils/media';
 
 export const TOGGLE_NATIVE_CONTROLS = 'aiana/TOGGLE_NATIVE_CONTROLS';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
@@ -32,8 +36,16 @@ export const UPDATE_ACTIVE_TEXT_TRACK = 'aiana/UPDATE_ACTIVE_TEXT_TRACK';
 export const SET_SUBTITLE_TEXT = 'aiana/SET_SUBTITLE_TEXT';
 export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFOS_TEXT = 'aiana/SET_ADDITIONAL_INFOS_TEXT';
+export const SET_BUFFERED_RANGES = 'aiana/SET_BUFFERED_RANGES';
 
-export function setAdditionalInformationsText(text?: string) {
+export function updateBufferedRanges(timeRanges: TimeRanges): AnyAction {
+  return {
+    bufferedRanges: convertTimeRanges(timeRanges),
+    type: SET_BUFFERED_RANGES
+  };
+}
+
+export function setAdditionalInformationsText(text?: string): AnyAction {
   return {
     text,
     type: SET_ADDITIONAL_INFOS_TEXT
@@ -48,7 +60,7 @@ export function addMetadataTrack(track: IRawMetadataTrack): AnyAction {
   };
 }
 
-export function setSubtitleText(text?: string) {
+export function setSubtitleText(text?: string): AnyAction {
   return {
     subtitleText: text,
     type: SET_SUBTITLE_TEXT

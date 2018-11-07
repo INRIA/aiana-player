@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { addChaptersTrack } from 'src/actions/chapters';
 import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from 'src/constants';
 import { IChaptersTrack } from 'src/reducers/chapters';
-import { IRawChapterTrack, rawChapterTrack } from 'src/utils/media-tracks';
+import { IRawChapterTrack, rawChapterTrack } from 'src/utils/media';
 
 interface IDispatchProps {
   addChaptersTrack(chaptersTrack: IRawChapterTrack): void;

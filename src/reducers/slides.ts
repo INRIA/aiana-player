@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { ADD_SLIDES_TRACK, SET_SLIDES_TEXT } from 'src/actions/slides';
-import { IRawTextTrack } from 'src/utils/media-tracks';
+import { IRawTextTrack } from 'src/utils/media';
 
 export interface ISlidesTrack {
   label?: string;

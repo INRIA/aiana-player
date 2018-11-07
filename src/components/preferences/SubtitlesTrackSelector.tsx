@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { updateActiveTextTrack } from 'src/actions/player';
 import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
-import { IRawTextTrack, isDisplayableTrack } from 'src/utils/media-tracks';
+import { IRawTextTrack, isDisplayableTrack } from 'src/utils/media';
 
 interface IProps {
   nativeControls: boolean;

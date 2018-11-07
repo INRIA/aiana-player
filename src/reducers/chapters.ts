@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { ADD_CHAPTER_TRACK } from 'src/actions/chapters';
-import { IRawChapterTrack } from 'src/utils/media-tracks';
+import { IRawChapterTrack } from 'src/utils/media';
 
 export interface IChaptersTrack {
   label: string;
