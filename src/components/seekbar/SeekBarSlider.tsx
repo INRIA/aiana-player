@@ -67,7 +67,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
     // position should be the `currentTime`.
     const sliderTime = isSeeking ? seekingTime : currentTime;
 
-    const progressPct = unitToPercent(sliderTime, duration);
+    const progressRatio = unitToPercent(sliderTime, duration) / 100;
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
@@ -102,7 +102,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
           <div
             className={`aip-play-progress ${isSeeking ? 'no-transition' : ''}`}
             style={{
-              transform: `scaleX(${progressPct / 100})`
+              transform: `scaleX(${progressRatio})`
             }}
           />
 
@@ -111,8 +111,8 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
               isSeeking ? 'no-transition' : ''
             }`}
             style={{
-              transform: `translate3d(calc(${(this.sliderWidth * progressPct) /
-                100}px - 50%), 0, 0)`
+              transform: `translateX(calc(${this.sliderWidth *
+                progressRatio}px - 50%))`
             }}
           />
         </div>
