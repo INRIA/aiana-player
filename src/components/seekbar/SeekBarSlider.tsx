@@ -92,7 +92,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
           )}
           tabIndex={0}
           onKeyDown={this.keyDownHandler}
-          onMouseDownCapture={this.mouseDownHandler}
+          onMouseDown={this.mouseDownHandler}
         >
           <div className="aip-seekbar">
             <div className="aip-seekbar-expander" />
@@ -132,9 +132,6 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
     });
   };
 
-  /**
-   * Unloads events bound to `document` to prevent memory leaks.
-   */
   public componentWillUnmount() {
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
@@ -143,13 +140,15 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
   private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
 
+    const sliderElement = evt.currentTarget;
+
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
-    this.sliderRef.current!.focus();
+    sliderElement.focus();
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    const { left, width } = this.sliderRef.current!.getBoundingClientRect();
+    const { left, width } = sliderElement.getBoundingClientRect();
 
     this.sliderPosition = left;
     this.sliderWidth = width;

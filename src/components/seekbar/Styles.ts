@@ -7,12 +7,6 @@ const StyledDiv = styled.div`
   width: 100%;
   cursor: pointer;
 
-  &.no-transition {
-    .aip-play-progress {
-      transition: none;
-    }
-  }
-
   .aip-progress-slider {
     height: 0.375em;
     width: 100%;
@@ -50,6 +44,10 @@ const StyledDiv = styled.div`
     transition: transform 0.1s cubic-bezier(0.4, 0, 1, 1);
     background-color: ${(props) => props.theme.main};
     pointer-events: none;
+
+    &.no-transition {
+      transition: none;
+    }
   }
 
   .aip-progress-slider-handle {
@@ -60,7 +58,13 @@ const StyledDiv = styled.div`
     width: 1em;
     border-radius: 0.5em;
     background-color: ${(props) => props.theme.main};
+    transition: transform 0.15s cubic-bezier(0.4, 0, 1, 1);
+    transform: translateX(0);
     pointer-events: none;
+
+    &.no-transition {
+      transition: none;
+    }
   }
 `;
 
