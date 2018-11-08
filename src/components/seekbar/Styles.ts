@@ -54,6 +54,7 @@ const StyledDiv = styled.div`
     position: absolute;
     top: calc(50% - 0.5em);
     left: 0;
+    display: inline-block;
     height: 1em;
     width: 1em;
     border-radius: 0.5em;

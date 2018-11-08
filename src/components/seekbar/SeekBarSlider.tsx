@@ -107,9 +107,12 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
           />
 
           <div
-            className="aip-progress-slider-handle"
+            className={`aip-progress-slider-handle ${
+              isSeeking ? 'no-transition' : ''
+            }`}
             style={{
-              left: `calc(${progressPct}% - 0.5em)`
+              transform: `translate3d(calc(${(this.sliderWidth * progressPct) /
+                100}px - 50%), 0, 0)`
             }}
           />
         </div>
