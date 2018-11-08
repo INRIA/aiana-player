@@ -19,6 +19,7 @@ import { IAianaState } from 'src/reducers/index';
 import { unitToPercent } from 'src/utils/math';
 import { durationTranslationKey, secondsToHMSObject } from 'src/utils/time';
 import { bounded } from 'src/utils/ui';
+import TimeRangesBar from '../buffered/TimeRangesBar';
 import StyledDiv from './Styles';
 
 const { round } = Math;
@@ -95,6 +96,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
         >
           <div className="aip-seekbar">
             <div className="aip-seekbar-expander" />
+            <TimeRangesBar />
           </div>
 
           <div
