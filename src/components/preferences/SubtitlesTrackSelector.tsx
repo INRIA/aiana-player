@@ -5,6 +5,7 @@ import { updateActiveTextTrack } from 'src/actions/player';
 import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
 import { IRawTextTrack, isDisplayableTrack } from 'src/utils/media';
+import { uuid } from 'src/utils/ui';
 
 interface IProps {
   nativeControls: boolean;
@@ -33,23 +34,24 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
 
   const selectedTrack = textTracks.find((track) => track.active);
   const selectedValue = selectedTrack ? selectedTrack.label : '';
+  const id = uuid();
 
   return (
-    <div className="aip-subtitles-track-selector">
-      <label>
-        <span>{t('preferences.subtitlestrack.label')}</span>
-        <select onChange={selectedTrackChangedHandler} value={selectedValue}>
-          <option value="">
-            {t('preferences.subtitlestrack.no_subtitle')}
+    <React.Fragment>
+      <span id={id}>{t('preferences.subtitlestrack.label')}</span>
+      <select
+        aria-labelledby={id}
+        onChange={selectedTrackChangedHandler}
+        value={selectedValue}
+      >
+        <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
+        {textTracks.filter(isDisplayableTrack).map((track) => (
+          <option key={track.label} value={track.label}>
+            {track.label}
           </option>
-          {textTracks.filter(isDisplayableTrack).map((track) => (
-            <option key={track.label} value={track.label}>
-              {track.label}
-            </option>
-          ))}
-        </select>
-      </label>
-    </div>
+        ))}
+      </select>
+    </React.Fragment>
   );
 };
 

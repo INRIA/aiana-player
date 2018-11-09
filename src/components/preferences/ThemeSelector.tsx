@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { changeCurrentTheme } from 'src/actions/preferences';
 import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
+import { uuid } from 'src/utils/ui';
 
 interface IProps {
   availableThemes: string[];
@@ -24,18 +25,24 @@ const ThemeSelector: React.SFC<IThemeSelector> = ({
   currentTheme,
   selectChangeHandler,
   t
-}) => (
-  <div className="aip-theme-selector">
-    <label>
-      <span>{t('preferences.theme-selector.label')}</span>
-      <select defaultValue={currentTheme} onChange={selectChangeHandler}>
+}) => {
+  const id = uuid();
+
+  return (
+    <React.Fragment>
+      <span id={id}>{t('preferences.theme-selector.label')}</span>
+      <select
+        aria-labelledby={id}
+        defaultValue={currentTheme}
+        onChange={selectChangeHandler}
+      >
         {availableThemes.map((themeName) => (
           <option key={themeName}>{themeName}</option>
         ))}
       </select>
-    </label>
-  </div>
-);
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = (state: IAianaState) => ({
   availableThemes: state.preferences.availableThemes,

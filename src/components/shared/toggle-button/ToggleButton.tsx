@@ -3,31 +3,32 @@ import { InjectedTranslateProps, translate } from 'react-i18next';
 import StyledToggleButton from './Styles';
 
 interface IProps {
+  isOn: boolean;
   label?: string;
   labelledBy?: string;
   onClick: (evt: React.MouseEvent<any>) => void;
-  pressed: boolean;
 }
 
 interface IToggleButton extends IProps, InjectedTranslateProps {}
 
 const ToggleButton: React.SFC<IToggleButton> = ({
+  isOn,
   label,
   labelledBy,
   onClick,
-  pressed
+  t
 }) => (
   <StyledToggleButton
     role="switch"
-    className={`aip-checkbox ${pressed ? 'pressed' : ''}`}
+    className="aip-switch"
     aria-label={label}
     aria-labelledby={labelledBy}
-    aria-pressed={pressed}
+    aria-checked={isOn}
     onClick={onClick}
     tabIndex={0}
   >
-    <span className="on">on</span>
-    <span className="off">off</span>
+    <span className="on">{t('button.toggle.on')}</span>
+    <span className="off">{t('button.toggle.off')}</span>
   </StyledToggleButton>
 );
 

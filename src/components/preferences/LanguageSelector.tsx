@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { changeLanguage } from 'src/actions/preferences';
 import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
+import { uuid } from 'src/utils/ui';
 
 interface IProps {
   availableLanguages: string[];
@@ -22,20 +23,23 @@ interface ILanguageSelector
 class LanguageSelector extends React.Component<ILanguageSelector> {
   public render() {
     const { availableLanguages, currentLanguage, t } = this.props;
+    const id = uuid();
 
     return (
-      <div className="aip-language-selector">
-        <label>
-          <span>{t('preferences.language.label')}</span>
-          <select onChange={this.props.changeHandler} value={currentLanguage}>
-            {availableLanguages.map((language) => (
-              <option key={language} value={language}>
-                {language}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <React.Fragment>
+        <span id={id}>{t('preferences.language.label')}</span>
+        <select
+          aria-labelledby={id}
+          onChange={this.props.changeHandler}
+          value={currentLanguage}
+        >
+          {availableLanguages.map((language) => (
+            <option key={language} value={language}>
+              {language}
+            </option>
+          ))}
+        </select>
+      </React.Fragment>
     );
   }
 }

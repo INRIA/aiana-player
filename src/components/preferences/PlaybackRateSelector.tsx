@@ -3,6 +3,7 @@ import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from 'src/actions/player';
 import { IAianaState } from 'src/reducers/index';
+import { uuid } from 'src/utils/ui';
 
 interface IProps {
   availablePlaybackRates: number[];
@@ -22,20 +23,23 @@ interface IPlaybackRateSelector
 class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   public render() {
     const { availablePlaybackRates, currentPlaybackRate, t } = this.props;
+    const id = uuid();
 
     return (
-      <div className="aip-playback-rate-selector">
-        <label>
-          <span>{t('preferences.playbackrate.label')}</span>
-          <select value={currentPlaybackRate} onChange={this.onPlayRateChange}>
-            {availablePlaybackRates.map((playbackRate) => (
-              <option key={playbackRate} value={playbackRate}>
-                {playbackRate}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <React.Fragment>
+        <span id={id}>{t('preferences.playbackrate.label')}</span>
+        <select
+          aria-labelledby={id}
+          value={currentPlaybackRate}
+          onChange={this.onPlayRateChange}
+        >
+          {availablePlaybackRates.map((playbackRate) => (
+            <option key={playbackRate} value={playbackRate}>
+              {playbackRate}
+            </option>
+          ))}
+        </select>
+      </React.Fragment>
     );
   }
 

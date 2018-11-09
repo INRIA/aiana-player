@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { toggleNativeControls } from 'src/actions/player';
 import { IAianaState } from 'src/reducers/index';
+import { uuid } from 'src/utils/ui';
+import ToggleButton from '../shared/toggle-button/ToggleButton';
 
 interface IProps {
   nativeControls: boolean;
@@ -21,20 +23,22 @@ interface INativeControlsSwitch
 class NativeControlsSwitch extends React.Component<INativeControlsSwitch> {
   public render() {
     const { nativeControls, t } = this.props;
+    const id = `aip-native-controls-${uuid()}`;
 
     return (
-      <label>
-        <span>{t('preferences.native_controls')}</span>
-        <input
-          type="checkbox"
-          defaultChecked={nativeControls}
+      <React.Fragment>
+        <span id={id}>{t('preferences.native_controls')}</span>
+        <ToggleButton
+          labelledBy={id}
           onClick={this.clickHandler}
+          isOn={nativeControls}
         />
-      </label>
+      </React.Fragment>
     );
   }
 
-  private clickHandler = () => {
+  private clickHandler = (evt: React.MouseEvent<any>) => {
+    evt.preventDefault();
     this.props.toggleNativeControls(!this.props.nativeControls);
   };
 }
