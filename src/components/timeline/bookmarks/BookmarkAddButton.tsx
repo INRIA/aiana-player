@@ -1,9 +1,6 @@
 import * as React from 'react';
+import BookmarkAddIcon from 'src/components/buttons/add-bookmark/ControlIcon';
 import StyledButton from 'src/components/styled/StyledButton';
-import StyledSvg from 'src/components/styled/StyledSvg';
-import BookmarkIcon from 'src/components/svg/Bookmark';
-
-const StyledBookmarkIcon = StyledSvg.withComponent(BookmarkIcon);
 
 interface IProps {
   media: HTMLMediaElement | null;
@@ -11,11 +8,11 @@ interface IProps {
   time: number;
 }
 
-class BookmarkButton extends React.Component<IProps> {
+class BookmarkAddButton extends React.Component<IProps> {
   public render() {
     return (
       <StyledButton onClick={this.clickHandler}>
-        <StyledBookmarkIcon />
+        <BookmarkAddIcon />
       </StyledButton>
     );
   }
@@ -29,4 +26,4 @@ class BookmarkButton extends React.Component<IProps> {
   };
 }
 
-export default BookmarkButton;
+export default BookmarkAddButton;

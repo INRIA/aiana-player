@@ -19,11 +19,24 @@ interface IDispatchProps {
 
 interface IBookmarksBar extends IProps, IDispatchProps {}
 
-const StyledList = styled.ol`
+const StyledBookmarksBar = styled.nav`
+  ol {
+    margin: 0;
+    padding: 0;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   li {
     display: block;
     width: 1em;
     height: 1em;
+
+    line-height: 1;
 
     position: absolute;
     transform: translateX(-50%);
@@ -42,7 +55,7 @@ const BookmarksBar: React.SFC<IBookmarksBar> = ({
   media,
   requestSeek: requestSeekAction
 }) => (
-  <StyledList>
+  <StyledBookmarksBar>
     {bookmarks.map(({ time }, idx) => (
       <li
         key={idx}
@@ -53,7 +66,7 @@ const BookmarksBar: React.SFC<IBookmarksBar> = ({
         <BookmarkButton onClick={requestSeekAction} media={media} time={time} />
       </li>
     ))}
-  </StyledList>
+  </StyledBookmarksBar>
 );
 
 const mapStateToProps = (state: IAianaState) => ({
