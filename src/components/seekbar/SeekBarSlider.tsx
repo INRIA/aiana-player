@@ -61,6 +61,8 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
       return null;
     }
 
+    this.setPosition(this.sliderRef.current);
+
     // If the slider is being used, its registered position should override
     // the `currentTime`. However, once media has seeked (which does not mean
     // enough data was loaded yet) and if the slider is not being used, its
@@ -68,6 +70,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
     const sliderTime = isSeeking ? seekingTime : currentTime;
 
     const progressRatio = unitToPercent(sliderTime, duration) / 100;
+
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
@@ -120,6 +123,19 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
     );
   }
 
+  public setPosition(sliderElement: HTMLDivElement | null) {
+    if (!sliderElement) {
+      return;
+    }
+
+    // recalculate slider element position to ensure no external
+    // event (such as fullscreen or window redimension) changed it.
+    const { left, width } = sliderElement.getBoundingClientRect();
+
+    this.sliderPosition = left;
+    this.sliderWidth = width;
+  }
+
   public getAriaValueText = (currentTime: number, duration: number): string => {
     const { t } = this.props;
 
@@ -148,13 +164,6 @@ class SeekBarSlider extends React.Component<ISeekBarSlider> {
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
     sliderElement.focus();
-
-    // recalculate slider element position to ensure no external
-    // event (such as fullscreen or window redimension) changed it.
-    const { left, width } = sliderElement.getBoundingClientRect();
-
-    this.sliderPosition = left;
-    this.sliderWidth = width;
 
     // trigger first recomputation to simulate simple click.
     this.updateCurrentTime(evt.pageX, this.sliderPosition, this.sliderWidth);
