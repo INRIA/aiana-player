@@ -10,15 +10,18 @@ const StyledSpan = styled.span`
   height: 1px;
   width: 1px;
   overflow: hidden;
-  white-space: no-wrap;
+  white-space: nowrap;
 `;
 
 interface IProps {
   children: React.ReactNode;
+  id?: string;
 }
 
-const AssistiveText: React.SFC<IProps> = ({ children }) => (
-  <StyledSpan className="assistive-text">{children}</StyledSpan>
+const AssistiveText: React.SFC<IProps> = ({ children, id }) => (
+  <StyledSpan id={id} className="assistive-text">
+    {children}
+  </StyledSpan>
 );
 
 export default AssistiveText;
