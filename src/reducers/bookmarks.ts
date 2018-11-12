@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import { ADD_BOOKMARK } from 'src/actions/bookmarks';
 
-interface IBookmark {
+export interface IBookmark {
   readonly time: number;
 }
 

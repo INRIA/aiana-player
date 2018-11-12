@@ -6,6 +6,7 @@ import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
 import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';
 import MediaSubtitles from './subtitles/MediaSubtitles';
+import TimelineBar from './timeline/Timeline';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 
@@ -29,6 +30,7 @@ const Player: React.SFC<IPlayerProps> = ({ chaptersMenu }) => (
     <Slides />
     <MediaSubtitles />
     <VideoPlayerControls />
+    <TimelineBar />
     <MediaAdditionalInfos />
   </StyledDiv>
 );
