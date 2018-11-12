@@ -2,6 +2,7 @@ export default {
   'additional-infos.title': 'Additional information',
   'button.toggle.off': 'non',
   'button.toggle.on': 'oui',
+  'controls.add_bookmark': 'Ajouter un signet',
   'controls.fullscreen.enter': 'Passer en mode plein écran',
   'controls.fullscreen.exit': 'Quitter le mode plein écran',
   'controls.mute': 'Désactiver le son',

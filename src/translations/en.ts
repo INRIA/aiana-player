@@ -2,6 +2,7 @@ export default {
   'additional-infos.title': 'Additional information',
   'button.toggle.off': 'off',
   'button.toggle.on': 'on',
+  'controls.add_bookmark': 'Add bookmark',
   'controls.fullscreen.enter': 'Full screen',
   'controls.fullscreen.exit': 'Exit full screen',
   'controls.mute': 'Mute',

@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { addBookmark } from 'src/actions/bookmarks';
+import AssistiveText from 'src/components/a11y/AssistiveText';
 import StyledButton from 'src/components/styled/StyledButton';
 import { IAianaState } from 'src/reducers';
 import ControlIcon from './ControlIcon';
@@ -13,13 +15,17 @@ interface IDispatchProps {
   addBookmark: (time: number) => void;
 }
 
-interface IAddBookmarkButton extends IProps, IDispatchProps {}
+interface IAddBookmarkButton
+  extends IProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
 
 class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
   public render() {
     return (
       <StyledButton onClick={this.clickHandler}>
-        <ControlIcon />
+        <ControlIcon aria-hidden="true" />
+        <AssistiveText>{this.props.t('controls.add_bookmark')}</AssistiveText>
       </StyledButton>
     );
   }
@@ -40,4 +46,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddBookmarkButton);
+)(translate()(AddBookmarkButton));
