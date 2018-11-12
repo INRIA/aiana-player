@@ -49,8 +49,7 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
     return null;
   }
 
-  const cues = [...activeChaptersTrack.cues[Symbol.iterator]()];
-  const chapters = cues.map((cue) => ({
+  const chapters = activeChaptersTrack.cues.map((cue) => ({
     startTime: cue.startTime,
     text: cue.text
   }));

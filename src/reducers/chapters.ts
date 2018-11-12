@@ -16,7 +16,7 @@ export interface IChaptersState {
 
 const initialState = {
   chaptersTracks: [],
-  menuEnabled: false,
+  menuEnabled: true,
   sources: [
     {
       label: 'Chapitres',
