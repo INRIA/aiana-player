@@ -4,35 +4,11 @@ import { DEFAULT_LANG } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import { IRawChapterTrack } from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
-import MediaChapterButton from './MediaChapterButton';
+import AssistiveText from '../a11y/AssistiveText';
+import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';
 
-interface IChapter {
-  startTime: number;
-  text: string;
-}
-
-interface IChaptersList {
-  chapters: IChapter[];
-}
-
-const ChaptersList: React.SFC<IChaptersList> = ({ chapters }) => {
-  if (chapters.length === 0) {
-    return null;
-  }
-
-  return (
-    <ol>
-      {chapters.map(({ startTime, text }, idx) => (
-        <li key={idx}>
-          <MediaChapterButton startTime={startTime}>{text}</MediaChapterButton>
-        </li>
-      ))}
-    </ol>
-  );
-};
-
-interface IMediaChapters {
+export interface IMediaChapters {
   chaptersTracks: IRawChapterTrack[];
   language: string;
 }
@@ -41,6 +17,7 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
   chaptersTracks,
   language
 }) => {
+  // TODO: refactor with ChaptersBar
   const activeChaptersTrack =
     chaptersTracks.find((track) => track.language === language) ||
     chaptersTracks.find((track) => track.language === DEFAULT_LANG);
@@ -49,16 +26,14 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
     return null;
   }
 
-  const chapters = activeChaptersTrack.cues.map((cue) => ({
-    startTime: cue.startTime,
-    text: cue.text
-  }));
   const uid = uuid();
 
   return (
     <StyledChapters className="aip-chapters" aria-labelledby={uid}>
-      <div id={uid}>{activeChaptersTrack.label}</div>
-      <ChaptersList chapters={chapters} />
+      <div id={uid}>
+        <AssistiveText>{activeChaptersTrack.label}</AssistiveText>
+      </div>
+      <ChaptersList chapters={activeChaptersTrack.cues} />
     </StyledChapters>
   );
 };
