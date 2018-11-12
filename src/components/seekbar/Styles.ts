@@ -29,9 +29,9 @@ const StyledDiv = styled.div`
 
   .aip-seekbar-expander {
     position: absolute;
-    top: -2em;
+    bottom: calc(50% - 0.5em);
     width: 100%;
-    height: 2em;
+    height: 1.5em;
   }
 
   .aip-play-progress {
