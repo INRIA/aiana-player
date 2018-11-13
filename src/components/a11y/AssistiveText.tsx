@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-const StyledSpan = styled.span`
+const VisuallyHidden = styled.span`
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
   padding: 0;
@@ -19,9 +19,9 @@ interface IProps {
 }
 
 const AssistiveText: React.SFC<IProps> = ({ children, id }) => (
-  <StyledSpan id={id} className="assistive-text">
+  <VisuallyHidden id={id} className="assistive-text">
     {children}
-  </StyledSpan>
+  </VisuallyHidden>
 );
 
 export default AssistiveText;

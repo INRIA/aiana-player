@@ -5,6 +5,7 @@ import {
   handleFullscreenChange,
   playerElementMounted
 } from 'src/actions/player';
+import SvgFilters from 'src/components/shared/filters';
 import { IAianaState } from 'src/reducers/index';
 import themes from 'src/themes';
 import { isDocumentFullscreen } from 'src/utils/fullscreen';
@@ -54,6 +55,7 @@ class Aiana extends React.Component<IAiana> {
       <IntlWrapper>
         <ThemeProvider theme={currentTheme}>
           <StyledAiana className="aip-app" innerRef={this.fullscreenRef}>
+            <SvgFilters />
             <Player />
             <PreferencesPanel />
           </StyledAiana>
