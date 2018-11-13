@@ -1,4 +1,4 @@
-import { ITrack } from 'src/components/video/VideoTextTrack';
+import { ITrack } from 'src/components/video/MediaSubtitlesTrack';
 import {
   TRACK_KIND_CAPTIONS,
   TRACK_KIND_CHAPTERS,
@@ -6,22 +6,23 @@ import {
   TRACK_MODE_ACTIVE
 } from 'src/constants';
 
-export interface IRawTextTrack {
-  activeCues: TextTrackCueList;
-  cues: TextTrackCueList;
+export interface IRawSubtitlesTrack {
+  active: boolean;
+  readonly activeCues: TextTrackCueList;
+  readonly cues: TextTrackCueList;
   readonly kind: string;
   readonly label: string;
   readonly language: string;
-  active: boolean;
+  mode: TextTrackMode | number;
 }
 
-export interface IRawChapterTrack {
+export interface IRawChaptersTrack {
   readonly cues: IMediaCue[];
   readonly label: string;
   readonly language: string;
 }
 
-export type IRawMetadataTrack = IRawTextTrack;
+export type IRawMetadataTrack = IRawSubtitlesTrack;
 
 export interface IMediaCue {
   endTime: number;
@@ -36,7 +37,7 @@ export interface IBufferedRange {
 
 export type BufferedRanges = IBufferedRange[];
 
-export function rawTextTrack(textTrack: TextTrack): IRawTextTrack {
+export function rawSubtitlesTrack(textTrack: TextTrack): IRawSubtitlesTrack {
   const { activeCues, cues, kind, label, language, mode } = textTrack;
 
   return {
@@ -45,15 +46,18 @@ export function rawTextTrack(textTrack: TextTrack): IRawTextTrack {
     cues,
     kind,
     label,
-    language
+    language,
+    mode
   };
 }
+
+export const rawTextTrack = rawSubtitlesTrack;
 
 /**
  * Strips unwanted properties from a TextTrack.
  * @param track {TextTrack}
  */
-export function rawChapterTrack(track: TextTrack): IRawChapterTrack {
+export function rawChaptersTrack(track: TextTrack): IRawChaptersTrack {
   const { cues: trackCues, label, language } = track;
 
   const cues: IMediaCue[] = [...trackCues[Symbol.iterator]()].map(
@@ -77,7 +81,7 @@ export function rawChapterTrack(track: TextTrack): IRawChapterTrack {
  * @param track
  */
 export function isDisplayableTrack(
-  track: TextTrack | IRawTextTrack | ITrack
+  track: TextTrack | IRawSubtitlesTrack | ITrack
 ): boolean {
   return (
     track.kind === undefined ||
@@ -96,10 +100,14 @@ export function isChapterTrack(track: TextTrack | ITrack) {
 
 /**
  * Tests if a subtitles track is active
- * @param track {IRawTextTrack}
+ * @param track {IRawSubtitlesTrack}
  */
-export function isActiveTrack(track: IRawTextTrack): boolean {
+export function isActiveTrack(track: IRawSubtitlesTrack): boolean {
   return track.active === true;
+}
+
+export function isDefaultTrack(track: ITrack): boolean {
+  return track.isDefault === true;
 }
 
 export function convertTimeRanges(timeRanges: TimeRanges): BufferedRanges {

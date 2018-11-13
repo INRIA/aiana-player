@@ -2,14 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { DEFAULT_LANG } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
-import { IRawChapterTrack } from 'src/utils/media';
+import { IRawChaptersTrack } from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
 import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';
 
 export interface IMediaChapters {
-  chaptersTracks: IRawChapterTrack[];
+  chaptersTracks: IRawChaptersTrack[];
   language: string;
 }
 

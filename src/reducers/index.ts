@@ -4,6 +4,7 @@ import chapters, { IChaptersState } from './chapters';
 import player, { IPlayerState } from './player';
 import preferences, { IPreferencesState } from './preferences';
 import slides, { ISlidesState } from './slides';
+import subtitles, { ISubtitlesState } from './subtitles';
 
 export interface IAianaState {
   bookmarks: IBookmarksState;
@@ -11,6 +12,7 @@ export interface IAianaState {
   player: IPlayerState;
   preferences: IPreferencesState;
   slides: ISlidesState;
+  subtitles: ISubtitlesState;
 }
 
 export default combineReducers({
@@ -18,5 +20,6 @@ export default combineReducers({
   chapters,
   player,
   preferences,
-  slides
+  slides,
+  subtitles
 });

@@ -6,7 +6,7 @@ import styled from 'src/utils/styled-components';
 import StyledButton from '../styled/StyledButton';
 
 interface IProps {
-  media: HTMLMediaElement | null;
+  media?: HTMLMediaElement;
   startTime: number;
 }
 

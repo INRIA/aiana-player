@@ -22,7 +22,7 @@ import { bounded } from 'src/utils/ui';
 import StyledVolumeSlider from './Styles';
 
 interface IProps {
-  mediaElement: HTMLMediaElement | null;
+  mediaElement?: HTMLMediaElement;
   volume: number;
   volumeStep: number;
 }

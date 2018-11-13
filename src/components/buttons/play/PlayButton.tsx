@@ -14,7 +14,7 @@ const StyledPlayButton = styled(StyledButton)`
 
 export interface IPlayButtonProps {
   isPlaying: boolean;
-  mediaElement: HTMLMediaElement | null;
+  mediaElement?: HTMLMediaElement;
 }
 
 interface IDispatchProps {

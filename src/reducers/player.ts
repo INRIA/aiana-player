@@ -16,20 +16,13 @@ import {
   PLAYER_ELEMENT_MOUNTED,
   SET_ADDITIONAL_INFOS_TEXT,
   SET_BUFFERED_RANGES,
-  SET_SUBTITLE_TEXT,
   TOGGLE_FULLSCREEN,
-  TOGGLE_NATIVE_CONTROLS,
-  UPDATE_ACTIVE_TEXT_TRACK,
-  UPDATE_TRACKS_LIST
+  TOGGLE_NATIVE_CONTROLS
 } from 'src/actions/player';
+import { ITrack } from 'src/components/video/MediaSubtitlesTrack';
 import { ISource } from 'src/components/video/VideoPlayer';
-import { ITrack } from 'src/components/video/VideoTextTrack';
 import { ExtendedHTMLElement } from 'src/types';
-import {
-  BufferedRanges,
-  IRawMetadataTrack,
-  IRawTextTrack
-} from 'src/utils/media';
+import { BufferedRanges, IRawMetadataTrack } from 'src/utils/media';
 import {
   DEFAULT_AUTOLOAD,
   DEFAULT_NATIVE_CONTROLS,
@@ -56,7 +49,7 @@ export interface IPlayerState {
 
   isSeeking: boolean;
 
-  mediaElement: HTMLMediaElement | null;
+  mediaElement?: HTMLMediaElement;
 
   metadataTracks: IRawMetadataTrack[];
 
@@ -77,20 +70,6 @@ export interface IPlayerState {
   seekingTime: number;
 
   readonly sources: ISource[];
-
-  subtitleText?: string;
-
-  readonly sourceTracks: ITrack[];
-
-  /**
-   * HTMLMediaElement already parses vtt files and manage its own tracks state
-   * living inside a TextTrackList. However, the list elements have some
-   * properties that are unnecessary to us. The elements will also lose some of
-   * the HTML attributes such as `default`.
-   * `textTracks` is a collection of lightweight objects with properties from
-   * `sources` and `sourceTracks`.
-   */
-  textTracks: IRawTextTrack[];
 
   /**
    * Volume level for audio portions of the media element.
@@ -117,37 +96,18 @@ const initialState: IPlayerState = {
   isMuted: false,
   isPlaying: false,
   isSeeking: false,
-  mediaElement: null,
   metadataTracks: [],
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   playerElement: null,
   preload: DEFAULT_AUTOLOAD,
   seekingTime: 0,
-  sourceTracks: [
-    {
-      label: 'Default subtitles (English)',
-      src: 'http://localhost:3000/dev/subtitles.vtt'
-    },
-    {
-      label: 'Sous-titres',
-      src: 'http://localhost:3000/dev/subtitles.1.vtt',
-      srcLang: 'es'
-    },
-    {
-      kind: 'captions',
-      label: 'Captions',
-      src: 'http://localhost:3000/dev/subtitles.vtt'
-    }
-  ],
   sources: [
     {
       src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
       type: 'video/mp4'
     }
   ],
-  subtitleText: undefined,
-  textTracks: [],
   volume: DEFAULT_VOLUME
 };
 
@@ -182,7 +142,7 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       return {
         ...state,
         isPlaying: false,
-        mediaElement: null
+        mediaElement: undefined
       };
     case MEDIA_PLAY:
     case MEDIA_PAUSE:
@@ -228,31 +188,6 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         isSeeking: action.isSeeking,
         seekingTime
-      };
-    case UPDATE_TRACKS_LIST:
-      return {
-        ...state,
-        textTracks: action.textTracks
-      };
-    case UPDATE_ACTIVE_TEXT_TRACK:
-      const textTracks = state.textTracks.map((track) => {
-        if (track.label === action.textTrackLabel) {
-          return { ...track, active: true };
-        }
-        if (track.active === true) {
-          return { ...track, active: false };
-        }
-        return { ...track };
-      });
-
-      return {
-        ...state,
-        textTracks
-      };
-    case SET_SUBTITLE_TEXT:
-      return {
-        ...state,
-        subtitleText: action.subtitleText
       };
     case SET_ADDITIONAL_INFOS_TEXT:
       return {

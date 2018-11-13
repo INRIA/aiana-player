@@ -30,7 +30,7 @@ interface IProps {
   isSeeking: boolean;
   seekStep: number;
   seekingTime: number;
-  mediaElement: HTMLMediaElement | null;
+  mediaElement?: HTMLMediaElement;
 }
 
 interface IDispatchProps {

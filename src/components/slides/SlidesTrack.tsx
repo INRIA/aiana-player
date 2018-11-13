@@ -6,7 +6,7 @@ import {
   TRACK_KIND_METADATA,
   TRACK_MODE_HIDDEN
 } from 'src/constants';
-import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media';
+import { IRawMetadataTrack, rawSubtitlesTrack } from 'src/utils/media';
 
 interface IProps {
   label?: string;
@@ -77,7 +77,7 @@ class SlidesTrack extends React.Component<ISlideTrack> {
       return;
     }
 
-    const slidesTrack = rawTextTrack(this.trackRef.current.track);
+    const slidesTrack = rawSubtitlesTrack(this.trackRef.current.track);
     this.props.addSlidesTrack(slidesTrack);
   };
 

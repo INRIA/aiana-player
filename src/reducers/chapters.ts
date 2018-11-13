@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { ADD_CHAPTER_TRACK } from 'src/actions/chapters';
-import { IRawChapterTrack } from 'src/utils/media';
+import { IRawChaptersTrack } from 'src/utils/media';
 
 export interface IChaptersTrack {
   label: string;
@@ -9,12 +9,12 @@ export interface IChaptersTrack {
 }
 
 export interface IChaptersState {
-  chaptersTracks: IRawChapterTrack[];
+  chaptersTracks: IRawChaptersTrack[];
   menuEnabled: boolean;
   readonly sources: IChaptersTrack[];
 }
 
-const initialState = {
+const initialState: IChaptersState = {
   chaptersTracks: [],
   menuEnabled: true,
   sources: [

@@ -6,7 +6,7 @@ import BookmarkIcon from 'src/components/svg/Bookmark';
 const StyledBookmarkIcon = StyledSvg.withComponent(BookmarkIcon);
 
 interface IProps {
-  media: HTMLMediaElement | null;
+  media?: HTMLMediaElement;
   onClick: (media: HTMLMediaElement, time: number) => void;
   time: number;
 }

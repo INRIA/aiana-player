@@ -11,22 +11,23 @@ import {
   toggleMute,
   updateBufferedRanges,
   updateCurrentTime,
-  updateMediaDuration,
-  updateTracksList
+  updateMediaDuration
 } from 'src/actions/player';
+import { updateSubtitlesTracksList } from 'src/actions/subtitles';
 import { IChaptersTrack } from 'src/reducers/chapters';
 import { IAianaState } from 'src/reducers/index';
 import { ISlidesTrack } from 'src/reducers/slides';
 import {
-  IRawTextTrack,
-  isDisplayableTrack,
-  rawTextTrack
+  IRawSubtitlesTrack,
+  // isDefaultTrack,
+  isDisplayableTrack
+  // rawSubtitlesTrack
 } from 'src/utils/media';
 import styled from 'src/utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
 import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
-import VideoTextTrack, { ITrack } from './VideoTextTrack';
+import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
 
 const StyledVideo = styled.div`
   position: absolute;
@@ -61,11 +62,11 @@ interface IDispatchProps {
   updateBufferedRanges: (timeRanges: TimeRanges) => void;
   updateCurrentTime: (time: number) => void;
   updateMediaDuration: (duration: number) => void;
-  updateTracksList: (textTracks: IRawTextTrack[]) => void;
+  updateSubtitlesTracksList: (subtitlesTracks: IRawSubtitlesTrack[]) => void;
 }
 
 interface IVideoProps {
-  additionalInformationsTracks?: ITrack[];
+  additionalInformationsTracks: ITrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
   currentTime: number;
@@ -76,8 +77,8 @@ interface IVideoProps {
   preload: string;
   slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
-  subtitlesTracks?: ITrack[];
-  textTracks: IRawTextTrack[];
+  subtitlesSources: ITrack[];
+  subtitlesTracks: IRawSubtitlesTrack[];
   volume: number;
 }
 
@@ -98,8 +99,6 @@ class VideoPlayer extends React.Component<IProps> {
 
     media.volume = volume;
     media.muted = isMuted;
-
-    this.populateTextTracks();
   }
 
   public componentWillUnmount() {
@@ -117,7 +116,7 @@ class VideoPlayer extends React.Component<IProps> {
       preload,
       slidesTracksSources,
       sources,
-      subtitlesTracks
+      subtitlesSources
     } = this.props;
 
     return (
@@ -139,70 +138,62 @@ class VideoPlayer extends React.Component<IProps> {
           preload={preload}
           tabIndex={nativeControls ? 0 : -1}
         >
-          {sources &&
-            sources.map((source, idx) => <source key={idx} {...source} />)}
+          {sources.map((source, idx) => (
+            <source key={idx} {...source} />
+          ))}
 
-          {subtitlesTracks &&
-            subtitlesTracks
-              .filter(isDisplayableTrack)
-              .map((track, idx) => <VideoTextTrack key={idx} {...track} />)}
+          {subtitlesSources.filter(isDisplayableTrack).map((track, idx) => (
+            <MediaSubtitlesTrack key={idx} {...track} />
+          ))}
 
           {chaptersSources.map((track, idx) => (
             <MediaChapterTrack key={idx} {...track} />
           ))}
 
-          {additionalInformationsTracks &&
-            additionalInformationsTracks.map((track, idx) => (
-              <AdditionalInfosTrack key={idx} {...track} />
-            ))}
+          {additionalInformationsTracks.map((track, idx) => (
+            <AdditionalInfosTrack key={idx} {...track} />
+          ))}
 
-          {slidesTracksSources &&
-            slidesTracksSources.map((track, idx) => (
-              <SlidesTrack key={idx} {...track} />
-            ))}
+          {slidesTracksSources.map((track, idx) => (
+            <SlidesTrack key={idx} {...track} />
+          ))}
         </video>
       </StyledVideo>
     );
   }
 
   private progressHandler = () => {
-    if (!this.mediaRef.current) {
-      return;
-    }
-
-    this.props.updateBufferedRanges(this.mediaRef.current.buffered);
+    this.props.updateBufferedRanges(this.mediaRef.current!.buffered);
   };
 
   /**
    * Handles any changes made to the text tracks (selected, etc).
    */
-  private populateTextTracks = () => {
-    const { subtitlesTracks } = this.props;
+  // private populateTextTracks = () => {
+  //   const { subtitlesSources } = this.props;
 
-    if (!this.mediaRef.current || !subtitlesTracks) {
-      return;
-    }
+  //   if (!subtitlesSources) {
+  //     return;
+  //   }
 
-    const videoTracks = [
-      ...this.mediaRef.current.textTracks[Symbol.iterator]()
-    ];
-    const defaultTrack = subtitlesTracks.find(
-      (track) => track.isDefault === true
-    );
+  //   const videoTracks = [
+  //     ...this.mediaRef.current!.textTracks[Symbol.iterator]()
+  //   ];
+  //   const defaultTrack = subtitlesSources.find(isDefaultTrack);
 
-    const visibleTracks = videoTracks
-      .filter(isDisplayableTrack)
-      .map((track) => {
-        return {
-          ...rawTextTrack(track),
-          active: track.label === (defaultTrack ? defaultTrack.label : false)
-        };
-      });
+  //   const rawDisplayableTracks = videoTracks
+  //     .filter(isDisplayableTrack)
+  //     .map((track) => {
+  //       return {
+  //         ...rawSubtitlesTrack(track),
+  //         active: track.label === (defaultTrack ? defaultTrack.label : false)
+  //       };
+  //     });
 
-    if (visibleTracks.length) {
-      this.props.updateTracksList(visibleTracks);
-    }
-  };
+  //   if (rawDisplayableTracks.length) {
+  //     this.props.updateSubtitlesTracksList(rawDisplayableTracks);
+  //   }
+  // };
 
   private clickHandler = () => {
     const media = this.mediaRef.current!;
@@ -222,13 +213,11 @@ class VideoPlayer extends React.Component<IProps> {
   };
 
   private timeUpdateHandler = () => {
-    const media = this.mediaRef.current!;
-    this.props.updateCurrentTime(media.currentTime);
+    this.props.updateCurrentTime(this.mediaRef.current!.currentTime);
   };
 
   private loadedMetadataHandler = () => {
-    const media = this.mediaRef.current!;
-    this.props.updateMediaDuration(media.duration);
+    this.props.updateMediaDuration(this.mediaRef.current!.duration);
   };
 
   /**
@@ -263,8 +252,8 @@ const mapStateToProps = (state: IAianaState) => ({
   preload: state.player.preload,
   slidesTracksSources: state.slides.sourceTracks,
   sources: state.player.sources,
-  subtitlesTracks: state.player.sourceTracks,
-  textTracks: state.player.textTracks,
+  subtitlesSources: state.subtitles.sources,
+  subtitlesTracks: state.subtitles.subtitlesTracks,
   volume: state.player.volume
 });
 
@@ -280,7 +269,7 @@ const mapDispatchToProps = {
   updateBufferedRanges,
   updateCurrentTime,
   updateMediaDuration,
-  updateTracksList
+  updateSubtitlesTracksList
 };
 
 export default connect(

@@ -10,7 +10,7 @@ import BookmarkButton from './BookmarkButton';
 interface IProps {
   bookmarks: IBookmark[];
   duration: number;
-  media: HTMLMediaElement | null;
+  media?: HTMLMediaElement;
 }
 
 interface IDispatchProps {

@@ -8,7 +8,7 @@ import { uuid } from 'src/utils/ui';
 interface IProps {
   availablePlaybackRates: number[];
   currentPlaybackRate: number;
-  mediaElement: HTMLMediaElement | null;
+  mediaElement?: HTMLMediaElement;
 }
 
 interface IDispatchProps {

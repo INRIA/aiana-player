@@ -5,17 +5,17 @@ import { formatSubtitles } from 'src/utils/strings';
 import { StyledSpan, StyledSubtitles } from './Styles';
 
 interface IVideoSubtitles {
-  subtitleText?: string;
+  subtitlesText?: string;
 }
 
-const MediaSubtitles: React.SFC<IVideoSubtitles> = ({ subtitleText }) => {
-  if (!subtitleText) {
+const MediaSubtitles: React.SFC<IVideoSubtitles> = ({ subtitlesText }) => {
+  if (!subtitlesText) {
     return null;
   }
 
   return (
     <StyledSubtitles>
-      {formatSubtitles(subtitleText).map((line, index) => (
+      {formatSubtitles(subtitlesText).map((line, index) => (
         <StyledSpan key={index}>
           <span>{line}</span>
         </StyledSpan>
@@ -25,7 +25,7 @@ const MediaSubtitles: React.SFC<IVideoSubtitles> = ({ subtitleText }) => {
 };
 
 const mapStateToProps = (state: IAianaState) => ({
-  subtitleText: state.player.subtitleText
+  subtitlesText: state.subtitles.subtitlesText
 });
 
 export default connect(mapStateToProps)(MediaSubtitles);

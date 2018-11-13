@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import { updateActiveTextTrack } from 'src/actions/player';
+import { updateActiveSubtitlesTrack } from 'src/actions/subtitles';
 import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
-import { IRawTextTrack, isDisplayableTrack } from 'src/utils/media';
+import { IRawSubtitlesTrack, isDisplayableTrack } from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
 
 interface IProps {
   nativeControls: boolean;
-  textTracks: IRawTextTrack[];
-  mediaElement: HTMLMediaElement | null;
+  subtitlesTracks: IRawSubtitlesTrack[];
+  mediaElement?: HTMLMediaElement;
 }
 
 interface IDispatchProps {
@@ -26,13 +26,13 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
   mediaElement,
   selectedTrackChangedHandler,
   t,
-  textTracks
+  subtitlesTracks
 }) => {
   if (!mediaElement) {
     return null;
   }
 
-  const selectedTrack = textTracks.find((track) => track.active);
+  const selectedTrack = subtitlesTracks.find((track) => track.active);
   const selectedValue = selectedTrack ? selectedTrack.label : '';
   const id = uuid();
 
@@ -45,7 +45,7 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
         value={selectedValue}
       >
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
-        {textTracks.filter(isDisplayableTrack).map((track) => (
+        {subtitlesTracks.filter(isDisplayableTrack).map((track) => (
           <option key={track.label} value={track.label}>
             {track.label}
           </option>
@@ -58,12 +58,12 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
 const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement,
   nativeControls: state.player.nativeControls,
-  textTracks: state.player.textTracks
+  subtitlesTracks: state.subtitles.subtitlesTracks
 });
 
 const mapDispatchToProps = (dispatch: CDispatch) => ({
   selectedTrackChangedHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(updateActiveTextTrack(evt.currentTarget.value));
+    dispatch(updateActiveSubtitlesTrack(evt.currentTarget.value));
   }
 });
 

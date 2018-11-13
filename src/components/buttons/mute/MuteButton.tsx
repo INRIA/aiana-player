@@ -16,7 +16,7 @@ const StyledMuteButton = styled(StyledButton)`
 
 interface IProps {
   isMuted: boolean;
-  mediaElement: HTMLMediaElement | null;
+  mediaElement?: HTMLMediaElement;
 }
 
 interface IDispatchProps {

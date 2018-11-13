@@ -1,15 +1,11 @@
 import { AnyAction } from 'redux';
-import { ExtendedHTMLElement, ThunkResult } from 'src/types';
+import { ExtendedHTMLElement } from 'src/types';
 import {
   enterFullscreen,
   exitFullscreen,
   isDocumentFullscreen
 } from '../utils/fullscreen';
-import {
-  convertTimeRanges,
-  IRawMetadataTrack,
-  IRawTextTrack
-} from '../utils/media';
+import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
 
 export const TOGGLE_NATIVE_CONTROLS = 'aiana/TOGGLE_NATIVE_CONTROLS';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
@@ -31,9 +27,6 @@ export const MEDIA_VOLUME_CHANGE = 'aiana/VOLUME_CHANGE';
 export const MEDIA_UPDATE_TIME = 'aiana/UPDATE_TIME';
 export const MEDIA_REQUEST_SEEK = 'aiana/MEDIA_REQUEST_SEEK';
 export const MEDIA_SEEK_TOGGLE = 'aiana/MEDIA_SEEK_TOGGLE';
-export const UPDATE_TRACKS_LIST = 'aiana/UPDATE_TRACKS_LIST';
-export const UPDATE_ACTIVE_TEXT_TRACK = 'aiana/UPDATE_ACTIVE_TEXT_TRACK';
-export const SET_SUBTITLE_TEXT = 'aiana/SET_SUBTITLE_TEXT';
 export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFOS_TEXT = 'aiana/SET_ADDITIONAL_INFOS_TEXT';
 export const SET_BUFFERED_RANGES = 'aiana/SET_BUFFERED_RANGES';
@@ -57,32 +50,6 @@ export function addMetadataTrack(track: IRawMetadataTrack): AnyAction {
   return {
     track,
     type: ADD_METADATA_TRACK
-  };
-}
-
-export function setSubtitleText(text?: string): AnyAction {
-  return {
-    subtitleText: text,
-    type: SET_SUBTITLE_TEXT
-  };
-}
-
-export function updateActiveTextTrack(
-  textTrackLabel: string
-): ThunkResult<void> {
-  return (dispatch) => {
-    dispatch({ textTrackLabel, type: UPDATE_ACTIVE_TEXT_TRACK });
-
-    if (textTrackLabel === '') {
-      dispatch(setSubtitleText(undefined));
-    }
-  };
-}
-
-export function updateTracksList(textTracks: IRawTextTrack[]): AnyAction {
-  return {
-    textTracks,
-    type: UPDATE_TRACKS_LIST
   };
 }
 

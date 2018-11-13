@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { ADD_SLIDES_TRACK, SET_SLIDES_TEXT } from 'src/actions/slides';
-import { IRawTextTrack } from 'src/utils/media';
+import { IRawSubtitlesTrack } from 'src/utils/media';
 
 export interface ISlidesTrack {
   label?: string;
@@ -10,7 +10,7 @@ export interface ISlidesTrack {
 
 export interface ISlidesState {
   currentSlideText: string | null;
-  slidesTracks: IRawTextTrack[];
+  slidesTracks: IRawSubtitlesTrack[];
   readonly sourceTracks: ISlidesTrack[];
 }
 
