@@ -2,8 +2,12 @@ import * as React from 'react';
 import StyledButton from 'src/components/styled/StyledButton';
 import StyledSvg from 'src/components/styled/StyledSvg';
 import BookmarkIcon from 'src/components/svg/Bookmark';
+import styled from 'src/utils/styled-components';
 
-const StyledBookmarkIcon = StyledSvg.withComponent(BookmarkIcon);
+const StyledSvgIcon = StyledSvg.withComponent(BookmarkIcon);
+const StyledBookmarkIcon = styled(StyledSvgIcon)`
+  filter: url('#aip-filter-dropshadow');
+`;
 
 interface IProps {
   media?: HTMLMediaElement;

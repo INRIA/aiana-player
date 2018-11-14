@@ -8,7 +8,7 @@ const StyledSvg = styled.svg`
 `;
 
 const SvgFilters: React.SFC = () => (
-  <StyledSvg aria-hidden="true">
+  <StyledSvg className="aip-filters" aria-hidden="true">
     <defs>
       <DropShadow />
       <ErodeFilter />

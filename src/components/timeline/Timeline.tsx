@@ -5,7 +5,7 @@ import ChaptersBar from './chapters/ChaptersBar';
 
 const StyledTimelineBar = styled.div`
   width: 100%;
-  height: 1em;
+  height: 2em;
   padding: 0 1em;
 
   position: absolute;
