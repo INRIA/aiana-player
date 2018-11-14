@@ -24,6 +24,8 @@ export interface IRawChaptersTrack {
 
 export type IRawMetadataTrack = IRawSubtitlesTrack;
 
+export type IRawSlidesTrack = IRawChaptersTrack;
+
 export interface IMediaCue {
   endTime: number;
   startTime: number;
@@ -73,6 +75,11 @@ export function rawChaptersTrack(track: TextTrack): IRawChaptersTrack {
     label,
     language
   };
+}
+
+export function rawSlidesTrack(track: TextTrack): IRawSlidesTrack {
+  const rawTrack: IRawSlidesTrack = rawChaptersTrack(track);
+  return rawTrack;
 }
 
 /**

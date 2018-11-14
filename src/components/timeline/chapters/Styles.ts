@@ -1,6 +1,13 @@
 import styled from 'src/utils/styled-components';
 
 const StyledNav = styled.nav`
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
   ol {
     height: 100%;
     width: 100%;
