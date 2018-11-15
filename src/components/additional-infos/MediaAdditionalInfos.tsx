@@ -8,7 +8,7 @@ import AssistiveText from '../a11y/AssistiveText';
 import StyledAdditionalInfos from './Styles';
 
 interface IMediaAdditionalInfos extends InjectedTranslateProps {
-  text: string | null;
+  text?: string;
 }
 
 const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({

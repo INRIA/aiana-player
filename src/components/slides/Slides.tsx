@@ -5,7 +5,7 @@ import { markdownToJSX } from 'src/utils/strings';
 import SlidesStyles from './Styles';
 
 interface IProps {
-  text: string | null;
+  text?: string;
 }
 
 const Slides: React.SFC<IProps> = ({ text }) => {

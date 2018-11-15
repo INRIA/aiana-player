@@ -4,12 +4,12 @@ import { IAianaState } from 'src/reducers/index';
 import { secondsToHMS } from 'src/utils/time';
 import StyledElement from './Styles';
 
-interface IProps {
+interface IStateProps {
   currentTime: number;
   duration: number;
 }
 
-const TimeStatus: React.SFC<IProps> = ({ currentTime, duration }) => (
+const TimeStatus: React.SFC<IStateProps> = ({ currentTime, duration }) => (
   <StyledElement className="aip-time-status">
     <span className="aip-time-current">{secondsToHMS(currentTime)}</span>
     <span> / </span>

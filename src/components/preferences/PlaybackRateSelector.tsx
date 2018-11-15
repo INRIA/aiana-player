@@ -5,7 +5,7 @@ import { changePlaybackRate } from 'src/actions/player';
 import { IAianaState } from 'src/reducers/index';
 import { uuid } from 'src/utils/ui';
 
-interface IProps {
+interface IStateProps {
   availablePlaybackRates: number[];
   currentPlaybackRate: number;
   mediaElement?: HTMLMediaElement;
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface IPlaybackRateSelector
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

@@ -39,10 +39,6 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
   public render() {
     const { label, src, srcLang } = this.props;
 
-    if (!src) {
-      return null;
-    }
-
     return (
       <track
         kind={TRACK_KIND_METADATA}
@@ -55,46 +51,30 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
   }
 
   public componentDidMount() {
-    if (!this.trackRef.current) {
-      return;
-    }
-
     // browser will set track `mode` to disabled.
-    this.trackRef.current.track.mode = TRACK_MODE_HIDDEN;
-    this.trackRef.current.addEventListener('load', this.loadHandler);
-    this.trackRef.current.track.addEventListener(
+    this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
+    this.trackRef.current!.addEventListener('load', this.loadHandler);
+    this.trackRef.current!.track.addEventListener(
       'cuechange',
       this.cueChangeHandler
     );
   }
 
   public componentWillUnmount() {
-    if (!this.trackRef.current) {
-      return;
-    }
-
-    this.trackRef.current.removeEventListener('load', this.loadHandler);
-    this.trackRef.current.track.removeEventListener(
+    this.trackRef.current!.removeEventListener('load', this.loadHandler);
+    this.trackRef.current!.track.removeEventListener(
       'cuechange',
       this.cueChangeHandler
     );
   }
 
   private loadHandler = () => {
-    if (!this.trackRef.current) {
-      return;
-    }
-
-    const metadataTrack = rawTextTrack(this.trackRef.current.track);
+    const metadataTrack = rawTextTrack(this.trackRef.current!.track);
     this.props.addMetadataTrack(metadataTrack);
   };
 
   private cueChangeHandler = () => {
-    if (!this.trackRef.current) {
-      return;
-    }
-
-    const currentCue = this.trackRef.current.track.activeCues[0];
+    const currentCue = this.trackRef.current!.track.activeCues[0];
     const currentText = currentCue ? currentCue.text : undefined;
     this.props.updateAdditionalInfosText(currentText);
   };

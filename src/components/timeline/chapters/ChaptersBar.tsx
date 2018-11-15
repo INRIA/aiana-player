@@ -6,13 +6,16 @@ import { DEFAULT_LANG } from 'src/constants';
 import { IAianaState } from 'src/reducers';
 import { getRandomColor } from 'src/utils/colors';
 import { unitToPercent } from 'src/utils/math';
+import { IRawChaptersTrack } from 'src/utils/media';
 import StyledChaptersBar from './Styles';
 
-interface IProps extends IMediaChapters {
+interface IStateProps extends IMediaChapters {
+  chaptersTracks: IRawChaptersTrack[];
   duration: number;
+  language: string;
 }
 
-const ChaptersBar: React.SFC<IProps> = ({
+const ChaptersBar: React.SFC<IStateProps> = ({
   chaptersTracks,
   duration,
   language

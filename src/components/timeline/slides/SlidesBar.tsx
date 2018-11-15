@@ -8,7 +8,7 @@ import { IRawSlidesTrack } from 'src/utils/media';
 import styled from 'src/utils/styled-components';
 import SlideButton from './SlideButton';
 
-interface IProps {
+interface IStateProps {
   duration: number;
   language: string;
   media?: HTMLMediaElement;
@@ -19,7 +19,7 @@ interface IDispatchProps {
   requestSeek: (media: HTMLMediaElement, seekingTime: number) => any;
 }
 
-interface ISlidesBar extends IProps, IDispatchProps {}
+interface ISlidesBar extends IStateProps, IDispatchProps {}
 
 const StyledSlidesBar = styled.nav`
   width: 100%;

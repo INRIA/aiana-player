@@ -1,17 +1,12 @@
 import * as React from 'react';
+import { IMediaCue } from 'src/utils/media';
 import MediaChapterButton from './MediaChapterButton';
 
-interface IChapter {
-  endTime: number;
-  startTime: number;
-  text: string;
+interface IProps {
+  chapters: IMediaCue[];
 }
 
-interface IChaptersList {
-  chapters: IChapter[];
-}
-
-const ChaptersList: React.SFC<IChaptersList> = ({ chapters }) => {
+const ChaptersList: React.SFC<IProps> = ({ chapters }) => {
   if (chapters.length === 0) {
     return null;
   }

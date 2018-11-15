@@ -24,7 +24,7 @@ import StyledDiv from './Styles';
 
 const { round } = Math;
 
-interface IProps {
+interface IStateProps {
   currentTime: number;
   duration: number;
   isSeeking: boolean;
@@ -38,7 +38,7 @@ interface IDispatchProps {
 }
 
 interface ISeekBarSlider
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

@@ -26,11 +26,11 @@ const StyledControls = styled.div`
   margin-top: 0.3125em;
 `;
 
-interface IProps {
+interface IStateProps {
   nativeControls: boolean;
 }
 
-const VideoPlayerControls: React.SFC<IProps> = ({ nativeControls }) => {
+const VideoPlayerControls: React.SFC<IStateProps> = ({ nativeControls }) => {
   if (nativeControls) {
     return null;
   }

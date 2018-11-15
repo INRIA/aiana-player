@@ -4,14 +4,17 @@ import { IAianaState } from 'src/reducers';
 import { BufferedRanges } from 'src/utils/media';
 import StyledTimeRanges from './Styles';
 
-interface IProps {
+interface IStateProps {
   bufferedRanges: BufferedRanges;
   duration: number;
 }
 
 const { floor } = Math;
 
-const TimeRangesBar: React.SFC<IProps> = ({ bufferedRanges, duration }) => (
+const TimeRangesBar: React.SFC<IStateProps> = ({
+  bufferedRanges,
+  duration
+}) => (
   <StyledTimeRanges className="aip-buffered">
     <svg width="1em" height="1em" viewBox={`0 0 ${floor(duration)} 2`}>
       {bufferedRanges.map(({ end, start }, idx) => (

@@ -14,7 +14,7 @@ const StyledMuteButton = styled(StyledButton)`
   }
 `;
 
-interface IProps {
+interface IStateProps {
   isMuted: boolean;
   mediaElement?: HTMLMediaElement;
 }
@@ -24,7 +24,10 @@ interface IDispatchProps {
   unmute(media: HTMLMediaElement): void;
 }
 
-interface IMuteButton extends IProps, IDispatchProps, InjectedTranslateProps {}
+interface IMuteButton
+  extends IStateProps,
+    IDispatchProps,
+    InjectedTranslateProps {}
 
 class MuteButton extends React.Component<IMuteButton> {
   public render() {

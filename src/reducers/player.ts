@@ -31,7 +31,7 @@ import {
 } from '../constants';
 
 export interface IPlayerState {
-  additionalInformationsText: string | null;
+  additionalInformationsText?: string;
   readonly additionalInformationsTracks: ITrack[];
 
   autoPlay: boolean;
@@ -64,7 +64,7 @@ export interface IPlayerState {
    * expressed as a multiple of the normal speed of the media resource.
    */
   playbackRate: number;
-  playerElement: ExtendedHTMLElement | null;
+  playerElement?: ExtendedHTMLElement;
   preload: string;
 
   seekingTime: number;
@@ -79,7 +79,6 @@ export interface IPlayerState {
 }
 
 const initialState: IPlayerState = {
-  additionalInformationsText: null,
   additionalInformationsTracks: [
     {
       kind: 'metadata',
@@ -99,7 +98,6 @@ const initialState: IPlayerState = {
   metadataTracks: [],
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
-  playerElement: null,
   preload: DEFAULT_AUTOLOAD,
   seekingTime: 0,
   sources: [

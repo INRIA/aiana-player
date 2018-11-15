@@ -21,7 +21,7 @@ import { unitToPercent } from 'src/utils/math';
 import { bounded } from 'src/utils/ui';
 import StyledVolumeSlider from './Styles';
 
-interface IProps {
+interface IStateProps {
   mediaElement?: HTMLMediaElement;
   volume: number;
   volumeStep: number;
@@ -32,7 +32,7 @@ interface IDispatchProps {
 }
 
 export interface IVolumeSliderProps
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

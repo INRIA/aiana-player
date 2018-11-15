@@ -7,7 +7,7 @@ import { CDispatch } from 'src/store';
 import { IRawSubtitlesTrack, isDisplayableTrack } from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
 
-interface IProps {
+interface IStateProps {
   nativeControls: boolean;
   subtitlesTracks: IRawSubtitlesTrack[];
   mediaElement?: HTMLMediaElement;
@@ -18,7 +18,7 @@ interface IDispatchProps {
 }
 
 interface ISubtitlesTrackSelector
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

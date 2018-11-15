@@ -60,7 +60,7 @@ interface IDispatchProps {
   updateSubtitlesTracksList: (subtitlesTracks: IRawSubtitlesTrack[]) => void;
 }
 
-interface IVideoProps {
+interface IStateProps {
   additionalInformationsTracks: ITrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
@@ -77,7 +77,7 @@ interface IVideoProps {
   volume: number;
 }
 
-interface IProps extends IVideoProps, IDispatchProps {}
+interface IProps extends IStateProps, IDispatchProps {}
 
 class VideoPlayer extends React.Component<IProps> {
   private mediaRef = React.createRef<HTMLVideoElement>();

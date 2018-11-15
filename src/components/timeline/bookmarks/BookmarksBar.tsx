@@ -7,7 +7,7 @@ import { unitToPercent } from 'src/utils/math';
 import styled from 'src/utils/styled-components';
 import BookmarkButton from './BookmarkButton';
 
-interface IProps {
+interface IStateProps {
   bookmarks: IBookmark[];
   duration: number;
   media?: HTMLMediaElement;
@@ -17,7 +17,7 @@ interface IDispatchProps {
   requestSeek: (media: HTMLMediaElement, seekingTime: number) => any;
 }
 
-interface IBookmarksBar extends IProps, IDispatchProps {}
+interface IBookmarksBar extends IStateProps, IDispatchProps {}
 
 const StyledBookmarksBar = styled.nav`
   width: 100%;

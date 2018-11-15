@@ -7,7 +7,7 @@ import StyledButton from 'src/components/styled/StyledButton';
 import { IAianaState } from 'src/reducers';
 import ControlIcon from './ControlIcon';
 
-interface IProps {
+interface IStateProps {
   currentTime: number;
 }
 
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface IAddBookmarkButton
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

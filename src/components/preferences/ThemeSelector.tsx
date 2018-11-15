@@ -6,7 +6,7 @@ import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
 import { uuid } from 'src/utils/ui';
 
-interface IProps {
+interface IStateProps {
   availableThemes: string[];
   currentTheme: string;
 }
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface IThemeSelector
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

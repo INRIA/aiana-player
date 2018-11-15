@@ -19,11 +19,11 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-interface IPlayerProps {
+interface IStateProps {
   chaptersMenu: boolean;
 }
 
-const Player: React.SFC<IPlayerProps> = ({ chaptersMenu }) => (
+const Player: React.SFC<IStateProps> = ({ chaptersMenu }) => (
   <StyledDiv className="aip-player">
     {chaptersMenu && <ChaptersMenu />}
     <VideoPlayer />

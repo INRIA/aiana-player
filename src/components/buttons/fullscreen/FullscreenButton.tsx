@@ -9,9 +9,9 @@ import { ExtendedHTMLElement } from 'src/types';
 import { isFullscreenEnabled } from 'src/utils/fullscreen';
 import ControlIcon from './ControlIcon';
 
-interface IProps {
+interface IStateProps {
   isFullscreen: boolean;
-  playerElement: ExtendedHTMLElement | null;
+  playerElement?: ExtendedHTMLElement;
 }
 
 interface IDispatchProps {
@@ -19,7 +19,7 @@ interface IDispatchProps {
 }
 
 interface IFullscreenButton
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

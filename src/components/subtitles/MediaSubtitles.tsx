@@ -4,11 +4,11 @@ import { IAianaState } from 'src/reducers/index';
 import { formatSubtitles } from 'src/utils/strings';
 import { StyledSpan, StyledSubtitles } from './Styles';
 
-interface IVideoSubtitles {
+interface IStateProps {
   subtitlesText?: string;
 }
 
-const MediaSubtitles: React.SFC<IVideoSubtitles> = ({ subtitlesText }) => {
+const MediaSubtitles: React.SFC<IStateProps> = ({ subtitlesText }) => {
   if (!subtitlesText) {
     return null;
   }

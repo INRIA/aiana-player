@@ -6,7 +6,7 @@ import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
 import { uuid } from 'src/utils/ui';
 
-interface IProps {
+interface IStateProps {
   availableLanguages: string[];
   currentLanguage: string;
 }
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface ILanguageSelector
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

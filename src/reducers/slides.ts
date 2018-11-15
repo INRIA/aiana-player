@@ -9,13 +9,12 @@ export interface ISlidesTrack {
 }
 
 export interface ISlidesState {
-  currentSlideText: string | null;
+  currentSlideText?: string;
   slidesTracks: IRawSlidesTrack[];
   readonly sourceTracks: ISlidesTrack[];
 }
 
 const initialState: ISlidesState = {
-  currentSlideText: null,
   slidesTracks: [],
   sourceTracks: [
     {

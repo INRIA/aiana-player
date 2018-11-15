@@ -7,7 +7,7 @@ import { IAianaState } from 'src/reducers/index';
 import { uuid } from 'src/utils/ui';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
 
-interface IProps {
+interface IStateProps {
   nativeControls: boolean;
 }
 
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface INativeControlsSwitch
-  extends IProps,
+  extends IStateProps,
     IDispatchProps,
     InjectedTranslateProps {}
 

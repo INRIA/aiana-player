@@ -5,7 +5,7 @@ import { IAianaState } from 'src/reducers/index';
 import styled from 'src/utils/styled-components';
 import StyledButton from '../styled/StyledButton';
 
-interface IProps {
+interface IStateProps {
   media?: HTMLMediaElement;
   startTime: number;
 }
@@ -14,7 +14,7 @@ interface IDispatchProps {
   requestSeek(media: HTMLMediaElement, seekingTime: number): void;
 }
 
-interface IMediaChapterButton extends IProps, IDispatchProps {}
+interface IMediaChapterButton extends IStateProps, IDispatchProps {}
 
 const StyledChapterButton = styled(StyledButton)`
   display: block;
