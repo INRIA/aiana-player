@@ -17,12 +17,7 @@ import { updateSubtitlesTracksList } from 'src/actions/subtitles';
 import { IChaptersTrack } from 'src/reducers/chapters';
 import { IAianaState } from 'src/reducers/index';
 import { ISlidesTrack } from 'src/reducers/slides';
-import {
-  IRawSubtitlesTrack,
-  // isDefaultTrack,
-  isDisplayableTrack
-  // rawSubtitlesTrack
-} from 'src/utils/media';
+import { IRawSubtitlesTrack, isDisplayableTrack } from 'src/utils/media';
 import styled from 'src/utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
 import SlidesTrack from '../slides/SlidesTrack';
@@ -165,35 +160,6 @@ class VideoPlayer extends React.Component<IProps> {
   private progressHandler = () => {
     this.props.updateBufferedRanges(this.mediaRef.current!.buffered);
   };
-
-  /**
-   * Handles any changes made to the text tracks (selected, etc).
-   */
-  // private populateTextTracks = () => {
-  //   const { subtitlesSources } = this.props;
-
-  //   if (!subtitlesSources) {
-  //     return;
-  //   }
-
-  //   const videoTracks = [
-  //     ...this.mediaRef.current!.textTracks[Symbol.iterator]()
-  //   ];
-  //   const defaultTrack = subtitlesSources.find(isDefaultTrack);
-
-  //   const rawDisplayableTracks = videoTracks
-  //     .filter(isDisplayableTrack)
-  //     .map((track) => {
-  //       return {
-  //         ...rawSubtitlesTrack(track),
-  //         active: track.label === (defaultTrack ? defaultTrack.label : false)
-  //       };
-  //     });
-
-  //   if (rawDisplayableTracks.length) {
-  //     this.props.updateSubtitlesTracksList(rawDisplayableTracks);
-  //   }
-  // };
 
   private clickHandler = () => {
     const media = this.mediaRef.current!;
