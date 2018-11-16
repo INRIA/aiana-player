@@ -9,9 +9,7 @@ const StyledTimeRanges = styled.div`
     width: 100%;
     height: 100%;
 
-    rect {
-      fill: ${(props) => hexToHsla(props.theme.fg, 0.7)};
-    }
+    fill: ${(props) => hexToHsla(props.theme.fg, 0.7)};
   }
 `;
 

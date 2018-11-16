@@ -17,18 +17,13 @@ const TimeRangesBar: React.SFC<IStateProps> = ({
 }) => (
   <StyledTimeRanges className="aip-buffered">
     <svg
-      width="1em"
+      width="100%"
       height="1em"
-      viewBox={`0 0 ${floor(duration)} 1`}
+      viewBox={`0 0 ${floor(duration)} 10`}
       preserveAspectRatio="none"
     >
       {bufferedRanges.map(({ end, start }, idx) => (
-        <rect
-          key={idx}
-          width={floor(end - start)}
-          height="1"
-          x={floor(start)}
-        />
+        <path key={idx} d={`M${start} 0 H${end} V10 H${start} z`} />
       ))}
     </svg>
   </StyledTimeRanges>
