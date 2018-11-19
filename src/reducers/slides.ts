@@ -19,8 +19,13 @@ const initialState: ISlidesState = {
   sourceTracks: [
     {
       label: 'Presentation Slides',
-      src: 'http://localhost:3000/dev/slides.en.vtt',
+      src: 'http://localhost:3000/dev/en/slides.vtt',
       srcLang: 'en'
+    },
+    {
+      label: 'Slides de Présentation',
+      src: 'http://localhost:3000/dev/fr/slides.vtt',
+      srcLang: 'fr'
     }
   ]
 };

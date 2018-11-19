@@ -83,7 +83,13 @@ const initialState: IPlayerState = {
     {
       kind: 'metadata',
       label: 'Additional info',
-      src: 'http://localhost:3000/dev/additional.en.vtt',
+      src: 'http://localhost:3000/dev/en/additional-infos.vtt',
+      srcLang: 'en'
+    },
+    {
+      kind: 'metadata',
+      label: 'Informations Complémentaires',
+      src: 'http://localhost:3000/dev/fr/additional-infos.vtt',
       srcLang: 'en'
     }
   ],

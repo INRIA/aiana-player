@@ -32,13 +32,13 @@ export interface ISubtitlesState {
 const initialState = {
   sources: [
     {
-      label: 'Default subtitles (English)',
-      src: 'http://localhost:3000/dev/subtitles.vtt',
+      label: 'Subtitles',
+      src: 'http://localhost:3000/dev/en/subtitles.vtt',
       srcLang: 'en'
     },
     {
       label: 'Sous-titres',
-      src: 'http://localhost:3000/dev/subtitles.1.vtt',
+      src: 'http://localhost:3000/dev/fr/subtitles.vtt',
       srcLang: 'fr'
     }
   ],

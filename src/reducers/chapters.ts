@@ -20,12 +20,12 @@ const initialState: IChaptersState = {
   sources: [
     {
       label: 'Chapitres',
-      src: 'http://localhost:3000/dev/chapters.fr.vtt',
+      src: 'http://localhost:3000/dev/fr/chapters.vtt',
       srcLang: 'fr'
     },
     {
       label: 'Chapters',
-      src: 'http://localhost:3000/dev/chapters.en.vtt',
+      src: 'http://localhost:3000/dev/en/chapters.vtt',
       srcLang: 'en'
     }
   ]
