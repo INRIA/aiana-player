@@ -24,9 +24,9 @@ import { ISource } from 'src/components/video/VideoPlayer';
 import { ExtendedHTMLElement } from 'src/types';
 import { BufferedRanges, IRawMetadataTrack } from 'src/utils/media';
 import {
-  DEFAULT_AUTOLOAD,
   DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
+  DEFAULT_PRELOAD,
   DEFAULT_VOLUME
 } from '../constants';
 
@@ -104,7 +104,7 @@ const initialState: IPlayerState = {
   metadataTracks: [],
   nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
-  preload: DEFAULT_AUTOLOAD,
+  preload: DEFAULT_PRELOAD,
   seekingTime: 0,
   sources: [
     {
