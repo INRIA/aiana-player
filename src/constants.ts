@@ -10,7 +10,7 @@ export const ARROW_LEFT_KEY = 'ArrowLeft';
 export const HOME_KEY = 'Home';
 export const END_KEY = 'End';
 export const PAGE_UP_KEY = 'PageUp';
-export const PAGE_DOWN_KEY = 'PageDOWN';
+export const PAGE_DOWN_KEY = 'PageDown';
 
 export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1;
