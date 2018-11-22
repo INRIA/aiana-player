@@ -8,7 +8,6 @@ import { IRawSubtitlesTrack, isDisplayableTrack } from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
 
 interface IStateProps {
-  nativeControls: boolean;
   subtitlesTracks: IRawSubtitlesTrack[];
   mediaElement?: HTMLMediaElement;
 }
@@ -57,7 +56,6 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
 
 const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement,
-  nativeControls: state.player.nativeControls,
   subtitlesTracks: state.subtitles.subtitlesTracks
 });
 

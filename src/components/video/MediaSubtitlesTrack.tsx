@@ -22,7 +22,6 @@ export interface ITrack {
 }
 
 interface IStateProps {
-  nativeControls: boolean;
   subtitlesTracks: IRawSubtitlesTrack[];
 }
 
@@ -66,7 +65,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   public componentDidMount() {
-    this.toggleNativeTextTrack(this.props.nativeControls);
+    this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
 
     this.trackRef.current!.addEventListener('load', this.loadHandler);
     this.trackRef.current!.track.addEventListener(
@@ -84,12 +83,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   public componentDidUpdate(prevProps: ITrackProps) {
-    const { nativeControls, subtitlesTracks } = prevProps;
-
-    if (nativeControls) {
-      this.toggleNativeTextTrack(this.props.nativeControls);
-    }
-
+    const { subtitlesTracks } = prevProps;
     const prevActiveTrack = subtitlesTracks.find(isActiveTrack);
     const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
 
@@ -129,16 +123,9 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     const currentText = currentCue ? currentCue.text : undefined;
     this.props.updateSubtitleText(currentText);
   };
-
-  private toggleNativeTextTrack(nativeControls: boolean) {
-    if (!nativeControls) {
-      this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
-    }
-  }
 }
 
 const mapStateToProps = (state: IAianaState) => ({
-  nativeControls: state.player.nativeControls,
   subtitlesTracks: state.subtitles.subtitlesTracks
 });
 

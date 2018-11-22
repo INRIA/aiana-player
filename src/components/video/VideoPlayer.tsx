@@ -68,7 +68,6 @@ interface IStateProps {
   isMuted: boolean;
   isSeeking: boolean;
   language: string;
-  nativeControls: boolean;
   preload: string;
   slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
@@ -105,7 +104,6 @@ class VideoPlayer extends React.Component<IProps> {
       additionalInformationsTracks,
       autoPlay,
       chaptersSources,
-      nativeControls,
       pauseHandler,
       playHandler,
       preload,
@@ -118,7 +116,6 @@ class VideoPlayer extends React.Component<IProps> {
       <StyledVideo className="aip-video">
         <video
           autoPlay={autoPlay}
-          controls={nativeControls}
           ref={this.mediaRef}
           onClick={this.clickHandler}
           onLoadedMetadata={this.loadedMetadataHandler}
@@ -131,7 +128,7 @@ class VideoPlayer extends React.Component<IProps> {
           onVolumeChange={this.volumeChangeHandler}
           playsInline={true}
           preload={preload}
-          tabIndex={nativeControls ? 0 : -1}
+          tabIndex={-1}
         >
           {sources.map((source, idx) => (
             <source key={idx} {...source} />
@@ -214,7 +211,6 @@ const mapStateToProps = (state: IAianaState) => ({
   isMuted: state.player.isMuted,
   isSeeking: state.player.isSeeking,
   language: state.preferences.language,
-  nativeControls: state.player.nativeControls,
   preload: state.player.preload,
   slidesTracksSources: state.slides.sourceTracks,
   sources: state.player.sources,

@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers/index';
 import { hexToHsla } from 'src/utils/colors';
 import styled from 'src/utils/styled-components';
 import AddBookmarkButton from '../buttons/add-bookmark/AddBookmarkButton';
@@ -26,35 +24,21 @@ const StyledControls = styled.div`
   margin-top: 0.3125em;
 `;
 
-interface IStateProps {
-  nativeControls: boolean;
-}
+const VideoPlayerControls: React.SFC = () => (
+  <StyledControlsWrapper>
+    <SeekBarSlider />
+    <StyledControls className="aip-controls">
+      <div className="aip-controls-left">
+        <PlayButton />
+        <VolumeControl />
+        <TimeStatus />
+        <AddBookmarkButton />
+      </div>
+      <div className="aip-controls-right">
+        <FullscreenButton />
+      </div>
+    </StyledControls>
+  </StyledControlsWrapper>
+);
 
-const VideoPlayerControls: React.SFC<IStateProps> = ({ nativeControls }) => {
-  if (nativeControls) {
-    return null;
-  }
-
-  return (
-    <StyledControlsWrapper>
-      <SeekBarSlider />
-      <StyledControls className="aip-controls">
-        <div className="aip-controls-left">
-          <PlayButton />
-          <VolumeControl />
-          <TimeStatus />
-          <AddBookmarkButton />
-        </div>
-        <div className="aip-controls-right">
-          <FullscreenButton />
-        </div>
-      </StyledControls>
-    </StyledControlsWrapper>
-  );
-};
-
-const mapStateToProps = (state: IAianaState) => ({
-  nativeControls: state.player.nativeControls
-});
-
-export default connect(mapStateToProps)(VideoPlayerControls);
+export default VideoPlayerControls;
