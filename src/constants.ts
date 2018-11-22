@@ -16,7 +16,6 @@ export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1;
 
 export const DEFAULT_LANG = 'en';
-export const DEFAULT_NATIVE_CONTROLS = false;
 export const DEFAULT_PLAY_RATE = 1;
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_SEEK_STEP = 5;

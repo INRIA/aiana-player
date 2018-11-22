@@ -16,15 +16,13 @@ import {
   PLAYER_ELEMENT_MOUNTED,
   SET_ADDITIONAL_INFOS_TEXT,
   SET_BUFFERED_RANGES,
-  TOGGLE_FULLSCREEN,
-  TOGGLE_NATIVE_CONTROLS
+  TOGGLE_FULLSCREEN
 } from 'src/actions/player';
 import { ITrack } from 'src/components/video/MediaSubtitlesTrack';
 import { ISource } from 'src/components/video/VideoPlayer';
 import { ExtendedHTMLElement } from 'src/types';
 import { BufferedRanges, IRawMetadataTrack } from 'src/utils/media';
 import {
-  DEFAULT_NATIVE_CONTROLS,
   DEFAULT_PLAY_RATE,
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME
@@ -52,12 +50,6 @@ export interface IPlayerState {
   mediaElement?: HTMLMediaElement;
 
   metadataTracks: IRawMetadataTrack[];
-
-  /**
-   * Determines if the video HTML element should use its own controls or those
-   * provided by Aiana
-   */
-  nativeControls: boolean;
 
   /**
    * The current rate of speed for the media resource to play. This speed is
@@ -102,7 +94,6 @@ const initialState: IPlayerState = {
   isPlaying: false,
   isSeeking: false,
   metadataTracks: [],
-  nativeControls: DEFAULT_NATIVE_CONTROLS,
   playbackRate: DEFAULT_PLAY_RATE,
   preload: DEFAULT_PRELOAD,
   seekingTime: 0,
@@ -121,11 +112,6 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       return {
         ...state,
         bufferedRanges: action.bufferedRanges
-      };
-    case TOGGLE_NATIVE_CONTROLS:
-      return {
-        ...state,
-        nativeControls: action.nativeControls
       };
     case TOGGLE_FULLSCREEN:
       return {
