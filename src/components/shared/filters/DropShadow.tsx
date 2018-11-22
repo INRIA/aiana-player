@@ -13,7 +13,7 @@ const DropShadow: React.SFC<IProps> = ({
   deviation = 1,
   dx = 1
 }) => (
-  <filter xmlns="http://www.w3.org/2000/svg" id={id} height={height}>
+  <filter id={id} height={height}>
     <feGaussianBlur in="SourceAlpha" stdDeviation={deviation} />
     <feOffset dx={dx} dy={dx} result="offsetblur" />
     <feMerge>
