@@ -50,7 +50,7 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
         {subtitlesTracks.filter(isDisplayableTrack).map((track) => (
           <option key={track.language} value={track.language}>
-            {track.label}
+            {t(`languages.${track.language}`)}
           </option>
         ))}
       </select>
