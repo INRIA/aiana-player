@@ -1,5 +1,8 @@
 import { Reducer } from 'redux';
-import { ADD_CHAPTER_TRACK } from 'src/actions/chapters';
+import {
+  ADD_CHAPTER_TRACK,
+  UPDATE_ACTIVE_CHAPTERS_TRACK
+} from 'src/actions/chapters';
 import { DEFAULT_LANG } from 'src/constants';
 import { IRawChaptersTrack } from 'src/utils/media';
 
@@ -10,8 +13,8 @@ export interface IChaptersTrack {
 }
 
 export interface IChaptersState {
-  language: string;
   chaptersTracks: IRawChaptersTrack[];
+  language: string;
   menuEnabled: boolean;
   readonly sources: IChaptersTrack[];
 }
@@ -47,6 +50,11 @@ const chapters: Reducer = (state: IChaptersState = initialState, action) => {
         chaptersTracks
       };
     }
+    case UPDATE_ACTIVE_CHAPTERS_TRACK:
+      return {
+        ...state,
+        language: action.language
+      };
     default:
       return state;
   }

@@ -15,6 +15,7 @@ export default {
   'controls.volume.valuetext': '{{ volumePct }}% volume',
   'languages.en': 'English',
   'languages.fr': 'Français',
+  'preferences.chapterstrack.label': 'Chapters language',
   'preferences.language.label': 'Language',
   'preferences.playbackrate.label': 'Speed',
   'preferences.subtitlestrack.label': 'Subtitles',

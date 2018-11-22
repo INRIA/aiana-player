@@ -13,6 +13,7 @@ export default {
   'controls.unmute': 'Activer le son',
   'controls.volume.label': 'Volume sonore',
   'controls.volume.valuetext': 'Volume à {{ volumePct }}%',
+  'preferences.chapterstrack.label': 'Langue des chapitres',
   'preferences.language.label': 'Langue',
   'preferences.playbackrate.label': 'Vitesse',
   'preferences.subtitlestrack.label': 'Sous-titres',

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import styled from 'src/utils/styled-components';
+import ChaptersTrackSelector from './ChaptersTrackSelector';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
@@ -57,6 +58,9 @@ const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
       </li>
       <li className="aip-subtitles-track">
         <SubtitlesTrackSelector />
+      </li>
+      <li className="aip-chapters-track">
+        <ChaptersTrackSelector />
       </li>
     </ul>
   </StyledPanel>
