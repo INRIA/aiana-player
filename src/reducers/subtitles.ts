@@ -64,6 +64,7 @@ const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
         subtitlesTracks: action.subtitlesTracks
       };
     case UPDATE_ACTIVE_SUBTITLES_TRACK: {
+      // TODO: put this in a separate function
       const subtitlesTracks = state.subtitlesTracks.map((track) => {
         if (track.language === action.subtitlesTrackLanguage) {
           return { ...track, active: true };
