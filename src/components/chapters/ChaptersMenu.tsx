@@ -40,7 +40,7 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
 
 const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.chapters.chaptersTracks,
-  language: state.preferences.language
+  language: state.chapters.language
 });
 
 export default connect(mapStateToProps)(ChaptersMenu);
