@@ -16,7 +16,6 @@ export default {
   'languages.en': 'English',
   'languages.fr': 'Français',
   'preferences.language.label': 'Language',
-  'preferences.native_controls': 'Player native controls',
   'preferences.playbackrate.label': 'Speed',
   'preferences.subtitlestrack.label': 'Subtitles track',
   'preferences.subtitlestrack.no_subtitle': 'No subtitles',

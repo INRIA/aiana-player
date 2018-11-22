@@ -14,7 +14,6 @@ export default {
   'controls.volume.label': 'Volume sonore',
   'controls.volume.valuetext': 'Volume à {{ volumePct }}%',
   'preferences.language.label': 'Langue',
-  'preferences.native_controls': 'Contrôles natifs du lecteur',
   'preferences.playbackrate.label': 'Vitesse',
   'preferences.subtitlestrack.label': 'Piste de sous-titres',
   'preferences.subtitlestrack.no_subtitle': 'Aucun sous-titre',
