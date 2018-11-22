@@ -50,7 +50,7 @@ const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
       >
         {chaptersTracks.map((track) => (
           <option key={track.language} value={track.language}>
-            {track.label}
+            {t(`languages.${track.language}`)}
           </option>
         ))}
       </select>

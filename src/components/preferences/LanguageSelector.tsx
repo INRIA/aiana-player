@@ -35,7 +35,7 @@ class LanguageSelector extends React.Component<ILanguageSelector> {
         >
           {availableLanguages.map((language) => (
             <option key={language} value={language}>
-              {language}
+              {t(`languages.${language}`)}
             </option>
           ))}
         </select>

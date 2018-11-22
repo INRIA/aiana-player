@@ -35,7 +35,7 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
         >
           {availablePlaybackRates.map((playbackRate) => (
             <option key={playbackRate} value={playbackRate}>
-              {playbackRate}
+              ×{playbackRate}
             </option>
           ))}
         </select>
