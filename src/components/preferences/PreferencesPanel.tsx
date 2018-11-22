@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { InjectedTranslateProps, translate } from 'react-i18next';
 import styled from 'src/utils/styled-components';
-import NativeControlsSwitch from '../buttons/NativeControlsSwitch';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
@@ -52,9 +51,6 @@ const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
       </li>
       <li className="aip-playback-rate">
         <PlaybackRateSelector />
-      </li>
-      <li className="aip-native-controls">
-        <NativeControlsSwitch />
       </li>
       <li className="aip-theme">
         <ThemeSelector />
