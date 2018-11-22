@@ -7,7 +7,6 @@ import {
 } from '../utils/fullscreen';
 import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
 
-export const TOGGLE_NATIVE_CONTROLS = 'aiana/TOGGLE_NATIVE_CONTROLS';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
 export const PLAYER_ELEMENT_MOUNTED = 'aiana/PLAYER_ELEMENT_MOUNTED';
@@ -84,13 +83,6 @@ export function updateCurrentTime(currentTime: number): AnyAction {
   return {
     currentTime,
     type: MEDIA_UPDATE_TIME
-  };
-}
-
-export function toggleNativeControls(nativeControls: boolean): AnyAction {
-  return {
-    nativeControls,
-    type: TOGGLE_NATIVE_CONTROLS
   };
 }
 
