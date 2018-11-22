@@ -4,6 +4,7 @@ import styled from 'src/utils/styled-components';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
+import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
 import ThemeSelector from './ThemeSelector';
 
@@ -61,6 +62,9 @@ const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
       </li>
       <li className="aip-chapters-track">
         <ChaptersTrackSelector />
+      </li>
+      <li className="aip-slides-track">
+        <SlidesTrackSelector />
       </li>
     </ul>
   </StyledPanel>

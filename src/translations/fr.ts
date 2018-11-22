@@ -16,6 +16,7 @@ export default {
   'preferences.chapterstrack.label': 'Langue des chapitres',
   'preferences.language.label': 'Langue',
   'preferences.playbackrate.label': 'Vitesse',
+  'preferences.slidestrack.label': 'Langue des diapositives',
   'preferences.subtitlestrack.label': 'Sous-titres',
   'preferences.subtitlestrack.no_subtitle': 'Aucun sous-titre',
   'preferences.theme-selector.label': 'Thème',
