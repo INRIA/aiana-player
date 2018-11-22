@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { updateActiveSubtitlesTrack } from 'src/actions/subtitles';
 import { IAianaState } from 'src/reducers/index';
 import { CDispatch } from 'src/store';
-import { IRawSubtitlesTrack, isDisplayableTrack } from 'src/utils/media';
+import {
+  IRawSubtitlesTrack,
+  isActiveTrack,
+  isDisplayableTrack
+} from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
 
 interface IStateProps {
@@ -31,8 +35,8 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
     return null;
   }
 
-  const selectedTrack = subtitlesTracks.find((track) => track.active);
-  const selectedValue = selectedTrack ? selectedTrack.label : '';
+  const selectedTrack = subtitlesTracks.find(isActiveTrack);
+  const selectedValue = selectedTrack ? selectedTrack.language : '';
   const id = uuid();
 
   return (
@@ -45,7 +49,7 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
       >
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
         {subtitlesTracks.filter(isDisplayableTrack).map((track) => (
-          <option key={track.label} value={track.label}>
+          <option key={track.language} value={track.language}>
             {track.label}
           </option>
         ))}

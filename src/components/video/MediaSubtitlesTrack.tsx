@@ -83,8 +83,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   public componentDidUpdate(prevProps: ITrackProps) {
-    const { subtitlesTracks } = prevProps;
-    const prevActiveTrack = subtitlesTracks.find(isActiveTrack);
+    const prevActiveTrack = prevProps.subtitlesTracks.find(isActiveTrack);
     const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
 
     // this track is active, but wasn't so at previous state.

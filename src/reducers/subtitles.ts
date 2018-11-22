@@ -8,7 +8,7 @@ import {
 import { IRawSubtitlesTrack } from 'src/utils/media';
 
 export interface ISubtitlesTrack {
-  label: string;
+  label?: string;
   src: string;
   srcLang: string;
 }
@@ -65,7 +65,7 @@ const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
       };
     case UPDATE_ACTIVE_SUBTITLES_TRACK: {
       const subtitlesTracks = state.subtitlesTracks.map((track) => {
-        if (track.label === action.subtitlesTrackLabel) {
+        if (track.language === action.subtitlesTrackLanguage) {
           return { ...track, active: true };
         }
         if (track.active === true) {

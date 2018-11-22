@@ -11,7 +11,7 @@ export interface IRawSubtitlesTrack {
   readonly activeCues: TextTrackCueList;
   readonly cues: TextTrackCueList;
   readonly kind: string;
-  readonly label: string;
+  readonly label?: string;
   readonly language: string;
   mode: TextTrackMode | number;
 }

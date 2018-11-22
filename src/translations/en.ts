@@ -17,7 +17,7 @@ export default {
   'languages.fr': 'Français',
   'preferences.language.label': 'Language',
   'preferences.playbackrate.label': 'Speed',
-  'preferences.subtitlestrack.label': 'Subtitles track',
+  'preferences.subtitlestrack.label': 'Subtitles',
   'preferences.subtitlestrack.no_subtitle': 'No subtitles',
   'preferences.theme-selector.label': 'Theme',
   'preferences.title': 'Preferences',

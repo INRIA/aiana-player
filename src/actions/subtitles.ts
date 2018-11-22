@@ -17,12 +17,12 @@ export function setSubtitlesText(text?: string): AnyAction {
 }
 
 export function updateActiveSubtitlesTrack(
-  subtitlesTrackLabel: string
+  subtitlesTrackLanguage: string
 ): ThunkResult<void> {
   return (dispatch) => {
-    dispatch({ subtitlesTrackLabel, type: UPDATE_ACTIVE_SUBTITLES_TRACK });
+    dispatch({ subtitlesTrackLanguage, type: UPDATE_ACTIVE_SUBTITLES_TRACK });
 
-    if (subtitlesTrackLabel === '') {
+    if (subtitlesTrackLanguage === '') {
       dispatch(setSubtitlesText(undefined));
     }
   };
