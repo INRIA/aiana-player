@@ -1,5 +1,10 @@
 import { Reducer } from 'redux';
-import { ADD_SLIDES_TRACK, SET_SLIDES_TEXT } from 'src/actions/slides';
+import {
+  ADD_SLIDES_TRACK,
+  SET_SLIDES_TEXT,
+  UPDATE_ACTIVE_SLIDES_TRACK
+} from 'src/actions/slides';
+import { DEFAULT_LANG } from 'src/constants';
 import { IRawSlidesTrack } from 'src/utils/media';
 
 export interface ISlidesTrack {
@@ -10,11 +15,13 @@ export interface ISlidesTrack {
 
 export interface ISlidesState {
   currentSlideText?: string;
+  language: string;
   slidesTracks: IRawSlidesTrack[];
   readonly sourceTracks: ISlidesTrack[];
 }
 
 const initialState: ISlidesState = {
+  language: DEFAULT_LANG,
   slidesTracks: [],
   sourceTracks: [
     {
@@ -43,6 +50,11 @@ const slides: Reducer = (state = initialState, action) => {
       return {
         ...state,
         currentSlideText: action.text
+      };
+    case UPDATE_ACTIVE_SLIDES_TRACK:
+      return {
+        ...state,
+        language: action.language
       };
     default:
       return state;

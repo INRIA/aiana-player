@@ -6,6 +6,7 @@ import {
   TRACK_KIND_METADATA,
   TRACK_MODE_HIDDEN
 } from 'src/constants';
+import { IAianaState } from 'src/reducers';
 import { IRawSlidesTrack, rawSlidesTrack } from 'src/utils/media';
 
 interface IProps {
@@ -14,14 +15,19 @@ interface IProps {
   srcLang?: string;
 }
 
+interface IStateProps {
+  language: string;
+  slidesTracks: IRawSlidesTrack[];
+}
+
 interface IDispatchProps {
   addSlidesTrack(track: IRawSlidesTrack): void;
   setSlidesText(text?: string): void;
 }
 
-export interface ISlideTrack extends IProps, IDispatchProps {}
+interface ISlideTrackProps extends IProps, IStateProps, IDispatchProps {}
 
-class SlidesTrack extends React.Component<ISlideTrack> {
+class SlidesTrack extends React.Component<ISlideTrackProps> {
   public static defaultProps: IProps = {
     srcLang: DEFAULT_LANG
   };
@@ -72,6 +78,26 @@ class SlidesTrack extends React.Component<ISlideTrack> {
     );
   }
 
+  public componentDidUpdate(prevProps: ISlideTrackProps) {
+    const prevActiveTrack = prevProps.slidesTracks.find((track) => {
+      return track.language === prevProps.language;
+    });
+    const activeTrack = this.props.slidesTracks.find((track) => {
+      return track.language === this.props.language;
+    });
+
+    // this track is active, but wasn't so at previous state.
+    if (
+      this.props.srcLang === this.props.language &&
+      prevActiveTrack &&
+      prevActiveTrack.label !== activeTrack!.label
+    ) {
+      const currentCue = this.trackRef.current!.track.activeCues[0];
+      const currentText = currentCue ? currentCue.text : undefined;
+      this.props.setSlidesText(currentText);
+    }
+  }
+
   private loadHandler = () => {
     if (!this.trackRef.current) {
       return;
@@ -88,11 +114,18 @@ class SlidesTrack extends React.Component<ISlideTrack> {
       return;
     }
 
-    const currentCue = this.trackRef.current.track.activeCues[0];
-    const currentText = currentCue ? currentCue.text : undefined;
-    this.props.setSlidesText(currentText);
+    if (this.props.srcLang === this.props.language) {
+      const currentCue = this.trackRef.current.track.activeCues[0];
+      const currentText = currentCue ? currentCue.text : undefined;
+      this.props.setSlidesText(currentText);
+    }
   };
 }
+
+const mapStateToProps = (state: IAianaState) => ({
+  language: state.slides.language,
+  slidesTracks: state.slides.slidesTracks
+});
 
 const mapDispatchToProps = {
   addSlidesTrack,
@@ -100,6 +133,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SlidesTrack);
