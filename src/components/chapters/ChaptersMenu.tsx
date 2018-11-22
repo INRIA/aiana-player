@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { DEFAULT_LANG } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import { IRawChaptersTrack } from 'src/utils/media';
 import { uuid } from 'src/utils/ui';
@@ -17,10 +16,9 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
   chaptersTracks,
   language
 }) => {
-  // TODO: refactor with ChaptersBar
-  const activeChaptersTrack =
-    chaptersTracks.find((track) => track.language === language) ||
-    chaptersTracks.find((track) => track.language === DEFAULT_LANG);
+  const activeChaptersTrack = chaptersTracks.find(
+    (track) => track.language === language
+  );
 
   if (!activeChaptersTrack) {
     return null;

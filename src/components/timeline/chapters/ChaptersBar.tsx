@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import AssistiveText from 'src/components/a11y/AssistiveText';
 import { IMediaChapters } from 'src/components/chapters/ChaptersMenu';
-import { DEFAULT_LANG } from 'src/constants';
 import { IAianaState } from 'src/reducers';
 import { getRandomColor } from 'src/utils/colors';
 import { unitToPercent } from 'src/utils/math';
@@ -21,9 +20,9 @@ const ChaptersBar: React.SFC<IStateProps> = ({
   language
 }) => {
   // TODO: refactor with ChaptersMenu
-  const activeChaptersTrack =
-    chaptersTracks.find((track) => track.language === language) ||
-    chaptersTracks.find((track) => track.language === DEFAULT_LANG);
+  const activeChaptersTrack = chaptersTracks.find(
+    (track) => track.language === language
+  );
 
   if (!activeChaptersTrack) {
     return null;
@@ -52,7 +51,7 @@ const ChaptersBar: React.SFC<IStateProps> = ({
 const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.chapters.chaptersTracks,
   duration: state.player.duration,
-  language: state.preferences.language
+  language: state.chapters.language
 });
 
 export default connect(mapStateToProps)(ChaptersBar);
