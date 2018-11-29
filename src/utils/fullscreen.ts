@@ -51,3 +51,37 @@ export function isFullscreenEnabled(): boolean {
     doc.msFullscreenEnabled
   );
 }
+
+const fullscreenChangeEvents = [
+  'fullscreenchange',
+  'webkitfullscreenchange',
+  'mozfullscreenchange',
+  'MSFullscreenChange'
+];
+
+export function addFullscreenChangeEventListener(
+  eventHandler: EventListenerOrEventListenerObject
+) {
+  handleFullscreenChangeEventListener(document.addEventListener, eventHandler);
+}
+
+export function removeFullscreenChangeEventListener(
+  eventHandler: EventListenerOrEventListenerObject
+) {
+  handleFullscreenChangeEventListener(
+    document.removeEventListener,
+    eventHandler
+  );
+}
+
+function handleFullscreenChangeEventListener(
+  callback: (
+    type: string,
+    listener: EventListenerOrEventListenerObject
+  ) => void,
+  eventHandler: EventListenerOrEventListenerObject
+) {
+  fullscreenChangeEvents.forEach((eventName) => {
+    callback(eventName, eventHandler);
+  });
+}

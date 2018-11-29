@@ -8,7 +8,11 @@ import {
 import SvgFilters from 'src/components/shared/filters';
 import { IAianaState } from 'src/reducers/index';
 import themes from 'src/themes';
-import { isDocumentFullscreen } from 'src/utils/fullscreen';
+import {
+  addFullscreenChangeEventListener,
+  isDocumentFullscreen,
+  removeFullscreenChangeEventListener
+} from 'src/utils/fullscreen';
 import { injectGlobalStyles } from 'src/utils/global-styles';
 import { ThemeProvider } from 'src/utils/styled-components';
 import Player from '../Player';
@@ -41,11 +45,11 @@ class Aiana extends React.Component<IAiana> {
       this.props.playerElementMounted(this.fullscreenRef.current);
     }
 
-    this.bindDocumentFullscreenEvents();
+    addFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
   public componentWillUnmount() {
-    this.unbindDocumentFullscreenEvents();
+    removeFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
   public render() {
@@ -63,23 +67,6 @@ class Aiana extends React.Component<IAiana> {
       </IntlWrapper>
     );
   }
-
-  private bindDocumentFullscreenEvents = () => {
-    document.addEventListener('fullscreenchange', this.fullscreenHandler);
-    document.addEventListener('webkitfullscreenchange', this.fullscreenHandler);
-    document.addEventListener('mozfullscreenchange', this.fullscreenHandler);
-    document.addEventListener('MSFullscreenChange', this.fullscreenHandler);
-  };
-
-  private unbindDocumentFullscreenEvents = () => {
-    document.removeEventListener('fullscreenchange', this.fullscreenHandler);
-    document.removeEventListener(
-      'webkitfullscreenchange',
-      this.fullscreenHandler
-    );
-    document.removeEventListener('mozfullscreenchange', this.fullscreenHandler);
-    document.removeEventListener('MSFullscreenChange', this.fullscreenHandler);
-  };
 
   private fullscreenHandler = () => {
     this.props.handleFullscreenChange(isDocumentFullscreen());
