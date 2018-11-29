@@ -20,10 +20,13 @@ export function updateActiveSubtitlesTrack(
   subtitlesTrackLanguage: string
 ): ThunkResult<void> {
   return (dispatch) => {
-    dispatch({ subtitlesTrackLanguage, type: UPDATE_ACTIVE_SUBTITLES_TRACK });
+    dispatch({
+      subtitlesTrackLanguage,
+      type: UPDATE_ACTIVE_SUBTITLES_TRACK
+    });
 
     if (subtitlesTrackLanguage === '') {
-      dispatch(setSubtitlesText(undefined));
+      dispatch(setSubtitlesText());
     }
   };
 }
