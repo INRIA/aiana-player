@@ -4,8 +4,8 @@ import {
   changeVolume,
   mediaElementMounted,
   mediaElementUnounted,
-  pauseMedia,
-  playMedia,
+  requestMediaPause,
+  requestMediaPlay,
   startSeeking,
   stopSeeking,
   toggleMute,
@@ -49,8 +49,8 @@ interface IDispatchProps {
   changeVolume: (volume: number) => void;
   mediaElementMounted: (media: HTMLMediaElement) => void;
   mediaElementUnounted: () => void;
-  pauseHandler: () => void;
-  playHandler: () => void;
+  requestMediaPause: () => any;
+  requestMediaPlay: () => any;
   startSeeking: () => void;
   stopSeeking: () => void;
   toggleMute: (muted: boolean) => void;
@@ -104,8 +104,6 @@ class VideoPlayer extends React.Component<IProps> {
       additionalInformationsTracks,
       autoPlay,
       chaptersSources,
-      pauseHandler,
-      playHandler,
       preload,
       slidesTracksSources,
       sources,
@@ -119,8 +117,6 @@ class VideoPlayer extends React.Component<IProps> {
           ref={this.mediaRef}
           onClick={this.clickHandler}
           onLoadedMetadata={this.loadedMetadataHandler}
-          onPause={pauseHandler}
-          onPlay={playHandler}
           onProgress={this.progressHandler}
           onSeeked={this.seekedHandler}
           onSeeking={this.seekingHandler}
@@ -160,7 +156,11 @@ class VideoPlayer extends React.Component<IProps> {
 
   private clickHandler = () => {
     const media = this.mediaRef.current!;
-    media.paused ? media.play() : media.pause();
+    if (media.paused) {
+      this.props.requestMediaPlay();
+    } else {
+      this.props.requestMediaPause();
+    }
   };
 
   private seekedHandler = () => {
@@ -223,8 +223,8 @@ const mapDispatchToProps = {
   changeVolume,
   mediaElementMounted,
   mediaElementUnounted,
-  pauseHandler: pauseMedia,
-  playHandler: playMedia,
+  requestMediaPause,
+  requestMediaPlay,
   startSeeking,
   stopSeeking,
   toggleMute,

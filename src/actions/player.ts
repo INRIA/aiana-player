@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ExtendedHTMLElement } from 'src/types';
+import { ExtendedHTMLElement, ThunkResult } from 'src/types';
 import {
   enterFullscreen,
   exitFullscreen,
@@ -93,19 +93,23 @@ export function handleFullscreenChange(isFullscreen: boolean): AnyAction {
   };
 }
 
-export function handleToggleFullscreen(
-  rootElement: ExtendedHTMLElement
-): AnyAction {
-  const shouldExitFullscreen = isDocumentFullscreen();
-
-  if (shouldExitFullscreen) {
-    exitFullscreen();
-  } else {
-    enterFullscreen(rootElement);
-  }
-
+function requestToggleFullscreen(): AnyAction {
   return {
     type: TOGGLE_FULLSCREEN_REQUESTED
+  };
+}
+
+export function handleToggleFullscreen(
+  rootElement: ExtendedHTMLElement
+): ThunkResult<void> {
+  return (dispatch) => {
+    dispatch(requestToggleFullscreen());
+
+    if (isDocumentFullscreen()) {
+      exitFullscreen();
+    } else {
+      enterFullscreen(rootElement);
+    }
   };
 }
 
@@ -129,30 +133,32 @@ export function mediaElementUnounted(): AnyAction {
   };
 }
 
-export function requestMediaPlay(media: HTMLMediaElement): AnyAction {
-  media.play();
+export function requestMediaPlay(media: HTMLMediaElement): ThunkResult<void> {
+  return (dispatch) => {
+    dispatch({ type: MEDIA_REQUEST_PLAY });
 
-  return {
-    type: MEDIA_REQUEST_PLAY
+    media.play().then(() => dispatch(playMedia()));
   };
 }
 
-export function playMedia(): AnyAction {
+function playMedia(): AnyAction {
   return {
     isPlaying: true,
     type: MEDIA_PLAY
   };
 }
 
-export function requestMediaPause(media: HTMLMediaElement): AnyAction {
-  media.pause();
+export function requestMediaPause(media: HTMLMediaElement): ThunkResult<void> {
+  return (dispatch) => {
+    dispatch({ type: MEDIA_REQUEST_PAUSE });
 
-  return {
-    type: MEDIA_REQUEST_PAUSE
+    media.pause();
+
+    dispatch(pauseMedia());
   };
 }
 
-export function pauseMedia(): AnyAction {
+function pauseMedia(): AnyAction {
   return {
     isPlaying: false,
     type: MEDIA_PAUSE
