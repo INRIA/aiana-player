@@ -49,8 +49,8 @@ interface IDispatchProps {
   changeVolume: (volume: number) => void;
   mediaElementMounted: (media: HTMLMediaElement) => void;
   mediaElementUnounted: () => void;
-  requestMediaPause: () => any;
-  requestMediaPlay: () => any;
+  requestMediaPause: (media: HTMLMediaElement) => any;
+  requestMediaPlay: (media: HTMLMediaElement) => any;
   startSeeking: () => void;
   stopSeeking: () => void;
   toggleMute: (muted: boolean) => void;
@@ -79,11 +79,10 @@ interface IStateProps {
 interface IProps extends IStateProps, IDispatchProps {}
 
 class VideoPlayer extends React.Component<IProps> {
-  private mediaRef = React.createRef<HTMLVideoElement>();
+  private media = React.createRef<HTMLVideoElement>();
 
   public componentDidMount() {
-    const { volume, isMuted } = this.props;
-    const media = this.mediaRef.current;
+    const media = this.media.current;
 
     if (!media) {
       return;
@@ -91,8 +90,8 @@ class VideoPlayer extends React.Component<IProps> {
 
     this.props.mediaElementMounted(media);
 
-    media.volume = volume;
-    media.muted = isMuted;
+    media.volume = this.props.volume;
+    media.muted = this.props.isMuted;
   }
 
   public componentWillUnmount() {
@@ -100,21 +99,11 @@ class VideoPlayer extends React.Component<IProps> {
   }
 
   public render() {
-    const {
-      additionalInformationsTracks,
-      autoPlay,
-      chaptersSources,
-      preload,
-      slidesTracksSources,
-      sources,
-      subtitlesSources
-    } = this.props;
-
     return (
       <StyledVideo className="aip-video">
         <video
-          autoPlay={autoPlay}
-          ref={this.mediaRef}
+          autoPlay={this.props.autoPlay}
+          ref={this.media}
           onClick={this.clickHandler}
           onLoadedMetadata={this.loadedMetadataHandler}
           onProgress={this.progressHandler}
@@ -123,26 +112,28 @@ class VideoPlayer extends React.Component<IProps> {
           onTimeUpdate={this.timeUpdateHandler}
           onVolumeChange={this.volumeChangeHandler}
           playsInline={true}
-          preload={preload}
+          preload={this.props.preload}
           tabIndex={-1}
         >
-          {sources.map((source, idx) => (
+          {this.props.sources.map((source, idx) => (
             <source key={idx} {...source} />
           ))}
 
-          {subtitlesSources.filter(isDisplayableTrack).map((track, idx) => (
-            <MediaSubtitlesTrack key={idx} {...track} />
-          ))}
+          {this.props.subtitlesSources
+            .filter(isDisplayableTrack)
+            .map((track, idx) => (
+              <MediaSubtitlesTrack key={idx} {...track} />
+            ))}
 
-          {chaptersSources.map((track, idx) => (
+          {this.props.chaptersSources.map((track, idx) => (
             <MediaChapterTrack key={idx} {...track} />
           ))}
 
-          {additionalInformationsTracks.map((track, idx) => (
+          {this.props.additionalInformationsTracks.map((track, idx) => (
             <AdditionalInfosTrack key={idx} {...track} />
           ))}
 
-          {slidesTracksSources.map((track, idx) => (
+          {this.props.slidesTracksSources.map((track, idx) => (
             <SlidesTrack key={idx} {...track} />
           ))}
         </video>
@@ -151,15 +142,14 @@ class VideoPlayer extends React.Component<IProps> {
   }
 
   private progressHandler = () => {
-    this.props.updateBufferedRanges(this.mediaRef.current!.buffered);
+    this.props.updateBufferedRanges(this.media.current!.buffered);
   };
 
   private clickHandler = () => {
-    const media = this.mediaRef.current!;
-    if (media.paused) {
-      this.props.requestMediaPlay();
+    if (this.media.current!.paused) {
+      this.props.requestMediaPlay(this.media.current!);
     } else {
-      this.props.requestMediaPause();
+      this.props.requestMediaPause(this.media.current!);
     }
   };
 
@@ -176,11 +166,11 @@ class VideoPlayer extends React.Component<IProps> {
   };
 
   private timeUpdateHandler = () => {
-    this.props.updateCurrentTime(this.mediaRef.current!.currentTime);
+    this.props.updateCurrentTime(this.media.current!.currentTime);
   };
 
   private loadedMetadataHandler = () => {
-    this.props.updateMediaDuration(this.mediaRef.current!.duration);
+    this.props.updateMediaDuration(this.media.current!.duration);
   };
 
   /**
@@ -189,7 +179,7 @@ class VideoPlayer extends React.Component<IProps> {
    * application state.
    */
   private volumeChangeHandler = () => {
-    const media = this.mediaRef.current!;
+    const media = this.media.current!;
     const { isMuted, volume } = this.props;
 
     // only dispatch `toggleMute` when state is behind video object property

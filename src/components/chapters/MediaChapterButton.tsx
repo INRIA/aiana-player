@@ -31,11 +31,9 @@ class MediaChapterButton extends React.Component<IMediaChapterButton> {
   }
 
   private clickHandler = () => {
-    const { requestSeek: requestSeekAction, startTime, media } = this.props;
-    if (!media) {
-      return;
+    if (this.props.media) {
+      this.props.requestSeek(this.props.media, this.props.startTime);
     }
-    requestSeekAction(media, startTime);
   };
 }
 

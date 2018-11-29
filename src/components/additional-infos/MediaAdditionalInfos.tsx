@@ -7,14 +7,11 @@ import { uuid } from 'src/utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledAdditionalInfos from './Styles';
 
-interface IMediaAdditionalInfos extends InjectedTranslateProps {
+interface IProps extends InjectedTranslateProps {
   text?: string;
 }
 
-const MediaAdditionalInfos: React.SFC<IMediaAdditionalInfos> = ({
-  t,
-  text
-}) => {
+const MediaAdditionalInfos: React.SFC<IProps> = ({ t, text }) => {
   if (!text) {
     return null;
   }

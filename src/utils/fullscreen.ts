@@ -1,27 +1,29 @@
 import { ExtendedDocument, ExtendedHTMLElement } from 'src/types';
 
-export function enterFullscreen(element: ExtendedHTMLElement): Promise<void> {
-  if (element.webkitRequestFullscreen) {
-    return element.webkitRequestFullscreen();
+// fullscreen support isn't consistent across browsers, and fullscreen API
+// functions return values can be promises or void.
+export function enterFullscreen(element: ExtendedHTMLElement): void {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
   } else if (element.msRequestFullscreen) {
-    return element.msRequestFullscreen();
+    element.msRequestFullscreen();
   }
-
-  return element.requestFullscreen();
 }
 
-export function exitFullscreen(): Promise<void> {
+export function exitFullscreen(): void {
   const doc = document as ExtendedDocument;
 
-  if (doc.webkitExitFullscreen) {
-    return doc.webkitExitFullscreen();
+  if (doc.exitFullscreen) {
+    doc.exitFullscreen();
+  } else if (doc.webkitExitFullscreen) {
+    doc.webkitExitFullscreen();
   } else if (doc.mozCancelFullScreen) {
-    return doc.mozCancelFullScreen();
+    doc.mozCancelFullScreen();
   } else if (doc.msExitFullscreen) {
-    return doc.msExitFullscreen();
+    doc.msExitFullscreen();
   }
-
-  return doc.exitFullscreen();
 }
 
 export function isDocumentFullscreen(): boolean {

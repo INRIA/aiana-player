@@ -93,19 +93,13 @@ export function handleFullscreenChange(isFullscreen: boolean): AnyAction {
   };
 }
 
-function requestToggleFullscreen(): AnyAction {
-  return {
-    type: TOGGLE_FULLSCREEN_REQUESTED
-  };
-}
-
-export function handleToggleFullscreen(
+export function toggleFullscreen(
   rootElement: ExtendedHTMLElement
 ): ThunkResult<void> {
-  return (dispatch) => {
-    dispatch(requestToggleFullscreen());
+  return () => {
+    const isFullscreen = isDocumentFullscreen();
 
-    if (isDocumentFullscreen()) {
+    if (isFullscreen) {
       exitFullscreen();
     } else {
       enterFullscreen(rootElement);
