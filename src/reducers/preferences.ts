@@ -1,41 +1,48 @@
 import { Reducer } from 'redux';
 import { CHANGE_LANGUAGE, CHANGE_THEME } from 'src/actions/preferences';
+import { LOAD_CONFIGURATION } from 'src/actions/shared';
 import {
-  AVAILABLE_LANGUAGES,
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
+  DEFAULT_AVAILABLE_LANGUAGES,
   DEFAULT_LANG,
   DEFAULT_SEEK_STEP,
+  DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_THEME,
-  DEFAULT_VOLUME_STEP
+  DEFAULT_VOLUME_STEP,
+  DEFAULT_VOLUME_STEP_MULTIPLIER
 } from 'src/constants';
 import InriaTheme from 'src/themes/inria';
 import { IAianaTheme } from 'src/utils/styled-components';
 
 export interface IPreferencesState {
-  availableLanguages: string[];
-  availablePlaybackRates: number[];
-  availableThemes: string[];
+  currentLanguage: string;
   currentTheme: string;
   customTheme: IAianaTheme;
-  language: string;
+  languages: string[];
+  playbackRates: number[];
   /**
    * The base number of seconds to go forward or backard after a keyboard
    * event on seek bar.
    */
   seekStep: number;
+  seekStepMultiplier: number;
+  themes: string[];
   volumeStep: number;
+  volumeStepMultiplier: number;
 }
 
 const initialState: IPreferencesState = {
-  availableLanguages: AVAILABLE_LANGUAGES,
-  availablePlaybackRates: AVAILABLE_PLAYBACK_RATES,
-  availableThemes: AVAILABLE_THEMES,
+  currentLanguage: DEFAULT_LANG,
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
-  language: DEFAULT_LANG,
+  languages: DEFAULT_AVAILABLE_LANGUAGES,
+  playbackRates: AVAILABLE_PLAYBACK_RATES,
   seekStep: DEFAULT_SEEK_STEP,
-  volumeStep: DEFAULT_VOLUME_STEP
+  seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
+  themes: AVAILABLE_THEMES,
+  volumeStep: DEFAULT_VOLUME_STEP,
+  volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER
 };
 
 const preferences: Reducer = (state = initialState, action) => {
@@ -43,12 +50,17 @@ const preferences: Reducer = (state = initialState, action) => {
     case CHANGE_LANGUAGE:
       return {
         ...state,
-        language: action.language
+        currentLanguage: action.currentLanguage
       };
     case CHANGE_THEME:
       return {
         ...state,
-        currentTheme: action.themeName
+        currentTheme: action.currentTheme
+      };
+    case LOAD_CONFIGURATION:
+      return {
+        ...state,
+        ...action.preferences
       };
     default:
       return state;

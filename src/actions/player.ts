@@ -130,7 +130,6 @@ export function mediaElementUnounted(): AnyAction {
 export function requestMediaPlay(media: HTMLMediaElement): ThunkResult<void> {
   return (dispatch) => {
     dispatch({ type: MEDIA_REQUEST_PLAY });
-
     media.play().then(() => dispatch(playMedia()));
   };
 }
@@ -145,9 +144,7 @@ function playMedia(): AnyAction {
 export function requestMediaPause(media: HTMLMediaElement): ThunkResult<void> {
   return (dispatch) => {
     dispatch({ type: MEDIA_REQUEST_PAUSE });
-
     media.pause();
-
     dispatch(pauseMedia());
   };
 }

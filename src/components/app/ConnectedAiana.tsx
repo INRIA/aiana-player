@@ -5,6 +5,7 @@ import {
   handleFullscreenChange,
   playerElementMounted
 } from 'src/actions/player';
+import { handleFetchInitialData } from 'src/actions/shared';
 import SvgFilters from 'src/components/shared/filters';
 import { IAianaState } from 'src/reducers/index';
 import themes from 'src/themes';
@@ -26,6 +27,7 @@ interface IProps {
 }
 
 interface IDispatchProps {
+  handleFetchInitialData: () => void;
   handleFullscreenChange: (isFullscreen: boolean) => void;
   playerElementMounted: (playerElement: HTMLElement) => void;
 }
@@ -41,6 +43,7 @@ class Aiana extends React.Component<IAiana> {
   }
 
   public componentDidMount() {
+    this.props.handleFetchInitialData();
     this.props.playerElementMounted(this.fullscreenRef.current!);
     addFullscreenChangeEventListener(this.fullscreenHandler);
   }
@@ -75,6 +78,7 @@ const mapStateToProps = (state: IAianaState) => ({
 });
 
 const mapDispatchToProps = {
+  handleFetchInitialData,
   handleFullscreenChange,
   playerElementMounted
 };

@@ -9,6 +9,7 @@ import subtitles, { ISubtitlesState } from './subtitles';
 export interface IAianaState {
   bookmarks: IBookmarksState;
   chapters: IChaptersState;
+  configuration: any;
   player: IPlayerState;
   preferences: IPreferencesState;
   slides: ISlidesState;

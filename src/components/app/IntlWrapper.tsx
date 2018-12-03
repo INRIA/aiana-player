@@ -16,7 +16,7 @@ const IntlWrapper: React.SFC<IProps> = ({ children, language }) => (
 );
 
 const mapStateToProps = (state: IAianaState) => ({
-  language: state.preferences.language
+  language: state.preferences.currentLanguage
 });
 
 export default connect(mapStateToProps)(IntlWrapper);

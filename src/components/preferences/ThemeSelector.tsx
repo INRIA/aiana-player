@@ -7,8 +7,8 @@ import { CDispatch } from 'src/store';
 import { uuid } from 'src/utils/ui';
 
 interface IStateProps {
-  availableThemes: string[];
   currentTheme: string;
+  themes: string[];
 }
 
 interface IDispatchProps {
@@ -21,10 +21,10 @@ interface IThemeSelector
     InjectedTranslateProps {}
 
 const ThemeSelector: React.SFC<IThemeSelector> = ({
-  availableThemes,
   currentTheme,
   selectChangeHandler,
-  t
+  t,
+  themes
 }) => {
   const id = uuid();
 
@@ -36,7 +36,7 @@ const ThemeSelector: React.SFC<IThemeSelector> = ({
         defaultValue={currentTheme}
         onChange={selectChangeHandler}
       >
-        {availableThemes.map((themeName) => (
+        {themes.map((themeName) => (
           <option key={themeName}>{themeName}</option>
         ))}
       </select>
@@ -45,8 +45,8 @@ const ThemeSelector: React.SFC<IThemeSelector> = ({
 };
 
 const mapStateToProps = (state: IAianaState) => ({
-  availableThemes: state.preferences.availableThemes,
-  currentTheme: state.preferences.currentTheme
+  currentTheme: state.preferences.currentTheme,
+  themes: state.preferences.themes
 });
 
 const mapDispatchToProps = (dispatch: CDispatch) => ({

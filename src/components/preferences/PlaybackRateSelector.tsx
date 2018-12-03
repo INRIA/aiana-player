@@ -6,9 +6,9 @@ import { IAianaState } from 'src/reducers/index';
 import { uuid } from 'src/utils/ui';
 
 interface IStateProps {
-  availablePlaybackRates: number[];
   currentPlaybackRate: number;
   mediaElement?: HTMLMediaElement;
+  playbackRates: number[];
 }
 
 interface IDispatchProps {
@@ -22,7 +22,7 @@ interface IPlaybackRateSelector
 
 class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   public render() {
-    const { availablePlaybackRates, currentPlaybackRate, t } = this.props;
+    const { playbackRates, currentPlaybackRate, t } = this.props;
     const id = uuid();
 
     return (
@@ -33,7 +33,7 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
           value={currentPlaybackRate}
           onChange={this.onPlayRateChange}
         >
-          {availablePlaybackRates.map((playbackRate) => (
+          {playbackRates.map((playbackRate) => (
             <option key={playbackRate} value={playbackRate}>
               ×{playbackRate}
             </option>
@@ -60,9 +60,9 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
 }
 
 const mapStateToProps = (state: IAianaState) => ({
-  availablePlaybackRates: state.preferences.availablePlaybackRates,
   currentPlaybackRate: state.player.playbackRate,
-  mediaElement: state.player.mediaElement
+  mediaElement: state.player.mediaElement,
+  playbackRates: state.preferences.playbackRates
 });
 
 const mapDispatchToProps = {
