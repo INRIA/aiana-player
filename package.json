@@ -19,11 +19,13 @@
     }
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "color-convert": "^1.9.3",
     "focus-visible": "^4.1.5",
     "i18next": "^11.10.2",
     "marked": "^0.5.1",
+    "query-string": "^6.2.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-i18next": "^7.13.0",
@@ -56,6 +58,7 @@
     "@types/jest": "^23.3.9",
     "@types/marked": "^0.4.2",
     "@types/node": "^10.12.1",
+    "@types/query-string": "^6.1.1",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
     "@types/react-i18next": "^7.8.3",
