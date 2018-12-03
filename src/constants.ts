@@ -15,17 +15,19 @@ export const PAGE_DOWN_KEY = 'PageDown';
 export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1;
 
+export const DEFAULT_AVAILABLE_LANGUAGES = ['en', 'fr'];
 export const DEFAULT_LANG = 'en';
-export const DEFAULT_PLAY_RATE = 1;
-export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
+export const DEFAULT_MENU_ENABLED = true;
+export const DEFAULT_MUTED = false;
+export const DEFAULT_PLAYBACK_RATE = 1;
+export const DEFAULT_PRELOAD = 'auto';
 export const DEFAULT_SEEK_STEP = 5;
 export const DEFAULT_SEEK_STEP_MULTIPLIER = 2;
 export const DEFAULT_THEME = 'inria';
+export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
-export const DEFAULT_PRELOAD = 'auto';
 
-export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 export const AVAILABLE_PLAYBACK_RATES = [
   0.25,
   0.5,

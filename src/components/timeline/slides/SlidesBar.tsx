@@ -9,8 +9,8 @@ import styled from 'src/utils/styled-components';
 import SlideButton from './SlideButton';
 
 interface IStateProps {
+  currentLanguage: string;
   duration: number;
-  language: string;
   media?: HTMLMediaElement;
   slidesTracks: IRawSlidesTrack[];
 }
@@ -61,12 +61,12 @@ const StyledSlidesBar = styled.nav`
 const SlidesBar: React.SFC<ISlidesBar> = ({
   slidesTracks,
   duration,
-  language,
+  currentLanguage,
   media,
   requestSeek: requestSeekAction
 }) => {
   const activeSlidesTrack =
-    slidesTracks.find((track) => track.language === language) ||
+    slidesTracks.find((track) => track.language === currentLanguage) ||
     slidesTracks.find((track) => track.language === DEFAULT_LANG);
 
   if (!activeSlidesTrack) {
@@ -96,8 +96,8 @@ const SlidesBar: React.SFC<ISlidesBar> = ({
 };
 
 const mapStateToProps = (state: IAianaState) => ({
+  currentLanguage: state.preferences.currentLanguage,
   duration: state.player.duration,
-  language: state.preferences.language,
   media: state.player.mediaElement,
   slidesTracks: state.slides.slidesTracks
 });

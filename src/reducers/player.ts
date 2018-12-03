@@ -18,22 +18,22 @@ import {
   SET_BUFFERED_RANGES,
   TOGGLE_FULLSCREEN
 } from 'src/actions/player';
+import { LOAD_CONFIGURATION } from 'src/actions/shared';
 import { ITrack } from 'src/components/video/MediaSubtitlesTrack';
 import { ISource } from 'src/components/video/VideoPlayer';
 import { ExtendedHTMLElement } from 'src/types';
 import { BufferedRanges, IRawMetadataTrack } from 'src/utils/media';
 import {
-  DEFAULT_PLAY_RATE,
+  DEFAULT_MUTED,
+  DEFAULT_PLAYBACK_RATE,
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME
 } from '../constants';
 
 export interface IPlayerState {
   additionalInformationsText?: string;
-  readonly additionalInformationsTracks: ITrack[];
-
+  additionalInformationsTracks: ITrack[];
   autoPlay: boolean;
-
   bufferedRanges: BufferedRanges;
 
   /** The current position of the player, expressed in seconds */
@@ -58,10 +58,8 @@ export interface IPlayerState {
   playbackRate: number;
   playerElement?: ExtendedHTMLElement;
   preload: string;
-
   seekingTime: number;
-
-  readonly sources: ISource[];
+  sources: ISource[];
 
   /**
    * Volume level for audio portions of the media element.
@@ -71,38 +69,20 @@ export interface IPlayerState {
 }
 
 const initialState: IPlayerState = {
-  additionalInformationsTracks: [
-    {
-      kind: 'metadata',
-      label: 'Additional info',
-      src: 'http://localhost:3000/dev/en/additional-infos.vtt',
-      srcLang: 'en'
-    },
-    {
-      kind: 'metadata',
-      label: 'Informations Complémentaires',
-      src: 'http://localhost:3000/dev/fr/additional-infos.vtt',
-      srcLang: 'en'
-    }
-  ],
+  additionalInformationsTracks: [],
   autoPlay: false,
   bufferedRanges: [],
   currentTime: 0,
   duration: 0,
   isFullscreen: false,
-  isMuted: false,
+  isMuted: DEFAULT_MUTED,
   isPlaying: false,
   isSeeking: false,
   metadataTracks: [],
-  playbackRate: DEFAULT_PLAY_RATE,
+  playbackRate: DEFAULT_PLAYBACK_RATE,
   preload: DEFAULT_PRELOAD,
   seekingTime: 0,
-  sources: [
-    {
-      src: 'https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4',
-      type: 'video/mp4'
-    }
-  ],
+  sources: [],
   volume: DEFAULT_VOLUME
 };
 
@@ -172,12 +152,10 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         seekingTime: action.seekingTime
       };
     case MEDIA_SEEK_TOGGLE:
-      const seekingTime = action.isSeeking ? state.seekingTime : 0;
-
       return {
         ...state,
         isSeeking: action.isSeeking,
-        seekingTime
+        seekingTime: action.isSeeking ? state.seekingTime : 0
       };
     case SET_ADDITIONAL_INFOS_TEXT:
       return {
@@ -193,6 +171,11 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
       return {
         ...state,
         metadataTracks
+      };
+    case LOAD_CONFIGURATION:
+      return {
+        ...state,
+        ...action.player
       };
     default:
       return state;

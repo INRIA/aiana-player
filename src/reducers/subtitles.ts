@@ -1,4 +1,5 @@
 import { Reducer } from 'redux';
+import { LOAD_CONFIGURATION } from 'src/actions/shared';
 import {
   ADD_SUBTITLES_TRACK,
   SET_SUBTITLE_TEXT,
@@ -26,22 +27,11 @@ export interface ISubtitlesState {
    */
   subtitlesTracks: IRawSubtitlesTrack[];
 
-  readonly sources: ISubtitlesTrack[];
+  sources: ISubtitlesTrack[];
 }
 
 const initialState = {
-  sources: [
-    {
-      label: 'Subtitles',
-      src: 'http://localhost:3000/dev/en/subtitles.vtt',
-      srcLang: 'en'
-    },
-    {
-      label: 'Sous-titres',
-      src: 'http://localhost:3000/dev/fr/subtitles.vtt',
-      srcLang: 'fr'
-    }
-  ],
+  sources: [],
   subtitlesTracks: []
 };
 
@@ -84,6 +74,11 @@ const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
       return {
         ...state,
         subtitlesText: action.subtitlesText
+      };
+    case LOAD_CONFIGURATION:
+      return {
+        ...state,
+        ...action.subtitles
       };
     default:
       return state;

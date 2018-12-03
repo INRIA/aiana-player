@@ -64,10 +64,11 @@ interface IStateProps {
   additionalInformationsTracks: ITrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
+  currentLanguage: string;
   currentTime: number;
   isMuted: boolean;
   isSeeking: boolean;
-  language: string;
+  playbackRate: number;
   preload: string;
   slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
@@ -80,23 +81,6 @@ interface IProps extends IStateProps, IDispatchProps {}
 
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();
-
-  public componentDidMount() {
-    const media = this.media.current;
-
-    if (!media) {
-      return;
-    }
-
-    this.props.mediaElementMounted(media);
-
-    media.volume = this.props.volume;
-    media.muted = this.props.isMuted;
-  }
-
-  public componentWillUnmount() {
-    this.props.mediaElementUnounted();
-  }
 
   public render() {
     return (
@@ -139,6 +123,28 @@ class VideoPlayer extends React.Component<IProps> {
         </video>
       </StyledVideo>
     );
+  }
+
+  public componentDidMount() {
+    this.props.mediaElementMounted(this.media.current!);
+  }
+
+  public componentWillUnmount() {
+    this.props.mediaElementUnounted();
+  }
+
+  public componentDidUpdate() {
+    if (this.media.current!.playbackRate !== this.props.playbackRate) {
+      this.media.current!.playbackRate = this.props.playbackRate;
+    }
+
+    if (this.media.current!.volume !== this.props.volume) {
+      this.media.current!.volume = this.props.volume;
+    }
+
+    if (this.media.current!.muted !== this.props.isMuted) {
+      this.media.current!.muted = this.props.isMuted;
+    }
   }
 
   private progressHandler = () => {
@@ -197,12 +203,13 @@ const mapStateToProps = (state: IAianaState) => ({
   additionalInformationsTracks: state.player.additionalInformationsTracks,
   autoPlay: state.player.autoPlay,
   chaptersSources: state.chapters.sources,
+  currentLanguage: state.preferences.currentLanguage,
   currentTime: state.player.currentTime,
   isMuted: state.player.isMuted,
   isSeeking: state.player.isSeeking,
-  language: state.preferences.language,
+  playbackRate: state.player.playbackRate,
   preload: state.player.preload,
-  slidesTracksSources: state.slides.sourceTracks,
+  slidesTracksSources: state.slides.sources,
   sources: state.player.sources,
   subtitlesSources: state.subtitles.sources,
   subtitlesTracks: state.subtitles.subtitlesTracks,
