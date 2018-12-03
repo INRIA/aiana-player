@@ -42,7 +42,6 @@ class Aiana extends React.Component<IAiana> {
 
   public componentDidMount() {
     this.props.playerElementMounted(this.fullscreenRef.current!);
-
     addFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
