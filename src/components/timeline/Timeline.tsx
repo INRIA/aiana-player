@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { hexToHsla } from 'src/utils/colors';
 import styled from 'src/utils/styled-components';
 import BookmarksBar from './bookmarks/BookmarksBar';
 import ChaptersBar from './chapters/ChaptersBar';
@@ -12,7 +13,7 @@ const StyledTimelineBar = styled.div`
   position: absolute;
   bottom: 4.25em;
 
-  background-color: ${(props) => props.theme.bg};
+  background-color: ${(props) => hexToHsla(props.theme.fg, 0.1)};
 
   > div {
     width: 100%;

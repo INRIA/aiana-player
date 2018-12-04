@@ -74,6 +74,10 @@ const Styles = styled.section`
     figcaption {
       font-style: italic;
     }
+
+    p {
+      margin-top: 0;
+    }
   }
 `;
 
