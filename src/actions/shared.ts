@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as queryString from 'query-string';
 import { AnyAction } from 'redux';
+import { DEFAULT_CONFIGURATION_PATH } from 'src/constants';
 import { CDispatch } from 'src/store';
 import { ThunkResult } from 'src/types';
 
@@ -23,7 +24,7 @@ export function handleFetchInitialData(): ThunkResult<void> {
         })
       );
     } else {
-      axios.get('/configuration.json').then(({ data }) => {
+      axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
         dispatch(loadConfiguration(data));
       });
     }

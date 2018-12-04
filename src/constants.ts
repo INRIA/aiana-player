@@ -15,6 +15,7 @@ export const PAGE_DOWN_KEY = 'PageDown';
 export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1;
 
+export const DEFAULT_CONFIGURATION_PATH = './configuration.json';
 export const DEFAULT_AVAILABLE_LANGUAGES = ['en', 'fr'];
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_MENU_ENABLED = true;
