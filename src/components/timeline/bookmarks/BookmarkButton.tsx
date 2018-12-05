@@ -11,8 +11,8 @@ const StyledBookmarkIcon = styled(StyledSvgIcon)`
 
 interface IProps {
   media?: HTMLMediaElement;
-  onClick: (media: HTMLMediaElement, time: number) => void;
   time: number;
+  onClick(media: HTMLMediaElement, time: number): void;
 }
 
 class BookmarkButton extends React.Component<IProps> {

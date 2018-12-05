@@ -12,7 +12,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => void;
+  changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
 interface ILanguageSelector

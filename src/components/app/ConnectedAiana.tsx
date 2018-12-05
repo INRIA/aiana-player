@@ -27,9 +27,9 @@ interface IProps {
 }
 
 interface IDispatchProps {
-  handleFetchInitialData: () => void;
-  handleFullscreenChange: (isFullscreen: boolean) => void;
-  playerElementMounted: (playerElement: HTMLElement) => void;
+  handleFetchInitialData(): void;
+  handleFullscreenChange(isFullscreen: boolean): void;
+  playerElementMounted(playerElement: HTMLElement): void;
 }
 
 interface IAiana extends IProps, IDispatchProps {}

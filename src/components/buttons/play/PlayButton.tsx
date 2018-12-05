@@ -18,8 +18,8 @@ export interface IPlayButtonProps {
 }
 
 interface IDispatchProps {
-  pauseMedia: (media: HTMLMediaElement) => void;
-  playMedia: (media: HTMLMediaElement) => void;
+  pauseMedia(media: HTMLMediaElement): void;
+  playMedia(media: HTMLMediaElement): void;
 }
 
 interface IProps

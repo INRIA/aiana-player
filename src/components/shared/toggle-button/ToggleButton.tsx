@@ -6,7 +6,7 @@ interface IProps {
   isOn: boolean;
   label?: string;
   labelledBy?: string;
-  onClick: (evt: React.MouseEvent<any>) => void;
+  onClick(evt: React.MouseEvent<any>): void;
 }
 
 interface IToggleButton extends IProps, InjectedTranslateProps {}

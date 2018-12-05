@@ -46,18 +46,18 @@ export interface ISource {
 }
 
 interface IDispatchProps {
-  changeVolume: (volume: number) => void;
-  mediaElementMounted: (media: HTMLMediaElement) => void;
-  mediaElementUnounted: () => void;
-  requestMediaPause: (media: HTMLMediaElement) => any;
-  requestMediaPlay: (media: HTMLMediaElement) => any;
-  startSeeking: () => void;
-  stopSeeking: () => void;
-  toggleMute: (muted: boolean) => void;
-  updateBufferedRanges: (timeRanges: TimeRanges) => void;
-  updateCurrentTime: (time: number) => void;
-  updateMediaDuration: (duration: number) => void;
-  updateSubtitlesTracksList: (subtitlesTracks: IRawSubtitlesTrack[]) => void;
+  changeVolume(volume: number): void;
+  mediaElementMounted(media: HTMLMediaElement): void;
+  mediaElementUnounted(): void;
+  requestMediaPause(media: HTMLMediaElement): any;
+  requestMediaPlay(media: HTMLMediaElement): any;
+  startSeeking(): void;
+  stopSeeking(): void;
+  toggleMute(muted: boolean): void;
+  updateBufferedRanges(timeRanges: TimeRanges): void;
+  updateCurrentTime(time: number): void;
+  updateMediaDuration(duration: number): void;
+  updateSubtitlesTracksList(subtitlesTracks: IRawSubtitlesTrack[]): void;
 }
 
 interface IStateProps {

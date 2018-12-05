@@ -12,7 +12,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  addBookmark: (time: number) => void;
+  addBookmark(time: number): void;
 }
 
 interface IAddBookmarkButton

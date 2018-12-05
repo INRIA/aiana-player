@@ -27,8 +27,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  addSubtitlesTrack: (track: IRawSubtitlesTrack) => void;
-  updateSubtitleText: (text?: string) => void;
+  addSubtitlesTrack(track: IRawSubtitlesTrack): void;
+  updateSubtitleText(text?: string): void;
 }
 
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}

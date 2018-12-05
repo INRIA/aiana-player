@@ -11,8 +11,8 @@ const StyledSlideIcon = styled(StyledSvgIcon)`
 
 interface IProps {
   media?: HTMLMediaElement;
-  onClick: (media: HTMLMediaElement, time: number) => void;
   time: number;
+  onClick(media: HTMLMediaElement, time: number): void;
 }
 
 class SlideButton extends React.Component<IProps> {
