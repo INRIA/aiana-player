@@ -10,7 +10,11 @@ import {
   TRACK_MODE_HIDDEN
 } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
-import { IRawMetadataTrack, rawTextTrack } from 'src/utils/media';
+import {
+  getLastActiveCueText,
+  IRawMetadataTrack,
+  rawTextTrack
+} from 'src/utils/media';
 
 interface IProps {
   label?: string;
@@ -74,8 +78,8 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
   };
 
   private cueChangeHandler = () => {
-    const currentCue = this.trackRef.current!.track.activeCues[0];
-    const currentText = currentCue ? currentCue.text : undefined;
+    const track = this.trackRef.current!.track;
+    const currentText = getLastActiveCueText(track);
     this.props.updateAdditionalInfosText(currentText);
   };
 }

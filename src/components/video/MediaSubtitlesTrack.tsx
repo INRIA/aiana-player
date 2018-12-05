@@ -8,6 +8,7 @@ import {
 } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import {
+  getLastActiveCueText,
   IRawSubtitlesTrack,
   isActiveTrack,
   rawSubtitlesTrack
@@ -92,8 +93,8 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
       prevActiveTrack &&
       prevActiveTrack.label !== activeTrack!.label
     ) {
-      const currentCue = this.trackRef.current!.track.activeCues[0];
-      const currentText = currentCue ? currentCue.text : undefined;
+      const track = this.trackRef.current!.track;
+      const currentText = getLastActiveCueText(track);
       this.props.updateSubtitleText(currentText);
     }
   }
@@ -118,8 +119,8 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
       return;
     }
 
-    const currentCue = this.trackRef.current!.track.activeCues[0];
-    const currentText = currentCue ? currentCue.text : undefined;
+    const track = this.trackRef.current!.track;
+    const currentText = getLastActiveCueText(track);
     this.props.updateSubtitleText(currentText);
   };
 }

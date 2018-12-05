@@ -7,7 +7,11 @@ import {
   TRACK_MODE_HIDDEN
 } from 'src/constants';
 import { IAianaState } from 'src/reducers';
-import { IRawSlidesTrack, rawSlidesTrack } from 'src/utils/media';
+import {
+  getLastActiveCueText,
+  IRawSlidesTrack,
+  rawSlidesTrack
+} from 'src/utils/media';
 
 interface IProps {
   label?: string;
@@ -92,8 +96,8 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
       prevActiveTrack &&
       prevActiveTrack.label !== activeTrack!.label
     ) {
-      const currentCue = this.trackRef.current!.track.activeCues[0];
-      const currentText = currentCue ? currentCue.text : undefined;
+      const track = this.trackRef.current!.track;
+      const currentText = getLastActiveCueText(track);
       this.props.setSlidesText(currentText);
     }
   }
@@ -115,8 +119,8 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
     }
 
     if (this.props.srcLang === this.props.language) {
-      const currentCue = this.trackRef.current.track.activeCues[0];
-      const currentText = currentCue ? currentCue.text : undefined;
+      const track = this.trackRef.current!.track;
+      const currentText = getLastActiveCueText(track);
       this.props.setSlidesText(currentText);
     }
   };

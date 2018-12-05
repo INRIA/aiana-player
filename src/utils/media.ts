@@ -130,3 +130,19 @@ export function convertTimeRanges(timeRanges: TimeRanges): BufferedRanges {
 
   return ranges;
 }
+
+export function getLastActiveCue(track: TextTrack): TextTrackCue | undefined {
+  return track.activeCues[track.activeCues.length - 1];
+}
+
+export function getCueText(cue?: TextTrackCue): string | undefined {
+  if (cue) {
+    return cue.text;
+  }
+
+  return;
+}
+
+export function getLastActiveCueText(track: TextTrack): string | undefined {
+  return getCueText(getLastActiveCue(track));
+}
