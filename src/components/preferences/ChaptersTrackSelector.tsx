@@ -9,7 +9,7 @@ import { uuid } from 'src/utils/ui';
 
 interface IStateProps {
   chaptersTracks: IRawChaptersTrack[];
-  language: string;
+  currentLanguage: string;
   mediaElement?: HTMLMediaElement;
 }
 
@@ -22,9 +22,20 @@ interface IChaptersTrackSelector
     IDispatchProps,
     InjectedTranslateProps {}
 
+function getSelectedValue(
+  tracks: IRawChaptersTrack[],
+  language: string
+): string {
+  const selectedTrack = tracks.find((track) => {
+    return track.language === language;
+  });
+
+  return selectedTrack ? selectedTrack.language : '';
+}
+
 const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
   chaptersTracks,
-  language,
+  currentLanguage,
   mediaElement,
   selectedTrackChangedHandler,
   t
@@ -32,11 +43,6 @@ const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
   if (!mediaElement) {
     return null;
   }
-
-  const selectedTrack = chaptersTracks.find((track) => {
-    return track.language === language;
-  });
-  const selectedValue = selectedTrack ? selectedTrack.language : '';
 
   const id = uuid();
 
@@ -46,11 +52,11 @@ const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
       <select
         aria-labelledby={id}
         onChange={selectedTrackChangedHandler}
-        value={selectedValue}
+        value={getSelectedValue(chaptersTracks, currentLanguage)}
       >
-        {chaptersTracks.map((track) => (
-          <option key={track.language} value={track.language}>
-            {t(`languages.${track.language}`)}
+        {chaptersTracks.map(({ language }) => (
+          <option key={language} value={language}>
+            {t(`languages.${language}`)}
           </option>
         ))}
       </select>
@@ -60,7 +66,7 @@ const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
 
 const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.chapters.chaptersTracks,
-  language: state.chapters.language,
+  currentLanguage: state.chapters.language,
   mediaElement: state.player.mediaElement
 });
 

@@ -30,8 +30,8 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
         <span id={id}>{t('preferences.playbackrate.label')}</span>
         <select
           aria-labelledby={id}
-          value={currentPlaybackRate}
           onChange={this.onPlayRateChange}
+          value={currentPlaybackRate}
         >
           {playbackRates.map((playbackRate) => (
             <option key={playbackRate} value={playbackRate}>

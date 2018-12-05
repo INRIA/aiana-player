@@ -158,8 +158,6 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   }
 
   public componentWillUnmount() {
-    document.removeEventListener('mousemove', this.mouseMoveHandler, true);
-    document.removeEventListener('mouseup', this.mouseUpHandler, true);
     window.removeEventListener('resize', this.setPosition);
   }
 

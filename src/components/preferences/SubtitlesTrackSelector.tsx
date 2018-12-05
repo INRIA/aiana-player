@@ -25,6 +25,12 @@ interface ISubtitlesTrackSelector
     IDispatchProps,
     InjectedTranslateProps {}
 
+export function getSelectedValue(tracks: IRawSubtitlesTrack[]): string {
+  const selectedTrack = tracks.find(isActiveTrack);
+
+  return selectedTrack ? selectedTrack.language : '';
+}
+
 const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
   mediaElement,
   selectedTrackChangedHandler,
@@ -35,8 +41,6 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
     return null;
   }
 
-  const selectedTrack = subtitlesTracks.find(isActiveTrack);
-  const selectedValue = selectedTrack ? selectedTrack.language : '';
   const id = uuid();
 
   return (
@@ -45,12 +49,12 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
       <select
         aria-labelledby={id}
         onChange={selectedTrackChangedHandler}
-        value={selectedValue}
+        value={getSelectedValue(subtitlesTracks)}
       >
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
-        {subtitlesTracks.filter(isDisplayableTrack).map((track) => (
-          <option key={track.language} value={track.language}>
-            {t(`languages.${track.language}`)}
+        {subtitlesTracks.filter(isDisplayableTrack).map(({ language }) => (
+          <option key={language} value={language}>
+            {t(`languages.${language}`)}
           </option>
         ))}
       </select>

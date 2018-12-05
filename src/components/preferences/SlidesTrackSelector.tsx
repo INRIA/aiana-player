@@ -9,7 +9,7 @@ import { uuid } from 'src/utils/ui';
 
 interface IStateProps {
   slidesTracks: IRawSlidesTrack[];
-  language: string;
+  currentLanguage: string;
   mediaElement?: HTMLMediaElement;
 }
 
@@ -22,9 +22,20 @@ interface ISlidesTrackSelector
     IDispatchProps,
     InjectedTranslateProps {}
 
+export function getSelectedValue(
+  tracks: IRawSlidesTrack[],
+  language: string
+): string {
+  const selectedTrack = tracks.find((track) => {
+    return track.language === language;
+  });
+
+  return selectedTrack ? selectedTrack.language : '';
+}
+
 const SlidesTrackSelector: React.SFC<ISlidesTrackSelector> = ({
   slidesTracks,
-  language,
+  currentLanguage,
   mediaElement,
   selectedTrackChangedHandler,
   t
@@ -32,11 +43,6 @@ const SlidesTrackSelector: React.SFC<ISlidesTrackSelector> = ({
   if (!mediaElement) {
     return null;
   }
-
-  const selectedTrack = slidesTracks.find((track) => {
-    return track.language === language;
-  });
-  const selectedValue = selectedTrack ? selectedTrack.language : '';
 
   const id = uuid();
 
@@ -46,11 +52,11 @@ const SlidesTrackSelector: React.SFC<ISlidesTrackSelector> = ({
       <select
         aria-labelledby={id}
         onChange={selectedTrackChangedHandler}
-        value={selectedValue}
+        value={getSelectedValue(slidesTracks, currentLanguage)}
       >
-        {slidesTracks.map((track) => (
-          <option key={track.language} value={track.language}>
-            {t(`languages.${track.language}`)}
+        {slidesTracks.map(({ language }) => (
+          <option key={language} value={language}>
+            {t(`languages.${language}`)}
           </option>
         ))}
       </select>
@@ -59,7 +65,7 @@ const SlidesTrackSelector: React.SFC<ISlidesTrackSelector> = ({
 };
 
 const mapStateToProps = (state: IAianaState) => ({
-  language: state.slides.language,
+  currentLanguage: state.slides.language,
   mediaElement: state.player.mediaElement,
   slidesTracks: state.slides.slidesTracks
 });

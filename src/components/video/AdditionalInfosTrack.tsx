@@ -4,11 +4,7 @@ import {
   addMetadataTrack,
   setAdditionalInformationsText
 } from 'src/actions/player';
-import {
-  DEFAULT_LANG,
-  TRACK_KIND_METADATA,
-  TRACK_MODE_HIDDEN
-} from 'src/constants';
+import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import {
   getLastActiveCueText,
@@ -34,10 +30,6 @@ interface IDispatchProps {
 export interface IChapterTrack extends IProps, IStateProps, IDispatchProps {}
 
 class AdditionalInfosTrack extends React.Component<IChapterTrack> {
-  public static defaultProps: IProps = {
-    srcLang: DEFAULT_LANG
-  };
-
   private trackRef = React.createRef<HTMLTrackElement>();
 
   public render() {

@@ -9,8 +9,6 @@ interface IStateProps {
   duration: number;
 }
 
-const { floor } = Math;
-
 const TimeRangesBar: React.SFC<IStateProps> = ({
   bufferedRanges,
   duration
@@ -19,7 +17,7 @@ const TimeRangesBar: React.SFC<IStateProps> = ({
     <svg
       width="100%"
       height="1em"
-      viewBox={`0 0 ${floor(duration)} 10`}
+      viewBox={`0 0 ${Math.floor(duration)} 10`}
       preserveAspectRatio="none"
     >
       {bufferedRanges.map(({ end, start }, idx) => (

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { addSubtitlesTrack, setSubtitlesText } from 'src/actions/subtitles';
-import {
-  DEFAULT_LANG,
-  TRACK_KIND_SUBTITLES,
-  TRACK_MODE_HIDDEN
-} from 'src/constants';
+import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from 'src/constants';
 import { IAianaState } from 'src/reducers/index';
 import {
   getLastActiveCueText,
@@ -34,23 +30,12 @@ interface IDispatchProps {
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
 
 class MediaSubtitlesTrack extends React.Component<ITrackProps> {
+  public static defaultProps: ITrack = {
+    isDefault: false,
+    kind: TRACK_KIND_SUBTITLES
+  };
+
   private trackRef = React.createRef<HTMLTrackElement>();
-
-  constructor(props: ITrackProps) {
-    super(props);
-
-    const {
-      isDefault = false,
-      kind = TRACK_KIND_SUBTITLES,
-      srcLang = DEFAULT_LANG
-    } = props;
-
-    this.state = {
-      isDefault,
-      kind,
-      srcLang
-    };
-  }
 
   public render() {
     return (

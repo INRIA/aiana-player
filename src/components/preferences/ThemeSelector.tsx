@@ -33,8 +33,8 @@ const ThemeSelector: React.SFC<IThemeSelector> = ({
       <span id={id}>{t('preferences.theme-selector.label')}</span>
       <select
         aria-labelledby={id}
-        defaultValue={currentTheme}
         onChange={selectChangeHandler}
+        value={currentTheme}
       >
         {themes.map((themeName) => (
           <option key={themeName}>{themeName}</option>
