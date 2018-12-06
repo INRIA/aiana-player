@@ -1,12 +1,12 @@
 import { Reducer } from 'redux';
-import { LOAD_CONFIGURATION } from 'src/actions/shared';
+import { LOAD_CONFIGURATION } from '../actions/shared';
 import {
   ADD_SLIDES_TRACK,
   SET_SLIDES_TEXT,
   UPDATE_ACTIVE_SLIDES_TRACK
-} from 'src/actions/slides';
-import { DEFAULT_LANG } from 'src/constants';
-import { IRawSlidesTrack } from 'src/utils/media';
+} from '../actions/slides';
+import { DEFAULT_LANG } from '../constants';
+import { IRawSlidesTrack } from '../utils/media';
 
 export interface ISlidesTrack {
   label?: string;

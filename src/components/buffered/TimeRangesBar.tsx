@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers';
-import { BufferedRanges } from 'src/utils/media';
+import { IAianaState } from '../../reducers';
+import { BufferedRanges } from '../../utils/media';
 import StyledTimeRanges from './Styles';
 
 interface IStateProps {

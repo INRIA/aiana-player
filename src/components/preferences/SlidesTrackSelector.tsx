@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { updateActiveSlidesTrack } from 'src/actions/slides';
-import { IAianaState } from 'src/reducers';
-import { CDispatch } from 'src/store';
-import { IRawSlidesTrack } from 'src/utils/media';
-import { uuid } from 'src/utils/ui';
+import { updateActiveSlidesTrack } from '../../actions/slides';
+import { IAianaState } from '../../reducers';
+import { CDispatch } from '../../store';
+import { IRawSlidesTrack } from '../../utils/media';
+import { uuid } from '../../utils/ui';
 
 interface IStateProps {
   slidesTracks: IRawSlidesTrack[];
@@ -20,7 +20,7 @@ interface IDispatchProps {
 interface ISlidesTrackSelector
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 export function getSelectedValue(
   tracks: IRawSlidesTrack[],
@@ -79,4 +79,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(SlidesTrackSelector));
+)(withI18n()(SlidesTrackSelector));

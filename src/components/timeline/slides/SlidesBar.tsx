@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { requestSeek } from 'src/actions/player';
-import { DEFAULT_LANG } from 'src/constants';
-import { IAianaState } from 'src/reducers';
-import { unitToPercent } from 'src/utils/math';
-import { IRawSlidesTrack } from 'src/utils/media';
-import styled from 'src/utils/styled-components';
+import { requestSeek } from '../../../actions/player';
+import { DEFAULT_LANG } from '../../../constants';
+import { IAianaState } from '../../../reducers';
+import { unitToPercent } from '../../../utils/math';
+import { IRawSlidesTrack } from '../../../utils/media';
+import styled from '../../../utils/styled-components';
 import SlideButton from './SlideButton';
 
 interface IStateProps {

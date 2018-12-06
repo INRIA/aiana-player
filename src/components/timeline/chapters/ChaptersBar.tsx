@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import AssistiveText from 'src/components/a11y/AssistiveText';
-import { IMediaChapters } from 'src/components/chapters/ChaptersMenu';
-import { IAianaState } from 'src/reducers';
-import { getRandomColor } from 'src/utils/colors';
-import { unitToPercent } from 'src/utils/math';
-import { IRawChaptersTrack } from 'src/utils/media';
+import AssistiveText from '../../a11y/AssistiveText';
+import { IMediaChapters } from '../../chapters/ChaptersMenu';
+import { IAianaState } from '../../../reducers';
+import { getRandomColor } from '../../../utils/colors';
+import { unitToPercent } from '../../../utils/math';
+import { IRawChaptersTrack } from '../../../utils/media';
 import StyledChaptersBar from './Styles';
 
 interface IStateProps extends IMediaChapters {

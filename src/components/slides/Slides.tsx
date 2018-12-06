@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers';
-import { markdownToJSX } from 'src/utils/strings';
+import { IAianaState } from '../../reducers';
+import { markdownToJSX } from '../../utils/strings';
 import SlidesStyles from './Styles';
 
 interface IProps {

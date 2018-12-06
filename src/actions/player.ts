@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ExtendedHTMLElement, ThunkResult } from 'src/types';
+import { ExtendedHTMLElement, ThunkResult } from '../types';
 import {
   enterFullscreen,
   exitFullscreen,

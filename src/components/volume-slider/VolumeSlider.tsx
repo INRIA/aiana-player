@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestChangeVolume } from 'src/actions/player';
+import { requestChangeVolume } from '../../actions/player';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
@@ -14,11 +14,11 @@ import {
   PAGE_UP_KEY,
   VOLUME_MAXIMUM,
   VOLUME_MINIMUM
-} from 'src/constants';
-import { IAianaState } from 'src/reducers/index';
-import { CDispatch } from 'src/store';
-import { unitToPercent } from 'src/utils/math';
-import { bounded } from 'src/utils/ui';
+} from '../../constants';
+import { IAianaState } from '../../reducers/index';
+import { CDispatch } from '../../store';
+import { unitToPercent } from '../../utils/math';
+import { bounded } from '../../utils/ui';
 import StyledVolumeSlider from './Styles';
 
 interface IStateProps {
@@ -34,7 +34,7 @@ interface IDispatchProps {
 export interface IVolumeSliderProps
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 class VolumeSlider extends React.Component<IVolumeSliderProps> {
   public elementRef = React.createRef<HTMLDivElement>();
@@ -194,4 +194,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(VolumeSlider));
+)(withI18n()(VolumeSlider));

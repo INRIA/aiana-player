@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'src/utils/styled-components';
+import styled from '../../../utils/styled-components';
 import DropShadow from './DropShadow';
 import ErodeFilter from './Erode';
 

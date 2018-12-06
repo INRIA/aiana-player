@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import {
   handleFullscreenChange,
   playerElementMounted
-} from 'src/actions/player';
-import { handleFetchInitialData } from 'src/actions/shared';
-import SvgFilters from 'src/components/shared/filters';
-import { IAianaState } from 'src/reducers/index';
-import themes from 'src/themes';
+} from '../../actions/player';
+import { handleFetchInitialData } from '../../actions/shared';
+import SvgFilters from '../../components/shared/filters';
+import { IAianaState } from '../../reducers/index';
+import themes from '../../themes';
 import {
   addFullscreenChangeEventListener,
   isDocumentFullscreen,
   removeFullscreenChangeEventListener
-} from 'src/utils/fullscreen';
-import { injectGlobalStyles } from 'src/utils/global-styles';
-import { ThemeProvider } from 'src/utils/styled-components';
+} from '../../utils/fullscreen';
+import { injectGlobalStyles } from '../../utils/global-styles';
+import { ThemeProvider } from '../../utils/styled-components';
 import Player from '../Player';
 import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
@@ -74,6 +74,7 @@ class Aiana extends React.Component<IAiana> {
 }
 
 const mapStateToProps = (state: IAianaState) => ({
+  availableThemes: state.preferences.themes,
   currentTheme: state.preferences.currentTheme
 });
 

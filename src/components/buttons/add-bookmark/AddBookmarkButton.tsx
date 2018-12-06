@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { addBookmark } from 'src/actions/bookmarks';
-import AssistiveText from 'src/components/a11y/AssistiveText';
-import StyledButton from 'src/components/styled/StyledButton';
-import { IAianaState } from 'src/reducers';
+import { addBookmark } from '../../../actions/bookmarks';
+import AssistiveText from '../../../components/a11y/AssistiveText';
+import StyledButton from '../../../components/styled/StyledButton';
+import { IAianaState } from '../../../reducers';
 import ControlIcon from './ControlIcon';
 
 interface IStateProps {
@@ -18,7 +18,7 @@ interface IDispatchProps {
 interface IAddBookmarkButton
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
   public render() {
@@ -46,4 +46,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(AddBookmarkButton));
+)(withI18n()(AddBookmarkButton));

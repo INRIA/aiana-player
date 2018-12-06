@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addChaptersTrack } from 'src/actions/chapters';
-import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from 'src/constants';
-import { IChaptersTrack } from 'src/reducers/chapters';
-import { IRawChaptersTrack, rawChaptersTrack } from 'src/utils/media';
+import { addChaptersTrack } from '../../actions/chapters';
+import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from '../../constants';
+import { IChaptersTrack } from '../../reducers/chapters';
+import { IRawChaptersTrack, rawChaptersTrack } from '../../utils/media';
 
 interface IDispatchProps {
   addChaptersTrack(chaptersTrack: IRawChaptersTrack): void;

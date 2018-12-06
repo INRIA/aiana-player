@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import StyledToggleButton from './Styles';
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
   onClick(evt: React.MouseEvent<any>): void;
 }
 
-interface IToggleButton extends IProps, InjectedTranslateProps {}
+interface IToggleButton extends IProps, I18nContextValues {}
 
 const ToggleButton: React.SFC<IToggleButton> = ({
   isOn,
@@ -32,4 +32,4 @@ const ToggleButton: React.SFC<IToggleButton> = ({
   </StyledToggleButton>
 );
 
-export default translate()(ToggleButton);
+export default withI18n()(ToggleButton);

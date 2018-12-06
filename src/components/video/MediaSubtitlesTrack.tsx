@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addSubtitlesTrack, setSubtitlesText } from 'src/actions/subtitles';
-import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from 'src/constants';
-import { IAianaState } from 'src/reducers/index';
+import { addSubtitlesTrack, setSubtitlesText } from '../../actions/subtitles';
+import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from '../../constants';
+import { IAianaState } from '../../reducers/index';
 import {
   getLastActiveCueText,
   IRawSubtitlesTrack,
   isActiveTrack,
   rawSubtitlesTrack
-} from 'src/utils/media';
+} from '../../utils/media';
 
 export interface ITrack {
   isDefault?: boolean;

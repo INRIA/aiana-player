@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { changePlaybackRate } from 'src/actions/player';
-import { IAianaState } from 'src/reducers/index';
-import { uuid } from 'src/utils/ui';
+import { changePlaybackRate } from '../../actions/player';
+import { IAianaState } from '../../reducers/index';
+import { uuid } from '../../utils/ui';
 
 interface IStateProps {
   currentPlaybackRate: number;
@@ -18,7 +18,7 @@ interface IDispatchProps {
 interface IPlaybackRateSelector
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   public render() {
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(PlaybackRateSelector));
+)(withI18n()(PlaybackRateSelector));

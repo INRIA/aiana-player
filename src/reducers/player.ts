@@ -17,18 +17,18 @@ import {
   SET_ADDITIONAL_INFOS_TEXT,
   SET_BUFFERED_RANGES,
   TOGGLE_FULLSCREEN
-} from 'src/actions/player';
-import { LOAD_CONFIGURATION } from 'src/actions/shared';
-import { ITrack } from 'src/components/video/MediaSubtitlesTrack';
-import { ISource } from 'src/components/video/VideoPlayer';
-import { ExtendedHTMLElement } from 'src/types';
-import { BufferedRanges, IRawMetadataTrack } from 'src/utils/media';
+} from '../actions/player';
+import { LOAD_CONFIGURATION } from '../actions/shared';
+import { ITrack } from '../components/video/MediaSubtitlesTrack';
+import { ISource } from '../components/video/VideoPlayer';
 import {
   DEFAULT_MUTED,
   DEFAULT_PLAYBACK_RATE,
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME
 } from '../constants';
+import { ExtendedHTMLElement } from '../types';
+import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
 
 export interface IPlayerState {
   additionalInformationsText?: string;

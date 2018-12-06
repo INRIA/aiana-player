@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { IRawChaptersTrack } from 'src/utils/media';
+import { IRawChaptersTrack } from '../utils/media';
 
 export const ADD_CHAPTER_TRACK = 'aiana/ADD_CHAPTER_TRACK';
 export const UPDATE_ACTIVE_CHAPTERS_TRACK =

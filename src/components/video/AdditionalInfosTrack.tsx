@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import {
   addMetadataTrack,
   setAdditionalInformationsText
-} from 'src/actions/player';
-import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from 'src/constants';
-import { IAianaState } from 'src/reducers/index';
+} from '../../actions/player';
+import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants';
+import { IAianaState } from '../../reducers/index';
 import {
   getLastActiveCueText,
   IRawMetadataTrack,
   rawTextTrack
-} from 'src/utils/media';
+} from '../../utils/media';
 
 interface IProps {
   label?: string;

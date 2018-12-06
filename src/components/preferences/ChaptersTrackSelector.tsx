@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { updateActiveChaptersTrack } from 'src/actions/chapters';
-import { IAianaState } from 'src/reducers';
-import { CDispatch } from 'src/store';
-import { IRawChaptersTrack } from 'src/utils/media';
-import { uuid } from 'src/utils/ui';
+import { updateActiveChaptersTrack } from '../../actions/chapters';
+import { IAianaState } from '../../reducers';
+import { CDispatch } from '../../store';
+import { IRawChaptersTrack } from '../../utils/media';
+import { uuid } from '../../utils/ui';
 
 interface IStateProps {
   chaptersTracks: IRawChaptersTrack[];
@@ -20,7 +20,7 @@ interface IDispatchProps {
 interface IChaptersTrackSelector
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 function getSelectedValue(
   tracks: IRawChaptersTrack[],
@@ -79,4 +79,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(ChaptersTrackSelector));
+)(withI18n()(ChaptersTrackSelector));

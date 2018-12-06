@@ -1,4 +1,4 @@
-import styled from 'src/utils/styled-components';
+import styled from '../../utils/styled-components';
 
 const Styles = styled.section`
   position: absolute;

@@ -2,10 +2,10 @@ import { Reducer } from 'redux';
 import {
   ADD_CHAPTER_TRACK,
   UPDATE_ACTIVE_CHAPTERS_TRACK
-} from 'src/actions/chapters';
-import { LOAD_CONFIGURATION } from 'src/actions/shared';
-import { DEFAULT_LANG, DEFAULT_MENU_ENABLED } from 'src/constants';
-import { IRawChaptersTrack } from 'src/utils/media';
+} from '../actions/chapters';
+import { LOAD_CONFIGURATION } from '../actions/shared';
+import { DEFAULT_LANG, DEFAULT_MENU_ENABLED } from '../constants';
+import { IRawChaptersTrack } from '../utils/media';
 
 export interface IChaptersTrack {
   label: string;

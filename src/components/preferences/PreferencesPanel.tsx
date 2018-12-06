@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
-import styled from 'src/utils/styled-components';
+import { I18nContextValues, withI18n } from 'react-i18next';
+import styled from '../../utils/styled-components';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import LanguageSelector from './LanguageSelector';
 import PlaybackRateSelector from './PlaybackRateSelector';
@@ -44,7 +44,7 @@ const StyledPanel = styled.div`
   }
 `;
 
-const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
+const PreferencesPanel: React.SFC<I18nContextValues> = ({ t }) => (
   <StyledPanel className="aip-preferences">
     <h2>{t('preferences.title')}</h2>
     <ul>
@@ -70,4 +70,4 @@ const PreferencesPanel: React.SFC<InjectedTranslateProps> = ({ t }) => (
   </StyledPanel>
 );
 
-export default translate()(PreferencesPanel);
+export default withI18n()(PreferencesPanel);

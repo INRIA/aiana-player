@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as queryString from 'query-string';
 import { AnyAction } from 'redux';
-import { DEFAULT_CONFIGURATION_PATH } from 'src/constants';
-import { CDispatch } from 'src/store';
-import { ThunkResult } from 'src/types';
+import { DEFAULT_CONFIGURATION_PATH } from '../constants';
+import { CDispatch } from '../store';
+import { ThunkResult } from '../types';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 

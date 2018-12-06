@@ -1,8 +1,8 @@
 import * as React from 'react';
-import StyledButton from 'src/components/styled/StyledButton';
-import StyledSvg from 'src/components/styled/StyledSvg';
-import SlideIcon from 'src/components/svg/Slide';
-import styled from 'src/utils/styled-components';
+import StyledButton from '../../styled/StyledButton';
+import StyledSvg from '../../styled/StyledSvg';
+import SlideIcon from '../../svg/Slide';
+import styled from '../../../utils/styled-components';
 
 const StyledSvgIcon = StyledSvg.withComponent(SlideIcon);
 const StyledSlideIcon = styled(StyledSvgIcon)`

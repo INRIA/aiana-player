@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers/index';
-import { formatSubtitles } from 'src/utils/strings';
+import { IAianaState } from '../../reducers/index';
+import { formatSubtitles } from '../../utils/strings';
 import { StyledSpan, StyledSubtitles } from './Styles';
 
 interface IStateProps {

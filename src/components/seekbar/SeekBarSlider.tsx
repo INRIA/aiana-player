@@ -1,9 +1,9 @@
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
-import { requestSeek } from 'src/actions/player';
+import { requestSeek } from '../../actions/player';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
@@ -14,11 +14,11 @@ import {
   HOME_KEY,
   PAGE_DOWN_KEY,
   PAGE_UP_KEY
-} from 'src/constants';
-import { IAianaState } from 'src/reducers/index';
-import { unitToPercent } from 'src/utils/math';
-import { durationTranslationKey, secondsToHMSObject } from 'src/utils/time';
-import { bounded } from 'src/utils/ui';
+} from '../../constants';
+import { IAianaState } from '../../reducers/index';
+import { unitToPercent } from '../../utils/math';
+import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
+import { bounded } from '../../utils/ui';
 import TimeRangesBar from '../buffered/TimeRangesBar';
 import StyledDiv from './Styles';
 
@@ -46,7 +46,7 @@ interface IDispatchProps {
 interface ISeekBarSlider
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   public sliderRef = React.createRef<HTMLDivElement>();
@@ -313,4 +313,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(SeekBarSlider));
+)(withI18n()(SeekBarSlider));

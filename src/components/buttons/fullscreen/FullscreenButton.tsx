@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { toggleFullscreen } from 'src/actions/player';
-import AssistiveText from 'src/components/a11y/AssistiveText';
-import StyledButton from 'src/components/styled/StyledButton';
-import { IAianaState } from 'src/reducers/index';
-import { ExtendedHTMLElement } from 'src/types';
-import { isFullscreenEnabled } from 'src/utils/fullscreen';
+import { toggleFullscreen } from '../../../actions/player';
+import AssistiveText from '../../../components/a11y/AssistiveText';
+import StyledButton from '../../../components/styled/StyledButton';
+import { IAianaState } from '../../../reducers/index';
+import { ExtendedHTMLElement } from '../../../types';
+import { isFullscreenEnabled } from '../../../utils/fullscreen';
 import ControlIcon from './ControlIcon';
 
 interface IStateProps {
@@ -15,13 +15,13 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  toggleFullscreen(element: ExtendedHTMLElement): void;
+  toggleFullscreen: any;
 }
 
 interface IFullscreenButton
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 class FullscreenButton extends React.Component<IFullscreenButton> {
   public render() {
@@ -74,4 +74,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(FullscreenButton));
+)(withI18n()(FullscreenButton));
