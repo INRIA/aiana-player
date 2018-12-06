@@ -20,4 +20,15 @@ describe('format subtitles', () => {
     expect(formatSubtitles(`${text}    `)).toEqual(result);
     expect(formatSubtitles(`    ${text}    `)).toEqual(result);
   });
+
+  test('should return single line string', () => {
+    const text = `Hello, world!
+    This is a multiline string.`;
+    const result = ['Hello, world! This is a multiline string.'];
+
+    expect(formatSubtitles(text, true)).toEqual(result);
+    expect(formatSubtitles(`    ${text}`, true)).toEqual(result);
+    expect(formatSubtitles(`${text}    `, true)).toEqual(result);
+    expect(formatSubtitles(`    ${text}    `, true)).toEqual(result);
+  });
 });

@@ -23,11 +23,13 @@ export function bounded(
   return relativeX;
 }
 
+/**
+ * Generates a random string of [0-9a-z] characters
+ */
 function randString(length: number = 4): string {
-  const str = Math.random()
+  return Math.random()
     .toString(36)
     .substring(2, length + 2);
-  return str;
 }
 
 /**

@@ -5,8 +5,16 @@ marked.setOptions({
   headerIds: false
 });
 
-export function formatSubtitles(text: string): string[] {
-  return text.split(/\n/).map((line) => line.trim());
+export function formatSubtitles(
+  text: string,
+  singleLine: boolean = false
+): string[] {
+  const cleanedText = text.split(/\n/).map((line) => line.trim());
+  if (!singleLine) {
+    return cleanedText;
+  } else {
+    return [cleanedText.join(' ')];
+  }
 }
 
 export function markdownToJSX(md: string): JSX.Element {
