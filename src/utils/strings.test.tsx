@@ -1,4 +1,5 @@
-import { formatSubtitles } from './strings';
+import { shallow } from 'enzyme';
+import { formatSubtitles, markdownToJSX } from './strings';
 
 describe('format subtitles', () => {
   test('with single line string', () => {
@@ -30,5 +31,13 @@ describe('format subtitles', () => {
     expect(formatSubtitles(`    ${text}`, true)).toEqual(result);
     expect(formatSubtitles(`${text}    `, true)).toEqual(result);
     expect(formatSubtitles(`    ${text}    `, true)).toEqual(result);
+  });
+});
+
+test('markdown to JSX', () => {
+  const result = shallow(markdownToJSX('# Hello, World!'));
+
+  it('returns a JSX element', () => {
+    expect(result.find('h1').html()).toMatch(/Hello, World!/);
   });
 });

@@ -13,6 +13,9 @@ export function hexToHsla(color: string, alpha: number): string {
   return `hsla(${h}, ${s}%, ${l}%, ${alpha})`;
 }
 
+/**
+ * FIXME: Debug function to generate random color
+ */
 export function getRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '';
