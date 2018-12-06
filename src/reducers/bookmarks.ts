@@ -1,14 +1,12 @@
 import { Reducer } from 'redux';
-import { ADD_BOOKMARK } from 'src/actions/bookmarks';
-import { LOAD_CONFIGURATION } from 'src/actions/shared';
+import { ADD_BOOKMARK } from '../actions/bookmarks';
+import { LOAD_CONFIGURATION } from '../actions/shared';
 
 export interface IBookmark {
   readonly time: number;
 }
 
-export type IBookmarksState = IBookmark[];
-
-const bookmarks: Reducer = (state: IBookmarksState = [], action) => {
+const bookmarks: Reducer = (state: IBookmark[] = [], action) => {
   switch (action.type) {
     case ADD_BOOKMARK:
       if (state.find((mark) => mark.time === action.time)) {

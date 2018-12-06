@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { requestSeek } from 'src/actions/player';
-import { IAianaState } from 'src/reducers';
-import { IBookmark } from 'src/reducers/bookmarks';
-import { unitToPercent } from 'src/utils/math';
-import styled from 'src/utils/styled-components';
+import { requestSeek } from '../../../actions/player';
+import { IAianaState } from '../../../reducers';
+import { IBookmark } from '../../../reducers/bookmarks';
+import { unitToPercent } from '../../../utils/math';
+import styled from '../../../utils/styled-components';
 import BookmarkButton from './BookmarkButton';
 
 interface IStateProps {

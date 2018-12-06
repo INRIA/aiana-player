@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { changeCurrentLanguage } from 'src/actions/preferences';
-import { IAianaState } from 'src/reducers/index';
-import { CDispatch } from 'src/store';
-import { uuid } from 'src/utils/ui';
+import { changeCurrentLanguage } from '../../actions/preferences';
+import { IAianaState } from '../../reducers/index';
+import { CDispatch } from '../../store';
+import { uuid } from '../../utils/ui';
 
 interface IStateProps {
   currentLanguage: string;
@@ -18,7 +18,7 @@ interface IDispatchProps {
 interface ILanguageSelector
   extends IStateProps,
     IDispatchProps,
-    InjectedTranslateProps {}
+    I18nContextValues {}
 
 class LanguageSelector extends React.Component<ILanguageSelector> {
   public render() {
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(LanguageSelector));
+)(withI18n()(LanguageSelector));

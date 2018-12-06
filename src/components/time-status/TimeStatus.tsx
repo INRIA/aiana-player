@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers/index';
-import { secondsToHMS } from 'src/utils/time';
+import { IAianaState } from '../../reducers/index';
+import { secondsToHMS } from '../../utils/time';
 import StyledElement from './Styles';
 
 interface IStateProps {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers/index';
-import { IRawChaptersTrack } from 'src/utils/media';
-import { uuid } from 'src/utils/ui';
+import { IAianaState } from '../../reducers/index';
+import { IRawChaptersTrack } from '../../utils/media';
+import { uuid } from '../../utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
 import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';

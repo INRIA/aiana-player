@@ -1,7 +1,7 @@
 import * as React from 'react';
-import StyledSvg from 'src/components/styled/StyledSvg';
-import PauseIcon from 'src/components/svg/Pause';
-import PlayIcon from 'src/components/svg/PlayArrow';
+import StyledSvg from '../../styled/StyledSvg';
+import PauseIcon from '../../svg/Pause';
+import PlayIcon from '../../svg/PlayArrow';
 
 const StyledPlayIcon = StyledSvg.withComponent(PlayIcon);
 const StyledPauseIcon = StyledSvg.withComponent(PauseIcon);

@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { formatSubtitles, markdownToJSX } from './strings';
 
 describe('format subtitles', () => {
@@ -34,10 +34,14 @@ describe('format subtitles', () => {
   });
 });
 
-test('markdown to JSX', () => {
-  const result = shallow(markdownToJSX('# Hello, World!'));
+describe('markdown to JSX', () => {
+  const wrapper = mount(markdownToJSX('# Hello, World!'));
 
-  it('returns a JSX element', () => {
-    expect(result.find('h1').html()).toMatch(/Hello, World!/);
+  it('mounts properly', () => {
+    expect(wrapper.html()).toContain('Hello, World!');
+  });
+
+  it('has proper class name', () => {
+    expect(wrapper.hasClass('aip-marked')).toBe(true);
   });
 });

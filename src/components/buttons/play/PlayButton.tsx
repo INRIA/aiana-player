@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestMediaPause, requestMediaPlay } from 'src/actions/player';
-import AssistiveText from 'src/components/a11y/AssistiveText';
-import StyledButton from 'src/components/styled/StyledButton';
-import { IAianaState } from 'src/reducers/index';
-import styled from 'src/utils/styled-components';
+import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
+import AssistiveText from '../../../components/a11y/AssistiveText';
+import StyledButton from '../../../components/styled/StyledButton';
+import { IAianaState } from '../../../reducers/index';
+import styled from '../../../utils/styled-components';
 import PlayControlIcon from './ControlIcon';
 
 const StyledPlayButton = styled(StyledButton)`
@@ -18,14 +18,11 @@ export interface IPlayButtonProps {
 }
 
 interface IDispatchProps {
-  pauseMedia(media: HTMLMediaElement): void;
-  playMedia(media: HTMLMediaElement): void;
+  pauseMedia: any;
+  playMedia: any;
 }
 
-interface IProps
-  extends IPlayButtonProps,
-    IDispatchProps,
-    InjectedTranslateProps {}
+interface IProps extends IPlayButtonProps, IDispatchProps, I18nContextValues {}
 
 class PlayButton extends React.Component<IProps> {
   public render() {
@@ -72,7 +69,7 @@ const mapDispatchToProps = {
   playMedia: requestMediaPlay
 };
 
-export default connect<IPlayButtonProps, IDispatchProps, void>(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(PlayButton));
+)(withI18n()(PlayButton));

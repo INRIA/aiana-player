@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMediaCue } from 'src/utils/media';
+import { IMediaCue } from '../../utils/media';
 import MediaChapterButton from './MediaChapterButton';
 
 interface IProps {

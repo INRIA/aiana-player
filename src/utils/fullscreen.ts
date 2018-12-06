@@ -1,4 +1,4 @@
-import { ExtendedDocument, ExtendedHTMLElement } from 'src/types';
+import { ExtendedDocument, ExtendedHTMLElement } from '../types';
 
 // fullscreen support isn't consistent across browsers, and fullscreen API
 // functions return values can be promises or void.

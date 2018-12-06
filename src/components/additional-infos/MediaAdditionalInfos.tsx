@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers';
-import { markdownToJSX } from 'src/utils/strings';
-import { uuid } from 'src/utils/ui';
+import { IAianaState } from '../../reducers';
+import { markdownToJSX } from '../../utils/strings';
+import { uuid } from '../../utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledAdditionalInfos from './Styles';
 
-interface IProps extends InjectedTranslateProps {
+interface IProps extends I18nContextValues {
   text?: string;
 }
 
@@ -35,4 +35,4 @@ const mapStateToProps = (state: IAianaState) => ({
   text: state.player.additionalInformationsText
 });
 
-export default connect(mapStateToProps)(translate()(MediaAdditionalInfos));
+export default connect(mapStateToProps)(withI18n()(MediaAdditionalInfos));

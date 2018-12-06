@@ -8,7 +8,7 @@ import {
   I18N_DURATION_SECONDS_KEY,
   SECONDS_PER_HOUR,
   SECONDS_PER_MINUTE
-} from 'src/constants';
+} from '../constants';
 import {
   durationTranslationKey,
   extractHours,

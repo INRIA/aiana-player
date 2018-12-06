@@ -1,12 +1,12 @@
 import { Reducer } from 'redux';
-import { LOAD_CONFIGURATION } from 'src/actions/shared';
+import { LOAD_CONFIGURATION } from '../actions/shared';
 import {
   ADD_SUBTITLES_TRACK,
   SET_SUBTITLE_TEXT,
   UPDATE_ACTIVE_SUBTITLES_TRACK,
   UPDATE_SUBTITLES_TRACKS_LIST
-} from 'src/actions/subtitles';
-import { IRawSubtitlesTrack } from 'src/utils/media';
+} from '../actions/subtitles';
+import { IRawSubtitlesTrack } from '../utils/media';
 
 export interface ISubtitlesTrack {
   label?: string;

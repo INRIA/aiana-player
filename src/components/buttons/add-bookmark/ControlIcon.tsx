@@ -1,6 +1,6 @@
 import * as React from 'react';
-import StyledSvg from 'src/components/styled/StyledSvg';
-import BookmarkAddIcon from 'src/components/svg/BookmarkAdd';
+import StyledSvg from '../../styled/StyledSvg';
+import BookmarkAddIcon from '../../svg/BookmarkAdd';
 
 const StyledIcon = StyledSvg.withComponent(BookmarkAddIcon);
 

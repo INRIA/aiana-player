@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { IAianaState } from 'src/reducers';
+import { IAianaState } from './reducers';
 
 /**
  * Default `Document` interface is missing proprietary implementations and some

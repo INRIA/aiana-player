@@ -1,10 +1,10 @@
-import { ITrack } from 'src/components/video/MediaSubtitlesTrack';
+import { ITrack } from '../components/video/MediaSubtitlesTrack';
 import {
   TRACK_KIND_CAPTIONS,
   TRACK_KIND_CHAPTERS,
   TRACK_KIND_SUBTITLES,
   TRACK_MODE_ACTIVE
-} from 'src/constants';
+} from '../constants';
 
 export interface IRawSubtitlesTrack {
   active: boolean;

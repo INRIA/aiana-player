@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
-import { ThunkResult } from 'src/types';
-import { IRawSubtitlesTrack } from 'src/utils/media';
+import { ThunkResult } from '../types';
+import { IRawSubtitlesTrack } from '../utils/media';
 
 export const UPDATE_SUBTITLES_TRACKS_LIST =
   'aiana/UPDATE_SUBTITLES_TRACKS_LIST';

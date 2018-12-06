@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { InjectedTranslateProps, translate } from 'react-i18next';
+import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { muteMedia, unmuteMedia } from 'src/actions/player';
-import AssistiveText from 'src/components/a11y/AssistiveText';
-import StyledButton from 'src/components/styled/StyledButton';
-import { IAianaState } from 'src/reducers/index';
-import styled from 'src/utils/styled-components';
+import { muteMedia, unmuteMedia } from '../../../actions/player';
+import AssistiveText from '../../../components/a11y/AssistiveText';
+import StyledButton from '../../../components/styled/StyledButton';
+import { IAianaState } from '../../../reducers/index';
+import styled from '../../../utils/styled-components';
 import ControlIcon from './ControlIcon';
 
 const StyledMuteButton = styled(StyledButton)`
@@ -24,10 +24,7 @@ interface IDispatchProps {
   unmute(media: HTMLMediaElement): void;
 }
 
-interface IMuteButton
-  extends IStateProps,
-    IDispatchProps,
-    InjectedTranslateProps {}
+interface IMuteButton extends IStateProps, IDispatchProps, I18nContextValues {}
 
 class MuteButton extends React.Component<IMuteButton> {
   public render() {
@@ -79,4 +76,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(translate()(MuteButton));
+)(withI18n()(MuteButton));

@@ -12,13 +12,13 @@ import {
   updateBufferedRanges,
   updateCurrentTime,
   updateMediaDuration
-} from 'src/actions/player';
-import { updateSubtitlesTracksList } from 'src/actions/subtitles';
-import { IChaptersTrack } from 'src/reducers/chapters';
-import { IAianaState } from 'src/reducers/index';
-import { ISlidesTrack } from 'src/reducers/slides';
-import { IRawSubtitlesTrack, isDisplayableTrack } from 'src/utils/media';
-import styled from 'src/utils/styled-components';
+} from '../../actions/player';
+import { updateSubtitlesTracksList } from '../../actions/subtitles';
+import { IChaptersTrack } from '../../reducers/chapters';
+import { IAianaState } from '../../reducers/index';
+import { ISlidesTrack } from '../../reducers/slides';
+import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
+import styled from '../../utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
 import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
@@ -46,11 +46,11 @@ export interface ISource {
 }
 
 interface IDispatchProps {
+  requestMediaPause: any;
+  requestMediaPlay: any;
   changeVolume(volume: number): void;
   mediaElementMounted(media: HTMLMediaElement): void;
   mediaElementUnounted(): void;
-  requestMediaPause(media: HTMLMediaElement): any;
-  requestMediaPlay(media: HTMLMediaElement): any;
   startSeeking(): void;
   stopSeeking(): void;
   toggleMute(muted: boolean): void;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from 'src/reducers';
-import styled from 'src/utils/styled-components';
+import { IAianaState } from '../reducers';
+import styled from '../utils/styled-components';
 import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
 import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';

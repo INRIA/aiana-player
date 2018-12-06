@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addSlidesTrack, setSlidesText } from 'src/actions/slides';
-import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from 'src/constants';
-import { IAianaState } from 'src/reducers';
+import { addSlidesTrack, setSlidesText } from '../../actions/slides';
+import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants';
+import { IAianaState } from '../../reducers';
 import {
   getLastActiveCueText,
   IRawSlidesTrack,
   rawSlidesTrack
-} from 'src/utils/media';
+} from '../../utils/media';
 
 interface IProps {
   label?: string;

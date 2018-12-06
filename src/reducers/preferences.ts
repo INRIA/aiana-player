@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
-import { CHANGE_LANGUAGE, CHANGE_THEME } from 'src/actions/preferences';
-import { LOAD_CONFIGURATION } from 'src/actions/shared';
+import { CHANGE_LANGUAGE, CHANGE_THEME } from '../actions/preferences';
+import { LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
@@ -11,9 +11,9 @@ import {
   DEFAULT_THEME,
   DEFAULT_VOLUME_STEP,
   DEFAULT_VOLUME_STEP_MULTIPLIER
-} from 'src/constants';
-import InriaTheme from 'src/themes/inria';
-import { IAianaTheme } from 'src/utils/styled-components';
+} from '../constants';
+import InriaTheme from '../themes/inria';
+import { IAianaTheme } from '../utils/styled-components';
 
 export interface IPreferencesState {
   currentLanguage: string;
