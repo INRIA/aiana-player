@@ -56,31 +56,33 @@ const StyledBookmarksBar = styled.nav`
   }
 `;
 
-const BookmarksBar: React.SFC<IBookmarksBar> = ({
+function BookmarksBar({
   bookmarks,
   duration,
   media,
   requestSeek: requestSeekAction
-}) => (
-  <StyledBookmarksBar>
-    <ol>
-      {bookmarks.map(({ time }, idx) => (
-        <li
-          key={idx}
-          style={{
-            left: `${unitToPercent(time, duration)}%`
-          }}
-        >
-          <BookmarkButton
-            onClick={requestSeekAction}
-            media={media}
-            time={time}
-          />
-        </li>
-      ))}
-    </ol>
-  </StyledBookmarksBar>
-);
+}: IBookmarksBar) {
+  return (
+    <StyledBookmarksBar>
+      <ol>
+        {bookmarks.map(({ time }, idx) => (
+          <li
+            key={idx}
+            style={{
+              left: `${unitToPercent(time, duration)}%`
+            }}
+          >
+            <BookmarkButton
+              onClick={requestSeekAction}
+              media={media}
+              time={time}
+            />
+          </li>
+        ))}
+      </ol>
+    </StyledBookmarksBar>
+  );
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   bookmarks: state.bookmarks,

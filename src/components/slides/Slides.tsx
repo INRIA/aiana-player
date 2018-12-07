@@ -8,7 +8,7 @@ interface IProps {
   text?: string;
 }
 
-const Slides: React.SFC<IProps> = ({ text }) => {
+function Slides({ text }: IProps) {
   if (!text) {
     return null;
   }
@@ -18,7 +18,7 @@ const Slides: React.SFC<IProps> = ({ text }) => {
       <div className="aip-slides-content">{markdownToJSX(text)}</div>
     </SlidesStyles>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   text: state.slides.currentSlideText

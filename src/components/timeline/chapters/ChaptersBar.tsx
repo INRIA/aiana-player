@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import AssistiveText from '../../a11y/AssistiveText';
-import { IMediaChapters } from '../../chapters/ChaptersMenu';
 import { IAianaState } from '../../../reducers';
 import { getRandomColor } from '../../../utils/colors';
 import { unitToPercent } from '../../../utils/math';
 import { IRawChaptersTrack } from '../../../utils/media';
+import AssistiveText from '../../a11y/AssistiveText';
+import { IMediaChapters } from '../../chapters/ChaptersMenu';
 import StyledChaptersBar from './Styles';
 
 interface IStateProps extends IMediaChapters {
@@ -14,11 +14,7 @@ interface IStateProps extends IMediaChapters {
   language: string;
 }
 
-const ChaptersBar: React.SFC<IStateProps> = ({
-  chaptersTracks,
-  duration,
-  language
-}) => {
+function ChaptersBar({ chaptersTracks, duration, language }: IStateProps) {
   // TODO: refactor with ChaptersMenu
   const activeChaptersTrack = chaptersTracks.find(
     (track) => track.language === language
@@ -46,7 +42,7 @@ const ChaptersBar: React.SFC<IStateProps> = ({
       </ol>
     </StyledChaptersBar>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.chapters.chaptersTracks,

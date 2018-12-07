@@ -9,11 +9,13 @@ interface IProps {
   children: any;
 }
 
-const IntlWrapper: React.SFC<IProps> = ({ children, language }) => (
-  <I18nextProvider i18n={i18nInstance} initialLanguage={language}>
-    {children}
-  </I18nextProvider>
-);
+function IntlWrapper({ children, language }: IProps) {
+  return (
+    <I18nextProvider i18n={i18nInstance} initialLanguage={language}>
+      {children}
+    </I18nextProvider>
+  );
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   language: state.preferences.currentLanguage

@@ -5,7 +5,7 @@ import { updateActiveChaptersTrack } from '../../actions/chapters';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { IRawChaptersTrack } from '../../utils/media';
-import { uuid } from '../../utils/ui';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   chaptersTracks: IRawChaptersTrack[];
@@ -18,7 +18,8 @@ interface IDispatchProps {
 }
 
 interface IChaptersTrackSelector
-  extends IStateProps,
+  extends InjectedUniqueIdProps,
+    IStateProps,
     IDispatchProps,
     I18nContextValues {}
 
@@ -33,24 +34,23 @@ function getSelectedValue(
   return selectedTrack ? selectedTrack.language : '';
 }
 
-const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
+function ChaptersTrackSelector({
   chaptersTracks,
   currentLanguage,
   mediaElement,
   selectedTrackChangedHandler,
-  t
-}) => {
+  t,
+  uid
+}: IChaptersTrackSelector) {
   if (!mediaElement) {
     return null;
   }
 
-  const id = uuid();
-
   return (
     <React.Fragment>
-      <span id={id}>{t('preferences.chapterstrack.label')}</span>
+      <span id={uid}>{t('preferences.chapterstrack.label')}</span>
       <select
-        aria-labelledby={id}
+        aria-labelledby={uid}
         onChange={selectedTrackChangedHandler}
         value={getSelectedValue(chaptersTracks, currentLanguage)}
       >
@@ -62,7 +62,7 @@ const ChaptersTrackSelector: React.SFC<IChaptersTrackSelector> = ({
       </select>
     </React.Fragment>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.chapters.chaptersTracks,
@@ -79,4 +79,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(ChaptersTrackSelector));
+)(withI18n()(withUniqueId(ChaptersTrackSelector)));

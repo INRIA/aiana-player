@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { changeCurrentLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
 import { CDispatch } from '../../store';
-import { uuid } from '../../utils/ui';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   currentLanguage: string;
@@ -16,20 +16,20 @@ interface IDispatchProps {
 }
 
 interface ILanguageSelector
-  extends IStateProps,
+  extends InjectedUniqueIdProps,
+    IStateProps,
     IDispatchProps,
     I18nContextValues {}
 
 class LanguageSelector extends React.Component<ILanguageSelector> {
   public render() {
-    const { languages, currentLanguage, t } = this.props;
-    const id = uuid();
+    const { languages, currentLanguage, t, uid } = this.props;
 
     return (
       <React.Fragment>
-        <span id={id}>{t('preferences.language.label')}</span>
+        <span id={uid}>{t('preferences.language.label')}</span>
         <select
-          aria-labelledby={id}
+          aria-labelledby={uid}
           onChange={this.props.changeHandler}
           value={currentLanguage}
         >
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(LanguageSelector));
+)(withI18n()(withUniqueId(LanguageSelector)));

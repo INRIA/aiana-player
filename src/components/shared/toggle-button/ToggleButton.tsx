@@ -11,25 +11,21 @@ interface IProps {
 
 interface IToggleButton extends IProps, I18nContextValues {}
 
-const ToggleButton: React.SFC<IToggleButton> = ({
-  isOn,
-  label,
-  labelledBy,
-  onClick,
-  t
-}) => (
-  <StyledToggleButton
-    role="switch"
-    className="aip-switch"
-    aria-label={label}
-    aria-labelledby={labelledBy}
-    aria-checked={isOn}
-    onClick={onClick}
-    tabIndex={0}
-  >
-    <span className="on">{t('button.toggle.on')}</span>
-    <span className="off">{t('button.toggle.off')}</span>
-  </StyledToggleButton>
-);
+function ToggleButton({ isOn, label, labelledBy, onClick, t }: IToggleButton) {
+  return (
+    <StyledToggleButton
+      role="switch"
+      className="aip-switch"
+      aria-label={label}
+      aria-labelledby={labelledBy}
+      aria-checked={isOn}
+      onClick={onClick}
+      tabIndex={0}
+    >
+      <span className="on">{t('button.toggle.on')}</span>
+      <span className="off">{t('button.toggle.off')}</span>
+    </StyledToggleButton>
+  );
+}
 
 export default withI18n()(ToggleButton);

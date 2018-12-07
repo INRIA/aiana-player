@@ -5,7 +5,7 @@ import { updateActiveSlidesTrack } from '../../actions/slides';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { IRawSlidesTrack } from '../../utils/media';
-import { uuid } from '../../utils/ui';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   slidesTracks: IRawSlidesTrack[];
@@ -18,7 +18,8 @@ interface IDispatchProps {
 }
 
 interface ISlidesTrackSelector
-  extends IStateProps,
+  extends InjectedUniqueIdProps,
+    IStateProps,
     IDispatchProps,
     I18nContextValues {}
 
@@ -33,24 +34,23 @@ export function getSelectedValue(
   return selectedTrack ? selectedTrack.language : '';
 }
 
-const SlidesTrackSelector: React.SFC<ISlidesTrackSelector> = ({
+function SlidesTrackSelector({
   slidesTracks,
   currentLanguage,
   mediaElement,
   selectedTrackChangedHandler,
-  t
-}) => {
+  t,
+  uid
+}: ISlidesTrackSelector) {
   if (!mediaElement) {
     return null;
   }
 
-  const id = uuid();
-
   return (
     <React.Fragment>
-      <span id={id}>{t('preferences.slidestrack.label')}</span>
+      <span id={uid}>{t('preferences.slidestrack.label')}</span>
       <select
-        aria-labelledby={id}
+        aria-labelledby={uid}
         onChange={selectedTrackChangedHandler}
         value={getSelectedValue(slidesTracks, currentLanguage)}
       >
@@ -62,7 +62,7 @@ const SlidesTrackSelector: React.SFC<ISlidesTrackSelector> = ({
       </select>
     </React.Fragment>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   currentLanguage: state.slides.language,
@@ -79,4 +79,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(SlidesTrackSelector));
+)(withI18n()(withUniqueId(SlidesTrackSelector)));

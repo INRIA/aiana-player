@@ -18,10 +18,12 @@ interface IProps {
   id?: string;
 }
 
-const AssistiveText: React.SFC<IProps> = ({ children, id }) => (
-  <VisuallyHidden id={id} className="assistive-text">
-    {children}
-  </VisuallyHidden>
-);
+function AssistiveText({ children, id }: IProps) {
+  return (
+    <VisuallyHidden id={id} className="assistive-text">
+      {children}
+    </VisuallyHidden>
+  );
+}
 
 export default AssistiveText;

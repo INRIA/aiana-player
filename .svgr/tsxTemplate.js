@@ -6,9 +6,9 @@ function getProps(config) {
   if (config.expandProps) props.push('...props');
 
   if (props.length === 0) return '()';
-  if (props.length === 1 && config.expandProps) return 'props';
+  if (props.length === 1 && config.expandProps) return '(props: any)';
 
-  return `({ ${props.join(', ')} })`;
+  return `({ ${props.join(', ')} }: any)`;
 }
 
 module.exports = (code, config, state) => {
@@ -16,7 +16,9 @@ module.exports = (code, config, state) => {
 
   return `import * as React from 'react';
 
-const ${state.componentName}: React.SFC = ${props} => ${code}
+function ${state.componentName}${props} {
+  return ${code}
+}
 
-export default ${state.componentName}`;
+export default ${state.componentName};`;
 };

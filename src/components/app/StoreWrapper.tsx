@@ -8,10 +8,12 @@ import ConnectedAiana from './ConnectedAiana';
 
 const store = createStore(reducers, {}, composeWithDevTools(middleware));
 
-const StoreWrapper: React.SFC = () => (
-  <Provider store={store}>
-    <ConnectedAiana />
-  </Provider>
-);
+function StoreWrapper() {
+  return (
+    <Provider store={store}>
+      <ConnectedAiana />
+    </Provider>
+  );
+}
 
 export default StoreWrapper;

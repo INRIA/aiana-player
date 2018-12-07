@@ -6,7 +6,7 @@ interface IProps {
   chapters: IMediaCue[];
 }
 
-const ChaptersList: React.SFC<IProps> = ({ chapters }) => {
+function ChaptersList({ chapters }: IProps) {
   if (chapters.length === 0) {
     return null;
   }
@@ -20,6 +20,6 @@ const ChaptersList: React.SFC<IProps> = ({ chapters }) => {
       ))}
     </ol>
   );
-};
+}
 
 export default ChaptersList;

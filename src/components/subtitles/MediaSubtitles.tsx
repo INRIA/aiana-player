@@ -8,7 +8,7 @@ interface IStateProps {
   subtitlesText?: string;
 }
 
-const MediaSubtitles: React.SFC<IStateProps> = ({ subtitlesText }) => {
+function MediaSubtitles({ subtitlesText }: IStateProps) {
   if (!subtitlesText) {
     return null;
   }
@@ -22,7 +22,7 @@ const MediaSubtitles: React.SFC<IStateProps> = ({ subtitlesText }) => {
       ))}
     </StyledSubtitles>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   subtitlesText: state.subtitles.subtitlesText

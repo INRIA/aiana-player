@@ -10,12 +10,12 @@ interface IControlIcon {
   isMuted: boolean;
 }
 
-const ControlIcon: React.SFC<IControlIcon> = ({ isMuted }): JSX.Element => {
+function ControlIcon({ isMuted }: IControlIcon) {
   if (isMuted) {
     return <StyledVolumeMutedIcon aria-hidden="true" />;
   }
 
   return <StyledVolumeUnmutedIcon aria-hidden="true" />;
-};
+}
 
 export default ControlIcon;

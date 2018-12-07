@@ -37,7 +37,7 @@ function randString(length: number = 4): string {
  *
  * @param length {number} the length of the identifier
  */
-export function uuid(length: number = 6): string {
+export function uid(length: number = 6): string {
   if (length < 1) {
     return '';
   }

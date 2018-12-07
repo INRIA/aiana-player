@@ -8,11 +8,13 @@ const StyledDiv = styled.div`
   height: 100%;
 `;
 
-const VolumeControl: React.SFC = () => (
-  <StyledDiv>
-    <MuteButton />
-    <VolumeSlider />
-  </StyledDiv>
-);
+function VolumeControl() {
+  return (
+    <StyledDiv>
+      <MuteButton />
+      <VolumeSlider />
+    </StyledDiv>
+  );
+}
 
 export default VolumeControl;

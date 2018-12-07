@@ -9,13 +9,15 @@ interface IStateProps {
   duration: number;
 }
 
-const TimeStatus: React.SFC<IStateProps> = ({ currentTime, duration }) => (
-  <StyledElement className="aip-time-status">
-    <span className="aip-time-current">{secondsToHMS(currentTime)}</span>
-    <span> / </span>
-    <span className="aip-time-duration">{secondsToHMS(duration)}</span>
-  </StyledElement>
-);
+function TimeStatus({ currentTime, duration }: IStateProps) {
+  return (
+    <StyledElement className="aip-time-status">
+      <span className="aip-time-current">{secondsToHMS(currentTime)}</span>
+      <span> / </span>
+      <span className="aip-time-duration">{secondsToHMS(duration)}</span>
+    </StyledElement>
+  );
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   currentTime: state.player.currentTime,

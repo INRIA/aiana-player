@@ -58,13 +58,13 @@ const StyledSlidesBar = styled.nav`
   }
 `;
 
-const SlidesBar: React.SFC<ISlidesBar> = ({
+function SlidesBar({
   slidesTracks,
   duration,
   currentLanguage,
   media,
   requestSeek: requestSeekAction
-}) => {
+}: ISlidesBar) {
   const activeSlidesTrack =
     slidesTracks.find((track) => track.language === currentLanguage) ||
     slidesTracks.find((track) => track.language === DEFAULT_LANG);
@@ -93,7 +93,7 @@ const SlidesBar: React.SFC<ISlidesBar> = ({
       </ol>
     </StyledSlidesBar>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   currentLanguage: state.preferences.currentLanguage,

@@ -3,7 +3,7 @@ import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
-import { uuid } from '../../utils/ui';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   currentPlaybackRate: number;
@@ -16,20 +16,20 @@ interface IDispatchProps {
 }
 
 interface IPlaybackRateSelector
-  extends IStateProps,
+  extends InjectedUniqueIdProps,
+    IStateProps,
     IDispatchProps,
     I18nContextValues {}
 
 class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   public render() {
-    const { playbackRates, currentPlaybackRate, t } = this.props;
-    const id = uuid();
+    const { playbackRates, currentPlaybackRate, t, uid } = this.props;
 
     return (
       <React.Fragment>
-        <span id={id}>{t('preferences.playbackrate.label')}</span>
+        <span id={uid}>{t('preferences.playbackrate.label')}</span>
         <select
-          aria-labelledby={id}
+          aria-labelledby={uid}
           onChange={this.onPlayRateChange}
           value={currentPlaybackRate}
         >
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(PlaybackRateSelector));
+)(withI18n()(withUniqueId(PlaybackRateSelector)));

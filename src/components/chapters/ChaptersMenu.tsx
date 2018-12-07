@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers/index';
 import { IRawChaptersTrack } from '../../utils/media';
-import { uuid } from '../../utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';
 
@@ -12,10 +12,9 @@ export interface IMediaChapters {
   language: string;
 }
 
-const ChaptersMenu: React.SFC<IMediaChapters> = ({
-  chaptersTracks,
-  language
-}) => {
+interface IProps extends IMediaChapters, InjectedUniqueIdProps {}
+
+function ChaptersMenu({ chaptersTracks, language, uid }: IProps) {
   const activeChaptersTrack = chaptersTracks.find(
     (track) => track.language === language
   );
@@ -23,8 +22,6 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
   if (!activeChaptersTrack) {
     return null;
   }
-
-  const uid = uuid();
 
   return (
     <StyledChapters className="aip-chapters" aria-labelledby={uid}>
@@ -34,11 +31,11 @@ const ChaptersMenu: React.SFC<IMediaChapters> = ({
       <ChaptersList chapters={activeChaptersTrack.cues} />
     </StyledChapters>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   chaptersTracks: state.chapters.chaptersTracks,
   language: state.chapters.language
 });
 
-export default connect(mapStateToProps)(ChaptersMenu);
+export default connect(mapStateToProps)(withUniqueId(ChaptersMenu));

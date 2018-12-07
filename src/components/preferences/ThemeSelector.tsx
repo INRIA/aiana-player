@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { changeCurrentTheme } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
 import { CDispatch } from '../../store';
-import { uuid } from '../../utils/ui';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   currentTheme: string;
@@ -16,23 +16,23 @@ interface IDispatchProps {
 }
 
 interface IThemeSelector
-  extends IStateProps,
+  extends InjectedUniqueIdProps,
+    IStateProps,
     IDispatchProps,
     I18nContextValues {}
 
-const ThemeSelector: React.SFC<IThemeSelector> = ({
+function ThemeSelector({
   currentTheme,
   selectChangeHandler,
   t,
-  themes
-}) => {
-  const id = uuid();
-
+  themes,
+  uid
+}: IThemeSelector) {
   return (
     <React.Fragment>
-      <span id={id}>{t('preferences.theme-selector.label')}</span>
+      <span id={uid}>{t('preferences.theme-selector.label')}</span>
       <select
-        aria-labelledby={id}
+        aria-labelledby={uid}
         onChange={selectChangeHandler}
         value={currentTheme}
       >
@@ -42,7 +42,7 @@ const ThemeSelector: React.SFC<IThemeSelector> = ({
       </select>
     </React.Fragment>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   currentTheme: state.preferences.currentTheme,
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(ThemeSelector));
+)(withI18n()(withUniqueId(ThemeSelector)));

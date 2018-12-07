@@ -10,12 +10,12 @@ interface IControlIcon {
   isFullscreen: boolean;
 }
 
-const ControlIcon: React.SFC<IControlIcon> = ({ isFullscreen }) => {
+function ControlIcon({ isFullscreen }: IControlIcon) {
   if (isFullscreen) {
     return <StyledFullscreenExitIcon aria-hidden="true" />;
   }
 
   return <StyledFullscreenIcon aria-hidden="true" />;
-};
+}
 
 export default ControlIcon;

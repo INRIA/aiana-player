@@ -9,23 +9,22 @@ interface IStateProps {
   duration: number;
 }
 
-const TimeRangesBar: React.SFC<IStateProps> = ({
-  bufferedRanges,
-  duration
-}) => (
-  <StyledTimeRanges className="aip-buffered">
-    <svg
-      width="100%"
-      height="1em"
-      viewBox={`0 0 ${Math.floor(duration)} 10`}
-      preserveAspectRatio="none"
-    >
-      {bufferedRanges.map(({ end, start }, idx) => (
-        <path key={idx} d={`M${start} 0 H${end} V10 H${start} z`} />
-      ))}
-    </svg>
-  </StyledTimeRanges>
-);
+function TimeRangesBar({ bufferedRanges, duration }: IStateProps) {
+  return (
+    <StyledTimeRanges className="aip-buffered">
+      <svg
+        width="100%"
+        height="1em"
+        viewBox={`0 0 ${Math.floor(duration)} 10`}
+        preserveAspectRatio="none"
+      >
+        {bufferedRanges.map(({ end, start }, idx) => (
+          <path key={idx} d={`M${start} 0 H${end} V10 H${start} z`} />
+        ))}
+      </svg>
+    </StyledTimeRanges>
+  );
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   bufferedRanges: state.player.bufferedRanges,

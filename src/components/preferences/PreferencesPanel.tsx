@@ -44,30 +44,32 @@ const StyledPanel = styled.div`
   }
 `;
 
-const PreferencesPanel: React.SFC<I18nContextValues> = ({ t }) => (
-  <StyledPanel className="aip-preferences">
-    <h2>{t('preferences.title')}</h2>
-    <ul>
-      <li className="aip-language">
-        <LanguageSelector />
-      </li>
-      <li className="aip-playback-rate">
-        <PlaybackRateSelector />
-      </li>
-      <li className="aip-theme">
-        <ThemeSelector />
-      </li>
-      <li className="aip-subtitles-track">
-        <SubtitlesTrackSelector />
-      </li>
-      <li className="aip-chapters-track">
-        <ChaptersTrackSelector />
-      </li>
-      <li className="aip-slides-track">
-        <SlidesTrackSelector />
-      </li>
-    </ul>
-  </StyledPanel>
-);
+function PreferencesPanel({ t }: I18nContextValues) {
+  return (
+    <StyledPanel className="aip-preferences">
+      <h2>{t('preferences.title')}</h2>
+      <ul>
+        <li className="aip-language">
+          <LanguageSelector />
+        </li>
+        <li className="aip-playback-rate">
+          <PlaybackRateSelector />
+        </li>
+        <li className="aip-theme">
+          <ThemeSelector />
+        </li>
+        <li className="aip-subtitles-track">
+          <SubtitlesTrackSelector />
+        </li>
+        <li className="aip-chapters-track">
+          <ChaptersTrackSelector />
+        </li>
+        <li className="aip-slides-track">
+          <SlidesTrackSelector />
+        </li>
+      </ul>
+    </StyledPanel>
+  );
+}
 
 export default withI18n()(PreferencesPanel);

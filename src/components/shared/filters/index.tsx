@@ -7,13 +7,15 @@ const StyledSvg = styled.svg`
   display: none;
 `;
 
-const SvgFilters: React.SFC = () => (
-  <StyledSvg className="aip-filters" aria-hidden="true">
-    <defs>
-      <DropShadow />
-      <ErodeFilter />
-    </defs>
-  </StyledSvg>
-);
+function SvgFilters() {
+  return (
+    <StyledSvg className="aip-filters" aria-hidden="true">
+      <defs>
+        <DropShadow />
+        <ErodeFilter />
+      </defs>
+    </StyledSvg>
+  );
+}
 
 export default SvgFilters;

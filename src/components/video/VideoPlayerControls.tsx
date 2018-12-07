@@ -24,21 +24,23 @@ const StyledControls = styled.div`
   margin-top: 0.3125em;
 `;
 
-const VideoPlayerControls: React.SFC = () => (
-  <StyledControlsWrapper>
-    <SeekBarSlider />
-    <StyledControls className="aip-controls">
-      <div className="aip-controls-left">
-        <PlayButton />
-        <VolumeControl />
-        <TimeStatus />
-        <AddBookmarkButton />
-      </div>
-      <div className="aip-controls-right">
-        <FullscreenButton />
-      </div>
-    </StyledControls>
-  </StyledControlsWrapper>
-);
+function VideoPlayerControls() {
+  return (
+    <StyledControlsWrapper>
+      <SeekBarSlider />
+      <StyledControls className="aip-controls">
+        <div className="aip-controls-left">
+          <PlayButton />
+          <VolumeControl />
+          <TimeStatus />
+          <AddBookmarkButton />
+        </div>
+        <div className="aip-controls-right">
+          <FullscreenButton />
+        </div>
+      </StyledControls>
+    </StyledControlsWrapper>
+  );
+}
 
 export default VideoPlayerControls;

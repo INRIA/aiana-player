@@ -10,12 +10,12 @@ interface IControlIcon {
   isPlaying: boolean;
 }
 
-const PlayControlIcon: React.SFC<IControlIcon> = ({ isPlaying }) => {
+function PlayControlIcon({ isPlaying }: IControlIcon) {
   if (isPlaying) {
     return <StyledPauseIcon aria-hidden="true" />;
   }
 
   return <StyledPlayIcon aria-hidden="true" />;
-};
+}
 
 export default PlayControlIcon;

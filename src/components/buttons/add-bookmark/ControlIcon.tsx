@@ -4,6 +4,8 @@ import BookmarkAddIcon from '../../svg/BookmarkAdd';
 
 const StyledIcon = StyledSvg.withComponent(BookmarkAddIcon);
 
-const ControlIcon: React.SFC = () => <StyledIcon />;
+function ControlIcon() {
+  return <StyledIcon />;
+}
 
 export default ControlIcon;

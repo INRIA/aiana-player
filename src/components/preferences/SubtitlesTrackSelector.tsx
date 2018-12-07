@@ -9,7 +9,7 @@ import {
   isActiveTrack,
   isDisplayableTrack
 } from '../../utils/media';
-import { uuid } from '../../utils/ui';
+import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   subtitlesTracks: IRawSubtitlesTrack[];
@@ -21,7 +21,8 @@ interface IDispatchProps {
 }
 
 interface ISubtitlesTrackSelector
-  extends IStateProps,
+  extends InjectedUniqueIdProps,
+    IStateProps,
     IDispatchProps,
     I18nContextValues {}
 
@@ -31,23 +32,22 @@ export function getSelectedValue(tracks: IRawSubtitlesTrack[]): string {
   return selectedTrack ? selectedTrack.language : '';
 }
 
-const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
+function SubtitlesTrackSelector({
   mediaElement,
   selectedTrackChangedHandler,
   t,
-  subtitlesTracks
-}) => {
+  subtitlesTracks,
+  uid
+}: ISubtitlesTrackSelector) {
   if (!mediaElement) {
     return null;
   }
 
-  const id = uuid();
-
   return (
     <React.Fragment>
-      <span id={id}>{t('preferences.subtitlestrack.label')}</span>
+      <span id={uid}>{t('preferences.subtitlestrack.label')}</span>
       <select
-        aria-labelledby={id}
+        aria-labelledby={uid}
         onChange={selectedTrackChangedHandler}
         value={getSelectedValue(subtitlesTracks)}
       >
@@ -60,7 +60,7 @@ const SubtitlesTrackSelector: React.SFC<ISubtitlesTrackSelector> = ({
       </select>
     </React.Fragment>
   );
-};
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   mediaElement: state.player.mediaElement,
@@ -76,4 +76,4 @@ const mapDispatchToProps = (dispatch: CDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(SubtitlesTrackSelector));
+)(withI18n()(withUniqueId(SubtitlesTrackSelector)));

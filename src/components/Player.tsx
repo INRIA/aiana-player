@@ -23,17 +23,19 @@ interface IStateProps {
   chaptersMenu: boolean;
 }
 
-const Player: React.SFC<IStateProps> = ({ chaptersMenu }) => (
-  <StyledDiv className="aip-player">
-    {chaptersMenu && <ChaptersMenu />}
-    <VideoPlayer />
-    <Slides />
-    <MediaSubtitles />
-    <VideoPlayerControls />
-    <TimelineBar />
-    <MediaAdditionalInfos />
-  </StyledDiv>
-);
+function Player({ chaptersMenu }: IStateProps) {
+  return (
+    <StyledDiv className="aip-player">
+      {chaptersMenu && <ChaptersMenu />}
+      <VideoPlayer />
+      <Slides />
+      <MediaSubtitles />
+      <VideoPlayerControls />
+      <TimelineBar />
+      <MediaAdditionalInfos />
+    </StyledDiv>
+  );
+}
 
 const mapStateToProps = (state: IAianaState) => ({
   chaptersMenu: state.chapters.menuEnabled
