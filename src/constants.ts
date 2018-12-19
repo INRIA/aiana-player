@@ -29,6 +29,19 @@ export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
 
+export const INACTIVITY_TIMER_DURATION = 3000;
+export const INACTIVITY_EVENTS = [
+  'click',
+  'contextmenu',
+  'mousedown',
+  'mouseenter',
+  'mousemove',
+  'mouseup',
+  'keydown',
+  'keypress',
+  'keyup'
+];
+
 export const AVAILABLE_PLAYBACK_RATES = [
   0.25,
   0.5,
