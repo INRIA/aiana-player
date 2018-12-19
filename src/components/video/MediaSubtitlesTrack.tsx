@@ -73,14 +73,8 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
 
     // this track is active, but wasn't so at previous state.
-    if (
-      this.isActive() &&
-      prevActiveTrack &&
-      prevActiveTrack.label !== activeTrack!.label
-    ) {
-      const track = this.trackRef.current!.track;
-      const currentText = getLastActiveCueText(track);
-      this.props.updateSubtitleText(currentText);
+    if (prevActiveTrack && prevActiveTrack.label !== activeTrack!.label) {
+      this.cueChangeHandler();
     }
   }
 
