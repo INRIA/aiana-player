@@ -17,6 +17,7 @@ export interface IRawSubtitlesTrack {
 }
 
 export interface IRawChaptersTrack {
+  active: boolean;
   readonly cues: IMediaCue[];
   readonly label: string;
   readonly language: string;
@@ -59,7 +60,10 @@ export const rawTextTrack = rawSubtitlesTrack;
  * Strips unwanted properties from a TextTrack.
  * @param track {TextTrack}
  */
-export function rawChaptersTrack(track: TextTrack): IRawChaptersTrack {
+export function rawChaptersTrack(
+  track: TextTrack,
+  currentLanguage?: string
+): IRawChaptersTrack {
   const { cues: trackCues, label, language } = track;
 
   const cues: IMediaCue[] = [...trackCues[Symbol.iterator]()].map(
@@ -71,6 +75,7 @@ export function rawChaptersTrack(track: TextTrack): IRawChaptersTrack {
   );
 
   return {
+    active: language === currentLanguage,
     cues,
     label,
     language
@@ -109,7 +114,9 @@ export function isChapterTrack(track: TextTrack | ITrack) {
  * Tests if a subtitles track is active
  * @param track {IRawSubtitlesTrack}
  */
-export function isActiveTrack(track: IRawSubtitlesTrack): boolean {
+export function isActiveTrack(
+  track: IRawSubtitlesTrack | IRawChaptersTrack
+): boolean {
   return track.active === true;
 }
 

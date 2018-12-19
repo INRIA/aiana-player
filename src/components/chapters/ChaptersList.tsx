@@ -3,10 +3,11 @@ import { IMediaCue } from '../../utils/media';
 import MediaChapterButton from './MediaChapterButton';
 
 interface IProps {
+  activeText?: string;
   chapters: IMediaCue[];
 }
 
-function ChaptersList({ chapters }: IProps) {
+function ChaptersList({ activeText, chapters }: IProps) {
   if (chapters.length === 0) {
     return null;
   }
@@ -14,7 +15,7 @@ function ChaptersList({ chapters }: IProps) {
   return (
     <ol>
       {chapters.map(({ startTime, text }, idx) => (
-        <li key={idx}>
+        <li key={idx} className={text === activeText ? 'active' : 'inactive'}>
           <MediaChapterButton startTime={startTime}>{text}</MediaChapterButton>
         </li>
       ))}

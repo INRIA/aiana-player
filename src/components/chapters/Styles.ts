@@ -5,6 +5,10 @@ const StyledChapters = styled.nav`
   left: 0;
   top: 0;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   width: 49%;
   height: calc(49% - 2.125em);
   padding: 1em;
@@ -13,6 +17,14 @@ const StyledChapters = styled.nav`
   line-height: 1.5;
   color: ${(props) => props.theme.bg};
   background-color: ${(props) => props.theme.fg};
+
+  ol {
+    margin: 0;
+  }
+
+  .active button {
+    font-weight: bold;
+  }
 `;
 
 export default StyledChapters;
