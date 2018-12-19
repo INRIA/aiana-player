@@ -10,6 +10,8 @@ const StyledAiana = styled.div`
   font-size: 1em;
   font-family: system, sans-serif;
 
+  -webkit-font-smoothing: antialiased;
+
   *,
   *::before,
   *::after {
