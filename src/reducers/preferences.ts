@@ -1,5 +1,9 @@
 import { Reducer } from 'redux';
-import { CHANGE_LANGUAGE, CHANGE_THEME } from '../actions/preferences';
+import {
+  CHANGE_LANGUAGE,
+  CHANGE_THEME,
+  TOGGLE_ACTIVITY
+} from '../actions/preferences';
 import { LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
@@ -19,6 +23,7 @@ export interface IPreferencesState {
   currentLanguage: string;
   currentTheme: string;
   customTheme: IAianaTheme;
+  isActive: boolean;
   languages: string[];
   playbackRates: number[];
   /**
@@ -36,6 +41,7 @@ const initialState: IPreferencesState = {
   currentLanguage: DEFAULT_LANG,
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
+  isActive: true,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
   playbackRates: AVAILABLE_PLAYBACK_RATES,
   seekStep: DEFAULT_SEEK_STEP,
@@ -47,6 +53,11 @@ const initialState: IPreferencesState = {
 
 const preferences: Reducer = (state = initialState, action) => {
   switch (action.type) {
+    case TOGGLE_ACTIVITY:
+      return {
+        ...state,
+        isActive: action.isActive
+      };
     case CHANGE_LANGUAGE:
       return {
         ...state,
