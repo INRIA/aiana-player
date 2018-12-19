@@ -15,6 +15,7 @@ export default {
   'controls.volume.valuetext': 'Volume à {{ volumePct }}%',
   'preferences.chapterstrack.label': 'Langue des chapitres',
   'preferences.language.label': 'Langue',
+  'preferences.menu_enabled.label': 'Afficher la liste des chapitres',
   'preferences.playbackrate.label': 'Vitesse',
   'preferences.slidestrack.label': 'Langue des diapositives',
   'preferences.subtitlestrack.label': 'Sous-titres',

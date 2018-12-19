@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import {
   ADD_CHAPTER_TRACK,
+  TOGGLE_CHAPTERS_MENU,
   UPDATE_ACTIVE_CHAPTERS_TRACK,
   UPDATE_CHAPTER_TEXT
 } from '../actions/chapters';
@@ -31,6 +32,11 @@ const initialState: IChaptersState = {
 
 const chapters: Reducer = (state: IChaptersState = initialState, action) => {
   switch (action.type) {
+    case TOGGLE_CHAPTERS_MENU:
+      return {
+        ...state,
+        menuEnabled: action.enabled
+      };
     case UPDATE_CHAPTER_TEXT:
       return {
         ...state,
