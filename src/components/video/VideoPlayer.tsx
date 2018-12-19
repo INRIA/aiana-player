@@ -26,11 +26,12 @@ import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
 
 const StyledVideo = styled.div`
   position: absolute;
-  left: 0;
-  bottom: 4.25em;
+  top: 40%;
+  right: 0%;
+  bottom: 0%;
+  left: 40%;
+
   display: block;
-  width: 50%;
-  height: calc(49% - 2.125em);
 
   video {
     display: block;

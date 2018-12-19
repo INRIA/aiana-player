@@ -13,11 +13,12 @@ const StyledTimelineBar = styled.div`
   position: absolute;
   bottom: 4.25em;
 
+  background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
+
   > div {
     width: 100%;
     height: 100%;
     position: relative;
-    background-color: ${(props) => hexToHsla(props.theme.fg, 0.1)};
   }
 `;
 

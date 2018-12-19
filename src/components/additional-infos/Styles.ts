@@ -1,11 +1,12 @@
 import styled from '../../utils/styled-components';
 
 const StyledAdditionalInfos = styled.aside`
-  width: 49%;
-  height: calc(49% - 2.125em);
   position: absolute;
-  right: 0;
-  top: 0;
+  top: 0%;
+  right: 0%;
+  bottom: 60%;
+  left: 60%;
+
   border: 1px solid ${(props) => props.theme.fg};
   padding: 1em;
   color: ${(props) => props.theme.bg};

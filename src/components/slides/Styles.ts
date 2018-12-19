@@ -2,11 +2,11 @@ import styled from '../../utils/styled-components';
 
 const Styles = styled.section`
   position: absolute;
-  right: 0;
-  bottom: 4.25em;
+  top: 0%;
+  right: 40%;
+  bottom: 40%;
+  left: 0%;
 
-  width: 49%;
-  height: calc(49% - 2.125em);
   padding: 1em;
 
   line-height: 1.5;

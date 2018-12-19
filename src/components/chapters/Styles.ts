@@ -2,15 +2,15 @@ import styled from '../../utils/styled-components';
 
 const StyledChapters = styled.nav`
   position: absolute;
-  left: 0;
-  top: 0;
+  top: 60%;
+  right: 60%;
+  bottom: 0%;
+  left: 0%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  width: 49%;
-  height: calc(49% - 2.125em);
   padding: 1em;
   border: 1px solid ${(props) => props.theme.fg};
 
