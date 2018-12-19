@@ -17,6 +17,7 @@ export default {
   'languages.fr': 'Français',
   'preferences.chapterstrack.label': 'Chapters language',
   'preferences.language.label': 'Language',
+  'preferences.menu_enabled.label': 'Show chapters list',
   'preferences.playbackrate.label': 'Speed',
   'preferences.slidestrack.label': 'Slides language',
   'preferences.subtitlestrack.label': 'Subtitles',
