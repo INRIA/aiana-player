@@ -69,11 +69,7 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
   private isActive() {
     const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
 
-    if (!activeTrack) {
-      return false;
-    }
-
-    return activeTrack.label === this.trackRef.current!.label;
+    return activeTrack && activeTrack.label === this.trackRef.current!.label;
   }
 
   private cueChangeHandler = () => {
