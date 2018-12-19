@@ -19,6 +19,7 @@ export interface ITrack {
 }
 
 interface IStateProps {
+  subtitlesLanguage?: string;
   subtitlesTracks: IRawSubtitlesTrack[];
 }
 
@@ -51,6 +52,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   public componentDidMount() {
+    // TODO: is it really hidden?
     this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
 
     this.trackRef.current!.addEventListener('load', this.loadHandler);
@@ -89,7 +91,10 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   private loadHandler = () => {
-    const chaptersTrack = rawSubtitlesTrack(this.trackRef.current!.track);
+    const chaptersTrack = rawSubtitlesTrack(
+      this.trackRef.current!.track,
+      this.props.subtitlesLanguage
+    );
     this.props.addSubtitlesTrack(chaptersTrack);
   };
 
@@ -105,6 +110,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
 }
 
 const mapStateToProps = (state: IAianaState) => ({
+  subtitlesLanguage: state.subtitles.language,
   subtitlesTracks: state.subtitles.subtitlesTracks
 });
 

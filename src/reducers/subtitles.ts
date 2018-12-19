@@ -15,6 +15,7 @@ export interface ISubtitlesTrack {
 }
 
 export interface ISubtitlesState {
+  language?: string;
   subtitlesText?: string;
 
   /**

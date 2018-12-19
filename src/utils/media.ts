@@ -40,17 +40,20 @@ export interface IBufferedRange {
 
 export type BufferedRanges = IBufferedRange[];
 
-export function rawSubtitlesTrack(textTrack: TextTrack): IRawSubtitlesTrack {
-  const { activeCues, cues, kind, label, language, mode } = textTrack;
+export function rawSubtitlesTrack(
+  textTrack: TextTrack,
+  subtitlesLanguage?: string
+): IRawSubtitlesTrack {
+  const { activeCues, cues, kind, label, language } = textTrack;
 
   return {
-    active: mode === TRACK_MODE_ACTIVE,
+    active: language === subtitlesLanguage,
     activeCues,
     cues,
     kind,
     label,
     language,
-    mode
+    mode: TRACK_MODE_ACTIVE
   };
 }
 
