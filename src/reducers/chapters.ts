@@ -1,7 +1,8 @@
 import { Reducer } from 'redux';
 import {
   ADD_CHAPTER_TRACK,
-  UPDATE_ACTIVE_CHAPTERS_TRACK
+  UPDATE_ACTIVE_CHAPTERS_TRACK,
+  UPDATE_CHAPTER_TEXT
 } from '../actions/chapters';
 import { LOAD_CONFIGURATION } from '../actions/shared';
 import { DEFAULT_LANG, DEFAULT_MENU_ENABLED } from '../constants';
@@ -18,6 +19,7 @@ export interface IChaptersState {
   language: string;
   menuEnabled: boolean;
   sources: IChaptersTrack[];
+  currentText?: string;
 }
 
 const initialState: IChaptersState = {
@@ -29,6 +31,11 @@ const initialState: IChaptersState = {
 
 const chapters: Reducer = (state: IChaptersState = initialState, action) => {
   switch (action.type) {
+    case UPDATE_CHAPTER_TEXT:
+      return {
+        ...state,
+        currentText: action.text
+      };
     case ADD_CHAPTER_TRACK: {
       const chaptersTracks = [].concat(
         state.chaptersTracks as any,
@@ -40,11 +47,23 @@ const chapters: Reducer = (state: IChaptersState = initialState, action) => {
         chaptersTracks
       };
     }
-    case UPDATE_ACTIVE_CHAPTERS_TRACK:
+    case UPDATE_ACTIVE_CHAPTERS_TRACK: {
+      const chaptersTracks = state.chaptersTracks.map((track) => {
+        if (track.language === action.language) {
+          return { ...track, active: true };
+        }
+        if (track.active === true) {
+          return { ...track, active: false };
+        }
+        return { ...track };
+      });
+
       return {
         ...state,
+        chaptersTracks,
         language: action.language
       };
+    }
     case LOAD_CONFIGURATION:
       return {
         ...state,
