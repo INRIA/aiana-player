@@ -34,9 +34,11 @@ function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  chaptersText: state.chapters.currentText,
-  chaptersTracks: state.chapters.chaptersTracks
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    chaptersText: state.chapters.currentText,
+    chaptersTracks: state.chapters.chaptersTracks
+  };
+}
 
 export default connect(mapStateToProps)(withUniqueId(ChaptersMenu));

@@ -44,16 +44,20 @@ class LanguageSelector extends React.Component<ILanguageSelector> {
   }
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  currentLanguage: state.preferences.currentLanguage,
-  languages: state.preferences.languages
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    currentLanguage: state.preferences.currentLanguage,
+    languages: state.preferences.languages
+  };
+}
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(changeCurrentLanguage(evt.currentTarget.value));
-  }
-});
+function mapDispatchToProps(dispatch: CDispatch) {
+  return {
+    changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
+      dispatch(changeCurrentLanguage(evt.currentTarget.value));
+    }
+  };
+}
 
 export default connect(
   mapStateToProps,

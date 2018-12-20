@@ -64,17 +64,23 @@ function SlidesTrackSelector({
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  currentLanguage: state.slides.language,
-  mediaElement: state.player.mediaElement,
-  slidesTracks: state.slides.slidesTracks
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    currentLanguage: state.slides.language,
+    mediaElement: state.player.mediaElement,
+    slidesTracks: state.slides.slidesTracks
+  };
+}
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  selectedTrackChangedHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(updateActiveSlidesTrack(evt.currentTarget.value));
-  }
-});
+function mapDispatchToProps(dispatch: CDispatch) {
+  return {
+    selectedTrackChangedHandler: (
+      evt: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      dispatch(updateActiveSlidesTrack(evt.currentTarget.value));
+    }
+  };
+}
 
 export default connect(
   mapStateToProps,

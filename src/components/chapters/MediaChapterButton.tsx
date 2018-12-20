@@ -37,9 +37,11 @@ class MediaChapterButton extends React.Component<IMediaChapterButton> {
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  media: state.player.mediaElement
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    media: state.player.mediaElement
+  };
+}
 
 const mapDispatchToProps = {
   requestSeek

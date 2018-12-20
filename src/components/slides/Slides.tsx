@@ -20,8 +20,10 @@ function Slides({ text }: IProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  text: state.slides.currentSlideText
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    text: state.slides.currentSlideText
+  };
+}
 
 export default connect(mapStateToProps)(Slides);

@@ -17,8 +17,10 @@ function IntlWrapper({ children, language }: IProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  language: state.preferences.currentLanguage
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    language: state.preferences.currentLanguage
+  };
+}
 
 export default connect(mapStateToProps)(IntlWrapper);

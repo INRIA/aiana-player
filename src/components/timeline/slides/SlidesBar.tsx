@@ -95,12 +95,14 @@ function SlidesBar({
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  currentLanguage: state.preferences.currentLanguage,
-  duration: state.player.duration,
-  media: state.player.mediaElement,
-  slidesTracks: state.slides.slidesTracks
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    currentLanguage: state.preferences.currentLanguage,
+    duration: state.player.duration,
+    media: state.player.mediaElement,
+    slidesTracks: state.slides.slidesTracks
+  };
+}
 
 const mapDispatchToProps = {
   requestSeek

@@ -296,15 +296,17 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   }
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  currentTime: state.player.currentTime,
-  duration: state.player.duration,
-  isFullscreen: state.player.isFullscreen,
-  isSeeking: state.player.isSeeking,
-  mediaElement: state.player.mediaElement,
-  seekStep: state.preferences.seekStep,
-  seekingTime: state.player.seekingTime
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    currentTime: state.player.currentTime,
+    duration: state.player.duration,
+    isFullscreen: state.player.isFullscreen,
+    isSeeking: state.player.isSeeking,
+    mediaElement: state.player.mediaElement,
+    seekStep: state.preferences.seekStep,
+    seekingTime: state.player.seekingTime
+  };
+}
 
 const mapDispatchToProps = {
   requestSeek

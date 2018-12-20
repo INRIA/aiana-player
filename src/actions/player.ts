@@ -97,9 +97,7 @@ export function toggleFullscreen(
   rootElement: ExtendedHTMLElement
 ): ThunkResult<void> {
   return () => {
-    const isFullscreen = isDocumentFullscreen();
-
-    if (isFullscreen) {
+    if (isDocumentFullscreen()) {
       exitFullscreen();
     } else {
       enterFullscreen(rootElement);
@@ -130,7 +128,9 @@ export function mediaElementUnounted(): AnyAction {
 export function requestMediaPlay(media: HTMLMediaElement): ThunkResult<void> {
   return (dispatch) => {
     dispatch({ type: MEDIA_REQUEST_PLAY });
-    media.play().then(() => dispatch(playMedia()));
+    media.play().then(() => {
+      dispatch(playMedia());
+    });
   };
 }
 

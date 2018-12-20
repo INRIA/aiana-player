@@ -179,17 +179,21 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   }
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  mediaElement: state.player.mediaElement,
-  volume: state.player.volume,
-  volumeStep: state.preferences.volumeStep
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    mediaElement: state.player.mediaElement,
+    volume: state.player.volume,
+    volumeStep: state.preferences.volumeStep
+  };
+}
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  updateVolume: (media: HTMLMediaElement, volume: number) => {
-    dispatch(requestChangeVolume(media, volume));
-  }
-});
+function mapDispatchToProps(dispatch: CDispatch) {
+  return {
+    updateVolume: (media: HTMLMediaElement, volume: number) => {
+      dispatch(requestChangeVolume(media, volume));
+    }
+  };
+}
 
 export default connect(
   mapStateToProps,

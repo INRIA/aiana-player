@@ -26,9 +26,11 @@ function TimeRangesBar({ bufferedRanges, duration }: IStateProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  bufferedRanges: state.player.bufferedRanges,
-  duration: state.player.duration
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    bufferedRanges: state.player.bufferedRanges,
+    duration: state.player.duration
+  };
+}
 
 export default connect(mapStateToProps)(TimeRangesBar);

@@ -24,8 +24,10 @@ function MediaSubtitles({ subtitlesText }: IStateProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  subtitlesText: state.subtitles.subtitlesText
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    subtitlesText: state.subtitles.subtitlesText
+  };
+}
 
 export default connect(mapStateToProps)(MediaSubtitles);

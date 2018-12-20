@@ -62,16 +62,22 @@ function SubtitlesTrackSelector({
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  mediaElement: state.player.mediaElement,
-  subtitlesTracks: state.subtitles.subtitlesTracks
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    mediaElement: state.player.mediaElement,
+    subtitlesTracks: state.subtitles.subtitlesTracks
+  };
+}
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  selectedTrackChangedHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(updateActiveSubtitlesTrack(evt.currentTarget.value));
-  }
-});
+function mapDispatchToProps(dispatch: CDispatch) {
+  return {
+    selectedTrackChangedHandler: (
+      evt: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      dispatch(updateActiveSubtitlesTrack(evt.currentTarget.value));
+    }
+  };
+}
 
 export default connect(
   mapStateToProps,

@@ -120,11 +120,13 @@ class Aiana extends React.Component<IAiana> {
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  availableThemes: state.preferences.themes,
-  currentTheme: state.preferences.currentTheme,
-  isActive: state.preferences.isActive
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    availableThemes: state.preferences.themes,
+    currentTheme: state.preferences.currentTheme,
+    isActive: state.preferences.isActive
+  };
+}
 
 const mapDispatchToProps = {
   handleFetchInitialData,

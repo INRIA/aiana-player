@@ -44,16 +44,20 @@ function ThemeSelector({
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  currentTheme: state.preferences.currentTheme,
-  themes: state.preferences.themes
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    currentTheme: state.preferences.currentTheme,
+    themes: state.preferences.themes
+  };
+}
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  selectChangeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(changeCurrentTheme(evt.currentTarget.value));
-  }
-});
+function mapDispatchToProps(dispatch: CDispatch) {
+  return {
+    selectChangeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
+      dispatch(changeCurrentTheme(evt.currentTarget.value));
+    }
+  };
+}
 
 export default connect(
   mapStateToProps,

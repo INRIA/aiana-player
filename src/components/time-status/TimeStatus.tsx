@@ -19,9 +19,11 @@ function TimeStatus({ currentTime, duration }: IStateProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  currentTime: state.player.currentTime,
-  duration: state.player.duration
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    currentTime: state.player.currentTime,
+    duration: state.player.duration
+  };
+}
 
 export default connect(mapStateToProps)(TimeStatus);

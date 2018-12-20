@@ -24,7 +24,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   addMetadataTrack(track: IRawMetadataTrack): void;
-  updateAdditionalInfosText(text?: string): void;
+  setAdditionalInformationsText(text?: string): void;
 }
 
 export interface IChapterTrack extends IProps, IStateProps, IDispatchProps {}
@@ -72,17 +72,19 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
   private cueChangeHandler = () => {
     const track = this.trackRef.current!.track;
     const currentText = getLastActiveCueText(track);
-    this.props.updateAdditionalInfosText(currentText);
+    this.props.setAdditionalInformationsText(currentText);
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  metadataTracks: state.player.metadataTracks
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    metadataTracks: state.player.metadataTracks
+  };
+}
 
 const mapDispatchToProps = {
   addMetadataTrack,
-  updateAdditionalInfosText: setAdditionalInformationsText
+  setAdditionalInformationsText
 };
 
 export default connect(

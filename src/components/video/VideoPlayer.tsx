@@ -200,22 +200,24 @@ class VideoPlayer extends React.Component<IProps> {
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  additionalInformationsTracks: state.player.additionalInformationsTracks,
-  autoPlay: state.player.autoPlay,
-  chaptersSources: state.chapters.sources,
-  currentLanguage: state.preferences.currentLanguage,
-  currentTime: state.player.currentTime,
-  isMuted: state.player.isMuted,
-  isSeeking: state.player.isSeeking,
-  playbackRate: state.player.playbackRate,
-  preload: state.player.preload,
-  slidesTracksSources: state.slides.sources,
-  sources: state.player.sources,
-  subtitlesSources: state.subtitles.sources,
-  subtitlesTracks: state.subtitles.subtitlesTracks,
-  volume: state.player.volume
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    additionalInformationsTracks: state.player.additionalInformationsTracks,
+    autoPlay: state.player.autoPlay,
+    chaptersSources: state.chapters.sources,
+    currentLanguage: state.preferences.currentLanguage,
+    currentTime: state.player.currentTime,
+    isMuted: state.player.isMuted,
+    isSeeking: state.player.isSeeking,
+    playbackRate: state.player.playbackRate,
+    preload: state.player.preload,
+    slidesTracksSources: state.slides.sources,
+    sources: state.player.sources,
+    subtitlesSources: state.subtitles.sources,
+    subtitlesTracks: state.subtitles.subtitlesTracks,
+    volume: state.player.volume
+  };
+}
 
 const mapDispatchToProps = {
   changeVolume,

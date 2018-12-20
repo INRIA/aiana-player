@@ -84,11 +84,13 @@ function BookmarksBar({
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  bookmarks: state.bookmarks,
-  duration: state.player.duration,
-  media: state.player.mediaElement
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    bookmarks: state.bookmarks,
+    duration: state.player.duration,
+    media: state.player.mediaElement
+  };
+}
 
 const mapDispatchToProps = {
   requestSeek

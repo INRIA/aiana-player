@@ -64,17 +64,23 @@ function ChaptersTrackSelector({
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  chaptersTracks: state.chapters.chaptersTracks,
-  currentLanguage: state.chapters.language,
-  mediaElement: state.player.mediaElement
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    chaptersTracks: state.chapters.chaptersTracks,
+    currentLanguage: state.chapters.language,
+    mediaElement: state.player.mediaElement
+  };
+}
 
-const mapDispatchToProps = (dispatch: CDispatch) => ({
-  selectedTrackChangedHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(updateActiveChaptersTrack(evt.currentTarget.value));
-  }
-});
+function mapDispatchToProps(dispatch: CDispatch) {
+  return {
+    selectedTrackChangedHandler: (
+      evt: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      dispatch(updateActiveChaptersTrack(evt.currentTarget.value));
+    }
+  };
+}
 
 export default connect(
   mapStateToProps,

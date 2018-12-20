@@ -44,10 +44,12 @@ function ChaptersBar({ chaptersTracks, duration, language }: IStateProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  chaptersTracks: state.chapters.chaptersTracks,
-  duration: state.player.duration,
-  language: state.chapters.language
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    chaptersTracks: state.chapters.chaptersTracks,
+    duration: state.player.duration,
+    language: state.chapters.language
+  };
+}
 
 export default connect(mapStateToProps)(ChaptersBar);

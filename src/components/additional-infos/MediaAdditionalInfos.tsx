@@ -29,9 +29,11 @@ function MediaAdditionalInfos({ t, text, uid }: IProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  text: state.player.additionalInformationsText
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    text: state.player.additionalInformationsText
+  };
+}
 
 export default connect(mapStateToProps)(
   withI18n()(withUniqueId(MediaAdditionalInfos))

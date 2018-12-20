@@ -20,8 +20,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  mute(media: HTMLMediaElement): void;
-  unmute(media: HTMLMediaElement): void;
+  muteMedia(media: HTMLMediaElement): void;
+  unmuteMedia(media: HTMLMediaElement): void;
 }
 
 interface IMuteButton extends IStateProps, IDispatchProps, I18nContextValues {}
@@ -43,16 +43,14 @@ class MuteButton extends React.Component<IMuteButton> {
   }
 
   private clickHandler = () => {
-    const { isMuted, mediaElement, mute, unmute } = this.props;
-
-    if (!mediaElement) {
+    if (!this.props.mediaElement) {
       return;
     }
 
-    if (isMuted) {
-      unmute(mediaElement);
+    if (this.props.isMuted) {
+      this.props.unmuteMedia(this.props.mediaElement);
     } else {
-      mute(mediaElement);
+      this.props.muteMedia(this.props.mediaElement);
     }
   };
 
@@ -63,14 +61,16 @@ class MuteButton extends React.Component<IMuteButton> {
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  isMuted: state.player.isMuted,
-  mediaElement: state.player.mediaElement
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    isMuted: state.player.isMuted,
+    mediaElement: state.player.mediaElement
+  };
+}
 
 const mapDispatchToProps = {
-  mute: muteMedia,
-  unmute: unmuteMedia
+  muteMedia,
+  unmuteMedia
 };
 
 export default connect(

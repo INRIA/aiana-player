@@ -18,8 +18,8 @@ export interface IPlayButtonProps {
 }
 
 interface IDispatchProps {
-  pauseMedia: any;
-  playMedia: any;
+  requestMediaPause: any;
+  requestMediaPlay: any;
 }
 
 interface IProps extends IPlayButtonProps, IDispatchProps, I18nContextValues {}
@@ -43,12 +43,10 @@ class PlayButton extends React.Component<IProps> {
   private clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    const { isPlaying, mediaElement, pauseMedia, playMedia } = this.props;
-
-    if (isPlaying && mediaElement) {
-      pauseMedia(mediaElement);
-    } else if (!isPlaying && mediaElement) {
-      playMedia(mediaElement);
+    if (this.props.isPlaying && this.props.mediaElement) {
+      this.props.requestMediaPause(this.props.mediaElement);
+    } else if (!this.props.isPlaying && this.props.mediaElement) {
+      this.props.requestMediaPlay(this.props.mediaElement);
     }
   };
 
@@ -59,14 +57,16 @@ class PlayButton extends React.Component<IProps> {
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  isPlaying: state.player.isPlaying,
-  mediaElement: state.player.mediaElement
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    isPlaying: state.player.isPlaying,
+    mediaElement: state.player.mediaElement
+  };
+}
 
 const mapDispatchToProps = {
-  pauseMedia: requestMediaPause,
-  playMedia: requestMediaPlay
+  requestMediaPause,
+  requestMediaPlay
 };
 
 export default connect(

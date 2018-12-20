@@ -25,7 +25,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   addSubtitlesTrack(track: IRawSubtitlesTrack): void;
-  updateSubtitleText(text?: string): void;
+  setSubtitlesText(text?: string): void;
 }
 
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
@@ -103,20 +103,21 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
       return;
     }
 
-    const track = this.trackRef.current!.track;
-    const currentText = getLastActiveCueText(track);
-    this.props.updateSubtitleText(currentText);
+    const currentText = getLastActiveCueText(this.trackRef.current!.track);
+    this.props.setSubtitlesText(currentText);
   };
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  subtitlesLanguage: state.subtitles.language,
-  subtitlesTracks: state.subtitles.subtitlesTracks
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    subtitlesLanguage: state.subtitles.language,
+    subtitlesTracks: state.subtitles.subtitlesTracks
+  };
+}
 
 const mapDispatchToProps = {
   addSubtitlesTrack,
-  updateSubtitleText: setSubtitlesText
+  setSubtitlesText
 };
 
 export default connect(

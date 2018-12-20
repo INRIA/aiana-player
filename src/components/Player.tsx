@@ -37,8 +37,10 @@ function Player({ chaptersMenu }: IStateProps) {
   );
 }
 
-const mapStateToProps = (state: IAianaState) => ({
-  chaptersMenu: state.chapters.menuEnabled
-});
+function mapStateToProps(state: IAianaState) {
+  return {
+    chaptersMenu: state.chapters.menuEnabled
+  };
+}
 
 export default connect(mapStateToProps)(Player);
