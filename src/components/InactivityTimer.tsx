@@ -99,7 +99,7 @@ class InactivityTimer extends React.Component<IInactivityTimer> {
   }
 
   private triggerInactivity = () => {
-    if (this.props.isPlaying && !this.props.isSeeking) {
+    if (this.props.isPlaying) {
       this.props.toggleActivity(false);
     }
   };

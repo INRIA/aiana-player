@@ -71,16 +71,13 @@ function toggleSeek(isSeeking: boolean): AnyAction {
 export function requestSeek(
   media: HTMLMediaElement,
   seekingTime: number
-): ThunkResult<void> {
+): AnyAction {
   media.currentTime = seekingTime;
 
-  return (dispatch) => {
-    dispatch(seek(seekingTime));
-    dispatch(toggleActivity(false));
-  };
+  return seek(seekingTime);
 }
 
-function seek(seekingTime: number) {
+function seek(seekingTime: number): AnyAction {
   return {
     seekingTime,
     type: MEDIA_REQUEST_SEEK
