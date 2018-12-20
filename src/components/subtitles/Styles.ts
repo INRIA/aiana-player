@@ -8,6 +8,8 @@ export const StyledSubtitles = styled.div`
   line-height: 1.5em;
   font-size: 1.25em;
   text-align: center;
+
+  pointer-events: none;
 `;
 
 export const StyledSpan = styled.span`
