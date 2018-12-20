@@ -51,9 +51,9 @@ function VideoPlayerControls(props: IStateProps) {
           <PlayButton />
           <VolumeControl />
           <TimeStatus />
-          <AddBookmarkButton />
         </div>
         <div className="aip-controls-right">
+          <AddBookmarkButton />
           <FullscreenButton />
         </div>
       </StyledControls>
