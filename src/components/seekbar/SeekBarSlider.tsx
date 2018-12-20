@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { AnyAction } from 'redux';
 import { requestSeek } from '../../actions/player';
 import {
   ARROW_DOWN_KEY,
@@ -40,7 +39,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  requestSeek(media: HTMLMediaElement, time: number): AnyAction;
+  requestSeek: any;
 }
 
 interface ISeekBarSlider

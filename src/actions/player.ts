@@ -6,6 +6,7 @@ import {
   isDocumentFullscreen
 } from '../utils/fullscreen';
 import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
+import { toggleActivity } from './shared';
 
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
@@ -70,9 +71,16 @@ function toggleSeek(isSeeking: boolean): AnyAction {
 export function requestSeek(
   media: HTMLMediaElement,
   seekingTime: number
-): AnyAction {
+): ThunkResult<void> {
   media.currentTime = seekingTime;
 
+  return (dispatch) => {
+    dispatch(seek(seekingTime));
+    dispatch(toggleActivity(false));
+  };
+}
+
+function seek(seekingTime: number) {
   return {
     seekingTime,
     type: MEDIA_REQUEST_SEEK
@@ -146,6 +154,7 @@ export function requestMediaPause(media: HTMLMediaElement): ThunkResult<void> {
     dispatch({ type: MEDIA_REQUEST_PAUSE });
     media.pause();
     dispatch(pauseMedia());
+    dispatch(toggleActivity(false));
   };
 }
 

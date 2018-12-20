@@ -17,9 +17,11 @@ const StyledTimelineBar = styled.div`
   bottom: 4.25em;
 
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
+  transition: none;
 
   &.inactive {
     opacity: 0;
+    transition: opacity 0.1s linear;
   }
 
   > div {

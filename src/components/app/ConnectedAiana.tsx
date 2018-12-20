@@ -6,10 +6,8 @@ import {
   handleFullscreenChange,
   playerElementMounted
 } from '../../actions/player';
-import { toggleActivity } from '../../actions/preferences';
 import { handleFetchInitialData } from '../../actions/shared';
 import SvgFilters from '../../components/shared/filters';
-import { INACTIVITY_EVENTS, INACTIVITY_TIMER_DURATION } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import themes from '../../themes';
 import {
@@ -19,6 +17,7 @@ import {
 } from '../../utils/fullscreen';
 import { injectGlobalStyles } from '../../utils/global-styles';
 import { ThemeProvider } from '../../utils/styled-components';
+import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
 import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
@@ -34,14 +33,12 @@ interface IDispatchProps {
   handleFetchInitialData(): void;
   handleFullscreenChange(isFullscreen: boolean): void;
   playerElementMounted(playerElement: HTMLElement): void;
-  toggleActivity(isActive: boolean): any;
 }
 
 interface IAiana extends IStateProps, IDispatchProps {}
 
 class Aiana extends React.Component<IAiana> {
   private fullscreenRef = React.createRef<HTMLElement>();
-  private inactivityTimer?: number;
 
   constructor(props: any) {
     super(props);
@@ -49,17 +46,17 @@ class Aiana extends React.Component<IAiana> {
   }
 
   public render() {
-    const currentTheme = themes[this.props.currentTheme];
-
-    const elementClasses = classNames({
-      'aip-app': true,
-      inactive: !this.props.isActive
-    });
-
     return (
       <IntlWrapper>
-        <ThemeProvider theme={currentTheme}>
-          <StyledAiana className={elementClasses} innerRef={this.fullscreenRef}>
+        <ThemeProvider theme={themes[this.props.currentTheme]}>
+          <StyledAiana
+            className={classNames({
+              'aip-app': true,
+              inactive: !this.props.isActive
+            })}
+            innerRef={this.fullscreenRef}
+          >
+            <InactivityTimer />
             <SvgFilters />
             <Player />
             <PreferencesPanel />
@@ -73,47 +70,11 @@ class Aiana extends React.Component<IAiana> {
     this.props.handleFetchInitialData();
     this.props.playerElementMounted(this.fullscreenRef.current!);
     addFullscreenChangeEventListener(this.fullscreenHandler);
-
-    INACTIVITY_EVENTS.forEach((evt) => {
-      this.fullscreenRef.current!.addEventListener(
-        evt,
-        this.resetInactivityTimer,
-        true
-      );
-    });
-
-    this.inactivityTimer = window.setTimeout(
-      this.triggerInactivity,
-      INACTIVITY_TIMER_DURATION
-    );
   }
 
   public componentWillUnmount() {
     removeFullscreenChangeEventListener(this.fullscreenHandler);
-
-    INACTIVITY_EVENTS.forEach((evt) => {
-      this.fullscreenRef.current!.removeEventListener(
-        evt,
-        this.resetInactivityTimer,
-        true
-      );
-    });
   }
-
-  private triggerInactivity = () => {
-    this.props.toggleActivity(false);
-  };
-
-  private resetInactivityTimer = () => {
-    window.clearTimeout(this.inactivityTimer);
-
-    this.inactivityTimer = window.setTimeout(
-      this.triggerInactivity,
-      INACTIVITY_TIMER_DURATION
-    );
-
-    this.props.toggleActivity(true);
-  };
 
   private fullscreenHandler = () => {
     this.props.handleFullscreenChange(isDocumentFullscreen());
@@ -131,8 +92,7 @@ function mapStateToProps(state: IAianaState) {
 const mapDispatchToProps = {
   handleFetchInitialData,
   handleFullscreenChange,
-  playerElementMounted,
-  toggleActivity
+  playerElementMounted
 };
 
 export default connect(

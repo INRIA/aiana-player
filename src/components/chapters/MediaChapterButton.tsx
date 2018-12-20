@@ -11,7 +11,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  requestSeek(media: HTMLMediaElement, seekingTime: number): void;
+  requestSeek: any;
 }
 
 interface IMediaChapterButton extends IStateProps, IDispatchProps {}

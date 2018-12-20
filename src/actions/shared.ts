@@ -6,6 +6,7 @@ import { CDispatch } from '../store';
 import { ThunkResult } from '../types';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
+export const TOGGLE_ACTIVITY = 'aiana/TOGGLE_ACTIVITY';
 
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
@@ -40,5 +41,12 @@ function loadConfiguration(configuration: any): AnyAction {
     slides: configuration.slides,
     subtitles: configuration.subtitles,
     type: LOAD_CONFIGURATION
+  };
+}
+
+export function toggleActivity(isActive: boolean): AnyAction {
+  return {
+    isActive,
+    type: TOGGLE_ACTIVITY
   };
 }

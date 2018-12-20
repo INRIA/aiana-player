@@ -14,13 +14,18 @@ import TimeStatus from '../time-status/TimeStatus';
 const StyledControlsWrapper = styled.div`
   position: absolute;
   bottom: 0;
+
   width: 100%;
+
   /* 0.5 + 0.3125 */
   padding: 0.8125rem 1rem 0.5rem;
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 
+  transition: none;
+
   &.inactive {
     opacity: 0;
+    transition: opacity 0.1s linear;
   }
 `;
 

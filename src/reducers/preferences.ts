@@ -1,10 +1,6 @@
 import { Reducer } from 'redux';
-import {
-  CHANGE_LANGUAGE,
-  CHANGE_THEME,
-  TOGGLE_ACTIVITY
-} from '../actions/preferences';
-import { LOAD_CONFIGURATION } from '../actions/shared';
+import { CHANGE_LANGUAGE, CHANGE_THEME } from '../actions/preferences';
+import { LOAD_CONFIGURATION, TOGGLE_ACTIVITY } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
