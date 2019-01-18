@@ -1,9 +1,5 @@
-import marked from 'marked';
 import * as React from 'react';
-
-marked.setOptions({
-  headerIds: false
-});
+import marked from './marked';
 
 /**
  * Format input string to be displayed as single or multiline subtitles.
@@ -21,16 +17,24 @@ export function formatSubtitles(
   }
 }
 
+type Adapter = (input: string) => string;
+
+function identity(input: string) {
+  return input;
+}
+
 /**
  * Converts input string (markdown, HTML) a JSX element.
  */
 export function markdownToJSX(md: string): JSX.Element {
-  const htmlContent = marked(md);
+  return unsafeJSX(marked)(md);
+}
 
-  return (
+function unsafeJSX(adapter: Adapter = identity) {
+  return (content: string): JSX.Element => (
     <div
       className="aip-marked"
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
+      dangerouslySetInnerHTML={{ __html: adapter(content) }}
     />
   );
 }
