@@ -1,7 +1,7 @@
+import { randomColor } from '@dashdashzako/random-hex-color';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../../reducers';
-import { getRandomColor } from '../../../utils/colors';
 import { unitToPercent } from '../../../utils/math';
 import { IRawChaptersTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
@@ -31,7 +31,7 @@ function ChaptersBar({ chaptersTracks, duration, language }: IStateProps) {
           <li
             key={idx}
             style={{
-              backgroundColor: getRandomColor(),
+              backgroundColor: randomColor(),
               left: `${unitToPercent(startTime, duration)}%`,
               width: `${unitToPercent(endTime - startTime, duration)}%`
             }}

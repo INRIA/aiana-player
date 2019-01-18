@@ -870,6 +870,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@dashdashzako/random-hex-color@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@dashdashzako/random-hex-color/-/random-hex-color-2.1.0.tgz#637ba241dd5f99d128722803a18f8fa5fab31887"
+  integrity sha512-btdNqQlpVzVb9UM5PuA3YuoVlH/rj0tqC+kgAwAceimH+E1dkp5ACGpk8BaoZHR2lsDxtM41nzhLAkB2fmz5Ug==
+
 "@iamstarkov/listr-update-renderer@0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@iamstarkov/listr-update-renderer/-/listr-update-renderer-0.4.1.tgz#d7c48092a2dcf90fd672b6c8b458649cb350c77e"

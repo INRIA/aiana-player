@@ -19,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "@dashdashzako/random-hex-color": "^2.1.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "color-convert": "^1.9.3",
