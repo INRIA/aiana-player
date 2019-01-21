@@ -1,8 +1,8 @@
 import * as React from 'react';
+import styled from '../../../utils/styled-components';
 import StyledButton from '../../styled/StyledButton';
 import StyledSvg from '../../styled/StyledSvg';
 import BookmarkIcon from '../../svg/Bookmark';
-import styled from '../../../utils/styled-components';
 
 const StyledSvgIcon = StyledSvg.withComponent(BookmarkIcon);
 const StyledBookmarkIcon = styled(StyledSvgIcon)`
