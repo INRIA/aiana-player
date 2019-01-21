@@ -5,12 +5,8 @@ export interface InjectedUniqueIdProps {
   uid: string;
 }
 
-function withUniqueId(WrappedComponent: any) {
-  return class extends React.Component {
-    public render() {
-      return <WrappedComponent uid={uid()} {...this.props} />;
-    }
-  };
+function withUniqueId(WrappedComponent: React.ComponentType<any>) {
+  return (props: any) => <WrappedComponent uid={uid()} {...props} />;
 }
 
 export default withUniqueId;
