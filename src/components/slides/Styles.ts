@@ -1,12 +1,6 @@
 import styled from '../../utils/styled-components';
 
 const Styles = styled.section`
-  position: absolute;
-  top: 0%;
-  right: 40%;
-  bottom: 40%;
-  left: 0%;
-
   padding: 1em;
 
   line-height: 1.5;

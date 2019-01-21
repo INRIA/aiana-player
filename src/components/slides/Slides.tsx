@@ -2,13 +2,16 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
+import withDraggable, { IDraggable } from '../hocs/withDraggable';
 import SlidesStyles from './Styles';
 
 interface IProps {
   text?: string;
 }
 
-function Slides({ text }: IProps) {
+interface ISlidesProps extends IProps, IDraggable {}
+
+function Slides({ text }: ISlidesProps) {
   if (!text) {
     return null;
   }
@@ -26,4 +29,4 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-export default connect(mapStateToProps)(Slides);
+export default connect(mapStateToProps)(withDraggable(Slides));
