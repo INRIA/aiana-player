@@ -17,7 +17,7 @@ import {
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { CDispatch } from '../../store';
-import { unitToPercent } from '../../utils/math';
+import { unitToRatio } from '../../utils/math';
 import { bounded } from '../../utils/ui';
 import StyledVolumeSlider from './Styles';
 
@@ -162,7 +162,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     }
 
     const positionDifference = bounded(mouseX, sliderX, sliderWidth);
-    const newVolume = unitToPercent(positionDifference, sliderWidth) / 100;
+    const newVolume = unitToRatio(positionDifference, sliderWidth);
 
     if (newVolume !== volume) {
       updateVolume(mediaElement, newVolume);

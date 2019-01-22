@@ -15,7 +15,7 @@ import {
   PAGE_UP_KEY
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { unitToPercent } from '../../utils/math';
+import { unitToRatio } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { bounded } from '../../utils/ui';
 import TimeRangesBar from '../buffered/TimeRangesBar';
@@ -75,7 +75,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     // position should be the `currentTime`.
     const sliderTime = isSeeking ? seekingTime : currentTime;
 
-    const progressRatio = unitToPercent(sliderTime, duration) / 100;
+    const progressRatio = unitToRatio(sliderTime, duration);
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
@@ -219,8 +219,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
       this.state.sliderWidth
     );
     const newCurrentTime = round(
-      (duration * unitToPercent(positionDifference, this.state.sliderWidth)) /
-        100
+      duration * unitToRatio(positionDifference, this.state.sliderWidth)
     );
 
     if (newCurrentTime !== currentTime) {
