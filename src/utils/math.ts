@@ -1,8 +1,4 @@
 export function unitToRatio(currentValue: number, unitTotal: number): number {
-  if (currentValue < 0) {
-    throw new Error('value must be positive');
-  }
-
   if (currentValue === 0 || unitTotal === 0) {
     return 0;
   }
@@ -18,9 +14,5 @@ export function percentageToUnit(
   percentage: number,
   unitTotal: number
 ): number {
-  if (percentage < 0) {
-    throw new Error('percentage must be positive');
-  }
-
   return (percentage * unitTotal) / 100;
 }
