@@ -6,37 +6,17 @@ import {
   ARROW_UP_KEY,
   END_KEY,
   HOME_KEY
-} from '../../constants';
-import { ExtendedHTMLElement } from '../../types';
-import { unitToPercent } from '../../utils/math';
-import styled from '../../utils/styled-components';
-import { bounded } from '../../utils/ui';
-import StyledButton from '../styled/StyledButton';
-import StyledSvg from '../styled/StyledSvg';
-import Move from '../svg/Move';
-
-const StyledSvgIcon = StyledSvg.withComponent(Move);
-
-const StyledControlsButton = styled(StyledButton)`
-  display: block;
-  height: 36px;
-  width: 100%;
-
-  background-color: ${(props) => props.theme.fg};
-  svg {
-    fill: ${(props) => props.theme.bg};
-  }
-
-  &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
-    cursor: grab;
-  }
-`;
+} from '../../../constants';
+import { ExtendedHTMLElement } from '../../../types';
+import { unitToPercent } from '../../../utils/math';
+import styled from '../../../utils/styled-components';
+import { bounded } from '../../../utils/ui';
+import DragButton from './DragButton';
 
 const StyledWindow = styled.div`
   position: absolute;
 
   background-color: ${(props) => props.theme.fg};
-  border: 2px solid ${(props) => props.theme.bg};
 `;
 
 export interface IWindow {
@@ -63,10 +43,8 @@ interface IHOCState {
 
 function withWindow(WrappedComponent: React.ComponentType<any>) {
   return class extends React.Component<IWrappedComponentProps, IHOCState> {
-    public controlsRef = React.createRef<HTMLButtonElement>();
     public elementRef = React.createRef<HTMLDivElement>();
-    public baseX = 0;
-    public baseY = 0;
+
     public boundariesElementWidth = 0;
     public boundariesElementHeight = 0;
 
@@ -104,24 +82,34 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             width: `${this.state.width}%`
           }}
         >
-          <StyledControlsButton
-            className="draggable-control"
-            innerRef={this.controlsRef}
-            onMouseDown={this.dragStartHandler}
-            onKeyDown={this.keyDownHandler}
-          >
-            <StyledSvgIcon />
-          </StyledControlsButton>
+          <DragButton
+            dragEnd={this.dragEndHandler}
+            dragStart={this.dragStartHandler}
+            dragUpdate={this.dragUpdateHandler}
+            keyUpdate={this.keyDownHandler}
+          />
+
+          <div
+            style={{
+              backgroundColor: 'red',
+              cursor: 'ns-resize',
+              height: '4px',
+              left: '5%',
+              position: 'absolute',
+              top: 0,
+              width: '90%'
+            }}
+          />
 
           <WrappedComponent {...this.props} />
         </StyledWindow>
       );
     }
 
-    private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+    private keyDownHandler = (key: string) => {
       this.setUpperBounds();
 
-      switch (evt.key) {
+      switch (key) {
         case ARROW_RIGHT_KEY:
           this.setState({
             left: this.boundedLeftPosition(this.state.left + 5)
@@ -157,36 +145,11 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       }
     };
 
-    private dragStartHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
-      evt.preventDefault();
-
-      this.controlsRef.current!.focus();
-
-      this.baseX = evt.pageX;
-      this.baseY = evt.pageY;
-
-      const {
-        height,
-        width
-      } = this.props.boundariesElement!.getBoundingClientRect();
-      this.boundariesElementWidth = width;
-      this.boundariesElementHeight = height;
-
+    private dragStartHandler = () => {
       this.setUpperBounds();
-
-      this.setState({
-        leftDiff: 0,
-        topDiff: 0
-      });
-
-      document.addEventListener('mousemove', this.dragHandler, true);
-      document.addEventListener('mouseup', this.dragEndHandler, true);
     };
 
-    private dragHandler = (evt: MouseEvent) => {
-      const xDiff = evt.pageX - this.baseX;
-      const yDiff = evt.pageY - this.baseY;
-
+    private dragUpdateHandler = (xDiff: number, yDiff: number) => {
       this.setState({
         leftDiff: unitToPercent(xDiff, this.boundariesElementWidth),
         topDiff: unitToPercent(yDiff, this.boundariesElementHeight)
@@ -194,17 +157,12 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     };
 
     private dragEndHandler = () => {
-      document.removeEventListener('mousemove', this.dragHandler, true);
-      document.removeEventListener('mouseup', this.dragEndHandler, true);
-
       this.setState({
         left: this.boundedLeftPosition(this.state.left + this.state.leftDiff),
         leftDiff: 0,
         top: this.boundedTopPosition(this.state.top + this.state.topDiff),
         topDiff: 0
       });
-
-      this.controlsRef.current!.blur();
     };
 
     /**
@@ -218,6 +176,9 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
         height: containerHeight,
         width: containerWidth
       } = this.props.boundariesElement!.getBoundingClientRect();
+
+      this.boundariesElementWidth = containerWidth;
+      this.boundariesElementHeight = containerHeight;
 
       const {
         height: elementHeight,
