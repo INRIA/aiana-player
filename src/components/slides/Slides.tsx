@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { ExtendedHTMLElement } from '../../types';
 import { markdownToJSX } from '../../utils/strings';
-import withDraggable, { IDraggable } from '../hocs/withDraggable';
+import withWindow, { IWindow } from '../hocs/withWindow';
 import SlidesStyles from './Styles';
 
 interface IProps {
@@ -14,7 +14,7 @@ interface IStateProps {
   boundariesElement?: ExtendedHTMLElement;
 }
 
-interface ISlidesProps extends IProps, IStateProps, IDraggable {}
+interface ISlidesProps extends IProps, IStateProps, IWindow {}
 
 function Slides({ text }: ISlidesProps) {
   if (!text) {
@@ -35,4 +35,4 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-export default connect(mapStateToProps)(withDraggable(Slides));
+export default connect(mapStateToProps)(withWindow(Slides));
