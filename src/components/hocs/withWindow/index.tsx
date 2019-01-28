@@ -13,6 +13,7 @@ import { unitToPercent } from '../../../utils/math';
 import styled from '../../../utils/styled-components';
 import { bounded } from '../../../utils/ui';
 import DragButton from './DragButton';
+import Resizers from './Resizers';
 
 const StyledWindow = styled.div`
   position: absolute;
@@ -90,17 +91,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             keyUpdate={this.moveKeyDownHandler}
           />
 
-          <div
-            style={{
-              backgroundColor: 'red',
-              cursor: 'ns-resize',
-              height: '4px',
-              left: '5%',
-              position: 'absolute',
-              top: 0,
-              width: '90%'
-            }}
-          />
+          <Resizers />
 
           <WrappedComponent {...this.props} />
         </StyledWindow>
