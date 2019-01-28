@@ -1,4 +1,12 @@
 import * as React from 'react';
+import {
+  ARROW_DOWN_KEY,
+  ARROW_LEFT_KEY,
+  ARROW_RIGHT_KEY,
+  ARROW_UP_KEY,
+  END_KEY,
+  HOME_KEY
+} from '../../constants';
 import { ExtendedHTMLElement } from '../../types';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
@@ -10,15 +18,14 @@ import Move from '../svg/Move';
 const StyledSvgIcon = StyledSvg.withComponent(Move);
 
 const StyledControlsButton = styled(StyledButton)`
-  position: absolute;
-  top: 0;
-  left: 0;
-
   display: block;
   height: 36px;
   width: 100%;
 
-  background-color: rgba(200, 100, 100, 0.3);
+  background-color: ${(props) => props.theme.fg};
+  svg {
+    fill: ${(props) => props.theme.bg};
+  }
 
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
     cursor: grab;
@@ -29,8 +36,7 @@ const StyledWindow = styled.div`
   position: absolute;
 
   background-color: ${(props) => props.theme.fg};
-  /* debug */
-  border: 2px solid #333;
+  border: 2px solid ${(props) => props.theme.bg};
 `;
 
 export interface IWindow {
@@ -61,6 +67,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     public elementRef = React.createRef<HTMLDivElement>();
     public baseX = 0;
     public baseY = 0;
+    public boundariesElementWidth = 0;
+    public boundariesElementHeight = 0;
 
     public state = {
       height: 35,
@@ -99,6 +107,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             className="draggable-control"
             innerRef={this.controlsRef}
             onMouseDown={this.dragStartHandler}
+            onKeyDown={this.keyDownHandler}
           >
             <StyledSvgIcon />
           </StyledControlsButton>
@@ -108,6 +117,45 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
+    private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+      this.setUpperBounds();
+
+      switch (evt.key) {
+        case ARROW_RIGHT_KEY:
+          this.setState({
+            left: this.boundedLeftPosition(this.state.left + 5)
+          });
+          break;
+        case ARROW_UP_KEY:
+          this.setState({
+            top: this.boundedTopPosition(this.state.top - 5)
+          });
+          break;
+        case ARROW_LEFT_KEY:
+          this.setState({
+            left: this.boundedLeftPosition(this.state.left - 5)
+          });
+          break;
+        case ARROW_DOWN_KEY:
+          this.setState({
+            top: this.boundedTopPosition(this.state.top + 5)
+          });
+          break;
+        case HOME_KEY:
+          this.setState({
+            left: this.boundedLeftPosition(0),
+            top: this.boundedTopPosition(0)
+          });
+          break;
+        case END_KEY:
+          this.setState({
+            left: this.boundedLeftPosition(100),
+            top: this.boundedTopPosition(100)
+          });
+          break;
+      }
+    };
+
     private dragStartHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
       evt.preventDefault();
 
@@ -116,14 +164,32 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       this.baseX = evt.pageX;
       this.baseY = evt.pageY;
 
+      const {
+        height,
+        width
+      } = this.props.boundariesElement!.getBoundingClientRect();
+      this.boundariesElementWidth = width;
+      this.boundariesElementHeight = height;
+
       this.setUpperBounds();
+
+      this.setState({
+        leftDiff: 0,
+        topDiff: 0
+      });
 
       document.addEventListener('mousemove', this.dragHandler, true);
       document.addEventListener('mouseup', this.dragEndHandler, true);
     };
 
     private dragHandler = (evt: MouseEvent) => {
-      this.updatePosition(evt.pageX, evt.pageY);
+      const xDiff = evt.pageX - this.baseX;
+      const yDiff = evt.pageY - this.baseY;
+
+      this.setState({
+        leftDiff: unitToPercent(xDiff, this.boundariesElementWidth),
+        topDiff: unitToPercent(yDiff, this.boundariesElementHeight)
+      });
     };
 
     private dragEndHandler = () => {
@@ -138,20 +204,6 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       });
 
       this.controlsRef.current!.blur();
-    };
-
-    private updatePosition = (mouseX: number, mouseY: number) => {
-      const {
-        height,
-        width
-      } = this.props.boundariesElement!.getBoundingClientRect();
-      const mouseXDiff = mouseX - this.baseX;
-      const mouseYDiff = mouseY - this.baseY;
-
-      this.setState({
-        leftDiff: unitToPercent(mouseXDiff, width),
-        topDiff: unitToPercent(mouseYDiff, height)
-      });
     };
 
     private setUpperBounds() {
