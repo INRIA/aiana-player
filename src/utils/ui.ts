@@ -1,6 +1,5 @@
 /**
  * Constrains a value to boundaries.
- *
  */
 export function bounded(
   x: number,

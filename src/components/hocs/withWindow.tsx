@@ -70,6 +70,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     public boundariesElementWidth = 0;
     public boundariesElementHeight = 0;
 
+    // TODO: height, left, top, and width should be moved to props and be updated through a dispatch.
     public state = {
       height: 35,
       left: 0,
