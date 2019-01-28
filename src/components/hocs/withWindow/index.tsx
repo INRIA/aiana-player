@@ -4,6 +4,7 @@ import {
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
+  DEFAULT_MOVE_STEP,
   END_KEY,
   HOME_KEY
 } from '../../../constants';
@@ -112,22 +113,22 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       switch (key) {
         case ARROW_RIGHT_KEY:
           this.setState({
-            left: this.boundedLeftPosition(this.state.left + 5)
+            left: this.boundedLeftPosition(this.state.left + DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_UP_KEY:
           this.setState({
-            top: this.boundedTopPosition(this.state.top - 5)
+            top: this.boundedTopPosition(this.state.top - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_LEFT_KEY:
           this.setState({
-            left: this.boundedLeftPosition(this.state.left - 5)
+            left: this.boundedLeftPosition(this.state.left - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_DOWN_KEY:
           this.setState({
-            top: this.boundedTopPosition(this.state.top + 5)
+            top: this.boundedTopPosition(this.state.top + DEFAULT_MOVE_STEP)
           });
           break;
         case HOME_KEY:
