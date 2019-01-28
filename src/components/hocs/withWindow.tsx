@@ -92,12 +92,12 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             height: `${this.state.height}%`,
             left: `${bounded(
               this.state.left + this.state.leftDiff,
-              0,
+              this.state.leftLowerBound,
               this.state.leftUpperBound
             )}%`,
             top: `${bounded(
               this.state.top + this.state.topDiff,
-              0,
+              this.state.topLowerBound,
               this.state.topUpperBound
             )}%`,
             width: `${this.state.width}%`
@@ -143,14 +143,14 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           break;
         case HOME_KEY:
           this.setState({
-            left: this.boundedLeftPosition(0),
-            top: this.boundedTopPosition(0)
+            left: this.boundedLeftPosition(this.state.leftLowerBound),
+            top: this.boundedTopPosition(this.state.topLowerBound)
           });
           break;
         case END_KEY:
           this.setState({
-            left: this.boundedLeftPosition(100),
-            top: this.boundedTopPosition(100)
+            left: this.boundedLeftPosition(this.state.leftUpperBound),
+            top: this.boundedTopPosition(this.state.topUpperBound)
           });
           break;
       }
@@ -206,11 +206,18 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       this.controlsRef.current!.blur();
     };
 
+    /**
+     * Defines the min and max positions of the movable element.
+     *
+     * This should be ran everytime user is starting an interaction to avoid
+     * misplacement due to resizing.
+     */
     private setUpperBounds() {
       const {
         height: containerHeight,
         width: containerWidth
       } = this.props.boundariesElement!.getBoundingClientRect();
+
       const {
         height: elementHeight,
         width: elementWidth
