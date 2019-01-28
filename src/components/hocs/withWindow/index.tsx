@@ -87,7 +87,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             dragEnd={this.dragEndHandler}
             dragStart={this.dragStartHandler}
             dragUpdate={this.dragUpdateHandler}
-            keyUpdate={this.keyDownHandler}
+            keyUpdate={this.moveKeyDownHandler}
           />
 
           <div
@@ -107,7 +107,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private keyDownHandler = (key: string) => {
+    private moveKeyDownHandler = (key: string) => {
       this.setUpperBounds();
 
       switch (key) {
