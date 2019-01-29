@@ -1,59 +1,65 @@
 import * as React from 'react';
+import { Direction } from '../../../constants';
+import ResizeButton from './ResizeButton';
 
-class Resizers extends React.Component {
+interface IProps {
+  resizeStart(): void;
+  resizeUpdate(xDiff: number, yDiff: number, direction: Direction): void;
+  resizeEnd(): void;
+}
+
+class Resizers extends React.Component<IProps> {
+  public baseX = 0;
+  public baseY = 0;
+  public currentDirection?: Direction;
+
   public render() {
     return (
       <div>
-        <div
-          style={{
-            backgroundColor: 'red',
-            cursor: 'ns-resize',
-            height: '4px',
-            left: '1em',
-            position: 'absolute',
-            top: 0,
-            width: 'calc(100% - 2em)'
-          }}
+        <ResizeButton
+          direction={Direction.Top}
+          mouseDownHandler={this.mouseDownHandler}
         />
-
-        <div
-          style={{
-            backgroundColor: 'red',
-            bottom: 0,
-            cursor: 'ns-resize',
-            height: '4px',
-            left: '1em',
-            position: 'absolute',
-            width: 'calc(100% - 2em)'
-          }}
+        <ResizeButton
+          direction={Direction.Right}
+          mouseDownHandler={this.mouseDownHandler}
         />
-
-        <div
-          style={{
-            backgroundColor: 'red',
-            cursor: 'ew-resize',
-            height: 'calc(100% - 2em)',
-            left: 0,
-            position: 'absolute',
-            top: '1em',
-            width: '4px'
-          }}
+        <ResizeButton
+          direction={Direction.Bottom}
+          mouseDownHandler={this.mouseDownHandler}
         />
-
-        <div
-          style={{
-            backgroundColor: 'red',
-            cursor: 'ew-resize',
-            height: 'calc(100% - 2em)',
-            position: 'absolute',
-            right: 0,
-            top: '1em',
-            width: '4px'
-          }}
+        <ResizeButton
+          direction={Direction.Left}
+          mouseDownHandler={this.mouseDownHandler}
         />
       </div>
     );
   }
+
+  private mouseDownHandler = (x: number, y: number, direction: Direction) => {
+    this.baseX = x;
+    this.baseY = y;
+    this.currentDirection = direction;
+
+    document.addEventListener('mousemove', this.mouseMoveHandler, true);
+    document.addEventListener('mouseup', this.mouseUpHandler, true);
+
+    this.props.resizeStart();
+  };
+
+  private mouseMoveHandler = (evt: MouseEvent) => {
+    const xDiff = evt.pageX - this.baseX;
+    const yDiff = evt.pageY - this.baseY;
+
+    this.props.resizeUpdate(xDiff, yDiff, this.currentDirection!);
+  };
+
+  private mouseUpHandler = () => {
+    document.removeEventListener('mousemove', this.mouseMoveHandler, true);
+    document.removeEventListener('mouseup', this.mouseUpHandler, true);
+
+    this.props.resizeEnd();
+  };
 }
 
 export default Resizers;

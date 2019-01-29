@@ -5,6 +5,7 @@ import {
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
   DEFAULT_MOVE_STEP,
+  Direction,
   END_KEY,
   HOME_KEY
 } from '../../../constants';
@@ -31,6 +32,8 @@ interface IWrappedComponentProps {
 }
 
 interface IHOCState {
+  height: number;
+  heightDiff: number;
   left: number;
   leftDiff: number;
   leftLowerBound: number;
@@ -40,7 +43,7 @@ interface IHOCState {
   topLowerBound: number;
   topUpperBound: number;
   width: number;
-  height: number;
+  widthDiff: number;
 }
 
 function withWindow(WrappedComponent: React.ComponentType<any>) {
@@ -53,6 +56,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     // TODO: height, left, top, and width should be moved to props and be updated through a dispatch.
     public state = {
       height: 35,
+      heightDiff: 0,
       left: 0,
       leftDiff: 0,
       leftLowerBound: 0,
@@ -61,7 +65,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       topDiff: 0,
       topLowerBound: 0,
       topUpperBound: 100,
-      width: 35
+      width: 35,
+      widthDiff: 0
     };
 
     public render() {
@@ -70,7 +75,11 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           className="draggable"
           innerRef={this.elementRef}
           style={{
-            height: `${this.state.height}%`,
+            height: `${bounded(
+              this.state.height + this.state.heightDiff,
+              20,
+              80
+            )}%`,
             left: `${bounded(
               this.state.left + this.state.leftDiff,
               this.state.leftLowerBound,
@@ -81,7 +90,11 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.state.topLowerBound,
               this.state.topUpperBound
             )}%`,
-            width: `${this.state.width}%`
+            width: `${bounded(
+              this.state.width + this.state.widthDiff,
+              20,
+              80
+            )}%`
           }}
         >
           <DragButton
@@ -91,12 +104,68 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             keyUpdate={this.moveKeyDownHandler}
           />
 
-          <Resizers />
+          <Resizers
+            resizeStart={this.resizeStartHandler}
+            resizeUpdate={this.resizeUpdateHandler}
+            resizeEnd={this.resizeEndHandler}
+          />
 
           <WrappedComponent {...this.props} />
         </StyledWindow>
       );
     }
+
+    private resizeStartHandler = () => {
+      this.setUpperBounds();
+      console.log('resize start');
+    };
+
+    private resizeUpdateHandler = (
+      xDiff: number,
+      yDiff: number,
+      direction: Direction
+    ) => {
+      switch (direction) {
+        case Direction.Top:
+          console.log('resize', 0, yDiff, direction);
+          this.setState({
+            heightDiff: unitToPercent(-yDiff, this.boundariesElementHeight),
+            topDiff: unitToPercent(yDiff, this.boundariesElementHeight)
+          });
+          break;
+        case Direction.Right:
+          console.log('resize', xDiff, 0, direction);
+          this.setState({
+            heightDiff: 0,
+            widthDiff: unitToPercent(xDiff, this.boundariesElementWidth)
+          });
+          break;
+        case Direction.Bottom:
+          console.log('resize', 0, yDiff, direction);
+          this.setState({
+            heightDiff: unitToPercent(yDiff, this.boundariesElementHeight),
+            widthDiff: 0
+          });
+          break;
+        case Direction.Left:
+          console.log('resize', xDiff, 0, direction);
+          this.setState({
+            leftDiff: unitToPercent(xDiff, this.boundariesElementWidth),
+            widthDiff: unitToPercent(-xDiff, this.boundariesElementWidth)
+          });
+          break;
+      }
+    };
+
+    private resizeEndHandler = () => {
+      console.log('resize end');
+      this.setState({
+        height: this.state.height + this.state.heightDiff,
+        heightDiff: 0,
+        width: this.state.width + this.state.widthDiff,
+        widthDiff: 0
+      });
+    };
 
     private moveKeyDownHandler = (key: string) => {
       this.setUpperBounds();
