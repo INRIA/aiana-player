@@ -75,11 +75,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           className="draggable"
           innerRef={this.elementRef}
           style={{
-            height: `${bounded(
-              this.state.height + this.state.heightDiff,
-              20,
-              80
-            )}%`,
+            height: `${this.state.height + this.state.heightDiff}%`,
             left: `${bounded(
               this.state.left + this.state.leftDiff,
               this.state.leftLowerBound,
@@ -90,11 +86,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.state.topLowerBound,
               this.state.topUpperBound
             )}%`,
-            width: `${bounded(
-              this.state.width + this.state.widthDiff,
-              20,
-              80
-            )}%`
+            width: `${this.state.width + this.state.widthDiff}%`
           }}
         >
           <DragButton
@@ -162,6 +154,10 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       this.setState({
         height: this.state.height + this.state.heightDiff,
         heightDiff: 0,
+        left: this.state.left + this.state.leftDiff,
+        leftDiff: 0,
+        top: this.state.top + this.state.topDiff,
+        topDiff: 0,
         width: this.state.width + this.state.widthDiff,
         widthDiff: 0
       });
