@@ -1,0 +1,17 @@
+@font-face {
+  font-family: system;
+  src: local('system-ui'), local('.SFNSText-Light'), local('Segoe UI'),
+    local('Roboto'), local('Oxygen-Sans'), local('Ubuntu'), local('Cantarell'),
+    local('Helvetica Neue');
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 100%;
+  font-family: system;
+}

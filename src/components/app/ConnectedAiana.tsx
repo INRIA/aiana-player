@@ -15,7 +15,6 @@ import {
   isDocumentFullscreen,
   removeFullscreenChangeEventListener
 } from '../../utils/fullscreen';
-import { injectGlobalStyles } from '../../utils/global-styles';
 import { ThemeProvider } from '../../utils/styled-components';
 import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
@@ -39,11 +38,6 @@ interface IAiana extends IStateProps, IDispatchProps {}
 
 class Aiana extends React.Component<IAiana> {
   private fullscreenRef = React.createRef<HTMLElement>();
-
-  constructor(props: any) {
-    super(props);
-    injectGlobalStyles();
-  }
 
   public render() {
     return (
