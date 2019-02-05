@@ -8,7 +8,7 @@ const StyledSvgIcon = StyledSvg.withComponent(Move);
 
 const StyledDragButton = styled(StyledButton)`
   display: block;
-  height: 36px;
+  height: 1.5rem;
   width: 100%;
 
   background-color: ${(props) => props.theme.fg};

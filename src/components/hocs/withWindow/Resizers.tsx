@@ -1,45 +1,77 @@
 import * as React from 'react';
-import { Direction } from '../../../constants';
+import {
+  DIRECTION_BOTTOM,
+  DIRECTION_LEFT,
+  DIRECTION_RIGHT,
+  DIRECTION_TOP
+} from '../../../constants';
+import { Direction } from '../../../types';
 import ResizeButton from './ResizeButton';
 
 interface IProps {
   resizeStart(): void;
-  resizeUpdate(xDiff: number, yDiff: number, direction: Direction): void;
+  resizeUpdate(xDiff: number, yDiff: number, directions: Direction[]): void;
   resizeEnd(): void;
 }
 
 class Resizers extends React.Component<IProps> {
   public baseX = 0;
   public baseY = 0;
-  public currentDirection?: Direction;
+  public currentDirections?: Direction[];
 
+  // FIXME: better markup please, and accessibility keys
   public render() {
     return (
+      // FIXME: a11y labels
       <div>
         <ResizeButton
-          direction={Direction.Top}
+          directions={[DIRECTION_TOP]}
           mouseDownHandler={this.mouseDownHandler}
         />
         <ResizeButton
-          direction={Direction.Right}
+          directions={[DIRECTION_TOP, DIRECTION_RIGHT]}
+          mouseDownHandler={this.mouseDownHandler}
+          type="corner"
+        />
+        <ResizeButton
+          directions={[DIRECTION_RIGHT]}
           mouseDownHandler={this.mouseDownHandler}
         />
         <ResizeButton
-          direction={Direction.Bottom}
+          directions={[DIRECTION_BOTTOM, DIRECTION_RIGHT]}
+          mouseDownHandler={this.mouseDownHandler}
+          type="corner"
+        />
+        <ResizeButton
+          directions={[DIRECTION_BOTTOM]}
           mouseDownHandler={this.mouseDownHandler}
         />
         <ResizeButton
-          direction={Direction.Left}
+          directions={[DIRECTION_BOTTOM, DIRECTION_LEFT]}
           mouseDownHandler={this.mouseDownHandler}
+          type="corner"
+        />
+        <ResizeButton
+          directions={[DIRECTION_LEFT]}
+          mouseDownHandler={this.mouseDownHandler}
+        />
+        <ResizeButton
+          directions={[DIRECTION_TOP, DIRECTION_LEFT]}
+          mouseDownHandler={this.mouseDownHandler}
+          type="corner"
         />
       </div>
     );
   }
 
-  private mouseDownHandler = (x: number, y: number, direction: Direction) => {
+  private mouseDownHandler = (
+    x: number,
+    y: number,
+    directions: Direction[]
+  ) => {
     this.baseX = x;
     this.baseY = y;
-    this.currentDirection = direction;
+    this.currentDirections = [...directions];
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
@@ -51,7 +83,7 @@ class Resizers extends React.Component<IProps> {
     const xDiff = evt.pageX - this.baseX;
     const yDiff = evt.pageY - this.baseY;
 
-    this.props.resizeUpdate(xDiff, yDiff, this.currentDirection!);
+    this.props.resizeUpdate(xDiff, yDiff, [...this.currentDirections!]);
   };
 
   private mouseUpHandler = () => {

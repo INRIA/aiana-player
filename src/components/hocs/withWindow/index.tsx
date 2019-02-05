@@ -5,11 +5,14 @@ import {
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
   DEFAULT_MOVE_STEP,
-  Direction,
+  DIRECTION_BOTTOM,
+  DIRECTION_LEFT,
+  DIRECTION_RIGHT,
+  DIRECTION_TOP,
   END_KEY,
   HOME_KEY
 } from '../../../constants';
-import { ExtendedHTMLElement } from '../../../types';
+import { Direction, ExtendedHTMLElement } from '../../../types';
 import { unitToPercent } from '../../../utils/math';
 import styled from '../../../utils/styled-components';
 import { bounded } from '../../../utils/ui';
@@ -18,8 +21,14 @@ import Resizers from './Resizers';
 
 const StyledWindow = styled.div`
   position: absolute;
+  padding: 0.5rem;
 
   background-color: ${(props) => props.theme.fg};
+
+  .aip-windowed {
+    height: calc(100% - 1.5rem);
+    overflow: auto;
+  }
 `;
 
 export interface IWindow {
@@ -76,8 +85,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           innerRef={this.elementRef}
           style={{
             height: `${this.state.height + this.state.heightDiff}%`,
-            left: `${Math.round(this.state.left)}%`,
-            top: `${Math.round(this.state.top)}%`,
+            left: `${this.state.left}%`,
+            top: `${this.state.top}%`,
             transform: `translate3d(${this.state.leftDiff}px, ${
               this.state.topDiff
             }px, 0)`,
@@ -97,61 +106,145 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             resizeEnd={this.resizeEndHandler}
           />
 
-          <WrappedComponent {...this.props} />
+          <div className="aip-windowed">
+            <WrappedComponent {...this.props} />
+          </div>
         </StyledWindow>
       );
     }
 
     private resizeStartHandler = () => {
       this.setUpperBounds();
-      console.log('resize start');
     };
 
     private resizeUpdateHandler = (
       xDiff: number,
       yDiff: number,
-      direction: Direction
+      directions: Direction[]
     ) => {
+      this.setState(directions.reduce((prev: object, direction: Direction) => {
+        return Object.assign(prev, this.resizeWIP(xDiff, yDiff, direction));
+      }, {}) as IHOCState);
+    };
+
+    private resizeWIP = (
+      xDiff: number,
+      yDiff: number,
+      direction: Direction
+    ): object => {
+      let newCoords = {};
+
       switch (direction) {
-        case Direction.Top:
-          console.log('resize', 0, yDiff, direction);
-          this.setState({
-            heightDiff: unitToPercent(-yDiff, this.containerHeight),
-            topDiff: unitToPercent(yDiff, this.containerHeight)
-          });
+        case DIRECTION_TOP:
+          {
+            const offsetTopPct = unitToPercent(
+              this.elementRef.current!.offsetTop,
+              this.containerHeight
+            );
+            const diffPct = unitToPercent(yDiff, this.containerHeight);
+            const futureTop = offsetTopPct + diffPct;
+
+            if (futureTop < 0) {
+              const maxDiff = offsetTopPct;
+
+              newCoords = {
+                heightDiff: maxDiff,
+                topDiff: this.safeYTranslate(yDiff)
+              };
+            } else {
+              newCoords = {
+                heightDiff: -diffPct,
+                topDiff: this.safeYTranslate(yDiff)
+              };
+            }
+          }
           break;
-        case Direction.Right:
-          console.log('resize', xDiff, 0, direction);
-          this.setState({
-            heightDiff: 0,
-            widthDiff: unitToPercent(xDiff, this.containerWidth)
-          });
+        case DIRECTION_RIGHT:
+          {
+            const offsetLeftPct = unitToPercent(
+              this.elementRef.current!.offsetLeft,
+              this.containerWidth
+            );
+            const diffPct = unitToPercent(xDiff, this.containerWidth);
+            const futureRight = offsetLeftPct + this.state.width + diffPct;
+
+            if (futureRight > 100) {
+              const maxDiff = 100 - this.state.width - offsetLeftPct;
+
+              newCoords = {
+                widthDiff: maxDiff
+              };
+            } else {
+              newCoords = {
+                widthDiff: diffPct
+              };
+            }
+          }
           break;
-        case Direction.Bottom:
-          console.log('resize', 0, yDiff, direction);
-          this.setState({
-            heightDiff: unitToPercent(yDiff, this.containerHeight),
-            widthDiff: 0
-          });
+        case DIRECTION_BOTTOM:
+          {
+            const offsetTopPct = unitToPercent(
+              this.elementRef.current!.offsetTop,
+              this.containerHeight
+            );
+            const diffPct = unitToPercent(yDiff, this.containerHeight);
+            const futureBottom = offsetTopPct + this.state.height + diffPct;
+
+            if (futureBottom > 100) {
+              const maxDiff = 100 - this.state.height - offsetTopPct;
+
+              newCoords = {
+                heightDiff: maxDiff,
+                widthDiff: 0
+              };
+            } else {
+              newCoords = {
+                heightDiff: diffPct,
+                widthDiff: 0
+              };
+            }
+          }
           break;
-        case Direction.Left:
-          console.log('resize', xDiff, 0, direction);
-          this.setState({
-            leftDiff: unitToPercent(xDiff, this.containerWidth),
-            widthDiff: unitToPercent(-xDiff, this.containerWidth)
-          });
+        case DIRECTION_LEFT:
+          {
+            const offsetLeftPct = unitToPercent(
+              this.elementRef.current!.offsetLeft,
+              this.containerWidth
+            );
+            const diffPct = unitToPercent(xDiff, this.containerWidth);
+            const futureLeft = offsetLeftPct + diffPct;
+
+            if (futureLeft < 0) {
+              const maxDiff = offsetLeftPct;
+
+              newCoords = {
+                leftDiff: this.safeXTranslate(xDiff),
+                widthDiff: maxDiff
+              };
+            } else {
+              newCoords = {
+                leftDiff: this.safeXTranslate(xDiff),
+                widthDiff: -diffPct
+              };
+            }
+          }
           break;
       }
+
+      return newCoords;
     };
 
     private resizeEndHandler = () => {
-      console.log('resize end');
       this.setState({
         height: this.state.height + this.state.heightDiff,
         heightDiff: 0,
-        left: this.state.left + this.state.leftDiff,
+        left:
+          this.state.left +
+          unitToPercent(this.state.leftDiff, this.containerWidth),
         leftDiff: 0,
-        top: this.state.top + this.state.topDiff,
+        top:
+          this.state.top +
+          unitToPercent(this.state.topDiff, this.containerHeight),
         topDiff: 0,
         width: this.state.width + this.state.widthDiff,
         widthDiff: 0
@@ -245,8 +338,6 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
         offsetHeight: elementHeight,
         offsetWidth: elementWidth
       } = this.elementRef.current!;
-
-      console.log(containerWidth, containerHeight, elementWidth, elementHeight);
 
       this.setState({
         leftUpperBound: 100 - unitToPercent(elementWidth, containerWidth),

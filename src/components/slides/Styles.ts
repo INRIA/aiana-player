@@ -1,16 +1,14 @@
 import styled from '../../utils/styled-components';
 
 const Styles = styled.section`
-  padding: 1em;
+  padding: 0.5em;
 
   line-height: 1.5;
   color: ${(props) => props.theme.bg};
   background-color: ${(props) => props.theme.fg};
 
   .aip-slides-content {
-    height: 100%;
     font-size: 1rem;
-    overflow: auto;
 
     * {
       max-width: 100%;

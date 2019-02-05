@@ -30,3 +30,5 @@ interface IHTMLElement {
 export type ThunkResult<R> = ThunkAction<R, IAianaState, undefined, any>;
 export type ExtendedHTMLElement = IHTMLElement & HTMLElement;
 export type ExtendedDocument = IDocument & Document;
+
+export type Direction = 'top' | 'right' | 'bottom' | 'left';

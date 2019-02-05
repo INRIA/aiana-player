@@ -2,12 +2,10 @@ export const SECONDS_PER_HOUR = 3600;
 export const MINUTES_PER_HOUR = 60;
 export const SECONDS_PER_MINUTE = 60;
 
-export enum Direction {
-  Top = 'top',
-  Right = 'right',
-  Bottom = 'bottom',
-  Left = 'left'
-}
+export const DIRECTION_TOP = 'top';
+export const DIRECTION_RIGHT = 'right';
+export const DIRECTION_BOTTOM = 'bottom';
+export const DIRECTION_LEFT = 'left';
 
 // Key codes
 export const ARROW_UP_KEY = 'ArrowUp';
