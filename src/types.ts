@@ -7,7 +7,7 @@ import { IAianaState } from './reducers';
  * This interface adds the missing ones and enables compatibility with
  * all browsers.
  */
-interface IDocument extends Document {
+interface IDocument {
   mozFullScreenEnabled: boolean;
   msFullscreenEnabled: boolean;
   webkitFullscreenEnabled: boolean;
