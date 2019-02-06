@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { updateUIWindow } from '../actions/shared';
 import { IAianaState } from '../reducers';
+import { IUIPlacement, IUIWindow } from '../reducers/preferences';
 import styled from '../utils/styled-components';
 import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
 import ChaptersMenu from './chapters/ChaptersMenu';
@@ -21,26 +23,63 @@ const StyledDiv = styled.div`
 
 interface IStateProps {
   chaptersMenu: boolean;
+  uiPlacement: IUIPlacement;
 }
 
-function Player({ chaptersMenu }: IStateProps) {
+interface IDispatchProps {
+  updateWindowHandler(name: string, window: IUIWindow): void;
+}
+
+interface IPlayer extends IStateProps, IDispatchProps {}
+
+function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
   return (
     <StyledDiv className="aip-player">
-      {chaptersMenu && <ChaptersMenu />}
-      <VideoPlayer />
-      <Slides />
+      {chaptersMenu && (
+        <ChaptersMenu
+          windowName="chapters"
+          boundariesElement=".aip-player"
+          uiUpdateHandler={updateWindowHandler}
+          {...uiPlacement.chapters}
+        />
+      )}
+      <VideoPlayer
+        windowName="video"
+        boundariesElement=".aip-player"
+        uiUpdateHandler={updateWindowHandler}
+        {...uiPlacement.video}
+      />
+      <Slides
+        windowName="slides"
+        boundariesElement=".aip-player"
+        uiUpdateHandler={updateWindowHandler}
+        {...uiPlacement.slides}
+      />
+      <MediaAdditionalInfos
+        windowName="additionalInfos"
+        boundariesElement=".aip-player"
+        uiUpdateHandler={updateWindowHandler}
+        {...uiPlacement.additionalInfos}
+      />
       <MediaSubtitles />
       <VideoPlayerControls />
       <TimelineBar />
-      <MediaAdditionalInfos />
     </StyledDiv>
   );
 }
 
 function mapStateToProps(state: IAianaState) {
   return {
-    chaptersMenu: state.chapters.menuEnabled
+    chaptersMenu: state.chapters.menuEnabled,
+    uiPlacement: state.preferences.uiPlacement
   };
 }
 
-export default connect(mapStateToProps)(Player);
+const mapDispatchToProps = {
+  updateWindowHandler: updateUIWindow
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Player);

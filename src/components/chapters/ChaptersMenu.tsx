@@ -4,6 +4,7 @@ import { IAianaState } from '../../reducers/index';
 import { IRawChaptersTrack, isActiveTrack } from '../../utils/media';
 import AssistiveText from '../a11y/AssistiveText';
 import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
+import withWindow, { IWindow } from '../hocs/withWindow';
 import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';
 
@@ -12,7 +13,7 @@ export interface IMediaChapters {
   chaptersTracks: IRawChaptersTrack[];
 }
 
-interface IProps extends IMediaChapters, InjectedUniqueIdProps {}
+interface IProps extends IMediaChapters, InjectedUniqueIdProps, IWindow {}
 
 function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   const activeChaptersTrack = chaptersTracks.find(isActiveTrack);
@@ -41,4 +42,4 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-export default connect(mapStateToProps)(withUniqueId(ChaptersMenu));
+export default connect(mapStateToProps)(withWindow(withUniqueId(ChaptersMenu)));

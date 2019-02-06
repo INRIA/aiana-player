@@ -1,3 +1,5 @@
+import { IUIPlacement } from './reducers/preferences';
+
 export const SECONDS_PER_HOUR = 3600;
 export const MINUTES_PER_HOUR = 60;
 export const SECONDS_PER_MINUTE = 60;
@@ -33,6 +35,33 @@ export const DEFAULT_THEME = 'inria';
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
+
+export const DEFAULT_UI_PLACEMENT: IUIPlacement = {
+  additionalInfos: {
+    height: 30,
+    left: 50,
+    top: 0,
+    width: 30
+  },
+  chapters: {
+    height: 30,
+    left: 0,
+    top: 50,
+    width: 30
+  },
+  slides: {
+    height: 35,
+    left: 5,
+    top: 5,
+    width: 35
+  },
+  video: {
+    height: 30,
+    left: 50,
+    top: 50,
+    width: 30
+  }
+};
 
 export const DEFAULT_MOVE_STEP = 5;
 

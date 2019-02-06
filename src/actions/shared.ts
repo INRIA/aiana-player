@@ -2,11 +2,13 @@ import axios from 'axios';
 import * as queryString from 'query-string';
 import { AnyAction } from 'redux';
 import { DEFAULT_CONFIGURATION_PATH } from '../constants';
+import { IUIWindow } from '../reducers/preferences';
 import { CDispatch } from '../store';
 import { ThunkResult } from '../types';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const TOGGLE_ACTIVITY = 'aiana/TOGGLE_ACTIVITY';
+export const CHANGE_UI_WINDOWS = 'aiana/CHANGE_UI_WINDOWS';
 
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
@@ -41,6 +43,14 @@ function loadConfiguration(configuration: any): AnyAction {
     slides: configuration.slides,
     subtitles: configuration.subtitles,
     type: LOAD_CONFIGURATION
+  };
+}
+
+export function updateUIWindow(name: string, window: IUIWindow): AnyAction {
+  return {
+    type: CHANGE_UI_WINDOWS,
+    window,
+    windowName: name
   };
 }
 

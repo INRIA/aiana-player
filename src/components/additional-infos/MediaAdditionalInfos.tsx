@@ -5,9 +5,10 @@ import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
 import AssistiveText from '../a11y/AssistiveText';
 import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
+import withWindow, { IWindow } from '../hocs/withWindow';
 import StyledAdditionalInfos from './Styles';
 
-interface IProps extends InjectedUniqueIdProps, I18nContextValues {
+interface IProps extends InjectedUniqueIdProps, I18nContextValues, IWindow {
   text?: string;
 }
 
@@ -36,5 +37,5 @@ function mapStateToProps(state: IAianaState) {
 }
 
 export default connect(mapStateToProps)(
-  withI18n()(withUniqueId(MediaAdditionalInfos))
+  withI18n()(withWindow(withUniqueId(MediaAdditionalInfos)))
 );

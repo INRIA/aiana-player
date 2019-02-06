@@ -12,7 +12,8 @@ import {
   END_KEY,
   HOME_KEY
 } from '../../../constants';
-import { Direction, ExtendedHTMLElement } from '../../../types';
+import { IUIWindow } from '../../../reducers/preferences';
+import { Direction } from '../../../types';
 import { unitToPercent } from '../../../utils/math';
 import styled from '../../../utils/styled-components';
 import { bounded } from '../../../utils/ui';
@@ -36,47 +37,55 @@ export interface IWindow {
 }
 
 interface IWrappedComponentProps {
-  boundariesElement?: ExtendedHTMLElement;
+  boundariesElement?: string;
+  height: number;
+  left: number;
+  top: number;
+  width: number;
+  windowName: string;
+  uiUpdateHandler(name: string, window: IUIWindow): void;
   [prop: string]: any;
 }
 
 interface IHOCState {
-  height: number;
   heightDiff: number;
-  left: number;
   leftDiff: number;
   leftLowerBound: number;
   leftUpperBound: number;
-  top: number;
   topDiff: number;
   topLowerBound: number;
   topUpperBound: number;
-  width: number;
   widthDiff: number;
 }
 
 function withWindow(WrappedComponent: React.ComponentType<any>) {
-  return class extends React.Component<IWrappedComponentProps, IHOCState> {
+  return class WithWindow extends React.Component<
+    IWrappedComponentProps,
+    IHOCState
+  > {
+    public static defaultProps: Partial<IWrappedComponentProps> = {
+      boundariesElement: 'body'
+    };
+
     public elementRef = React.createRef<HTMLDivElement>();
 
     public containerWidth = 0;
     public containerHeight = 0;
 
-    // TODO: height, left, top, and width should be moved to props and be updated through a dispatch.
-    public state = {
-      height: 35,
-      heightDiff: 0,
-      left: 0,
-      leftDiff: 0,
-      leftLowerBound: 0,
-      leftUpperBound: 100,
-      top: 0,
-      topDiff: 0,
-      topLowerBound: 0,
-      topUpperBound: 100,
-      width: 35,
-      widthDiff: 0
-    };
+    constructor(props: IWrappedComponentProps) {
+      super(props);
+
+      this.state = {
+        heightDiff: 0,
+        leftDiff: 0,
+        leftLowerBound: 0,
+        leftUpperBound: 100,
+        topDiff: 0,
+        topLowerBound: 0,
+        topUpperBound: 100,
+        widthDiff: 0
+      };
+    }
 
     public render() {
       return (
@@ -84,13 +93,13 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           className="draggable"
           innerRef={this.elementRef}
           style={{
-            height: `${this.state.height + this.state.heightDiff}%`,
-            left: `${this.state.left}%`,
-            top: `${this.state.top}%`,
+            height: `${this.props.height + this.state.heightDiff}%`,
+            left: `${this.props.left}%`,
+            top: `${this.props.top}%`,
             transform: `translate3d(${this.state.leftDiff}px, ${
               this.state.topDiff
             }px, 0)`,
-            width: `${this.state.width + this.state.widthDiff}%`
+            width: `${this.props.width + this.state.widthDiff}%`
           }}
         >
           <DragButton
@@ -122,12 +131,17 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       yDiff: number,
       directions: Direction[]
     ) => {
-      this.setState(directions.reduce((prev: object, direction: Direction) => {
-        return Object.assign(prev, this.resizeWIP(xDiff, yDiff, direction));
-      }, {}) as IHOCState);
+      const resizer = directions.reduce(
+        (prev: object, direction: Direction) => {
+          return Object.assign(prev, this.resize(xDiff, yDiff, direction));
+        },
+        {}
+      ) as IHOCState;
+
+      this.setState(resizer);
     };
 
-    private resizeWIP = (
+    private resize = (
       xDiff: number,
       yDiff: number,
       direction: Direction
@@ -166,10 +180,10 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.containerWidth
             );
             const diffPct = unitToPercent(xDiff, this.containerWidth);
-            const futureRight = offsetLeftPct + this.state.width + diffPct;
+            const futureRight = offsetLeftPct + this.props.width + diffPct;
 
             if (futureRight > 100) {
-              const maxDiff = 100 - this.state.width - offsetLeftPct;
+              const maxDiff = 100 - this.props.width - offsetLeftPct;
 
               newCoords = {
                 widthDiff: maxDiff
@@ -188,10 +202,10 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.containerHeight
             );
             const diffPct = unitToPercent(yDiff, this.containerHeight);
-            const futureBottom = offsetTopPct + this.state.height + diffPct;
+            const futureBottom = offsetTopPct + this.props.height + diffPct;
 
             if (futureBottom > 100) {
-              const maxDiff = 100 - this.state.height - offsetTopPct;
+              const maxDiff = 100 - this.props.height - offsetTopPct;
 
               newCoords = {
                 heightDiff: maxDiff,
@@ -235,18 +249,21 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     };
 
     private resizeEndHandler = () => {
-      this.setState({
-        height: this.state.height + this.state.heightDiff,
-        heightDiff: 0,
+      this.props.uiUpdateHandler(this.props.windowName, {
+        height: this.props.height + this.state.heightDiff,
         left:
-          this.state.left +
+          this.props.left +
           unitToPercent(this.state.leftDiff, this.containerWidth),
-        leftDiff: 0,
         top:
-          this.state.top +
+          this.props.top +
           unitToPercent(this.state.topDiff, this.containerHeight),
+        width: this.props.width + this.state.widthDiff
+      });
+
+      this.setState({
+        heightDiff: 0,
+        leftDiff: 0,
         topDiff: 0,
-        width: this.state.width + this.state.widthDiff,
         widthDiff: 0
       });
     };
@@ -256,33 +273,33 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       switch (key) {
         case ARROW_RIGHT_KEY:
-          this.setState({
-            left: this.boundedLeftPosition(this.state.left + DEFAULT_MOVE_STEP)
+          this.props.uiUpdateHandler(this.props.windowName, {
+            left: this.boundedLeftPosition(this.props.left + DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_UP_KEY:
-          this.setState({
-            top: this.boundedTopPosition(this.state.top - DEFAULT_MOVE_STEP)
+          this.props.uiUpdateHandler(this.props.windowName, {
+            top: this.boundedTopPosition(this.props.top - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_LEFT_KEY:
-          this.setState({
-            left: this.boundedLeftPosition(this.state.left - DEFAULT_MOVE_STEP)
+          this.props.uiUpdateHandler(this.props.windowName, {
+            left: this.boundedLeftPosition(this.props.left - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_DOWN_KEY:
-          this.setState({
-            top: this.boundedTopPosition(this.state.top + DEFAULT_MOVE_STEP)
+          this.props.uiUpdateHandler(this.props.windowName, {
+            top: this.boundedTopPosition(this.props.top + DEFAULT_MOVE_STEP)
           });
           break;
         case HOME_KEY:
-          this.setState({
+          this.props.uiUpdateHandler(this.props.windowName, {
             left: this.boundedLeftPosition(this.state.leftLowerBound),
             top: this.boundedTopPosition(this.state.topLowerBound)
           });
           break;
         case END_KEY:
-          this.setState({
+          this.props.uiUpdateHandler(this.props.windowName, {
             left: this.boundedLeftPosition(this.state.leftUpperBound),
             top: this.boundedTopPosition(this.state.topUpperBound)
           });
@@ -305,16 +322,19 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
      * Syncs properties and resets the diffs.
      */
     private dragEndHandler = () => {
-      this.setState({
+      this.props.uiUpdateHandler(this.props.windowName, {
         left: unitToPercent(
           this.elementRef.current!.offsetLeft + this.state.leftDiff,
           this.containerWidth
         ),
-        leftDiff: 0,
         top: unitToPercent(
           this.elementRef.current!.offsetTop + this.state.topDiff,
           this.containerHeight
-        ),
+        )
+      });
+
+      this.setState({
+        leftDiff: 0,
         topDiff: 0
       });
     };
@@ -326,13 +346,12 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
      * misplacement due to resizing.
      */
     private setUpperBounds() {
-      const {
-        offsetHeight: containerHeight,
-        offsetWidth: containerWidth
-      } = this.props.boundariesElement!;
+      const container = document.querySelector(
+        this.props.boundariesElement!
+      ) as HTMLElement;
 
-      this.containerWidth = containerWidth;
-      this.containerHeight = containerHeight;
+      this.containerWidth = container.offsetWidth;
+      this.containerHeight = container.offsetHeight;
 
       const {
         offsetHeight: elementHeight,
@@ -340,8 +359,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       } = this.elementRef.current!;
 
       this.setState({
-        leftUpperBound: 100 - unitToPercent(elementWidth, containerWidth),
-        topUpperBound: 100 - unitToPercent(elementHeight, containerHeight)
+        leftUpperBound: 100 - unitToPercent(elementWidth, this.containerWidth),
+        topUpperBound: 100 - unitToPercent(elementHeight, this.containerHeight)
       });
     }
 

@@ -20,25 +20,16 @@ import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
+import withWindow, { IWindow } from '../hocs/withWindow';
 import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
 
-const StyledVideo = styled.div`
-  position: absolute;
-  top: 40%;
-  right: 0%;
-  bottom: 0%;
-  left: 40%;
-
+const StyledVideo = styled.video`
   display: block;
-
-  video {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto;
-  }
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
 `;
 
 export interface ISource {
@@ -78,50 +69,49 @@ interface IStateProps {
   volume: number;
 }
 
-interface IProps extends IStateProps, IDispatchProps {}
+interface IProps extends IStateProps, IDispatchProps, IWindow {}
 
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();
 
   public render() {
     return (
-      <StyledVideo className="aip-video">
-        <video
-          autoPlay={this.props.autoPlay}
-          ref={this.media}
-          onClick={this.clickHandler}
-          onLoadedMetadata={this.loadedMetadataHandler}
-          onProgress={this.progressHandler}
-          onSeeked={this.seekedHandler}
-          onSeeking={this.seekingHandler}
-          onTimeUpdate={this.timeUpdateHandler}
-          onVolumeChange={this.volumeChangeHandler}
-          playsInline={true}
-          preload={this.props.preload}
-          tabIndex={-1}
-        >
-          {this.props.sources.map((source, idx) => (
-            <source key={idx} {...source} />
+      <StyledVideo
+        className="aip-video"
+        autoPlay={this.props.autoPlay}
+        innerRef={this.media}
+        onClick={this.clickHandler}
+        onLoadedMetadata={this.loadedMetadataHandler}
+        onProgress={this.progressHandler}
+        onSeeked={this.seekedHandler}
+        onSeeking={this.seekingHandler}
+        onTimeUpdate={this.timeUpdateHandler}
+        onVolumeChange={this.volumeChangeHandler}
+        playsInline={true}
+        preload={this.props.preload}
+        tabIndex={-1}
+      >
+        {this.props.sources.map((source, idx) => (
+          <source key={idx} {...source} />
+        ))}
+
+        {this.props.subtitlesSources
+          .filter(isDisplayableTrack)
+          .map((track, idx) => (
+            <MediaSubtitlesTrack key={idx} {...track} />
           ))}
 
-          {this.props.subtitlesSources
-            .filter(isDisplayableTrack)
-            .map((track, idx) => (
-              <MediaSubtitlesTrack key={idx} {...track} />
-            ))}
+        {this.props.chaptersSources.map((track, idx) => (
+          <MediaChapterTrack key={idx} {...track} />
+        ))}
 
-          {this.props.chaptersSources.map((track, idx) => (
-            <MediaChapterTrack key={idx} {...track} />
-          ))}
+        {this.props.additionalInformationsTracks.map((track, idx) => (
+          <AdditionalInfosTrack key={idx} {...track} />
+        ))}
 
-          {this.props.additionalInformationsTracks.map((track, idx) => (
-            <AdditionalInfosTrack key={idx} {...track} />
-          ))}
-
-          {this.props.slidesTracksSources.map((track, idx) => (
-            <SlidesTrack key={idx} {...track} />
-          ))}
-        </video>
+        {this.props.slidesTracksSources.map((track, idx) => (
+          <SlidesTrack key={idx} {...track} />
+        ))}
       </StyledVideo>
     );
   }
@@ -237,4 +227,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(VideoPlayer);
+)(withWindow(VideoPlayer));

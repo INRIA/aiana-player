@@ -1,6 +1,10 @@
 import { Reducer } from 'redux';
 import { CHANGE_LANGUAGE, CHANGE_THEME } from '../actions/preferences';
-import { LOAD_CONFIGURATION, TOGGLE_ACTIVITY } from '../actions/shared';
+import {
+  CHANGE_UI_WINDOWS,
+  LOAD_CONFIGURATION,
+  TOGGLE_ACTIVITY
+} from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
@@ -9,11 +13,26 @@ import {
   DEFAULT_SEEK_STEP,
   DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_THEME,
+  DEFAULT_UI_PLACEMENT,
   DEFAULT_VOLUME_STEP,
   DEFAULT_VOLUME_STEP_MULTIPLIER
 } from '../constants';
 import InriaTheme from '../themes/inria';
 import { IAianaTheme } from '../utils/styled-components';
+
+export interface IUIWindow {
+  height?: number;
+  left?: number;
+  top?: number;
+  width?: number;
+}
+
+export interface IUIPlacement {
+  additionalInfos: IUIWindow;
+  chapters: IUIWindow;
+  slides: IUIWindow;
+  video: IUIWindow;
+}
 
 export interface IPreferencesState {
   currentLanguage: string;
@@ -29,6 +48,7 @@ export interface IPreferencesState {
   seekStep: number;
   seekStepMultiplier: number;
   themes: string[];
+  uiPlacement: IUIPlacement;
   volumeStep: number;
   volumeStepMultiplier: number;
 }
@@ -43,6 +63,7 @@ const initialState: IPreferencesState = {
   seekStep: DEFAULT_SEEK_STEP,
   seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
   themes: AVAILABLE_THEMES,
+  uiPlacement: DEFAULT_UI_PLACEMENT,
   volumeStep: DEFAULT_VOLUME_STEP,
   volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER
 };
@@ -68,6 +89,17 @@ const preferences: Reducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.preferences
+      };
+    case CHANGE_UI_WINDOWS:
+      return {
+        ...state,
+        uiPlacement: {
+          ...state.uiPlacement,
+          [action.windowName]: {
+            ...state.uiPlacement[action.windowName],
+            ...action.window
+          }
+        }
       };
     default:
       return state;
