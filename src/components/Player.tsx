@@ -38,26 +38,26 @@ function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
       {chaptersMenu && (
         <ChaptersMenu
           windowName="chapters"
-          boundariesElement=".aip-player"
+          boundariesSelector=".aip-player"
           uiUpdateHandler={updateWindowHandler}
           {...uiPlacement.chapters}
         />
       )}
       <VideoPlayer
         windowName="video"
-        boundariesElement=".aip-player"
+        boundariesSelector=".aip-player"
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.video}
       />
       <Slides
         windowName="slides"
-        boundariesElement=".aip-player"
+        boundariesSelector=".aip-player"
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.slides}
       />
       <MediaAdditionalInfos
         windowName="additionalInfos"
-        boundariesElement=".aip-player"
+        boundariesSelector=".aip-player"
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.additionalInfos}
       />

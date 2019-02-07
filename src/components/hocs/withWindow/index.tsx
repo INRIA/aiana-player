@@ -37,7 +37,7 @@ export interface IWindow {
 }
 
 interface IWrappedComponentProps {
-  boundariesElement?: string;
+  boundariesSelector?: string;
   height: number;
   left: number;
   top: number;
@@ -64,7 +64,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     IHOCState
   > {
     public static defaultProps: Partial<IWrappedComponentProps> = {
-      boundariesElement: 'body'
+      boundariesSelector: 'body'
     };
 
     public elementRef = React.createRef<HTMLDivElement>();
@@ -347,7 +347,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
      */
     private setUpperBounds() {
       const container = document.querySelector(
-        this.props.boundariesElement!
+        this.props.boundariesSelector!
       ) as HTMLElement;
 
       this.containerWidth = container.offsetWidth;
