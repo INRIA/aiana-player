@@ -50,11 +50,7 @@ interface IWrappedComponentProps {
 interface IHOCState {
   heightDiff: number;
   leftDiff: number;
-  leftLowerBound: number;
-  leftUpperBound: number;
   topDiff: number;
-  topLowerBound: number;
-  topUpperBound: number;
   widthDiff: number;
 }
 
@@ -78,11 +74,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       this.state = {
         heightDiff: 0,
         leftDiff: 0,
-        leftLowerBound: 0,
-        leftUpperBound: 100,
         topDiff: 0,
-        topLowerBound: 0,
-        topUpperBound: 100,
         widthDiff: 0
       };
     }
@@ -294,14 +286,14 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           break;
         case HOME_KEY:
           this.props.uiUpdateHandler(this.props.windowName, {
-            left: this.boundedLeftPosition(this.state.leftLowerBound),
-            top: this.boundedTopPosition(this.state.topLowerBound)
+            left: this.boundedLeftPosition(0),
+            top: this.boundedTopPosition(0)
           });
           break;
         case END_KEY:
           this.props.uiUpdateHandler(this.props.windowName, {
-            left: this.boundedLeftPosition(this.state.leftUpperBound),
-            top: this.boundedTopPosition(this.state.topUpperBound)
+            left: this.boundedLeftPosition(100),
+            top: this.boundedTopPosition(100)
           });
           break;
       }
@@ -352,16 +344,6 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       this.containerWidth = container.offsetWidth;
       this.containerHeight = container.offsetHeight;
-
-      const {
-        offsetHeight: elementHeight,
-        offsetWidth: elementWidth
-      } = this.elementRef.current!;
-
-      this.setState({
-        leftUpperBound: 100 - unitToPercent(elementWidth, this.containerWidth),
-        topUpperBound: 100 - unitToPercent(elementHeight, this.containerHeight)
-      });
     }
 
     private safeXTranslate(x: number): number {
@@ -389,11 +371,11 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     }
 
     private boundedLeftPosition(pct: number) {
-      return bounded(pct, this.state.leftLowerBound, this.state.leftUpperBound);
+      return bounded(pct, 0, 100);
     }
 
     private boundedTopPosition(pct: number) {
-      return bounded(pct, this.state.topLowerBound, this.state.topUpperBound);
+      return bounded(pct, 0, 100);
     }
   };
 }
