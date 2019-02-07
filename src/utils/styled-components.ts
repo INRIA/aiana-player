@@ -2,10 +2,11 @@ import * as styledComponents from 'styled-components';
 import { ThemedStyledComponentsModule } from 'styled-components';
 
 export interface IAianaTheme {
-  fg: string;
   bg: string;
-  main: string;
+  clearFg: string;
+  fg: string;
   focus: string;
+  main: string;
 }
 
 const {

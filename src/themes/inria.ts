@@ -1,9 +1,13 @@
+import Color from 'color';
 import { IAianaTheme } from '../utils/styled-components';
 
 const theme: IAianaTheme = {
   bg: '#111',
+  clearFg: Color('#eee')
+    .lighten(0.3)
+    .string(),
   fg: '#eee',
-  focus: '#e63312',
+  focus: '#0070d2',
   main: '#e63312'
 };
 

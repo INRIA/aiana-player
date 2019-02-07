@@ -69,6 +69,10 @@ const StyledResizeButton = styled(StyledButton)`
       }
     }
   }
+
+  svg {
+    display: none;
+  }
 `;
 
 class ResizeButton extends React.Component<IProps> {
@@ -81,7 +85,9 @@ class ResizeButton extends React.Component<IProps> {
       <StyledResizeButton
         className={classNames(this.props.type, this.props.directions)}
         onMouseDown={this.mouseDownHandler}
-      />
+      >
+        {this.props.children}
+      </StyledResizeButton>
     );
   }
 
