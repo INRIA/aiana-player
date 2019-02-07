@@ -12,29 +12,28 @@ interface IProps {
 
 const StyledResizeButton = styled(StyledButton)`
   position: absolute;
-  background-color: transparent;
 
   &.top {
-    top: 0;
+    top: -4px;
   }
 
   &.bottom {
-    bottom: 0;
+    bottom: -4px;
   }
 
   &.left {
-    left: 0;
+    left: -4px;
   }
 
   &.right {
-    right: 0;
+    right: -4px;
   }
 
   &.border {
     &.top,
     &.bottom {
       left: 1rem;
-      height: 0.5rem;
+      height: calc(0.5rem + 4px);
       width: calc(100% - 2rem);
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ns-resize;
@@ -45,7 +44,7 @@ const StyledResizeButton = styled(StyledButton)`
     &.right {
       top: 1rem;
       height: calc(100% - 2rem);
-      width: 0.5rem;
+      width: calc(0.5rem + 4px);
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ew-resize;
       }
@@ -53,8 +52,8 @@ const StyledResizeButton = styled(StyledButton)`
   }
 
   &.corner {
-    height: 1em;
-    width: 1em;
+    height: calc(1rem + 4px);
+    width: calc(1rem + 4px);
 
     &.top.left,
     &.bottom.right {

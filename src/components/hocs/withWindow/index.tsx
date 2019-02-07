@@ -23,6 +23,8 @@ import Resizers from './Resizers';
 const StyledWindow = styled.div`
   position: absolute;
 
+  padding: 0.5rem 0 0 0;
+
   background-color: ${(props) => props.theme.fg};
 
   .aip-windowed {
