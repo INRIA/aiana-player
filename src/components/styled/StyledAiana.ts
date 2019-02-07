@@ -25,6 +25,11 @@ const StyledAiana = styled.div`
     box-sizing: border-box;
   }
 
+  [data-focus-visible-added] {
+    box-shadow: inset 0 0 2px 2px ${(props) => props.theme.focus};
+    outline: none;
+  }
+
   *:focus:not([data-focus-visible-added]) {
     outline: none;
   }

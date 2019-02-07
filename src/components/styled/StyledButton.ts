@@ -18,9 +18,4 @@ export default styled.button`
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
     cursor: pointer;
   }
-
-  &[data-focus-visible-added] {
-    box-shadow: inset 0 0 0 2px ${(props) => props.theme.focus};
-    outline: none;
-  }
 `;
