@@ -10,23 +10,40 @@ interface IProps {
   mouseDownHandler(x: number, y: number, directions: Direction[]): void;
 }
 
+// TODO: use variables for sizes.
 const StyledResizeButton = styled(StyledButton)`
   position: absolute;
 
   &.top {
     top: -4px;
+
+    &.focus-visible {
+      top: -0.75rem;
+    }
   }
 
   &.bottom {
     bottom: -4px;
+
+    &.focus-visible {
+      bottom: -0.75rem;
+    }
   }
 
   &.left {
     left: -4px;
+
+    &.focus-visible {
+      left: -0.75rem;
+    }
   }
 
   &.right {
     right: -4px;
+
+    &.focus-visible {
+      right: -0.75rem;
+    }
   }
 
   &.border {
@@ -35,8 +52,13 @@ const StyledResizeButton = styled(StyledButton)`
       left: 1rem;
       height: calc(0.5rem + 4px);
       width: calc(100% - 2rem);
+
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ns-resize;
+      }
+
+      &.focus-visible {
+        height: 1.5rem;
       }
     }
 
@@ -45,8 +67,13 @@ const StyledResizeButton = styled(StyledButton)`
       top: 1rem;
       height: calc(100% - 2rem);
       width: calc(0.5rem + 4px);
+
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ew-resize;
+      }
+
+      &.focus-visible {
+        width: 1.5rem;
       }
     }
   }
@@ -54,6 +81,11 @@ const StyledResizeButton = styled(StyledButton)`
   &.corner {
     height: calc(1rem + 4px);
     width: calc(1rem + 4px);
+
+    &.focus-visible {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
 
     &.top.left,
     &.bottom.right {
