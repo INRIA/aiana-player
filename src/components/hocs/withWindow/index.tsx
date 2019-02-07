@@ -22,7 +22,6 @@ import Resizers from './Resizers';
 
 const StyledWindow = styled.div`
   position: absolute;
-  padding: 0.5rem;
 
   background-color: ${(props) => props.theme.fg};
 

@@ -12,8 +12,7 @@ interface IProps {
 
 const StyledResizeButton = styled(StyledButton)`
   position: absolute;
-  /* background-color: ${(props) => props.theme.fg}; */
-  background-color: red;
+  background-color: transparent;
 
   &.top {
     top: 0;
@@ -35,17 +34,21 @@ const StyledResizeButton = styled(StyledButton)`
     &.top,
     &.bottom {
       left: 1rem;
-      height: .5rem;
+      height: 0.5rem;
       width: calc(100% - 2rem);
-      cursor: ns-resize;
+      &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
+        cursor: ns-resize;
+      }
     }
 
     &.left,
     &.right {
       top: 1rem;
       height: calc(100% - 2rem);
-      width: .5rem;
-      cursor: ew-resize;
+      width: 0.5rem;
+      &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
+        cursor: ew-resize;
+      }
     }
   }
 
@@ -53,15 +56,20 @@ const StyledResizeButton = styled(StyledButton)`
     height: 1em;
     width: 1em;
 
-    &.top.left, &.bottom.right {
-      cursor: nwse-resize;
+    &.top.left,
+    &.bottom.right {
+      &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
+        cursor: nwse-resize;
+      }
     }
 
-    &.top.right, &.bottom.left {
-      cursor: nesw-resize;
+    &.top.right,
+    &.bottom.left {
+      &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
+        cursor: nesw-resize;
+      }
     }
   }
-
 `;
 
 class ResizeButton extends React.Component<IProps> {

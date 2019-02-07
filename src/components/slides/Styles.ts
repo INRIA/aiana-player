@@ -1,7 +1,7 @@
 import styled from '../../utils/styled-components';
 
 const Styles = styled.section`
-  padding: 0.5em;
+  padding: 1rem;
 
   line-height: 1.5;
   color: ${(props) => props.theme.bg};

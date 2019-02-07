@@ -14,10 +14,10 @@ export default styled.button`
   text-align: inherit;
   line-height: inherit;
   overflow: hidden;
-  /*
+
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
     cursor: pointer;
-  } */
+  }
 
   &[data-focus-visible-added] {
     box-shadow: inset 0 0 0 2px ${(props) => props.theme.focus};
