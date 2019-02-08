@@ -29,10 +29,10 @@ interface IProps {
 }
 
 class DragButton extends React.Component<IProps> {
-  public controlsRef = React.createRef<HTMLButtonElement>();
-  public baseX = 0;
-  public baseY = 0;
-  public render() {
+  controlsRef = React.createRef<HTMLButtonElement>();
+  baseX = 0;
+  baseY = 0;
+  render() {
     return (
       <StyledDragButton
         className="draggable-control"

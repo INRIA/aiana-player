@@ -108,11 +108,11 @@ const StyledResizeButton = styled(StyledButton)`
 `;
 
 class ResizeButton extends React.Component<IProps> {
-  public static defaultProps = {
+  static defaultProps = {
     type: 'border'
   };
 
-  public render() {
+  render() {
     return (
       <StyledResizeButton
         className={classNames(this.props.type, this.props.directions)}

@@ -16,7 +16,7 @@ interface IProps {
 }
 
 class BookmarkButton extends React.Component<IProps> {
-  public render() {
+  render() {
     return (
       <StyledButton onClick={this.clickHandler}>
         <StyledBookmarkIcon />

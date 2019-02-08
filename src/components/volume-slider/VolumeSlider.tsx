@@ -37,12 +37,12 @@ export interface IVolumeSliderProps
     I18nContextValues {}
 
 class VolumeSlider extends React.Component<IVolumeSliderProps> {
-  public elementRef = React.createRef<HTMLDivElement>();
-  public sliderPosition = 0;
-  public sliderWidth = 0;
-  public sliderRef = React.createRef<HTMLDivElement>();
+  elementRef = React.createRef<HTMLDivElement>();
+  sliderPosition = 0;
+  sliderWidth = 0;
+  sliderRef = React.createRef<HTMLDivElement>();
 
-  public render() {
+  render() {
     const { t } = this.props;
     const volumePercents = 100 * this.props.volume;
 

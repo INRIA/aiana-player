@@ -31,14 +31,14 @@ interface IDispatchProps {
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
 
 class MediaSubtitlesTrack extends React.Component<ITrackProps> {
-  public static defaultProps: ITrack = {
+  static defaultProps: ITrack = {
     isDefault: false,
     kind: TRACK_KIND_SUBTITLES
   };
 
   private trackRef = React.createRef<HTMLTrackElement>();
 
-  public render() {
+  render() {
     return (
       <track
         default={this.props.isDefault}
@@ -51,7 +51,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     // TODO: is it really hidden?
     this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
 
@@ -62,7 +62,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     );
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.trackRef.current!.removeEventListener('load', this.loadHandler);
     this.trackRef.current!.track.removeEventListener(
       'cuechange',
@@ -70,7 +70,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     );
   }
 
-  public componentDidUpdate(prevProps: ITrackProps) {
+  componentDidUpdate(prevProps: ITrackProps) {
     const prevActiveTrack = prevProps.subtitlesTracks.find(isActiveTrack);
     const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
 

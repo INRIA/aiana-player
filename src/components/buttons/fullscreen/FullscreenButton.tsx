@@ -24,7 +24,7 @@ interface IFullscreenButton
     I18nContextValues {}
 
 class FullscreenButton extends React.Component<IFullscreenButton> {
-  public render() {
+  render() {
     if (!isFullscreenEnabled()) {
       return null;
     }

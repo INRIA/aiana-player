@@ -31,12 +31,12 @@ const StyledResizers = styled.div`
 `;
 
 class Resizers extends React.Component<IProps> {
-  public baseX = 0;
-  public baseY = 0;
-  public currentDirections?: Direction[];
+  baseX = 0;
+  baseY = 0;
+  currentDirections?: Direction[];
 
   // FIXME: better markup please, and accessibility keys
-  public render() {
+  render() {
     return (
       // FIXME: a11y labels
       <StyledResizers>

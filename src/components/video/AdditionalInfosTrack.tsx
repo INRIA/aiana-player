@@ -32,7 +32,7 @@ export interface IChapterTrack extends IProps, IStateProps, IDispatchProps {}
 class AdditionalInfosTrack extends React.Component<IChapterTrack> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
-  public render() {
+  render() {
     const { label, src, srcLang } = this.props;
 
     return (
@@ -46,7 +46,7 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     // browser will set track `mode` to disabled.
     this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
     this.trackRef.current!.addEventListener('load', this.loadHandler);
@@ -56,7 +56,7 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
     );
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.trackRef.current!.removeEventListener('load', this.loadHandler);
     this.trackRef.current!.track.removeEventListener(
       'cuechange',

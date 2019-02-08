@@ -1,8 +1,8 @@
 import * as React from 'react';
+import styled from '../../../utils/styled-components';
 import StyledButton from '../../styled/StyledButton';
 import StyledSvg from '../../styled/StyledSvg';
 import SlideIcon from '../../svg/Slide';
-import styled from '../../../utils/styled-components';
 
 const StyledSvgIcon = StyledSvg.withComponent(SlideIcon);
 const StyledSlideIcon = styled(StyledSvgIcon)`
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 class SlideButton extends React.Component<IProps> {
-  public render() {
+  render() {
     return (
       <StyledButton onClick={this.clickHandler}>
         <StyledSlideIcon />

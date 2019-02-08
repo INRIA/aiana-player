@@ -22,7 +22,7 @@ const StyledChapterButton = styled(StyledButton)`
 `;
 
 class MediaChapterButton extends React.Component<IMediaChapterButton> {
-  public render() {
+  render() {
     return (
       <StyledChapterButton type="button" onClick={this.clickHandler}>
         {this.props.children}

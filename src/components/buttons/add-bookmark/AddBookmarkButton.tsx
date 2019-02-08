@@ -21,7 +21,7 @@ interface IAddBookmarkButton
     I18nContextValues {}
 
 class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
-  public render() {
+  render() {
     return (
       <StyledButton onClick={this.clickHandler}>
         <ControlIcon aria-hidden="true" />

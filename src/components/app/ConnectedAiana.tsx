@@ -39,7 +39,7 @@ interface IAiana extends IStateProps, IDispatchProps {}
 class Aiana extends React.Component<IAiana> {
   private fullscreenRef = React.createRef<HTMLElement>();
 
-  public render() {
+  render() {
     return (
       <IntlWrapper>
         <ThemeProvider theme={themes[this.props.currentTheme]}>
@@ -60,13 +60,13 @@ class Aiana extends React.Component<IAiana> {
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.handleFetchInitialData();
     this.props.playerElementMounted(this.fullscreenRef.current!);
     addFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     removeFullscreenChangeEventListener(this.fullscreenHandler);
   }
 

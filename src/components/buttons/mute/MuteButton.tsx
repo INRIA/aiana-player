@@ -27,7 +27,7 @@ interface IDispatchProps {
 interface IMuteButton extends IStateProps, IDispatchProps, I18nContextValues {}
 
 class MuteButton extends React.Component<IMuteButton> {
-  public render() {
+  render() {
     const controlText = this.getControlText();
 
     return (

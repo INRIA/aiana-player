@@ -76,7 +76,7 @@ interface IProps extends IStateProps, IDispatchProps, IWindow {}
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();
 
-  public render() {
+  render() {
     return (
       <StyledVideo
         className="aip-video"
@@ -118,15 +118,15 @@ class VideoPlayer extends React.Component<IProps> {
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.mediaElementMounted(this.media.current!);
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.props.mediaElementUnounted();
   }
 
-  public componentDidUpdate() {
+  componentDidUpdate() {
     if (this.media.current!.playbackRate !== this.props.playbackRate) {
       this.media.current!.playbackRate = this.props.playbackRate;
     }

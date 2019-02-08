@@ -25,7 +25,7 @@ interface IDispatchProps {
 interface IProps extends IPlayButtonProps, IDispatchProps, I18nContextValues {}
 
 class PlayButton extends React.Component<IProps> {
-  public render() {
+  render() {
     const controlText = this.getControlText();
 
     return (

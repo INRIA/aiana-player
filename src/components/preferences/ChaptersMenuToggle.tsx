@@ -21,7 +21,7 @@ interface IChaptersMenuToggle
     InjectedUniqueIdProps {}
 
 class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {
-  public render() {
+  render() {
     return (
       <React.Fragment>
         <span id={this.props.uid}>

@@ -22,7 +22,7 @@ interface ILanguageSelector
     I18nContextValues {}
 
 class LanguageSelector extends React.Component<ILanguageSelector> {
-  public render() {
+  render() {
     const { languages, currentLanguage, t, uid } = this.props;
 
     return (

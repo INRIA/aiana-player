@@ -60,14 +60,14 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     IWrappedComponentProps,
     IHOCState
   > {
-    public static defaultProps: Partial<IWrappedComponentProps> = {
+    static defaultProps: Partial<IWrappedComponentProps> = {
       boundariesSelector: 'body'
     };
 
-    public elementRef = React.createRef<HTMLDivElement>();
+    elementRef = React.createRef<HTMLDivElement>();
 
-    public containerWidth = 0;
-    public containerHeight = 0;
+    containerWidth = 0;
+    containerHeight = 0;
 
     constructor(props: IWrappedComponentProps) {
       super(props);
@@ -80,7 +80,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       };
     }
 
-    public render() {
+    render() {
       return (
         <StyledWindow
           className="draggable"

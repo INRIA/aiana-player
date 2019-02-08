@@ -20,11 +20,11 @@ interface IInactivityTimer extends IStateProps, IDispatchProps {}
 class InactivityTimer extends React.Component<IInactivityTimer> {
   private inactivityTimer?: number;
 
-  public render() {
+  render() {
     return null;
   }
 
-  public componentDidUpdate(prevProps: IInactivityTimer) {
+  componentDidUpdate(prevProps: IInactivityTimer) {
     if (!prevProps.playerElement && this.props.playerElement) {
       this.attachEventsListeners();
     } else if (prevProps.playerElement && !this.props.playerElement) {

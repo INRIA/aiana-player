@@ -29,7 +29,7 @@ export interface IMediaChapterTrack
 class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
-  public render() {
+  render() {
     return (
       <track
         kind={TRACK_KIND_CHAPTERS}
@@ -41,7 +41,7 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     // browser will set track `mode` to disabled.
     this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
     this.trackRef.current!.addEventListener('load', this.loadHandler);
@@ -51,7 +51,7 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
     );
   }
 
-  public componentDidUpdate(prevProps: IMediaChapterTrack) {
+  componentDidUpdate(prevProps: IMediaChapterTrack) {
     const prevActiveTrack = prevProps.chaptersTracks.find(isActiveTrack);
     const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
 
@@ -61,7 +61,7 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
     }
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.trackRef.current!.removeEventListener('load', this.loadHandler);
     this.trackRef.current!.removeEventListener('cuechange', this.loadHandler);
   }

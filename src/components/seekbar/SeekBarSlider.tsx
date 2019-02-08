@@ -48,14 +48,14 @@ interface ISeekBarSlider
     I18nContextValues {}
 
 class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
-  public sliderRef = React.createRef<HTMLDivElement>();
+  sliderRef = React.createRef<HTMLDivElement>();
 
-  public state = {
+  state = {
     sliderPosition: 0,
     sliderWidth: 0
   };
 
-  public render() {
+  render() {
     const {
       currentTime,
       duration,
@@ -128,7 +128,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     );
   }
 
-  public getAriaValueText = (currentTime: number, duration: number): string => {
+  getAriaValueText = (currentTime: number, duration: number): string => {
     const { t } = this.props;
 
     return t('controls.seekbar.valuetext', {
@@ -143,11 +143,11 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     });
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     window.addEventListener('resize', this.setPosition);
   }
 
-  public componentDidUpdate(prevProps: IStateProps) {
+  componentDidUpdate(prevProps: IStateProps) {
     if (
       prevProps.duration !== this.props.duration ||
       prevProps.isFullscreen !== this.props.isFullscreen
@@ -156,7 +156,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     }
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.setPosition);
   }
 

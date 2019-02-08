@@ -2,12 +2,14 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
     "exclude": [
+      "*.json",
       "config/**/*.js",
       "node_modules/**/*.ts",
       "coverage/lcov-report/*.js"
     ]
   },
   "rules": {
+    "member-access": [true, "no-public"],
     "no-console": false
   }
 }

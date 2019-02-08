@@ -22,7 +22,7 @@ interface IPlaybackRateSelector
     I18nContextValues {}
 
 class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
-  public render() {
+  render() {
     const { playbackRates, currentPlaybackRate, t, uid } = this.props;
 
     return (
