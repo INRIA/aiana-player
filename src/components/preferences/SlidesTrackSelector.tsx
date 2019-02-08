@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { I18nContextValues, withI18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';

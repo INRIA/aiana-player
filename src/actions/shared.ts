@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as queryString from 'query-string';
+import queryString from 'query-string';
 import { AnyAction } from 'redux';
 import { DEFAULT_CONFIGURATION_PATH } from '../constants';
 import { IUIWindow } from '../reducers/preferences';

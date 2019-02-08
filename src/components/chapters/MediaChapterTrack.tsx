@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { addChaptersTrack, setChapterText } from '../../actions/chapters';
 import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from '../../constants';

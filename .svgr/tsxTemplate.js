@@ -14,7 +14,7 @@ function getProps(config) {
 module.exports = (code, config, state) => {
   const props = getProps(config);
 
-  return `import * as React from 'react';
+  return `import React from 'react';
 
 function ${state.componentName}${props} {
   return ${code}

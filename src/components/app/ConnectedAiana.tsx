@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import 'focus-visible';
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   handleFullscreenChange,

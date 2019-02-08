@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { toggleActivity } from '../actions/preferences';
 import { INACTIVITY_EVENTS, INACTIVITY_TIMER_DURATION } from '../constants';

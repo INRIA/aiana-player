@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import * as React from 'react';
+import React from 'react';
 import { Direction } from '../../../types';
 import styled from '../../../utils/styled-components';
 import StyledButton from '../../styled/StyledButton';

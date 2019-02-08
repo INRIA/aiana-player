@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { addSubtitlesTrack, setSubtitlesText } from '../../actions/subtitles';
 import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from '../../constants';

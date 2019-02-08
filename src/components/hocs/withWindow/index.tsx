@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
