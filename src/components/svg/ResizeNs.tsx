@@ -2,12 +2,12 @@
 
 import React from 'react';
 
-function Pause(props: React.SVGProps<SVGSVGElement>) {
+function ResizeNs(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 36 36" width="1em" height="1em" {...props}>
-      <path d="M10 27h5V9h-5zM20 9v18h5V9z" />
+      <path d="M18 16v-6h3l-4-5-4 5h3v18h-3l4 5 4-5h-3z" />
     </svg>
   );
 }
 
-export default Pause;
+export default ResizeNs;
