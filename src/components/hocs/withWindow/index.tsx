@@ -4,6 +4,7 @@ import {
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
+  DEFAULT_DRAGGABLE_SELECTOR,
   DEFAULT_MOVE_STEP,
   DIRECTION_BOTTOM,
   DIRECTION_LEFT,
@@ -61,7 +62,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     IHOCState
   > {
     static defaultProps: Partial<IWrappedComponentProps> = {
-      boundariesSelector: 'body'
+      boundariesSelector: DEFAULT_DRAGGABLE_SELECTOR
     };
 
     elementRef = React.createRef<HTMLDivElement>();
