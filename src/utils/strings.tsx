@@ -8,12 +8,12 @@ export function formatSubtitles(
   text: string,
   singleLine: boolean = false
 ): string[] {
-  const cleanedText = text.split(/\n/).map((line) => line.trim());
+  const trimmedTextLines = text.split(/\n/).map((line) => line.trim());
 
   if (!singleLine) {
-    return cleanedText;
+    return trimmedTextLines;
   } else {
-    return [cleanedText.join(' ')];
+    return [trimmedTextLines.join(' ')];
   }
 }
 
