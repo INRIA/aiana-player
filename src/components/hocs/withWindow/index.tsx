@@ -373,11 +373,27 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     }
 
     private boundedLeftPosition(pct: number) {
-      return bounded(pct, 0, 100);
+      return bounded(
+        pct,
+        0,
+        100 -
+          unitToPercent(
+            this.elementRef.current!.offsetWidth,
+            this.containerWidth
+          )
+      );
     }
 
     private boundedTopPosition(pct: number) {
-      return bounded(pct, 0, 100);
+      return bounded(
+        pct,
+        0,
+        100 -
+          unitToPercent(
+            this.elementRef.current!.offsetHeight,
+            this.containerHeight
+          )
+      );
     }
   };
 }
