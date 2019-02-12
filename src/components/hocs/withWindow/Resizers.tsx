@@ -8,7 +8,10 @@ import {
 import { Direction } from '../../../types';
 import styled from '../../../utils/styled-components';
 import StyledSvg from '../../styled/StyledSvg';
-import Move from '../../svg/Move';
+import ResizeEw from '../../svg/ResizeEw';
+import ResizeNesw from '../../svg/ResizeNesw';
+import ResizeNs from '../../svg/ResizeNs';
+import ResizeNwse from '../../svg/ResizeNwse';
 import ResizeButton from './ResizeButton';
 
 interface IProps {
@@ -17,7 +20,10 @@ interface IProps {
   resizeEnd(): void;
 }
 
-const StyledSvgIcon = StyledSvg.withComponent(Move);
+const StyledResizeNs = StyledSvg.withComponent(ResizeNs);
+const StyledResizeEw = StyledSvg.withComponent(ResizeEw);
+const StyledResizeNesw = StyledSvg.withComponent(ResizeNesw);
+const StyledResizeNwse = StyledSvg.withComponent(ResizeNwse);
 
 const StyledResizers = styled.div`
   .focus-visible[data-focus-visible-added] {
@@ -44,53 +50,53 @@ class Resizers extends React.Component<IProps> {
           directions={[DIRECTION_TOP]}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvgIcon />
+          <StyledResizeNs />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_TOP, DIRECTION_RIGHT]}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledSvgIcon />
+          <StyledResizeNesw />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_RIGHT]}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvgIcon />
+          <StyledResizeEw />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_BOTTOM, DIRECTION_RIGHT]}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledSvgIcon />
+          <StyledResizeNwse />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_BOTTOM]}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvgIcon />
+          <StyledResizeNs />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_BOTTOM, DIRECTION_LEFT]}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledSvgIcon />
+          <StyledResizeNesw />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_LEFT]}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvgIcon />
+          <StyledResizeEw />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_TOP, DIRECTION_LEFT]}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledSvgIcon />
+          <StyledResizeNwse />
         </ResizeButton>
       </StyledResizers>
     );
