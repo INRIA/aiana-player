@@ -21,7 +21,7 @@ const StyledDragButton = styled(StyledButton)`
   z-index: 1;
 
   opacity: 0;
-  background-color: ${(props) => hexToHsla(props.theme.bg, 0.7)};
+  background-color: ${(props) => hexToHsla(props.theme.bg, 0.75)};
 
   &:hover,
   &.is-dragging,
