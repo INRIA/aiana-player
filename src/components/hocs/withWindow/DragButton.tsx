@@ -45,7 +45,7 @@ const StyledDragButton = styled(StyledButton)`
 interface IProps {
   dragEnd(): void;
   dragStart(): void;
-  dragUpdate(xDiff: number, yDiff: number): void;
+  dragUpdate(deltaX: number, deltaY: number): void;
   keyUpdate(key: string): void;
 }
 
@@ -53,14 +53,16 @@ interface IState {
   isDragging: boolean;
 }
 
+const defaultState: IState = {
+  isDragging: false
+};
+
 class DragButton extends React.Component<IProps, IState> {
   controlsRef = React.createRef<HTMLButtonElement>();
   baseX = 0;
   baseY = 0;
 
-  state = {
-    isDragging: false
-  };
+  state = defaultState;
 
   render() {
     const classes = classNames('draggable-control', {
@@ -81,41 +83,47 @@ class DragButton extends React.Component<IProps, IState> {
 
   private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    this.controlsRef.current!.focus();
+    evt.currentTarget.focus();
     this.setState({ isDragging: true });
 
     this.baseX = evt.pageX;
     this.baseY = evt.pageY;
 
-    document.addEventListener('mousemove', this.mouseMoveHandler, true);
-    document.addEventListener('mouseup', this.mouseUpHandler, true);
+    document.addEventListener('mousemove', this.mouseMoveHandler);
+    document.addEventListener('mouseup', this.mouseUpHandler);
 
     this.props.dragStart();
   };
 
   private mouseMoveHandler = (evt: MouseEvent) => {
-    const xDiff = evt.pageX - this.baseX;
-    const yDiff = evt.pageY - this.baseY;
+    const deltaX = evt.pageX - this.baseX;
+    const deltaY = evt.pageY - this.baseY;
 
-    this.props.dragUpdate(xDiff, yDiff);
+    this.props.dragUpdate(deltaX, deltaY);
   };
 
   private mouseUpHandler = () => {
-    document.removeEventListener('mousemove', this.mouseMoveHandler, true);
-    document.removeEventListener('mouseup', this.mouseUpHandler, true);
-
-    this.setState({ isDragging: false });
     this.controlsRef.current!.blur();
-
-    this.props.dragEnd();
+    this.interactionEnd();
   };
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
     if (evt.key === ESCAPE_KEY) {
-      this.mouseUpHandler();
+      evt.currentTarget.blur();
+      this.interactionEnd();
+    } else {
+      this.props.keyUpdate(evt.key);
     }
-    this.props.keyUpdate(evt.key);
   };
+
+  private interactionEnd() {
+    document.removeEventListener('mousemove', this.mouseMoveHandler);
+    document.removeEventListener('mouseup', this.mouseUpHandler);
+
+    this.setState({ isDragging: false });
+
+    this.props.dragEnd();
+  }
 }
 
 export default DragButton;

@@ -15,10 +15,14 @@ import ResizeNwse from '../../svg/ResizeNwse';
 import ResizeButton from './ResizeButton';
 
 interface IProps {
-  keyUpdate(key: string, direction: Direction[]): void;
+  keyUpdate(key: string, handlePosition: Direction[]): void;
   resizeEnd(): void;
   resizeStart(): void;
-  resizeUpdate(xDiff: number, yDiff: number, directions: Direction[]): void;
+  resizeUpdate(
+    xDiff: number,
+    yDiff: number,
+    handlePositions: Direction[]
+  ): void;
 }
 
 const StyledResizeNs = StyledSvg.withComponent(ResizeNs);
@@ -40,7 +44,7 @@ const StyledResizers = styled.div`
 class Resizers extends React.Component<IProps> {
   baseX = 0;
   baseY = 0;
-  currentDirections?: Direction[];
+  currentPositions: Direction[] = [];
 
   // FIXME: better markup please, and accessibility keys
   render() {
@@ -48,14 +52,14 @@ class Resizers extends React.Component<IProps> {
       // FIXME: a11y labels
       <StyledResizers>
         <ResizeButton
-          directions={[DIRECTION_TOP]}
+          handlePositions={[DIRECTION_TOP]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeNs />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_TOP, DIRECTION_RIGHT]}
+          handlePositions={[DIRECTION_TOP, DIRECTION_RIGHT]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
@@ -63,14 +67,14 @@ class Resizers extends React.Component<IProps> {
           <StyledResizeNesw />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_RIGHT]}
+          handlePositions={[DIRECTION_RIGHT]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeEw />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_BOTTOM, DIRECTION_RIGHT]}
+          handlePositions={[DIRECTION_BOTTOM, DIRECTION_RIGHT]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
@@ -78,14 +82,14 @@ class Resizers extends React.Component<IProps> {
           <StyledResizeNwse />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_BOTTOM]}
+          handlePositions={[DIRECTION_BOTTOM]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeNs />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_BOTTOM, DIRECTION_LEFT]}
+          handlePositions={[DIRECTION_BOTTOM, DIRECTION_LEFT]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
@@ -93,14 +97,14 @@ class Resizers extends React.Component<IProps> {
           <StyledResizeNesw />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_LEFT]}
+          handlePositions={[DIRECTION_LEFT]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeEw />
         </ResizeButton>
         <ResizeButton
-          directions={[DIRECTION_TOP, DIRECTION_LEFT]}
+          handlePositions={[DIRECTION_TOP, DIRECTION_LEFT]}
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
@@ -114,11 +118,11 @@ class Resizers extends React.Component<IProps> {
   private mouseDownHandler = (
     x: number,
     y: number,
-    directions: Direction[]
+    handlePositions: Direction[]
   ) => {
     this.baseX = x;
     this.baseY = y;
-    this.currentDirections = [...directions];
+    this.currentPositions = [...handlePositions];
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
@@ -130,7 +134,7 @@ class Resizers extends React.Component<IProps> {
     const xDiff = evt.pageX - this.baseX;
     const yDiff = evt.pageY - this.baseY;
 
-    this.props.resizeUpdate(xDiff, yDiff, [...this.currentDirections!]);
+    this.props.resizeUpdate(xDiff, yDiff, [...this.currentPositions]);
   };
 
   private mouseUpHandler = () => {

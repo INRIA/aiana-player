@@ -32,6 +32,8 @@ const StyledVideo = styled.video`
 
   max-width: 100%;
   max-height: 100%;
+
+  transform: translate3d(0, 0, 0);
 `;
 
 export interface ISource {

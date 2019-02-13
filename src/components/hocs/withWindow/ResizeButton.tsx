@@ -6,10 +6,10 @@ import styled from '../../../utils/styled-components';
 import StyledButton from '../../styled/StyledButton';
 
 interface IProps {
-  directions: Direction[];
+  handlePositions: Direction[];
   type: 'border' | 'corner';
-  keyDownHandler(key: string, directions: Direction[]): void;
-  mouseDownHandler(x: number, y: number, directions: Direction[]): void;
+  keyDownHandler(key: string, handlePositions: Direction[]): void;
+  mouseDownHandler(x: number, y: number, handlePositions: Direction[]): void;
 }
 
 const OUTER_OVERFLOW_SIZE = '4px';
@@ -118,13 +118,10 @@ class ResizeButton extends React.Component<IProps> {
     type: 'border'
   };
 
-  buttonRef = React.createRef<HTMLButtonElement>();
-
   render() {
     return (
       <StyledResizeButton
-        className={classNames(this.props.type, this.props.directions)}
-        innerRef={this.buttonRef}
+        className={classNames(this.props.type, this.props.handlePositions)}
         onKeyDown={this.keyDownHandler}
         onMouseDown={this.mouseDownHandler}
         tabIndex={this.props.type === 'border' ? -1 : undefined}
@@ -136,15 +133,15 @@ class ResizeButton extends React.Component<IProps> {
 
   private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
     if (evt.key === ESCAPE_KEY) {
-      this.buttonRef.current!.blur();
+      evt.currentTarget.blur();
     }
-    this.props.keyDownHandler(evt.key, [...this.props.directions]);
+    this.props.keyDownHandler(evt.key, [...this.props.handlePositions]);
   };
 
   private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     this.props.mouseDownHandler(evt.pageX, evt.pageY, [
-      ...this.props.directions
+      ...this.props.handlePositions
     ]);
   };
 }

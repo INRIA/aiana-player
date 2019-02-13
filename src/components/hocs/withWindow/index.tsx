@@ -40,6 +40,8 @@ interface IWrappedComponentProps {
   boundariesSelector?: string;
   height: number;
   left: number;
+  minimumHeight?: number;
+  minimumWidth?: number;
   top: number;
   width: number;
   windowName: string;
@@ -54,30 +56,31 @@ interface IHOCState {
   widthDiff: number;
 }
 
+const defaultState: IHOCState = {
+  heightDiff: 0,
+  leftDiff: 0,
+  topDiff: 0,
+  widthDiff: 0
+};
+
+const defaultProps: Partial<IWrappedComponentProps> = {
+  boundariesSelector: DEFAULT_DRAGGABLE_SELECTOR,
+  minimumHeight: 20,
+  minimumWidth: 20
+};
+
 function withWindow(WrappedComponent: React.ComponentType<any>) {
   return class WithWindow extends React.Component<
     IWrappedComponentProps,
     IHOCState
   > {
-    static defaultProps: Partial<IWrappedComponentProps> = {
-      boundariesSelector: DEFAULT_DRAGGABLE_SELECTOR
-    };
+    static defaultProps = defaultProps;
 
     elementRef = React.createRef<HTMLDivElement>();
-
     containerWidth = 0;
     containerHeight = 0;
 
-    constructor(props: IWrappedComponentProps) {
-      super(props);
-
-      this.state = {
-        heightDiff: 0,
-        leftDiff: 0,
-        topDiff: 0,
-        widthDiff: 0
-      };
-    }
+    state = defaultState;
 
     render() {
       return (
@@ -114,112 +117,155 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private resizeKeyUpdate = (key: string, directions: Direction[]) => {
-      const resizer = directions.reduce(
-        (prev: object, direction: Direction) => {
-          return Object.assign(prev, this.resizeKey(key, direction));
+    private resizeKeyUpdate = (key: string, handlePositions: Direction[]) => {
+      const resizer = handlePositions.reduce(
+        (prev: object, handlePosition: Direction) => {
+          return Object.assign(prev, this.resizeKey(key, handlePosition));
         },
         {}
       ) as IUIWindow;
 
-      // TODO: dispatch size and position
-      this.props.uiUpdateHandler(this.props.windowName, resizer);
+      // Only dispatch when window got resize
+      if (Object.keys(resizer).length > 0) {
+        this.props.uiUpdateHandler(this.props.windowName, resizer);
+      }
     };
 
-    private resizeKey = (key: string, direction: Direction) => {
+    private resizeKey = (key: string, handlePosition: Direction) => {
       let newCoords = {};
 
-      switch (direction) {
+      switch (handlePosition) {
         case DIRECTION_TOP:
+          // window will have its top and height updated
           if (key === ARROW_UP_KEY) {
-            const futureTop = this.props.top - DEFAULT_MOVE_STEP;
-            const futureHeight = this.props.height + DEFAULT_MOVE_STEP;
+            // window will have its top lowered and height increased.
+            const expectedTop = this.props.top - DEFAULT_MOVE_STEP;
 
-            if (futureTop > 0) {
+            if (expectedTop > 0) {
+              // Expected `top` of the window is still in bounds
+
               newCoords = {
-                height: futureHeight,
-                top: futureTop
+                height: this.props.height + DEFAULT_MOVE_STEP,
+                top: expectedTop
               };
             } else {
+              // Expected `top` of the window is not in bounds
               newCoords = {
                 height: this.props.height + this.props.top,
                 top: 0
               };
             }
           } else if (key === ARROW_DOWN_KEY) {
-            newCoords = {
-              height: this.props.height - DEFAULT_MOVE_STEP,
-              top: this.props.top + DEFAULT_MOVE_STEP
-            };
-          }
-          break;
-        case DIRECTION_RIGHT: {
-          {
-            // TODO: using both axis is a mess when using diagonal resizers.
-            // Shall we prevent user from focusing those or just allow one axis?
-            if (key === ARROW_RIGHT_KEY) {
-              const futureWidth = this.props.width + DEFAULT_MOVE_STEP;
-              const futureRight = this.props.left + futureWidth;
+            // window will have its top increased and height lowered.
+            const expectedHeight = this.props.height - DEFAULT_MOVE_STEP;
 
-              if (futureRight > 100) {
-                newCoords = {
-                  width: 100 - this.props.left
-                };
-              } else {
-                newCoords = {
-                  width: futureWidth
-                };
-              }
-            } else if (key === ARROW_LEFT_KEY) {
-              // TODO: minimum width?
+            if (expectedHeight < this.props.minimumHeight!) {
+              // Expected height of the window is out of bounds
               newCoords = {
-                width: this.props.width - DEFAULT_MOVE_STEP
+                height: this.props.minimumHeight,
+                top:
+                  this.props.top -
+                  (this.props.height - this.props.minimumHeight!)
+              };
+            } else {
+              // Expected height of the window is in bounds
+              newCoords = {
+                height: expectedHeight,
+                top: this.props.top + DEFAULT_MOVE_STEP
               };
             }
           }
-          break;
-        }
-        case DIRECTION_BOTTOM:
-          if (key === ARROW_DOWN_KEY) {
-            const futureHeight = this.props.height + DEFAULT_MOVE_STEP;
-            const futureBottom = this.props.left + futureHeight;
 
-            if (futureBottom > 100) {
+          break;
+        case DIRECTION_RIGHT:
+          // window will have its width updated
+          if (key === ARROW_RIGHT_KEY) {
+            // increase window width
+            const expectedWidth = this.props.width + DEFAULT_MOVE_STEP;
+            const expectedRight = this.props.left + expectedWidth;
+
+            if (expectedRight > 100) {
+              // expected right border of the window is out of bounds
               newCoords = {
-                height: 100 - this.props.height
+                width: 100 - this.props.left
               };
             } else {
+              // expected right border of the window is in bounds
               newCoords = {
-                height: futureHeight
+                width: expectedWidth
+              };
+            }
+          } else if (key === ARROW_LEFT_KEY) {
+            // decrease window width
+            newCoords = {
+              width: this.boundedWidth(this.props.width - DEFAULT_MOVE_STEP)
+            };
+          }
+
+          break;
+        case DIRECTION_BOTTOM:
+          // window will have its height updated
+          if (key === ARROW_DOWN_KEY) {
+            // increase window height
+            const expectedHeight = this.props.height + DEFAULT_MOVE_STEP;
+            const expectedBottom = this.props.top + expectedHeight;
+
+            if (expectedBottom > 100) {
+              // expected bottom border of the window is out of bounds
+              newCoords = {
+                height: 100 - this.props.top
+              };
+            } else {
+              // expected bottom border of the window is in bounds
+              newCoords = {
+                height: expectedHeight
               };
             }
           } else if (key === ARROW_UP_KEY) {
+            // decrease window height
             newCoords = {
-              height: this.props.height - DEFAULT_MOVE_STEP
+              height: this.boundedHeight(this.props.height - DEFAULT_MOVE_STEP)
             };
           }
           break;
         case DIRECTION_LEFT:
+          // window will have its width and left position updated
           if (key === ARROW_LEFT_KEY) {
-            const futureLeft = this.props.left - DEFAULT_MOVE_STEP;
-            const futureWidth = this.props.width + DEFAULT_MOVE_STEP;
+            // decrease left position, increase width
+            const expectedLeft = this.props.left - DEFAULT_MOVE_STEP;
 
-            if (futureLeft > 0) {
+            if (expectedLeft > 0) {
+              // expected left border of the window is in bounds
               newCoords = {
-                left: futureLeft,
-                width: futureWidth
+                left: expectedLeft,
+                width: this.props.width + DEFAULT_MOVE_STEP
               };
             } else {
+              // expected left border of the window is out of bounds
               newCoords = {
                 left: 0,
                 width: this.props.width + this.props.left
               };
             }
           } else if (key === ARROW_RIGHT_KEY) {
-            newCoords = {
-              left: this.props.left + DEFAULT_MOVE_STEP,
-              width: this.props.width - DEFAULT_MOVE_STEP
-            };
+            // increase left position, decrease width
+            const expectedWidth = this.props.width - DEFAULT_MOVE_STEP;
+
+            if (expectedWidth < this.props.minimumWidth!) {
+              // expected left border of the window is out of bounds
+              newCoords = {
+                left:
+                  this.props.left +
+                  (this.props.width - this.props.minimumWidth!),
+                width: this.props.minimumWidth!
+              };
+            } else {
+              // expected left border of the window is in bounds
+              newCoords = {
+                left: this.props.left + DEFAULT_MOVE_STEP,
+                width: expectedWidth
+              };
+            }
           }
           break;
       }
@@ -234,11 +280,11 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     private resizeUpdateHandler = (
       xDiff: number,
       yDiff: number,
-      directions: Direction[]
+      handlePositions: Direction[]
     ) => {
-      const resizer = directions.reduce(
-        (prev: object, direction: Direction) => {
-          return Object.assign(prev, this.resize(xDiff, yDiff, direction));
+      const resizer = handlePositions.reduce(
+        (prev: object, handlePosition: Direction) => {
+          return Object.assign(prev, this.resize(xDiff, yDiff, handlePosition));
         },
         {}
       ) as IHOCState;
@@ -246,14 +292,20 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       this.setState(resizer);
     };
 
+    /**
+     * @param xDiff The x-axis difference, expressed in pixels
+     * @param yDiff The y-axis difference, expressed in pixels
+     * @param handlePosition The orientation of the resizing (the handle position)
+     * @returns An object to use in order to set state
+     */
     private resize = (
       xDiff: number,
       yDiff: number,
-      direction: Direction
+      handlePosition: Direction
     ): object => {
-      let newCoords = {};
+      let newCoords: Partial<IHOCState> = {};
 
-      switch (direction) {
+      switch (handlePosition) {
         case DIRECTION_TOP:
           {
             const offsetTopPct = unitToPercent(
@@ -285,9 +337,14 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.containerWidth
             );
             const diffPct = unitToPercent(xDiff, this.containerWidth);
-            const futureRight = offsetLeftPct + this.props.width + diffPct;
+            const expectedRight = offsetLeftPct + this.props.width + diffPct;
+            const expectedWidth = this.props.width + diffPct;
 
-            if (futureRight > 100) {
+            if (expectedWidth < this.props.minimumWidth!) {
+              newCoords = {
+                widthDiff: this.props.minimumWidth! - this.props.width
+              };
+            } else if (expectedRight > 100) {
               const maxDiff = 100 - this.props.width - offsetLeftPct;
 
               newCoords = {
@@ -307,9 +364,14 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.containerHeight
             );
             const diffPct = unitToPercent(yDiff, this.containerHeight);
-            const futureBottom = offsetTopPct + this.props.height + diffPct;
+            const expectedBottom = offsetTopPct + this.props.height + diffPct;
+            const expectedHeight = this.props.height + diffPct;
 
-            if (futureBottom > 100) {
+            if (expectedHeight < this.props.minimumHeight!) {
+              newCoords = {
+                heightDiff: this.props.minimumHeight! - this.props.height
+              };
+            } else if (expectedBottom > 100) {
               const maxDiff = 100 - this.props.height - offsetTopPct;
 
               newCoords = {
@@ -331,9 +393,9 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               this.containerWidth
             );
             const diffPct = unitToPercent(xDiff, this.containerWidth);
-            const futureLeft = offsetLeftPct + diffPct;
+            const expectedLeft = offsetLeftPct + diffPct;
 
-            if (futureLeft < 0) {
+            if (expectedLeft < 0) {
               const maxDiff = offsetLeftPct;
 
               newCoords = {
@@ -365,12 +427,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
         width: this.props.width + this.state.widthDiff
       });
 
-      this.setState({
-        heightDiff: 0,
-        leftDiff: 0,
-        topDiff: 0,
-        widthDiff: 0
-      });
+      this.setState(defaultState);
     };
 
     private moveKeyDownHandler = (key: string) => {
@@ -438,17 +495,22 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
         )
       });
 
-      this.setState({
-        leftDiff: 0,
-        topDiff: 0
-      });
+      this.setState(defaultState);
     };
+
+    private boundedWidth(w: number): number {
+      return bounded(w, this.props.minimumWidth!, 100);
+    }
+
+    private boundedHeight(h: number): number {
+      return bounded(h, this.props.minimumHeight!, 100);
+    }
 
     /**
      * Defines the min and max positions of the movable element.
      *
-     * This should be ran everytime user is starting an interaction to avoid
-     * misplacement due to resizing.
+     * This should be ran everytime user is starting an interaction in order to
+     * avoid misplacement due to resizing.
      */
     private setUpperBounds() {
       const container = document.querySelector(
@@ -459,52 +521,52 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       this.containerHeight = container.offsetHeight;
     }
 
-    private safeXTranslate(x: number): number {
+    private safeXTranslate(deltaX: number): number {
       const { offsetLeft, offsetWidth } = this.elementRef.current!;
 
-      if (offsetLeft + x < 0) {
+      if (offsetLeft + deltaX < 0) {
         return -offsetLeft;
-      } else if (offsetLeft + offsetWidth + x > this.containerWidth) {
+      } else if (offsetLeft + offsetWidth + deltaX > this.containerWidth) {
         return this.containerWidth - offsetLeft - offsetWidth;
       }
 
-      return x;
+      return deltaX;
     }
 
-    private safeYTranslate(y: number): number {
+    private safeYTranslate(deltaY: number): number {
       const { offsetTop, offsetHeight } = this.elementRef.current!;
 
-      if (offsetTop + y < 0) {
+      if (offsetTop + deltaY < 0) {
         return -offsetTop;
-      } else if (offsetTop + offsetHeight + y > this.containerHeight) {
+      } else if (offsetTop + offsetHeight + deltaY > this.containerHeight) {
         return this.containerHeight - offsetTop - offsetHeight;
       }
 
-      return y;
+      return deltaY;
     }
 
     private boundedLeftPosition(pct: number) {
-      return bounded(
+      return this.boundedPosition(
         pct,
-        0,
-        100 -
-          unitToPercent(
-            this.elementRef.current!.offsetWidth,
-            this.containerWidth
-          )
+        this.elementRef.current!.offsetWidth,
+        this.containerWidth
       );
     }
 
     private boundedTopPosition(pct: number) {
-      return bounded(
+      return this.boundedPosition(
         pct,
-        0,
-        100 -
-          unitToPercent(
-            this.elementRef.current!.offsetHeight,
-            this.containerHeight
-          )
+        this.elementRef.current!.offsetHeight,
+        this.containerHeight
       );
+    }
+
+    private boundedPosition(
+      pct: number,
+      positionPx: number,
+      maxPx: number
+    ): number {
+      return bounded(pct, 0, 100 - unitToPercent(positionPx, maxPx));
     }
   };
 }

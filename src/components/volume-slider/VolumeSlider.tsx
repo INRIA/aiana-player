@@ -124,7 +124,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
-    this.elementRef.current!.focus();
+    evt.currentTarget.focus();
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
