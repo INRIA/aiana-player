@@ -6,15 +6,17 @@ export function bounded(
   lowerBound: number,
   upperBound: number
 ): number {
-  const relativeX = x - lowerBound;
+  if (lowerBound > upperBound) {
+    throw Error('`lowerBound` bust be lower than `upperBound`');
+  }
 
-  if (relativeX < 0) {
-    return 0;
-  } else if (relativeX > upperBound) {
+  if (x - lowerBound < 0) {
+    return lowerBound;
+  } else if (x - upperBound > 0) {
     return upperBound;
   }
 
-  return relativeX;
+  return x;
 }
 
 /**
