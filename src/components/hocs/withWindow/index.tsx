@@ -24,12 +24,10 @@ import Resizers from './Resizers';
 const StyledWindow = styled.div`
   position: absolute;
 
-  padding: 0.5rem 0 0 0;
-
   background-color: ${(props) => props.theme.fg};
 
   .aip-windowed {
-    height: calc(100% - 1.5rem);
+    height: 100%;
     overflow: auto;
   }
 `;
@@ -104,17 +102,130 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           />
 
           <Resizers
+            keyUpdate={this.resizeKeyUpdate}
             resizeStart={this.resizeStartHandler}
             resizeUpdate={this.resizeUpdateHandler}
             resizeEnd={this.resizeEndHandler}
           />
-
           <div className="aip-windowed">
             <WrappedComponent {...this.props} />
           </div>
         </StyledWindow>
       );
     }
+
+    private resizeKeyUpdate = (key: string, directions: Direction[]) => {
+      const resizer = directions.reduce(
+        (prev: object, direction: Direction) => {
+          return Object.assign(prev, this.resizeKey(key, direction));
+        },
+        {}
+      ) as IUIWindow;
+
+      // TODO: dispatch size and position
+      this.props.uiUpdateHandler(this.props.windowName, resizer);
+    };
+
+    private resizeKey = (key: string, direction: Direction) => {
+      let newCoords = {};
+
+      switch (direction) {
+        case DIRECTION_TOP:
+          if (key === ARROW_UP_KEY) {
+            const futureTop = this.props.top - DEFAULT_MOVE_STEP;
+            const futureHeight = this.props.height + DEFAULT_MOVE_STEP;
+
+            if (futureTop > 0) {
+              newCoords = {
+                height: futureHeight,
+                top: futureTop
+              };
+            } else {
+              newCoords = {
+                height: this.props.height + this.props.top,
+                top: 0
+              };
+            }
+          } else if (key === ARROW_DOWN_KEY) {
+            newCoords = {
+              height: this.props.height - DEFAULT_MOVE_STEP,
+              top: this.props.top + DEFAULT_MOVE_STEP
+            };
+          }
+          break;
+        case DIRECTION_RIGHT: {
+          {
+            // TODO: using both axis is a mess when using diagonal resizers.
+            // Shall we prevent user from focusing those or just allow one axis?
+            if (key === ARROW_RIGHT_KEY) {
+              const futureWidth = this.props.width + DEFAULT_MOVE_STEP;
+              const futureRight = this.props.left + futureWidth;
+
+              if (futureRight > 100) {
+                newCoords = {
+                  width: 100 - this.props.left
+                };
+              } else {
+                newCoords = {
+                  width: futureWidth
+                };
+              }
+            } else if (key === ARROW_LEFT_KEY) {
+              // TODO: minimum width?
+              newCoords = {
+                width: this.props.width - DEFAULT_MOVE_STEP
+              };
+            }
+          }
+          break;
+        }
+        case DIRECTION_BOTTOM:
+          if (key === ARROW_DOWN_KEY) {
+            const futureHeight = this.props.height + DEFAULT_MOVE_STEP;
+            const futureBottom = this.props.left + futureHeight;
+
+            if (futureBottom > 100) {
+              newCoords = {
+                height: 100 - this.props.height
+              };
+            } else {
+              newCoords = {
+                height: futureHeight
+              };
+            }
+          } else if (key === ARROW_UP_KEY) {
+            newCoords = {
+              height: this.props.height - DEFAULT_MOVE_STEP
+            };
+          }
+          break;
+        case DIRECTION_LEFT:
+          if (key === ARROW_LEFT_KEY) {
+            const futureLeft = this.props.left - DEFAULT_MOVE_STEP;
+            const futureWidth = this.props.width + DEFAULT_MOVE_STEP;
+
+            if (futureLeft > 0) {
+              newCoords = {
+                left: futureLeft,
+                width: futureWidth
+              };
+            } else {
+              newCoords = {
+                left: 0,
+                width: this.props.width + this.props.left
+              };
+            }
+          } else if (key === ARROW_RIGHT_KEY) {
+            newCoords = {
+              left: this.props.left + DEFAULT_MOVE_STEP,
+              width: this.props.width - DEFAULT_MOVE_STEP
+            };
+          }
+          break;
+      }
+
+      return newCoords;
+    };
 
     private resizeStartHandler = () => {
       this.setUpperBounds();

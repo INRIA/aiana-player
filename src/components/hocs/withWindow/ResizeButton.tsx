@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { ESCAPE_KEY } from '../../../constants';
 import { Direction } from '../../../types';
 import styled from '../../../utils/styled-components';
 import StyledButton from '../../styled/StyledButton';
@@ -7,42 +8,47 @@ import StyledButton from '../../styled/StyledButton';
 interface IProps {
   directions: Direction[];
   type: 'border' | 'corner';
+  keyDownHandler(key: string, directions: Direction[]): void;
   mouseDownHandler(x: number, y: number, directions: Direction[]): void;
 }
 
-// TODO: use variables for sizes.
+const OUTER_OVERFLOW_SIZE = '4px';
+const FOCUSED_OUTER_OVERFLOW_SIZE = '0.75rem';
+const FOCUSED_SIZE = '1.5rem';
+const CORNER_SIZE = '1rem';
+
 const StyledResizeButton = styled(StyledButton)`
   position: absolute;
 
   &.top {
-    top: -4px;
+    top: -${OUTER_OVERFLOW_SIZE};
 
     &.focus-visible {
-      top: -0.75rem;
+      top: -${FOCUSED_OUTER_OVERFLOW_SIZE};
     }
   }
 
   &.bottom {
-    bottom: -4px;
+    bottom: -${OUTER_OVERFLOW_SIZE};
 
     &.focus-visible {
-      bottom: -0.75rem;
+      bottom: -${FOCUSED_OUTER_OVERFLOW_SIZE};
     }
   }
 
   &.left {
-    left: -4px;
+    left: -${OUTER_OVERFLOW_SIZE};
 
     &.focus-visible {
-      left: -0.75rem;
+      left: -${FOCUSED_OUTER_OVERFLOW_SIZE};
     }
   }
 
   &.right {
-    right: -4px;
+    right: -${OUTER_OVERFLOW_SIZE};
 
     &.focus-visible {
-      right: -0.75rem;
+      right: -${FOCUSED_OUTER_OVERFLOW_SIZE};
     }
   }
 
@@ -50,7 +56,7 @@ const StyledResizeButton = styled(StyledButton)`
     &.top,
     &.bottom {
       left: 1rem;
-      height: calc(0.5rem + 4px);
+      height: calc(0.5rem + ${OUTER_OVERFLOW_SIZE});
       width: calc(100% - 2rem);
 
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
@@ -58,7 +64,7 @@ const StyledResizeButton = styled(StyledButton)`
       }
 
       &.focus-visible {
-        height: 1.5rem;
+        height: ${FOCUSED_SIZE};
       }
     }
 
@@ -66,25 +72,25 @@ const StyledResizeButton = styled(StyledButton)`
     &.right {
       top: 1rem;
       height: calc(100% - 2rem);
-      width: calc(0.5rem + 4px);
+      width: calc(0.5rem + ${OUTER_OVERFLOW_SIZE});
 
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ew-resize;
       }
 
       &.focus-visible {
-        width: 1.5rem;
+        width: ${FOCUSED_SIZE};
       }
     }
   }
 
   &.corner {
-    height: calc(1rem + 4px);
-    width: calc(1rem + 4px);
+    height: calc(${CORNER_SIZE} + ${OUTER_OVERFLOW_SIZE});
+    width: calc(${CORNER_SIZE} + ${OUTER_OVERFLOW_SIZE});
 
     &.focus-visible {
-      height: 1.5rem;
-      width: 1.5rem;
+      height: ${FOCUSED_SIZE};
+      width: ${FOCUSED_SIZE};
     }
 
     &.top.left,
@@ -108,20 +114,32 @@ const StyledResizeButton = styled(StyledButton)`
 `;
 
 class ResizeButton extends React.Component<IProps> {
-  static defaultProps = {
+  static defaultProps: Partial<IProps> = {
     type: 'border'
   };
+
+  buttonRef = React.createRef<HTMLButtonElement>();
 
   render() {
     return (
       <StyledResizeButton
         className={classNames(this.props.type, this.props.directions)}
+        innerRef={this.buttonRef}
+        onKeyDown={this.keyDownHandler}
         onMouseDown={this.mouseDownHandler}
+        tabIndex={this.props.type === 'border' ? -1 : undefined}
       >
         {this.props.children}
       </StyledResizeButton>
     );
   }
+
+  private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (evt.key === ESCAPE_KEY) {
+      this.buttonRef.current!.blur();
+    }
+    this.props.keyDownHandler(evt.key, [...this.props.directions]);
+  };
 
   private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();

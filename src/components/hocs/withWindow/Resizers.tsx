@@ -15,9 +15,10 @@ import ResizeNwse from '../../svg/ResizeNwse';
 import ResizeButton from './ResizeButton';
 
 interface IProps {
+  keyUpdate(key: string, direction: Direction[]): void;
+  resizeEnd(): void;
   resizeStart(): void;
   resizeUpdate(xDiff: number, yDiff: number, directions: Direction[]): void;
-  resizeEnd(): void;
 }
 
 const StyledResizeNs = StyledSvg.withComponent(ResizeNs);
@@ -48,12 +49,14 @@ class Resizers extends React.Component<IProps> {
       <StyledResizers>
         <ResizeButton
           directions={[DIRECTION_TOP]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeNs />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_TOP, DIRECTION_RIGHT]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
@@ -61,12 +64,14 @@ class Resizers extends React.Component<IProps> {
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_RIGHT]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeEw />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_BOTTOM, DIRECTION_RIGHT]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
@@ -74,12 +79,14 @@ class Resizers extends React.Component<IProps> {
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_BOTTOM]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeNs />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_BOTTOM, DIRECTION_LEFT]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
@@ -87,12 +94,14 @@ class Resizers extends React.Component<IProps> {
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_LEFT]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
           <StyledResizeEw />
         </ResizeButton>
         <ResizeButton
           directions={[DIRECTION_TOP, DIRECTION_LEFT]}
+          keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
