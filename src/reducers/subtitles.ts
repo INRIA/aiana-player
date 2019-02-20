@@ -36,6 +36,23 @@ const initialState = {
   subtitlesTracks: []
 };
 
+function toggleSubtitlesTracks(
+  tracks: IRawSubtitlesTrack[],
+  language: string
+): IRawSubtitlesTrack[] {
+  return tracks.map((track) => {
+    if (track.language === language) {
+      return { ...track, active: true };
+    }
+
+    if (track.active === true) {
+      return { ...track, active: false };
+    }
+
+    return { ...track };
+  });
+}
+
 const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
   switch (action.type) {
     case ADD_SUBTITLES_TRACK: {
@@ -55,20 +72,12 @@ const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
         subtitlesTracks: action.subtitlesTracks
       };
     case UPDATE_ACTIVE_SUBTITLES_TRACK: {
-      // TODO: put this in a separate function
-      const subtitlesTracks = state.subtitlesTracks.map((track) => {
-        if (track.language === action.subtitlesTrackLanguage) {
-          return { ...track, active: true };
-        }
-        if (track.active === true) {
-          return { ...track, active: false };
-        }
-        return { ...track };
-      });
-
       return {
         ...state,
-        subtitlesTracks
+        subtitlesTracks: toggleSubtitlesTracks(
+          state.subtitlesTracks,
+          action.subtitlesTrackLanguage
+        )
       };
     }
     case SET_SUBTITLE_TEXT:
