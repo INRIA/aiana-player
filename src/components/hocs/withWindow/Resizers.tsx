@@ -62,7 +62,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeNs />
+          <StyledResizeNs aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_right', {
@@ -73,7 +73,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNesw />
+          <StyledResizeNesw aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.right', {
@@ -83,7 +83,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeEw />
+          <StyledResizeEw aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_right', {
@@ -94,7 +94,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNwse />
+          <StyledResizeNwse aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom', {
@@ -104,7 +104,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeNs />
+          <StyledResizeNs aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_left', {
@@ -115,7 +115,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNesw />
+          <StyledResizeNesw aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.left', {
@@ -125,7 +125,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeEw />
+          <StyledResizeEw aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_left', {
@@ -136,7 +136,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNwse />
+          <StyledResizeNwse aria-hidden="true" />
         </ResizeButton>
       </StyledResizers>
     );
