@@ -28,7 +28,7 @@ export const MEDIA_UPDATE_TIME = 'aiana/UPDATE_TIME';
 export const MEDIA_REQUEST_SEEK = 'aiana/MEDIA_REQUEST_SEEK';
 export const MEDIA_SEEK_TOGGLE = 'aiana/MEDIA_SEEK_TOGGLE';
 export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
-export const SET_ADDITIONAL_INFOS_TEXT = 'aiana/SET_ADDITIONAL_INFOS_TEXT';
+export const SET_ADDITIONAL_INFO_TEXT = 'aiana/SET_ADDITIONAL_INFO_TEXT';
 export const SET_BUFFERED_RANGES = 'aiana/SET_BUFFERED_RANGES';
 
 export function updateBufferedRanges(timeRanges: TimeRanges): AnyAction {
@@ -38,15 +38,16 @@ export function updateBufferedRanges(timeRanges: TimeRanges): AnyAction {
   };
 }
 
-export function setAdditionalInformationsText(text?: string): AnyAction {
+export function setAdditionalInformationText(text?: string): AnyAction {
   return {
     text,
-    type: SET_ADDITIONAL_INFOS_TEXT
+    type: SET_ADDITIONAL_INFO_TEXT
   };
 }
 
-// TODO: rename to add infos
-export function addMetadataTrack(track: IRawMetadataTrack): AnyAction {
+export function addAdditionalInformationTrack(
+  track: IRawMetadataTrack
+): AnyAction {
   return {
     track,
     type: ADD_METADATA_TRACK

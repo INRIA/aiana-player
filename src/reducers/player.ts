@@ -14,7 +14,7 @@ import {
   MEDIA_UPDATE_TIME,
   MEDIA_VOLUME_CHANGE,
   PLAYER_ELEMENT_MOUNTED,
-  SET_ADDITIONAL_INFOS_TEXT,
+  SET_ADDITIONAL_INFO_TEXT,
   SET_BUFFERED_RANGES,
   TOGGLE_FULLSCREEN
 } from '../actions/player';
@@ -157,7 +157,7 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         isSeeking: action.isSeeking,
         seekingTime: action.isSeeking ? state.seekingTime : 0
       };
-    case SET_ADDITIONAL_INFOS_TEXT:
+    case SET_ADDITIONAL_INFO_TEXT:
       return {
         ...state,
         additionalInformationsText: action.text
