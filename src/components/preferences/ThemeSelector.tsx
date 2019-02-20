@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeCurrentTheme } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
@@ -18,16 +18,16 @@ interface IDispatchProps {
 interface IThemeSelector
   extends InjectedUniqueIdProps,
     IStateProps,
-    IDispatchProps,
-    I18nContextValues {}
+    IDispatchProps {}
 
 function ThemeSelector({
   currentTheme,
   selectChangeHandler,
-  t,
   themes,
   uid
 }: IThemeSelector) {
+  const [t] = useTranslation();
+
   return (
     <React.Fragment>
       <span id={uid}>{t('preferences.theme-selector.label')}</span>
@@ -62,4 +62,4 @@ function mapDispatchToProps(dispatch: CDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(withUniqueId(ThemeSelector)));
+)(withUniqueId(ThemeSelector));

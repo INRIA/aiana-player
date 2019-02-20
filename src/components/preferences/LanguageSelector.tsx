@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeCurrentLanguage } from '../../actions/preferences';
 import { IAianaState } from '../../reducers/index';
@@ -7,7 +7,7 @@ import { CDispatch } from '../../store';
 import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
-  currentLanguage: string;
+  UILanguage: string;
   languages: string[];
 }
 
@@ -18,35 +18,32 @@ interface IDispatchProps {
 interface ILanguageSelector
   extends InjectedUniqueIdProps,
     IStateProps,
-    IDispatchProps,
-    I18nContextValues {}
+    IDispatchProps {}
 
-class LanguageSelector extends React.Component<ILanguageSelector> {
-  render() {
-    const { languages, currentLanguage, t, uid } = this.props;
+function LanguageSelector(props: ILanguageSelector) {
+  const [t] = useTranslation();
 
-    return (
-      <React.Fragment>
-        <span id={uid}>{t('preferences.language.label')}</span>
-        <select
-          aria-labelledby={uid}
-          onChange={this.props.changeHandler}
-          value={currentLanguage}
-        >
-          {languages.map((language) => (
-            <option key={language} value={language}>
-              {t(`languages.${language}`)}
-            </option>
-          ))}
-        </select>
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <span id={props.uid}>{t('preferences.language.label')}</span>
+      <select
+        aria-labelledby={props.uid}
+        onChange={props.changeHandler}
+        value={props.UILanguage}
+      >
+        {props.languages.map((language) => (
+          <option key={language} value={language}>
+            {t(`languages.${language}`)}
+          </option>
+        ))}
+      </select>
+    </React.Fragment>
+  );
 }
 
 function mapStateToProps(state: IAianaState) {
   return {
-    currentLanguage: state.preferences.currentLanguage,
+    UILanguage: state.preferences.language,
     languages: state.preferences.languages
   };
 }
@@ -62,4 +59,4 @@ function mapDispatchToProps(dispatch: CDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(withUniqueId(LanguageSelector)));
+)(withUniqueId(LanguageSelector));

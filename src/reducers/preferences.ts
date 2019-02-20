@@ -35,10 +35,10 @@ export interface IUIPlacement {
 }
 
 export interface IPreferencesState {
-  currentLanguage: string;
   currentTheme: string;
   customTheme: IAianaTheme;
   isActive: boolean;
+  language: string;
   languages: string[];
   playbackRates: number[];
   /**
@@ -54,10 +54,10 @@ export interface IPreferencesState {
 }
 
 const initialState: IPreferencesState = {
-  currentLanguage: DEFAULT_LANG,
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
   isActive: true,
+  language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
   playbackRates: AVAILABLE_PLAYBACK_RATES,
   seekStep: DEFAULT_SEEK_STEP,
@@ -78,7 +78,7 @@ const preferences: Reducer = (state = initialState, action) => {
     case CHANGE_LANGUAGE:
       return {
         ...state,
-        currentLanguage: action.currentLanguage
+        language: action.language
       };
     case CHANGE_THEME:
       return {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
 import AssistiveText from '../../../components/a11y/AssistiveText';
@@ -22,7 +22,7 @@ interface IDispatchProps {
   requestMediaPlay: any;
 }
 
-interface IProps extends IPlayButtonProps, IDispatchProps, I18nContextValues {}
+interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}
 
 class PlayButton extends React.Component<IProps> {
   render() {
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(PlayButton));
+)(withTranslation()(PlayButton));

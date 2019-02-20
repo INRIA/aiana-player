@@ -60,7 +60,6 @@ interface IStateProps {
   additionalInformationsTracks: ITrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
-  currentLanguage: string;
   currentTime: number;
   isMuted: boolean;
   isSeeking: boolean;
@@ -199,7 +198,6 @@ function mapStateToProps(state: IAianaState) {
     additionalInformationsTracks: state.player.additionalInformationsTracks,
     autoPlay: state.player.autoPlay,
     chaptersSources: state.chapters.sources,
-    currentLanguage: state.preferences.currentLanguage,
     currentTime: state.player.currentTime,
     isMuted: state.player.isMuted,
     isSeeking: state.player.isSeeking,

@@ -3,5 +3,8 @@ import ReactDOM from 'react-dom';
 import Aiana from './components/Aiana';
 import registerServiceWorker from './registerServiceWorker';
 
+import 'focus-visible';
+import './translations';
+
 ReactDOM.render(<Aiana />, document.querySelector('#root') as HTMLElement);
 registerServiceWorker();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
 import {
@@ -34,7 +34,7 @@ interface IDispatchProps {
 export interface IVolumeSliderProps
   extends IStateProps,
     IDispatchProps,
-    I18nContextValues {}
+    WithTranslation {}
 
 class VolumeSlider extends React.Component<IVolumeSliderProps> {
   elementRef = React.createRef<HTMLDivElement>();
@@ -198,4 +198,4 @@ function mapDispatchToProps(dispatch: CDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(VolumeSlider));
+)(withTranslation()(VolumeSlider));

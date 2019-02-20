@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import {
@@ -42,10 +42,7 @@ interface IDispatchProps {
   requestSeek: any;
 }
 
-interface ISeekBarSlider
-  extends IStateProps,
-    IDispatchProps,
-    I18nContextValues {}
+interface ISeekBarSlider extends IStateProps, IDispatchProps, WithTranslation {}
 
 class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   sliderRef = React.createRef<HTMLDivElement>();
@@ -313,4 +310,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(SeekBarSlider));
+)(withTranslation()(SeekBarSlider));
