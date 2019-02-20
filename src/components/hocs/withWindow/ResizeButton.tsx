@@ -7,6 +7,7 @@ import StyledButton from '../../styled/StyledButton';
 
 interface IProps {
   handlePositions: Direction[];
+  label: string;
   type: 'border' | 'corner';
   keyDownHandler(key: string, handlePositions: Direction[]): void;
   mouseDownHandler(x: number, y: number, handlePositions: Direction[]): void;
@@ -121,6 +122,7 @@ class ResizeButton extends React.Component<IProps> {
   render() {
     return (
       <StyledResizeButton
+        aria-label={this.props.label}
         className={classNames(this.props.type, this.props.handlePositions)}
         onKeyDown={this.keyDownHandler}
         onMouseDown={this.mouseDownHandler}

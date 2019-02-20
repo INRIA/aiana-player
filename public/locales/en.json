@@ -24,6 +24,14 @@
   "preferences.subtitlestrack.no_subtitle": "No subtitles",
   "preferences.theme-selector.label": "Theme",
   "preferences.title": "Preferences",
+  "resizers.top": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving top border",
+  "resizers.top_right": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving top right corner",
+  "resizers.right": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving right border",
+  "resizers.bottom_right": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving bottom right corner",
+  "resizers.bottom": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving bottom border",
+  "resizers.bottom_left": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving bottom left corner",
+  "resizers.left": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving left border",
+  "resizers.top_left": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving top left corner",
   "time.duration.h": "$t(time.hours, { \"count\": {{ hours }} })",
   "time.duration.hm": "$t(time.hours, { \"count\": {{ hours }} }) and $t(time.minutes, { \"count\": {{ minutes }} })",
   "time.duration.hms": "$t(time.hours, { \"count\": {{ hours }} }), $t(time.duration.ms, { \"minutes\": {{ minutes }}, { \"seconds\": {{ seconds }} })",
@@ -36,5 +44,11 @@
   "time.minutes": "{{ count }} minute",
   "time.minutes_plural": "{{ count }} minutes",
   "time.seconds": "{{ count }} second",
-  "time.seconds_plural": "{{ count }} seconds"
+  "time.seconds_plural": "{{ count }} seconds",
+  "timeline.goto_and_play_slide": "Play from slide number {{ index }}",
+  "window": "window",
+  "window_additionalInformation": "additional information window",
+  "window_chapters": "chapters window",
+  "window_slides": "slides window",
+  "window_video": "video window"
 }

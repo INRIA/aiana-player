@@ -22,6 +22,14 @@
   "preferences.subtitlestrack.no_subtitle": "Aucun sous-titre",
   "preferences.theme-selector.label": "Thème",
   "preferences.title": "Préférences",
+  "resizers.top": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure du haut",
+  "resizers.top_right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant le coin en haut à droite",
+  "resizers.right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure de droite",
+  "resizers.bottom_right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant le coin en bas à droite",
+  "resizers.bottom": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure du bas",
+  "resizers.bottom_left": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant le coin en bas à gauche",
+  "resizers.left": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure de gauche",
+  "resizers.top_left": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant le coin en haut à gauche",
   "time.duration.hm": "$t(time.hours, { \"count\": {{ hours }} }) et $t(time.minutes, { \"count\": {{ minutes }} })",
   "time.duration.hms": "$t(time.hours, { \"count\": {{ hours }} }), $t(time.duration.ms, { \"minutes\": {{ minutes }}, \"seconds\": {{ seconds }} })",
   "time.duration.hs": "$t(time.hours, { \"count\": {{ hours }} }) et $t(time.seconds, { \"count\": {{ seconds }} })",
@@ -31,5 +39,11 @@
   "time.minutes": "{{ count }} minute",
   "time.minutes_plural": "{{ count }} minutes",
   "time.seconds": "{{ count }} seconde",
-  "time.seconds_plural": "{{ count }} secondes"
+  "time.seconds_plural": "{{ count }} secondes",
+  "timeline.goto_and_play_slide": "Lire à partir de la diapositive {{ index }}",
+  "window": "fenêtre",
+  "window_additionalInformation": "fenêtre d'informations supplémentaires",
+  "window_chapters": "fenêtre des chapitres",
+  "window_slides": "fenêtre des diapositives",
+  "window_video": "fenêtre vidéo"
 }

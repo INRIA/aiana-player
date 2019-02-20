@@ -48,11 +48,11 @@ function loadConfiguration(configuration: any): AnyAction {
   };
 }
 
-export function updateUIWindow(name: string, window: IUIWindow): AnyAction {
+export function updateUIWindow(windowId: string, window: IUIWindow): AnyAction {
   return {
     type: CHANGE_UI_WINDOWS,
     window,
-    windowName: name
+    windowId
   };
 }
 

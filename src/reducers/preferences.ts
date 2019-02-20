@@ -95,8 +95,8 @@ const preferences: Reducer = (state = initialState, action) => {
         ...state,
         uiPlacement: {
           ...state.uiPlacement,
-          [action.windowName]: {
-            ...state.uiPlacement[action.windowName],
+          [action.windowId]: {
+            ...state.uiPlacement[action.windowId],
             ...action.window
           }
         }

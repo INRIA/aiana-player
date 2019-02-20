@@ -37,7 +37,12 @@ export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
 
-export const DEFAULT_DRAGGABLE_SELECTOR = 'body';
+export const DEFAULT_DRAGGABLE_SELECTOR = '.aip-player';
+
+export const WINDOW_ID_CHAPTERS = 'chapters';
+export const WINDOW_ID_ADDITIONAL_INFORMATION = 'additionalInformation';
+export const WINDOW_ID_SLIDES = 'slides';
+export const WINDOW_ID_VIDEO = 'video';
 
 export const DEFAULT_UI_PLACEMENT: IUIPlacement = {
   additionalInfos: {

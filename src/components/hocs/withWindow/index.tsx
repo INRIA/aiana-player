@@ -44,7 +44,7 @@ interface IWrappedComponentProps {
   minimumWidth?: number;
   top: number;
   width: number;
-  windowName: string;
+  windowId: string;
   uiUpdateHandler(name: string, window: IUIWindow): void;
   [prop: string]: any;
 }
@@ -109,6 +109,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             resizeStart={this.resizeStartHandler}
             resizeUpdate={this.resizeUpdateHandler}
             resizeEnd={this.resizeEndHandler}
+            windowId={this.props.windowId}
           />
           <div className="aip-windowed">
             <WrappedComponent {...this.props} />
@@ -127,7 +128,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       // Only dispatch when window got resize
       if (Object.keys(resizer).length > 0) {
-        this.props.uiUpdateHandler(this.props.windowName, resizer);
+        this.props.uiUpdateHandler(this.props.windowId, resizer);
       }
     };
 
@@ -416,7 +417,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     };
 
     private resizeEndHandler = () => {
-      this.props.uiUpdateHandler(this.props.windowName, {
+      this.props.uiUpdateHandler(this.props.windowId, {
         height: this.props.height + this.state.heightDiff,
         left:
           this.props.left +
@@ -435,33 +436,33 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       switch (key) {
         case ARROW_RIGHT_KEY:
-          this.props.uiUpdateHandler(this.props.windowName, {
+          this.props.uiUpdateHandler(this.props.windowId, {
             left: this.boundedLeftPosition(this.props.left + DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_UP_KEY:
-          this.props.uiUpdateHandler(this.props.windowName, {
+          this.props.uiUpdateHandler(this.props.windowId, {
             top: this.boundedTopPosition(this.props.top - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_LEFT_KEY:
-          this.props.uiUpdateHandler(this.props.windowName, {
+          this.props.uiUpdateHandler(this.props.windowId, {
             left: this.boundedLeftPosition(this.props.left - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_DOWN_KEY:
-          this.props.uiUpdateHandler(this.props.windowName, {
+          this.props.uiUpdateHandler(this.props.windowId, {
             top: this.boundedTopPosition(this.props.top + DEFAULT_MOVE_STEP)
           });
           break;
         case HOME_KEY:
-          this.props.uiUpdateHandler(this.props.windowName, {
+          this.props.uiUpdateHandler(this.props.windowId, {
             left: this.boundedLeftPosition(0),
             top: this.boundedTopPosition(0)
           });
           break;
         case END_KEY:
-          this.props.uiUpdateHandler(this.props.windowName, {
+          this.props.uiUpdateHandler(this.props.windowId, {
             left: this.boundedLeftPosition(100),
             top: this.boundedTopPosition(100)
           });
@@ -484,7 +485,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
      * Syncs properties and resets the diffs.
      */
     private dragEndHandler = () => {
-      this.props.uiUpdateHandler(this.props.windowName, {
+      this.props.uiUpdateHandler(this.props.windowId, {
         left: unitToPercent(
           this.elementRef.current!.offsetLeft + this.state.leftDiff,
           this.containerWidth

@@ -1,6 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateUIWindow } from '../actions/shared';
+import {
+  WINDOW_ID_ADDITIONAL_INFORMATION,
+  WINDOW_ID_CHAPTERS,
+  WINDOW_ID_SLIDES,
+  WINDOW_ID_VIDEO
+} from '../constants';
 import { IAianaState } from '../reducers';
 import { IUIPlacement, IUIWindow } from '../reducers/preferences';
 import styled from '../utils/styled-components';
@@ -37,27 +43,23 @@ function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
     <StyledDiv className="aip-player">
       {chaptersMenu && (
         <ChaptersMenu
-          windowName="chapters"
-          boundariesSelector=".aip-player"
+          windowId={WINDOW_ID_CHAPTERS}
           uiUpdateHandler={updateWindowHandler}
           {...uiPlacement.chapters}
         />
       )}
       <VideoPlayer
-        windowName="video"
-        boundariesSelector=".aip-player"
+        windowId={WINDOW_ID_VIDEO}
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.video}
       />
       <Slides
-        windowName="slides"
-        boundariesSelector=".aip-player"
+        windowId={WINDOW_ID_SLIDES}
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.slides}
       />
       <MediaAdditionalInfos
-        windowName="additionalInfos"
-        boundariesSelector=".aip-player"
+        windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.additionalInfos}
       />
