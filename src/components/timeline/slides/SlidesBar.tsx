@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../../actions/player';
 import { DEFAULT_LANG } from '../../../constants';
@@ -73,7 +74,8 @@ function SlidesBar({
     return null;
   }
 
-  // TODO: use labels on buttons and/or tooltip as slide navigation indicator
+  const [t] = useTranslation();
+
   return (
     <StyledSlidesBar>
       <ol>
@@ -85,8 +87,11 @@ function SlidesBar({
             }}
           >
             <SlideButton
-              onClick={requestSeekAction}
+              label={t('timeline.goto_and_play_slide', {
+                index: idx
+              })}
               media={media}
+              onClick={requestSeekAction}
               time={startTime}
             />
           </li>

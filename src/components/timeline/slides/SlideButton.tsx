@@ -10,6 +10,7 @@ const StyledSlideIcon = styled(StyledSvgIcon)`
 `;
 
 interface IProps {
+  label: string;
   media?: HTMLMediaElement;
   time: number;
   onClick(media: HTMLMediaElement, time: number): void;
@@ -18,8 +19,8 @@ interface IProps {
 class SlideButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler}>
-        <StyledSlideIcon />
+      <StyledButton aria-label={this.props.label} onClick={this.clickHandler}>
+        <StyledSlideIcon aria-hidden="true" />
       </StyledButton>
     );
   }
