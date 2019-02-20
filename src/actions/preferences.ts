@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
+import i18n from '../i18n';
 import { CDispatch } from '../store';
-import i18n from '../translations';
 import { ThunkResult } from '../types';
 import { TOGGLE_ACTIVITY } from './shared';
 
