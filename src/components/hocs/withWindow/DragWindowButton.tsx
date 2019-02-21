@@ -24,7 +24,7 @@ const StyledDragWindowButton = styled(StyledButton)`
   opacity: 0;
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.75)};
 
-  &:hover,
+  &.activable:hover,
   &.is-dragging,
   &.focus-visible {
     opacity: 1;
@@ -44,6 +44,7 @@ const StyledDragWindowButton = styled(StyledButton)`
 `;
 
 interface IProps {
+  isDraggable: boolean;
   windowId: string;
   dragEnd(): void;
   dragStart(): void;
@@ -70,6 +71,7 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
 
   render() {
     const classes = classNames('draggable-control', {
+      activable: this.props.isDraggable,
       'is-dragging': this.state.isDragging
     });
 

@@ -2,16 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
-import withWindow, { IWindow } from '../hocs/withWindow';
+import withWindow from '../hocs/withWindow';
 import SlidesStyles from './Styles';
 
 interface IProps {
   text?: string;
 }
 
-interface ISlidesProps extends IProps, IWindow {}
-
-function Slides({ text }: ISlidesProps) {
+function Slides({ text }: IProps) {
   if (!text) {
     return null;
   }

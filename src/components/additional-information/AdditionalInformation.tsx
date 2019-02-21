@@ -5,10 +5,10 @@ import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
 import AssistiveText from '../a11y/AssistiveText';
 import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
-import withWindow, { IWindow } from '../hocs/withWindow';
+import withWindow from '../hocs/withWindow';
 import StyledAdditionalInformation from './Styles';
 
-interface IProps extends InjectedUniqueIdProps, IWindow {
+interface IProps extends InjectedUniqueIdProps {
   text?: string;
 }
 

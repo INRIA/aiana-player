@@ -32,19 +32,17 @@ const StyledWindow = styled.div`
   }
 `;
 
-export interface IWindow {
-  isDraggable: boolean;
-}
-
 interface IWrappedComponentProps {
   boundariesSelector?: string;
   height: number;
+  isDraggable: boolean;
   left: number;
   minimumHeight?: number;
   minimumWidth?: number;
   top: number;
   width: number;
   windowId: string;
+  toggleDraggable(isDraggable: boolean): void;
   uiUpdateHandler(name: string, window: IUIWindow): void;
   [prop: string]: any;
 }
@@ -98,6 +96,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           }}
         >
           <DragWindowButton
+            isDraggable={this.props.isDraggable}
             dragEnd={this.dragEndHandler}
             dragStart={this.dragStartHandler}
             dragUpdate={this.dragUpdateHandler}
@@ -472,6 +471,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     };
 
     private dragStartHandler = () => {
+      this.props.toggleDraggable(false);
       this.setUpperBounds();
     };
 
@@ -498,6 +498,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
       });
 
       this.setState(defaultState);
+      this.props.toggleDraggable(true);
     };
 
     private boundedWidth(w: number): number {

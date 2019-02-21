@@ -20,7 +20,7 @@ import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
-import withWindow, { IWindow } from '../hocs/withWindow';
+import withWindow from '../hocs/withWindow';
 import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
@@ -72,7 +72,7 @@ interface IStateProps {
   volume: number;
 }
 
-interface IProps extends IStateProps, IDispatchProps, IWindow {}
+interface IProps extends IStateProps, IDispatchProps {}
 
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();

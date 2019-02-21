@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateUIWindow } from '../actions/shared';
 import {
@@ -36,38 +36,63 @@ interface IDispatchProps {
   updateWindowHandler(name: string, window: IUIWindow): void;
 }
 
-interface IPlayer extends IStateProps, IDispatchProps {}
+interface IPlayerProps extends IStateProps, IDispatchProps {}
 
-function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
-  return (
-    <StyledDiv className="aip-player">
-      {chaptersMenu && (
-        <ChaptersMenu
-          windowId={WINDOW_ID_CHAPTERS}
+interface IState {
+  isDraggable: boolean;
+}
+
+const defaultState: IState = {
+  isDraggable: true
+};
+
+class Player extends Component<IPlayerProps, IState> {
+  state = defaultState;
+
+  render() {
+    const { chaptersMenu, uiPlacement, updateWindowHandler } = this.props;
+    return (
+      <StyledDiv className="aip-player">
+        {chaptersMenu && (
+          <ChaptersMenu
+            isDraggable={this.state.isDraggable}
+            toggleDraggable={this.toggleDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            windowId={WINDOW_ID_CHAPTERS}
+            {...uiPlacement.chapters}
+          />
+        )}
+        <VideoPlayer
+          isDraggable={this.state.isDraggable}
+          toggleDraggable={this.toggleDraggable}
           uiUpdateHandler={updateWindowHandler}
-          {...uiPlacement.chapters}
+          windowId={WINDOW_ID_VIDEO}
+          {...uiPlacement.video}
         />
-      )}
-      <VideoPlayer
-        windowId={WINDOW_ID_VIDEO}
-        uiUpdateHandler={updateWindowHandler}
-        {...uiPlacement.video}
-      />
-      <Slides
-        windowId={WINDOW_ID_SLIDES}
-        uiUpdateHandler={updateWindowHandler}
-        {...uiPlacement.slides}
-      />
-      <AdditionalInformation
-        windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
-        uiUpdateHandler={updateWindowHandler}
-        {...uiPlacement.additionalInformation}
-      />
-      <MediaSubtitles />
-      <VideoPlayerControls />
-      <TimelineBar />
-    </StyledDiv>
-  );
+        <Slides
+          isDraggable={this.state.isDraggable}
+          toggleDraggable={this.toggleDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_SLIDES}
+          {...uiPlacement.slides}
+        />
+        <AdditionalInformation
+          isDraggable={this.state.isDraggable}
+          toggleDraggable={this.toggleDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
+          {...uiPlacement.additionalInformation}
+        />
+        <MediaSubtitles />
+        <VideoPlayerControls />
+        <TimelineBar />
+      </StyledDiv>
+    );
+  }
+
+  toggleDraggable = (isDraggable: boolean) => {
+    this.setState({ isDraggable });
+  };
 }
 
 function mapStateToProps(state: IAianaState) {
