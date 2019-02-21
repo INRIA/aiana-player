@@ -527,25 +527,38 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     private safeXTranslate(deltaX: number): number {
       const { offsetLeft, offsetWidth } = this.elementRef.current!;
 
-      if (offsetLeft + deltaX < 0) {
-        return -offsetLeft;
-      } else if (offsetLeft + offsetWidth + deltaX > this.containerWidth) {
-        return this.containerWidth - offsetLeft - offsetWidth;
-      }
-
-      return deltaX;
+      return this.safeTranslate(
+        deltaX,
+        offsetLeft,
+        offsetWidth,
+        this.containerWidth
+      );
     }
 
     private safeYTranslate(deltaY: number): number {
       const { offsetTop, offsetHeight } = this.elementRef.current!;
 
-      if (offsetTop + deltaY < 0) {
-        return -offsetTop;
-      } else if (offsetTop + offsetHeight + deltaY > this.containerHeight) {
-        return this.containerHeight - offsetTop - offsetHeight;
+      return this.safeTranslate(
+        deltaY,
+        offsetTop,
+        offsetHeight,
+        this.containerHeight
+      );
+    }
+
+    private safeTranslate(
+      delta: number,
+      pos: number,
+      size: number,
+      containerSize: number
+    ): number {
+      if (pos + delta < 0) {
+        return -pos;
+      } else if (pos + size + delta > containerSize) {
+        return containerSize - pos - size;
       }
 
-      return deltaY;
+      return delta;
     }
 
     private boundedLeftPosition(pct: number) {
