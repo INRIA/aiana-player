@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers/index';
 import { secondsToHMS } from '../../utils/time';
@@ -12,7 +12,9 @@ interface IStateProps {
 function TimeStatus({ currentTime, duration }: IStateProps) {
   return (
     <StyledElement className="aip-time-status">
-      <span className="aip-time-current">{secondsToHMS(currentTime)}</span>
+      <span className="aip-time-current" role="timer">
+        {secondsToHMS(currentTime)}
+      </span>
       <span> / </span>
       <span className="aip-time-duration">{secondsToHMS(duration)}</span>
     </StyledElement>

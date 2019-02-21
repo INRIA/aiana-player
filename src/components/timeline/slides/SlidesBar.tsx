@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../../actions/player';
 import { DEFAULT_LANG } from '../../../constants';
@@ -9,8 +10,8 @@ import styled from '../../../utils/styled-components';
 import SlideButton from './SlideButton';
 
 interface IStateProps {
-  currentLanguage: string;
   duration: number;
+  language: string;
   media?: HTMLMediaElement;
   slidesTracks: IRawSlidesTrack[];
 }
@@ -61,17 +62,19 @@ const StyledSlidesBar = styled.nav`
 function SlidesBar({
   slidesTracks,
   duration,
-  currentLanguage,
+  language,
   media,
   requestSeek: requestSeekAction
 }: ISlidesBar) {
   const activeSlidesTrack =
-    slidesTracks.find((track) => track.language === currentLanguage) ||
+    slidesTracks.find((track) => track.language === language) ||
     slidesTracks.find((track) => track.language === DEFAULT_LANG);
 
   if (!activeSlidesTrack) {
     return null;
   }
+
+  const [t] = useTranslation();
 
   return (
     <StyledSlidesBar>
@@ -84,8 +87,11 @@ function SlidesBar({
             }}
           >
             <SlideButton
-              onClick={requestSeekAction}
+              label={t('timeline.goto_and_play_slide', {
+                index: idx
+              })}
               media={media}
+              onClick={requestSeekAction}
               time={startTime}
             />
           </li>
@@ -97,8 +103,8 @@ function SlidesBar({
 
 function mapStateToProps(state: IAianaState) {
   return {
-    currentLanguage: state.preferences.currentLanguage,
     duration: state.player.duration,
+    language: state.slides.language,
     media: state.player.mediaElement,
     slidesTracks: state.slides.slidesTracks
   };

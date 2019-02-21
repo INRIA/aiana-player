@@ -1,5 +1,5 @@
-import styled from '../../utils/styled-components';
 import { hexToHsla } from '../../utils/colors';
+import styled from '../../utils/styled-components';
 
 const StyledTimeRanges = styled.div`
   height: 100%;

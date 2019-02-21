@@ -7,7 +7,7 @@ import { IAianaState } from './reducers';
  * This interface adds the missing ones and enables compatibility with
  * all browsers.
  */
-interface IDocument extends Document {
+interface IDocument {
   mozFullScreenEnabled: boolean;
   msFullscreenEnabled: boolean;
   webkitFullscreenEnabled: boolean;
@@ -30,3 +30,5 @@ interface IHTMLElement {
 export type ThunkResult<R> = ThunkAction<R, IAianaState, undefined, any>;
 export type ExtendedHTMLElement = IHTMLElement & HTMLElement;
 export type ExtendedDocument = IDocument & Document;
+
+export type Direction = 'top' | 'right' | 'bottom' | 'left';

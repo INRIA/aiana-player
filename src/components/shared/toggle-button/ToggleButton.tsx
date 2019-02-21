@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import StyledToggleButton from './Styles';
 
 interface IProps {
@@ -9,9 +9,9 @@ interface IProps {
   onClick(evt: React.MouseEvent<any>): void;
 }
 
-interface IToggleButton extends IProps, I18nContextValues {}
+function ToggleButton({ isOn, label, labelledBy, onClick }: IProps) {
+  const [t] = useTranslation();
 
-function ToggleButton({ isOn, label, labelledBy, onClick, t }: IToggleButton) {
   return (
     <StyledToggleButton
       role="switch"
@@ -28,4 +28,4 @@ function ToggleButton({ isOn, label, labelledBy, onClick, t }: IToggleButton) {
   );
 }
 
-export default withI18n()(ToggleButton);
+export default ToggleButton;

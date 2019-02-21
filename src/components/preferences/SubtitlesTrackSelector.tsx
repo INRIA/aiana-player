@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSubtitlesTrack } from '../../actions/subtitles';
 import { IAianaState } from '../../reducers/index';
@@ -23,8 +23,7 @@ interface IDispatchProps {
 interface ISubtitlesTrackSelector
   extends InjectedUniqueIdProps,
     IStateProps,
-    IDispatchProps,
-    I18nContextValues {}
+    IDispatchProps {}
 
 export function getSelectedValue(tracks: IRawSubtitlesTrack[]): string {
   const selectedTrack = tracks.find(isActiveTrack);
@@ -35,13 +34,14 @@ export function getSelectedValue(tracks: IRawSubtitlesTrack[]): string {
 function SubtitlesTrackSelector({
   mediaElement,
   selectedTrackChangedHandler,
-  t,
   subtitlesTracks,
   uid
 }: ISubtitlesTrackSelector) {
   if (!mediaElement) {
     return null;
   }
+
+  const [t] = useTranslation();
 
   return (
     <React.Fragment>
@@ -82,4 +82,4 @@ function mapDispatchToProps(dispatch: CDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(withUniqueId(SubtitlesTrackSelector)));
+)(withUniqueId(SubtitlesTrackSelector));

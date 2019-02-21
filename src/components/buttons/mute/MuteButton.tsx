@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { muteMedia, unmuteMedia } from '../../../actions/player';
 import AssistiveText from '../../../components/a11y/AssistiveText';
@@ -24,10 +24,10 @@ interface IDispatchProps {
   unmuteMedia(media: HTMLMediaElement): void;
 }
 
-interface IMuteButton extends IStateProps, IDispatchProps, I18nContextValues {}
+interface IMuteButton extends IStateProps, IDispatchProps, WithTranslation {}
 
 class MuteButton extends React.Component<IMuteButton> {
-  public render() {
+  render() {
     const controlText = this.getControlText();
 
     return (
@@ -76,4 +76,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(MuteButton));
+)(withTranslation()(MuteButton));

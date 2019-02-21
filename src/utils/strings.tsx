@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ReactElement } from 'react';
 import marked from './marked';
 
 /**
@@ -8,12 +8,12 @@ export function formatSubtitles(
   text: string,
   singleLine: boolean = false
 ): string[] {
-  const cleanedText = text.split(/\n/).map((line) => line.trim());
+  const trimmedTextLines = text.split(/\n/).map((line) => line.trim());
 
   if (!singleLine) {
-    return cleanedText;
+    return trimmedTextLines;
   } else {
-    return [cleanedText.join(' ')];
+    return [trimmedTextLines.join(' ')];
   }
 }
 
@@ -26,12 +26,12 @@ function identity(input: string) {
 /**
  * Converts input string (markdown, HTML) a JSX element.
  */
-export function markdownToJSX(md: string): JSX.Element {
+export function markdownToJSX(md: string): ReactElement<any> {
   return unsafeJSX(marked)(md);
 }
 
 function unsafeJSX(adapter: Adapter = identity) {
-  return (content: string): JSX.Element => (
+  return (content: string): ReactElement<any> => (
     <div
       className="aip-marked"
       dangerouslySetInnerHTML={{ __html: adapter(content) }}

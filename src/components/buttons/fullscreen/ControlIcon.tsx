@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import StyledSvg from '../../styled/StyledSvg';
 import FullscreenIcon from '../../svg/Fullscreen';
 import FullscreenExitIcon from '../../svg/FullscreenExit';

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from '../../utils/styled-components';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
@@ -45,7 +45,9 @@ const StyledPanel = styled.div`
   }
 `;
 
-function PreferencesPanel({ t }: I18nContextValues) {
+function PreferencesPanel() {
+  const [t] = useTranslation();
+
   return (
     <StyledPanel className="aip-preferences">
       <h2>{t('preferences.title')}</h2>
@@ -76,4 +78,4 @@ function PreferencesPanel({ t }: I18nContextValues) {
   );
 }
 
-export default withI18n()(PreferencesPanel);
+export default PreferencesPanel;

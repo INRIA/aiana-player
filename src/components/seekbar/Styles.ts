@@ -12,11 +12,6 @@ const StyledDiv = styled.div`
     width: 100%;
     position: relative;
     cursor: pointer;
-
-    &[data-focus-visible-added] {
-      box-shadow: 0 0 0 2px ${(props) => props.theme.focus};
-      outline: none;
-    }
   }
 
   .aip-seekbar {

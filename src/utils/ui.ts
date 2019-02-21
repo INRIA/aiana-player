@@ -1,30 +1,28 @@
 /**
- * Constrains input value to boundaries.
- * This can be used to ensure a slider recorded value is never
- * less than slider's minimum value nor more than slider's maximum value.
- *
- * @param x {number} The value to apply boundaries on
- * @param lowerBound {number} The lower bound
- * @param upperBound {number} The upper bound
+ * Constrains a value to boundaries.
  */
 export function bounded(
   x: number,
   lowerBound: number,
   upperBound: number
 ): number {
-  const relativeX = x - lowerBound;
+  if (lowerBound > upperBound) {
+    throw Error('`lowerBound` bust be lower than `upperBound`');
+  }
 
-  if (relativeX < 0) {
-    return 0;
-  } else if (relativeX > upperBound) {
+  if (x - lowerBound < 0) {
+    return lowerBound;
+  } else if (x - upperBound > 0) {
     return upperBound;
   }
 
-  return relativeX;
+  return x;
 }
 
 /**
  * Generates a random string of [0-9a-z] characters
+ *
+ * @param length - The length of the generated string (default: 4)
  */
 function randString(length: number = 4): string {
   return Math.random()
@@ -35,7 +33,7 @@ function randString(length: number = 4): string {
 /**
  * Generates a unique string identifer.
  *
- * @param length {number} the length of the identifier
+ * @param length {number} The length of the generated identifier (default: 6)
  */
 export function uid(length: number = 6): string {
   if (length < 1) {

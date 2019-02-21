@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleFullscreen } from '../../../actions/player';
 import AssistiveText from '../../../components/a11y/AssistiveText';
@@ -21,10 +21,10 @@ interface IDispatchProps {
 interface IFullscreenButton
   extends IStateProps,
     IDispatchProps,
-    I18nContextValues {}
+    WithTranslation {}
 
 class FullscreenButton extends React.Component<IFullscreenButton> {
-  public render() {
+  render() {
     if (!isFullscreenEnabled()) {
       return null;
     }
@@ -76,4 +76,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(FullscreenButton));
+)(withTranslation()(FullscreenButton));

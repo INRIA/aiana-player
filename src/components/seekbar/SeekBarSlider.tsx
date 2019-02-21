@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import {
@@ -15,7 +15,7 @@ import {
   PAGE_UP_KEY
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
-import { unitToPercent } from '../../utils/math';
+import { unitToRatio } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { bounded } from '../../utils/ui';
 import TimeRangesBar from '../buffered/TimeRangesBar';
@@ -42,20 +42,17 @@ interface IDispatchProps {
   requestSeek: any;
 }
 
-interface ISeekBarSlider
-  extends IStateProps,
-    IDispatchProps,
-    I18nContextValues {}
+interface ISeekBarSlider extends IStateProps, IDispatchProps, WithTranslation {}
 
 class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
-  public sliderRef = React.createRef<HTMLDivElement>();
+  sliderRef = React.createRef<HTMLDivElement>();
 
-  public state = {
+  state = {
     sliderPosition: 0,
     sliderWidth: 0
   };
 
-  public render() {
+  render() {
     const {
       currentTime,
       duration,
@@ -75,7 +72,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     // position should be the `currentTime`.
     const sliderTime = isSeeking ? seekingTime : currentTime;
 
-    const progressRatio = unitToPercent(sliderTime, duration) / 100;
+    const progressRatio = unitToRatio(sliderTime, duration);
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
@@ -128,7 +125,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     );
   }
 
-  public getAriaValueText = (currentTime: number, duration: number): string => {
+  getAriaValueText = (currentTime: number, duration: number): string => {
     const { t } = this.props;
 
     return t('controls.seekbar.valuetext', {
@@ -143,11 +140,11 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     });
   };
 
-  public componentDidMount() {
+  componentDidMount() {
     window.addEventListener('resize', this.setPosition);
   }
 
-  public componentDidUpdate(prevProps: IStateProps) {
+  componentDidUpdate(prevProps: IStateProps) {
     if (
       prevProps.duration !== this.props.duration ||
       prevProps.isFullscreen !== this.props.isFullscreen
@@ -156,7 +153,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     }
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.setPosition);
   }
 
@@ -219,8 +216,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
       this.state.sliderWidth
     );
     const newCurrentTime = round(
-      (duration * unitToPercent(positionDifference, this.state.sliderWidth)) /
-        100
+      duration * unitToRatio(positionDifference, this.state.sliderWidth)
     );
 
     if (newCurrentTime !== currentTime) {
@@ -314,4 +310,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(SeekBarSlider));
+)(withTranslation()(SeekBarSlider));

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
 import {
@@ -17,7 +17,7 @@ import {
 } from '../../constants';
 import { IAianaState } from '../../reducers/index';
 import { CDispatch } from '../../store';
-import { unitToPercent } from '../../utils/math';
+import { unitToRatio } from '../../utils/math';
 import { bounded } from '../../utils/ui';
 import StyledVolumeSlider from './Styles';
 
@@ -34,15 +34,15 @@ interface IDispatchProps {
 export interface IVolumeSliderProps
   extends IStateProps,
     IDispatchProps,
-    I18nContextValues {}
+    WithTranslation {}
 
 class VolumeSlider extends React.Component<IVolumeSliderProps> {
-  public elementRef = React.createRef<HTMLDivElement>();
-  public sliderPosition = 0;
-  public sliderWidth = 0;
-  public sliderRef = React.createRef<HTMLDivElement>();
+  elementRef = React.createRef<HTMLDivElement>();
+  sliderPosition = 0;
+  sliderWidth = 0;
+  sliderRef = React.createRef<HTMLDivElement>();
 
-  public render() {
+  render() {
     const { t } = this.props;
     const volumePercents = 100 * this.props.volume;
 
@@ -124,7 +124,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
-    this.elementRef.current!.focus();
+    evt.currentTarget.focus();
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
@@ -162,7 +162,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     }
 
     const positionDifference = bounded(mouseX, sliderX, sliderWidth);
-    const newVolume = unitToPercent(positionDifference, sliderWidth) / 100;
+    const newVolume = unitToRatio(positionDifference, sliderWidth);
 
     if (newVolume !== volume) {
       updateVolume(mediaElement, newVolume);
@@ -198,4 +198,4 @@ function mapDispatchToProps(dispatch: CDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(VolumeSlider));
+)(withTranslation()(VolumeSlider));

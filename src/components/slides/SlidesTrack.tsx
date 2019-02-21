@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { addSlidesTrack, setSlidesText } from '../../actions/slides';
 import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants';
@@ -30,7 +30,7 @@ interface ISlideTrackProps extends IProps, IStateProps, IDispatchProps {}
 class SlidesTrack extends React.Component<ISlideTrackProps> {
   private trackRef = React.createRef<HTMLTrackElement>();
 
-  public render() {
+  render() {
     const { label, src, srcLang } = this.props;
 
     if (!src) {
@@ -48,7 +48,7 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     // browser will set track `mode` to disabled.
     this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
     this.trackRef.current!.addEventListener('load', this.loadHandler);
@@ -58,7 +58,7 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
     );
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.trackRef.current!.removeEventListener('load', this.loadHandler);
     this.trackRef.current!.track.removeEventListener(
       'cuechange',
@@ -66,7 +66,7 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
     );
   }
 
-  public componentDidUpdate(prevProps: ISlideTrackProps) {
+  componentDidUpdate(prevProps: ISlideTrackProps) {
     const prevActiveTrack = prevProps.slidesTracks.find((track) => {
       return track.language === prevProps.language;
     });

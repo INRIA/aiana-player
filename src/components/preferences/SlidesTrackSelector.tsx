@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { I18nContextValues, withI18n } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';
 import { IAianaState } from '../../reducers';
@@ -20,8 +20,7 @@ interface IDispatchProps {
 interface ISlidesTrackSelector
   extends InjectedUniqueIdProps,
     IStateProps,
-    IDispatchProps,
-    I18nContextValues {}
+    IDispatchProps {}
 
 export function getSelectedValue(
   tracks: IRawSlidesTrack[],
@@ -39,12 +38,13 @@ function SlidesTrackSelector({
   currentLanguage,
   mediaElement,
   selectedTrackChangedHandler,
-  t,
   uid
 }: ISlidesTrackSelector) {
   if (!mediaElement) {
     return null;
   }
+
+  const [t] = useTranslation();
 
   return (
     <React.Fragment>
@@ -85,4 +85,4 @@ function mapDispatchToProps(dispatch: CDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withI18n()(withUniqueId(SlidesTrackSelector)));
+)(withUniqueId(SlidesTrackSelector));

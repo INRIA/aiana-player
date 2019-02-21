@@ -1,6 +1,13 @@
+import { IUIPlacement } from './reducers/preferences';
+
 export const SECONDS_PER_HOUR = 3600;
 export const MINUTES_PER_HOUR = 60;
 export const SECONDS_PER_MINUTE = 60;
+
+export const DIRECTION_TOP = 'top';
+export const DIRECTION_RIGHT = 'right';
+export const DIRECTION_BOTTOM = 'bottom';
+export const DIRECTION_LEFT = 'left';
 
 // Key codes
 export const ARROW_UP_KEY = 'ArrowUp';
@@ -11,6 +18,7 @@ export const HOME_KEY = 'Home';
 export const END_KEY = 'End';
 export const PAGE_UP_KEY = 'PageUp';
 export const PAGE_DOWN_KEY = 'PageDown';
+export const ESCAPE_KEY = 'Escape';
 
 export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1;
@@ -28,6 +36,42 @@ export const DEFAULT_THEME = 'inria';
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
+
+export const DEFAULT_DRAGGABLE_SELECTOR = '.aip-player';
+
+export const WINDOW_ID_CHAPTERS = 'chapters';
+export const WINDOW_ID_ADDITIONAL_INFORMATION = 'additionalInformation';
+export const WINDOW_ID_SLIDES = 'slides';
+export const WINDOW_ID_VIDEO = 'video';
+
+export const DEFAULT_UI_PLACEMENT: IUIPlacement = {
+  additionalInformation: {
+    height: 30,
+    left: 50,
+    top: 0,
+    width: 30
+  },
+  chapters: {
+    height: 30,
+    left: 0,
+    top: 50,
+    width: 30
+  },
+  slides: {
+    height: 35,
+    left: 5,
+    top: 5,
+    width: 35
+  },
+  video: {
+    height: 30,
+    left: 50,
+    top: 50,
+    width: 30
+  }
+};
+
+export const DEFAULT_MOVE_STEP = 5;
 
 export const INACTIVITY_TIMER_DURATION = 3000;
 export const INACTIVITY_EVENTS = [

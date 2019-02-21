@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
+import withWindow from '../hocs/withWindow';
 import SlidesStyles from './Styles';
 
 interface IProps {
@@ -26,4 +27,4 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-export default connect(mapStateToProps)(Slides);
+export default connect(mapStateToProps)(withWindow(Slides));

@@ -1,5 +1,5 @@
 import { randomColor } from '@dashdashzako/random-hex-color';
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../../reducers';
 import { unitToPercent } from '../../../utils/math';

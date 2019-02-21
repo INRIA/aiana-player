@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import 'focus-visible';
-import * as React from 'react';
+import React, { Component, createRef, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {
   handleFullscreenChange,
@@ -15,13 +14,11 @@ import {
   isDocumentFullscreen,
   removeFullscreenChangeEventListener
 } from '../../utils/fullscreen';
-import { injectGlobalStyles } from '../../utils/global-styles';
 import { ThemeProvider } from '../../utils/styled-components';
 import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
 import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from '../styled/StyledAiana';
-import IntlWrapper from './IntlWrapper';
 
 interface IStateProps {
   availableThemes: string[];
@@ -37,42 +34,37 @@ interface IDispatchProps {
 
 interface IAiana extends IStateProps, IDispatchProps {}
 
-class Aiana extends React.Component<IAiana> {
-  private fullscreenRef = React.createRef<HTMLElement>();
+class Aiana extends Component<IAiana> {
+  private fullscreenRef = createRef<HTMLElement>();
 
-  constructor(props: any) {
-    super(props);
-    injectGlobalStyles();
-  }
-
-  public render() {
+  render() {
     return (
-      <IntlWrapper>
-        <ThemeProvider theme={themes[this.props.currentTheme]}>
-          <StyledAiana
-            className={classNames({
-              'aip-app': true,
-              inactive: !this.props.isActive
-            })}
-            innerRef={this.fullscreenRef}
-          >
+      <ThemeProvider theme={themes[this.props.currentTheme]}>
+        <StyledAiana
+          className={classNames({
+            'aip-app': true,
+            inactive: !this.props.isActive
+          })}
+          innerRef={this.fullscreenRef}
+        >
+          <Suspense fallback={<div>I am loading</div>}>
             <InactivityTimer />
             <SvgFilters />
             <Player />
             <PreferencesPanel />
-          </StyledAiana>
-        </ThemeProvider>
-      </IntlWrapper>
+          </Suspense>
+        </StyledAiana>
+      </ThemeProvider>
     );
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     this.props.handleFetchInitialData();
     this.props.playerElementMounted(this.fullscreenRef.current!);
     addFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     removeFullscreenChangeEventListener(this.fullscreenHandler);
   }
 

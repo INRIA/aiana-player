@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import StyledSvg from '../../styled/StyledSvg';
 import VolumeUnmutedIcon from '../../svg/VolumeFull';
 import VolumeMutedIcon from '../../svg/VolumeMuted';

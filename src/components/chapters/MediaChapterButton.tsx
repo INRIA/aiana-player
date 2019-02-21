@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
@@ -22,7 +22,7 @@ const StyledChapterButton = styled(StyledButton)`
 `;
 
 class MediaChapterButton extends React.Component<IMediaChapterButton> {
-  public render() {
+  render() {
     return (
       <StyledChapterButton type="button" onClick={this.clickHandler}>
         {this.props.children}
