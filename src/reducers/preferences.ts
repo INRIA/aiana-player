@@ -41,6 +41,7 @@ export interface IPreferencesState {
   language: string;
   languages: string[];
   playbackRates: number[];
+
   /**
    * The base number of seconds to go forward or backard after a keyboard
    * event on seek bar.

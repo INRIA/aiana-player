@@ -10,7 +10,7 @@ import Move from '../../svg/Move';
 
 const StyledSvgIcon = StyledSvg.withComponent(Move);
 
-const StyledDragButton = styled(StyledButton)`
+const StyledDragWindowButton = styled(StyledButton)`
   display: block;
 
   height: 1.5rem;
@@ -51,7 +51,7 @@ interface IProps {
   keyUpdate(key: string): void;
 }
 
-interface IDragButton extends IProps, WithTranslation {}
+interface IDragWindowButton extends IProps, WithTranslation {}
 
 interface IState {
   isDragging: boolean;
@@ -61,7 +61,7 @@ const defaultState: IState = {
   isDragging: false
 };
 
-class DragButton extends React.Component<IDragButton, IState> {
+class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   controlsRef = React.createRef<HTMLButtonElement>();
   baseX = 0;
   baseY = 0;
@@ -74,7 +74,7 @@ class DragButton extends React.Component<IDragButton, IState> {
     });
 
     return (
-      <StyledDragButton
+      <StyledDragWindowButton
         aria-label={this.props.t('drag', { windowId: this.props.windowId })}
         className={classes}
         innerRef={this.controlsRef}
@@ -82,7 +82,7 @@ class DragButton extends React.Component<IDragButton, IState> {
         onKeyDown={this.keyDownHandler}
       >
         <StyledSvgIcon aria-hidden="true" />
-      </StyledDragButton>
+      </StyledDragWindowButton>
     );
   }
 
@@ -131,4 +131,4 @@ class DragButton extends React.Component<IDragButton, IState> {
   }
 }
 
-export default withTranslation()(DragButton);
+export default withTranslation()(DragWindowButton);

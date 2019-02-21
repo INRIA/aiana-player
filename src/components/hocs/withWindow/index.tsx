@@ -18,7 +18,7 @@ import { Direction } from '../../../types';
 import { unitToPercent } from '../../../utils/math';
 import styled from '../../../utils/styled-components';
 import { bounded } from '../../../utils/ui';
-import DragButton from './DragButton';
+import DragWindowButton from './DragWindowButton';
 import Resizers from './Resizers';
 
 const StyledWindow = styled.div`
@@ -97,7 +97,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             width: `${this.props.width + this.state.widthDiff}%`
           }}
         >
-          <DragButton
+          <DragWindowButton
             dragEnd={this.dragEndHandler}
             dragStart={this.dragStartHandler}
             dragUpdate={this.dragUpdateHandler}
