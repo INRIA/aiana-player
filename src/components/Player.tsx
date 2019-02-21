@@ -39,8 +39,6 @@ interface IDispatchProps {
 interface IPlayer extends IStateProps, IDispatchProps {}
 
 function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
-  console.log('player render', uiPlacement);
-
   return (
     <StyledDiv className="aip-player">
       {chaptersMenu && (
