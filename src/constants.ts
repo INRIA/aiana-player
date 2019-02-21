@@ -45,7 +45,7 @@ export const WINDOW_ID_SLIDES = 'slides';
 export const WINDOW_ID_VIDEO = 'video';
 
 export const DEFAULT_UI_PLACEMENT: IUIPlacement = {
-  additionalInfos: {
+  additionalInformation: {
     height: 30,
     left: 50,
     top: 0,

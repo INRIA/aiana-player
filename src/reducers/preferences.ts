@@ -28,7 +28,7 @@ export interface IUIWindow {
 }
 
 export interface IUIPlacement {
-  additionalInfos: IUIWindow;
+  additionalInformation: IUIWindow;
   chapters: IUIWindow;
   slides: IUIWindow;
   video: IUIWindow;

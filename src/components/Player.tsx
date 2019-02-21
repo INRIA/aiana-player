@@ -10,7 +10,7 @@ import {
 import { IAianaState } from '../reducers';
 import { IUIPlacement, IUIWindow } from '../reducers/preferences';
 import styled from '../utils/styled-components';
-import MediaAdditionalInfos from './additional-infos/MediaAdditionalInfos';
+import AdditionalInformation from './additional-information/AdditionalInformation';
 import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';
 import MediaSubtitles from './subtitles/MediaSubtitles';
@@ -39,6 +39,8 @@ interface IDispatchProps {
 interface IPlayer extends IStateProps, IDispatchProps {}
 
 function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
+  console.log('player render', uiPlacement);
+
   return (
     <StyledDiv className="aip-player">
       {chaptersMenu && (
@@ -58,10 +60,10 @@ function Player({ chaptersMenu, updateWindowHandler, uiPlacement }: IPlayer) {
         uiUpdateHandler={updateWindowHandler}
         {...uiPlacement.slides}
       />
-      <MediaAdditionalInfos
+      <AdditionalInformation
         windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
         uiUpdateHandler={updateWindowHandler}
-        {...uiPlacement.additionalInfos}
+        {...uiPlacement.additionalInformation}
       />
       <MediaSubtitles />
       <VideoPlayerControls />

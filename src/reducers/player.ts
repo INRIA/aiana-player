@@ -31,8 +31,8 @@ import { ExtendedHTMLElement } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
 
 export interface IPlayerState {
-  additionalInformationsText?: string;
-  additionalInformationsTracks: ITrack[];
+  additionalInformationText?: string;
+  additionalInformationTracks: ITrack[];
   autoPlay: boolean;
   bufferedRanges: BufferedRanges;
 
@@ -69,7 +69,7 @@ export interface IPlayerState {
 }
 
 const initialState: IPlayerState = {
-  additionalInformationsTracks: [],
+  additionalInformationTracks: [],
   autoPlay: false,
   bufferedRanges: [],
   currentTime: 0,
@@ -160,7 +160,7 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
     case SET_ADDITIONAL_INFO_TEXT:
       return {
         ...state,
-        additionalInformationsText: action.text
+        additionalInformationText: action.text
       };
     case ADD_METADATA_TRACK:
       const metadataTracks = [].concat(

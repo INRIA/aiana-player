@@ -102,6 +102,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             dragStart={this.dragStartHandler}
             dragUpdate={this.dragUpdateHandler}
             keyUpdate={this.moveKeyDownHandler}
+            windowId={this.props.windowId}
           />
 
           <Resizers

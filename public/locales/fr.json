@@ -1,5 +1,5 @@
 {
-  "additional-infos.title": "Additional information",
+  "additional-info.title": "Additional information",
   "button.toggle.off": "non",
   "button.toggle.on": "oui",
   "controls.add_bookmark": "Ajouter un signet",
@@ -13,6 +13,7 @@
   "controls.unmute": "Activer le son",
   "controls.volume.label": "Volume sonore",
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
+  "drag": "Déplacer la $t(window, { \"context\": \"{{ windowId }}\" })",
   "preferences.chapterstrack.label": "Langue des chapitres",
   "preferences.language.label": "Langue",
   "preferences.menu_enabled.label": "Afficher la liste des chapitres",

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import { ESCAPE_KEY } from '../../../constants';
 import { hexToHsla } from '../../../utils/colors';
 import styled from '../../../utils/styled-components';
@@ -43,11 +44,14 @@ const StyledDragButton = styled(StyledButton)`
 `;
 
 interface IProps {
+  windowId: string;
   dragEnd(): void;
   dragStart(): void;
   dragUpdate(deltaX: number, deltaY: number): void;
   keyUpdate(key: string): void;
 }
+
+interface IDragButton extends IProps, WithTranslation {}
 
 interface IState {
   isDragging: boolean;
@@ -57,7 +61,7 @@ const defaultState: IState = {
   isDragging: false
 };
 
-class DragButton extends React.Component<IProps, IState> {
+class DragButton extends React.Component<IDragButton, IState> {
   controlsRef = React.createRef<HTMLButtonElement>();
   baseX = 0;
   baseY = 0;
@@ -71,12 +75,13 @@ class DragButton extends React.Component<IProps, IState> {
 
     return (
       <StyledDragButton
+        aria-label={this.props.t('drag', { windowId: this.props.windowId })}
         className={classes}
         innerRef={this.controlsRef}
         onMouseDown={this.mouseDownHandler}
         onKeyDown={this.keyDownHandler}
       >
-        <StyledSvgIcon />
+        <StyledSvgIcon aria-hidden="true" />
       </StyledDragButton>
     );
   }
@@ -126,4 +131,4 @@ class DragButton extends React.Component<IProps, IState> {
   }
 }
 
-export default DragButton;
+export default withTranslation()(DragButton);

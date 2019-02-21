@@ -6,13 +6,13 @@ import { markdownToJSX } from '../../utils/strings';
 import AssistiveText from '../a11y/AssistiveText';
 import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 import withWindow, { IWindow } from '../hocs/withWindow';
-import StyledAdditionalInfos from './Styles';
+import StyledAdditionalInformation from './Styles';
 
 interface IProps extends InjectedUniqueIdProps, IWindow {
   text?: string;
 }
 
-function MediaAdditionalInfos({ text, uid }: IProps) {
+function AdditionalInformation({ text, uid }: IProps) {
   if (!text) {
     return null;
   }
@@ -20,24 +20,22 @@ function MediaAdditionalInfos({ text, uid }: IProps) {
   const [t] = useTranslation();
 
   return (
-    <StyledAdditionalInfos
-      className="aip-additional-infos"
+    <StyledAdditionalInformation
+      className="aip-additional-info"
       aria-labelledby={uid}
     >
-      <div id={uid}>
-        <AssistiveText>{t('additional-infos.title')}</AssistiveText>
-      </div>
+      <AssistiveText id={uid}>{t('additional-info.title')}</AssistiveText>
       {markdownToJSX(text)}
-    </StyledAdditionalInfos>
+    </StyledAdditionalInformation>
   );
 }
 
 function mapStateToProps(state: IAianaState) {
   return {
-    text: state.player.additionalInformationsText
+    text: state.player.additionalInformationText
   };
 }
 
 export default connect(mapStateToProps)(
-  withWindow(withUniqueId(MediaAdditionalInfos))
+  withWindow(withUniqueId(AdditionalInformation))
 );

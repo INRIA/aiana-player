@@ -57,7 +57,7 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  additionalInformationsTracks: ITrack[];
+  additionalInformationTracks: ITrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
   currentTime: number;
@@ -108,7 +108,7 @@ class VideoPlayer extends React.Component<IProps> {
           <MediaChapterTrack key={idx} {...track} />
         ))}
 
-        {this.props.additionalInformationsTracks.map((track, idx) => (
+        {this.props.additionalInformationTracks.map((track, idx) => (
           <AdditionalInfosTrack key={idx} {...track} />
         ))}
 
@@ -195,7 +195,7 @@ class VideoPlayer extends React.Component<IProps> {
 
 function mapStateToProps(state: IAianaState) {
   return {
-    additionalInformationsTracks: state.player.additionalInformationsTracks,
+    additionalInformationTracks: state.player.additionalInformationTracks,
     autoPlay: state.player.autoPlay,
     chaptersSources: state.chapters.sources,
     currentTime: state.player.currentTime,

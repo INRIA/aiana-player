@@ -1,5 +1,5 @@
 {
-  "additional-infos.title": "Additional information",
+  "additional-info.title": "Additional information",
   "button.toggle.off": "off",
   "button.toggle.on": "on",
   "controls.add_bookmark": "Add bookmark",
@@ -13,6 +13,7 @@
   "controls.unmute": "Unmute",
   "controls.volume.label": "Volume level",
   "controls.volume.valuetext": "{{ volumePct }}% volume",
+  "drag": "Drag the $t(window, { \"context\": \"{{ windowId }}\" })",
   "languages.en": "English",
   "languages.fr": "Français",
   "preferences.chapterstrack.label": "Chapters language",
