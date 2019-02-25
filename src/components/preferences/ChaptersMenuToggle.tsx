@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trans } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setChaptersMenu } from '../../actions/chapters';
 import { IAianaState } from '../../reducers';
@@ -17,14 +17,15 @@ interface IDispatchProps {
 interface IChaptersMenuToggle
   extends IStateProps,
     IDispatchProps,
-    InjectedUniqueIdProps {}
+    InjectedUniqueIdProps,
+    WithTranslation {}
 
 class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {
   render() {
     return (
       <React.Fragment>
         <span id={this.props.uid}>
-          <Trans>preferences.menu_enabled.label</Trans>
+          {this.props.t('preferences.menu_enabled.label')}
         </span>
         <ToggleButton
           isOn={this.props.menuEnabled}
@@ -53,4 +54,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withUniqueId(ChaptersMenuToggle));
+)(withTranslation()(withUniqueId(ChaptersMenuToggle)));
