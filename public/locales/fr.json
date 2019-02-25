@@ -8,6 +8,8 @@
   "controls.mute": "Désactiver le son",
   "controls.pause": "Mettre en pause",
   "controls.play": "Lire",
+  "controls.play_next_chapter": "Lire le chapitre suivant",
+  "controls.play_previous_chapter": "Lire le chapitre précédent",
   "controls.seekbar.label": "Position de la tête de lecture",
   "controls.seekbar.valuetext": "{{ currentTime }} sur {{ duration }}",
   "controls.unmute": "Activer le son",
