@@ -55,7 +55,7 @@
     "@storybook/addon-info": "^3.4.11",
     "@storybook/addon-knobs": "^3.4.11",
     "@storybook/react": "^3.4.11",
-    "@svgr/cli": "^2.4.1",
+    "@svgr/cli": "^4.1.0",
     "@types/classnames": "^2.2.6",
     "@types/color": "^3.0.0",
     "@types/color-convert": "^1.9.0",
