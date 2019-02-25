@@ -36,6 +36,7 @@ export const DEFAULT_THEME = 'inria';
 export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
+export const DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD = 1.0;
 
 export const DEFAULT_DRAGGABLE_SELECTOR = '.aip-player';
 

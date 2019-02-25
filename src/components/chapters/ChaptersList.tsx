@@ -16,7 +16,12 @@ function ChaptersList({ activeText, chapters }: IProps) {
     <ol>
       {chapters.map(({ startTime, text }, idx) => (
         <li key={idx} className={text === activeText ? 'active' : 'inactive'}>
-          <MediaChapterButton startTime={startTime}>{text}</MediaChapterButton>
+          <MediaChapterButton
+            isActive={text === activeText}
+            startTime={startTime}
+          >
+            {text}
+          </MediaChapterButton>
         </li>
       ))}
     </ol>

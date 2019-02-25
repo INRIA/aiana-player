@@ -5,16 +5,20 @@ import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
 import StyledButton from '../styled/StyledButton';
 
+interface IProps {
+  isActive: boolean;
+  startTime: number;
+}
+
 interface IStateProps {
   media?: HTMLMediaElement;
-  startTime: number;
 }
 
 interface IDispatchProps {
   requestSeek: any;
 }
 
-interface IMediaChapterButton extends IStateProps, IDispatchProps {}
+interface IMediaChapterButton extends IProps, IStateProps, IDispatchProps {}
 
 const StyledChapterButton = styled(StyledButton)`
   display: block;
@@ -24,7 +28,11 @@ const StyledChapterButton = styled(StyledButton)`
 class MediaChapterButton extends React.Component<IMediaChapterButton> {
   render() {
     return (
-      <StyledChapterButton type="button" onClick={this.clickHandler}>
+      <StyledChapterButton
+        aria-pressed={this.props.isActive}
+        onClick={this.clickHandler}
+        type="button"
+      >
         {this.props.children}
       </StyledChapterButton>
     );

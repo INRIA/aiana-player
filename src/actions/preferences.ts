@@ -8,10 +8,9 @@ export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
 
 export function changeCurrentLanguage(language: string): ThunkResult<void> {
-  return (dispatch: CDispatch) => {
-    i18n.changeLanguage(language).then(() => {
-      dispatch(changeLanguage(language));
-    });
+  return async (dispatch: CDispatch) => {
+    await i18n.changeLanguage(language);
+    dispatch(changeLanguage(language));
   };
 }
 

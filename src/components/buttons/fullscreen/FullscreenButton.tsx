@@ -29,16 +29,10 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
       return null;
     }
 
-    const controlText = this.getControlText();
-
     return (
-      <StyledButton
-        type="button"
-        aria-label={controlText}
-        onClick={this.clickHandler}
-      >
+      <StyledButton type="button" onClick={this.clickHandler}>
         <ControlIcon isFullscreen={this.props.isFullscreen} />
-        <AssistiveText>{controlText}</AssistiveText>
+        <AssistiveText>{this.getControlText()}</AssistiveText>
       </StyledButton>
     );
   }
@@ -52,13 +46,11 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
   };
 
   private getControlText = (): string => {
-    const { t, isFullscreen } = this.props;
-
-    if (isFullscreen) {
-      return t('controls.fullscreen.exit');
+    if (this.props.isFullscreen) {
+      return this.props.t('controls.fullscreen.exit');
     }
 
-    return t('controls.fullscreen.enter');
+    return this.props.t('controls.fullscreen.enter');
   };
 }
 

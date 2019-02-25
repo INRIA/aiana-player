@@ -1,11 +1,55 @@
 import { AnyAction } from 'redux';
+import { CDispatch } from '../store';
+import { ThunkResult } from '../types';
 import { IRawChaptersTrack } from '../utils/media';
+import { requestSeek } from './player';
 
 export const ADD_CHAPTER_TRACK = 'aiana/ADD_CHAPTER_TRACK';
 export const UPDATE_ACTIVE_CHAPTERS_TRACK =
   'aiana/UPDATE_ACTIVE_CHAPTERS_TRACK';
 export const UPDATE_CHAPTER_TEXT = 'aiana/UPDATE_CHAPTER_TEXT';
 export const TOGGLE_CHAPTERS_MENU = 'aiana/TOGGLE_CHAPTERS_MENU';
+
+export const PREVIOUS_CHAPTER = 'aiana/PREVIOUS_CHAPTER';
+export const NEXT_CHAPTER = 'aiana/NEXT_CHAPTER';
+
+export function seekNextChapter(
+  media: HTMLMediaElement,
+  from: number,
+  to: number
+): ThunkResult<void> {
+  return (dispatch: CDispatch) => {
+    dispatch(requestSeek(media, to));
+    dispatch(nextChapter(from, to));
+  };
+}
+
+export function seekPreviousChapter(
+  media: HTMLMediaElement,
+  from: number,
+  to: number
+): ThunkResult<void> {
+  return (dispatch: CDispatch) => {
+    dispatch(requestSeek(media, to));
+    dispatch(previousChapter(from, to));
+  };
+}
+
+function previousChapter(from: number, to: number): AnyAction {
+  return {
+    from,
+    to,
+    type: PREVIOUS_CHAPTER
+  };
+}
+
+function nextChapter(from: number, to: number): AnyAction {
+  return {
+    from,
+    to,
+    type: NEXT_CHAPTER
+  };
+}
 
 export function addChaptersTrack(chaptersTrack: IRawChaptersTrack): AnyAction {
   return {

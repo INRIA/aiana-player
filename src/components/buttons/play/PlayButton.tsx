@@ -26,16 +26,10 @@ interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}
 
 class PlayButton extends React.Component<IProps> {
   render() {
-    const controlText = this.getControlText();
-
     return (
-      <StyledPlayButton
-        type="button"
-        aria-label={controlText}
-        onClick={this.clickHandler}
-      >
+      <StyledPlayButton type="button" onClick={this.clickHandler}>
         <PlayControlIcon isPlaying={this.props.isPlaying} />
-        <AssistiveText>{controlText}</AssistiveText>
+        <AssistiveText>{this.getControlText()}</AssistiveText>
       </StyledPlayButton>
     );
   }
@@ -50,7 +44,7 @@ class PlayButton extends React.Component<IProps> {
     }
   };
 
-  private getControlText = (): string => {
+  private getControlText = () => {
     const { t, isPlaying } = this.props;
 
     return isPlaying ? t('controls.pause') : t('controls.play');

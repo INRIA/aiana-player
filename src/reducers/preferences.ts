@@ -10,6 +10,7 @@ import {
   AVAILABLE_THEMES,
   DEFAULT_AVAILABLE_LANGUAGES,
   DEFAULT_LANG,
+  DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   DEFAULT_SEEK_STEP,
   DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_THEME,
@@ -41,6 +42,7 @@ export interface IPreferencesState {
   language: string;
   languages: string[];
   playbackRates: number[];
+  previousChapterSeekThreshold: number;
 
   /**
    * The base number of seconds to go forward or backard after a keyboard
@@ -61,6 +63,7 @@ const initialState: IPreferencesState = {
   language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
   playbackRates: AVAILABLE_PLAYBACK_RATES,
+  previousChapterSeekThreshold: DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   seekStep: DEFAULT_SEEK_STEP,
   seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
   themes: AVAILABLE_THEMES,

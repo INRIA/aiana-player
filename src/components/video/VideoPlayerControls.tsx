@@ -8,6 +8,8 @@ import AddBookmarkButton from '../buttons/add-bookmark/AddBookmarkButton';
 import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
 import PlayButton from '../buttons/play/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';
+import NextChapter from '../chapters/controls/NextChapter';
+import PreviousChapter from '../chapters/controls/PreviousChapter';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
 import TimeStatus from '../time-status/TimeStatus';
 
@@ -49,8 +51,10 @@ function VideoPlayerControls(props: IStateProps) {
       <StyledControls className="aip-controls">
         <div className="aip-controls-left">
           <PlayButton />
-          <VolumeControl />
+          <PreviousChapter />
+          <NextChapter />
           <TimeStatus />
+          <VolumeControl />
         </div>
         <div className="aip-controls-right">
           <AddBookmarkButton />

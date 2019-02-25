@@ -8,6 +8,8 @@
   "controls.mute": "Mute",
   "controls.pause": "Pause",
   "controls.play": "Play",
+  "controls.play_next_chapter": "Play next chapter",
+  "controls.play_previous_chapter": "Play previous chapter",
   "controls.seekbar.label": "Media progress",
   "controls.seekbar.valuetext": "{{ currentTime }} of {{ duration }}",
   "controls.unmute": "Unmute",

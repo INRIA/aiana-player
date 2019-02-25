@@ -28,16 +28,10 @@ interface IMuteButton extends IStateProps, IDispatchProps, WithTranslation {}
 
 class MuteButton extends React.Component<IMuteButton> {
   render() {
-    const controlText = this.getControlText();
-
     return (
-      <StyledMuteButton
-        type="button"
-        aria-label={controlText}
-        onClick={this.clickHandler}
-      >
+      <StyledMuteButton type="button" onClick={this.clickHandler}>
         <ControlIcon isMuted={this.props.isMuted} />
-        <AssistiveText>{controlText}</AssistiveText>
+        <AssistiveText>{this.getControlText()}</AssistiveText>
       </StyledMuteButton>
     );
   }
