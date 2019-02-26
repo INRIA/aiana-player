@@ -20,6 +20,7 @@ const CORNER_SIZE = '1rem';
 
 const StyledResizeButton = styled(StyledButton)`
   position: absolute;
+  z-index: 1;
 
   &.top {
     top: -${OUTER_OVERFLOW_SIZE};
