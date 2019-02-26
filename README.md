@@ -2,9 +2,7 @@
 
 Aiana web player. Reloaded.
 
----
-
-## create-react-app documentation
+## `create-react-app` documentation
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebookincubator/create-react-app).
