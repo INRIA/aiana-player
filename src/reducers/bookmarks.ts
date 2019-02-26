@@ -14,7 +14,7 @@ const bookmarks: Reducer = (state: IBookmark[] = [], action) => {
       }
       return state.concat({ time: action.time });
     case LOAD_CONFIGURATION: {
-      const { actionBookmarks = [] } = action;
+      const { bookmarks: actionBookmarks = [] } = action;
       return state.concat(actionBookmarks);
     }
     default:
