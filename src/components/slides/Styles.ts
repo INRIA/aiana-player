@@ -8,10 +8,14 @@ const Styles = styled.section`
   background-color: ${(props) => props.theme.fg};
 
   .aip-slides-content {
-    font-size: 1rem;
+    font-size: 1.125rem;
 
     * {
       max-width: 100%;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     h1,
@@ -41,6 +45,11 @@ const Styles = styled.section`
 
     h2 {
       font-size: 1.1em;
+    }
+
+    h1,
+    h2 {
+      font-weight: bold;
     }
 
     h2,

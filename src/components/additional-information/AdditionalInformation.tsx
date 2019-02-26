@@ -25,7 +25,7 @@ function AdditionalInformation({ text, uid }: IProps) {
       aria-labelledby={uid}
     >
       <AssistiveText id={uid}>{t('additional-info.title')}</AssistiveText>
-      {markdownToJSX(text)}
+      <div className="aip-additional-info-content">{markdownToJSX(text)}</div>
     </StyledAdditionalInformation>
   );
 }
