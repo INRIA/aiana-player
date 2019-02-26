@@ -38,7 +38,7 @@ export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
 export const DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD = 1.0;
 
-export const DEFAULT_DRAGGABLE_SELECTOR = '.aip-player';
+export const DEFAULT_WINDOWS_CONTAINER = '.aip-windows';
 
 export const WINDOW_ID_CHAPTERS = 'chapters';
 export const WINDOW_ID_ADDITIONAL_INFORMATION = 'additionalInformation';

@@ -4,8 +4,8 @@ import {
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
-  DEFAULT_DRAGGABLE_SELECTOR,
   DEFAULT_MOVE_STEP,
+  DEFAULT_WINDOWS_CONTAINER,
   DIRECTION_BOTTOM,
   DIRECTION_LEFT,
   DIRECTION_RIGHT,
@@ -62,7 +62,7 @@ const defaultState: IHOCState = {
 };
 
 const defaultProps: Partial<IWrappedComponentProps> = {
-  boundariesSelector: DEFAULT_DRAGGABLE_SELECTOR,
+  boundariesSelector: DEFAULT_WINDOWS_CONTAINER,
   minimumHeight: 20,
   minimumWidth: 20
 };
