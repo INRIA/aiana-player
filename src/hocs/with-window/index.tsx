@@ -34,7 +34,7 @@ const StyledWindow = styled.div`
   }
 `;
 
-interface IWrappedComponentProps {
+export interface IWrappedComponentProps {
   boundariesSelector?: string;
   height: number;
   isDraggable: boolean;
@@ -45,7 +45,7 @@ interface IWrappedComponentProps {
   width: number;
   windowId: string;
   toggleDraggable(isDraggable: boolean): void;
-  uiUpdateHandler(name: string, window: IUIWindow): void;
+  uiUpdateHandler(name: string, window: Partial<IUIWindow>): void;
   [prop: string]: any;
 }
 

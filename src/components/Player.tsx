@@ -41,12 +41,13 @@ const StyledDiv = styled.div`
 `;
 
 interface IStateProps {
+  additionalInformationText?: string;
   chaptersMenu: boolean;
   uiPlacement: IUIPlacement;
 }
 
 interface IDispatchProps {
-  updateWindowHandler(name: string, window: IUIWindow): void;
+  updateWindowHandler(name: string, window: Partial<IUIWindow>): void;
 }
 
 interface IPlayerProps extends IStateProps, IDispatchProps {}
@@ -63,7 +64,13 @@ class Player extends Component<IPlayerProps, IState> {
   state = defaultState;
 
   render() {
-    const { chaptersMenu, uiPlacement, updateWindowHandler } = this.props;
+    const {
+      additionalInformationText,
+      chaptersMenu,
+      uiPlacement,
+      updateWindowHandler
+    } = this.props;
+
     return (
       <StyledDiv className="aip-player">
         <div className="aip-windows">
@@ -92,6 +99,7 @@ class Player extends Component<IPlayerProps, IState> {
           />
           <AdditionalInformation
             isDraggable={this.state.isDraggable}
+            text={additionalInformationText}
             toggleDraggable={this.toggleDraggable}
             uiUpdateHandler={updateWindowHandler}
             windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
@@ -112,6 +120,7 @@ class Player extends Component<IPlayerProps, IState> {
 
 function mapStateToProps(state: IAianaState) {
   return {
+    additionalInformationText: state.player.additionalInformationText,
     chaptersMenu: state.chapters.menuEnabled,
     uiPlacement: state.preferences.uiPlacement
   };

@@ -22,10 +22,10 @@ import InriaTheme from '../themes/inria';
 import { IAianaTheme } from '../utils/styled-components';
 
 export interface IUIWindow {
-  height?: number;
-  left?: number;
-  top?: number;
-  width?: number;
+  height: number;
+  left: number;
+  top: number;
+  width: number;
 }
 
 export interface IUIPlacement {
