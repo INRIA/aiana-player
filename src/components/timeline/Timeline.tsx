@@ -9,12 +9,10 @@ import ChaptersBar from './chapters/ChaptersBar';
 import SlidesBar from './slides/SlidesBar';
 
 const StyledTimelineBar = styled.div`
-  width: 100%;
-  height: 2.25em;
+  height: 2.25rem;
   padding: 0 1em;
 
-  position: absolute;
-  bottom: 4.25em;
+  position: relative;
 
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
   transition: none;

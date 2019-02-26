@@ -19,12 +19,25 @@ import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
 
 const StyledDiv = styled.div`
-  background-color: ${(props) => props.theme.bg};
   height: 100%;
+  width: 100%;
   max-height: 100%;
   max-width: 100%;
+
   position: relative;
-  width: 100%;
+
+  background-color: ${(props) => props.theme.bg};
+
+  .aip-windows {
+    /*
+      timeline height is 2.25rem,
+      controls height is 3.75rem,
+      margin between the two is 0.3125rem
+    */
+    height: calc(100% - 6.3125rem);
+
+    position: relative;
+  }
 `;
 
 interface IStateProps {
@@ -53,39 +66,41 @@ class Player extends Component<IPlayerProps, IState> {
     const { chaptersMenu, uiPlacement, updateWindowHandler } = this.props;
     return (
       <StyledDiv className="aip-player">
-        {chaptersMenu && (
-          <ChaptersMenu
+        <div className="aip-windows">
+          {chaptersMenu && (
+            <ChaptersMenu
+              isDraggable={this.state.isDraggable}
+              toggleDraggable={this.toggleDraggable}
+              uiUpdateHandler={updateWindowHandler}
+              windowId={WINDOW_ID_CHAPTERS}
+              {...uiPlacement.chapters}
+            />
+          )}
+          <VideoPlayer
             isDraggable={this.state.isDraggable}
             toggleDraggable={this.toggleDraggable}
             uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_CHAPTERS}
-            {...uiPlacement.chapters}
+            windowId={WINDOW_ID_VIDEO}
+            {...uiPlacement.video}
           />
-        )}
-        <VideoPlayer
-          isDraggable={this.state.isDraggable}
-          toggleDraggable={this.toggleDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_VIDEO}
-          {...uiPlacement.video}
-        />
-        <Slides
-          isDraggable={this.state.isDraggable}
-          toggleDraggable={this.toggleDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_SLIDES}
-          {...uiPlacement.slides}
-        />
-        <AdditionalInformation
-          isDraggable={this.state.isDraggable}
-          toggleDraggable={this.toggleDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
-          {...uiPlacement.additionalInformation}
-        />
-        <MediaSubtitles />
-        <VideoPlayerControls />
+          <Slides
+            isDraggable={this.state.isDraggable}
+            toggleDraggable={this.toggleDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            windowId={WINDOW_ID_SLIDES}
+            {...uiPlacement.slides}
+          />
+          <AdditionalInformation
+            isDraggable={this.state.isDraggable}
+            toggleDraggable={this.toggleDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
+            {...uiPlacement.additionalInformation}
+          />
+          <MediaSubtitles />
+        </div>
         <TimelineBar />
+        <VideoPlayerControls />
       </StyledDiv>
     );
   }

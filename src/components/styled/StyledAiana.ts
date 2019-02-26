@@ -3,12 +3,18 @@ import styled from '../../utils/styled-components';
 const StyledAiana = styled.div`
   display: block;
   width: 800px;
-  height: 450px;
+  /*
+    The wanted canvas ratio is 16/9. To achieve that with a fixed width at
+    800px, height should be 450px plus the height of the controls.
+  */
+  height: 546px;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};
   font-size: 1em;
   font-family: system, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
 
   &.inactive {
     &,
@@ -16,8 +22,6 @@ const StyledAiana = styled.div`
       cursor: none;
     }
   }
-
-  -webkit-font-smoothing: antialiased;
 
   *,
   *::before,

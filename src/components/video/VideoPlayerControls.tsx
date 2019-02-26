@@ -14,13 +14,11 @@ import SeekBarSlider from '../seekbar/SeekBarSlider';
 import TimeStatus from '../time-status/TimeStatus';
 
 const StyledControlsWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-
-  width: 100%;
-
-  /* 0.5 + 0.3125 */
+  height: 3.75rem;
   padding: 0.8125rem 1rem 0.5rem;
+
+  position: relative;
+
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 
   transition: none;
@@ -34,8 +32,8 @@ const StyledControlsWrapper = styled.div`
 const StyledControls = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 2.25em;
-  margin-top: 0.3125em;
+  height: 2.25rem;
+  margin-top: 0.3125rem;
 `;
 
 interface IStateProps {
