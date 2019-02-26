@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { ESCAPE_KEY } from '../../../constants';
-import { hexToHsla } from '../../../utils/colors';
-import styled from '../../../utils/styled-components';
-import StyledButton from '../../styled/StyledButton';
-import StyledSvg from '../../styled/StyledSvg';
-import Move from '../../svg/Move';
+import StyledButton from '../../components/styled/StyledButton';
+import StyledSvg from '../../components/styled/StyledSvg';
+import Move from '../../components/svg/Move';
+import { ESCAPE_KEY } from '../../constants';
+import { hexToHsla } from '../../utils/colors';
+import styled from '../../utils/styled-components';
 
 const StyledSvgIcon = StyledSvg.withComponent(Move);
 

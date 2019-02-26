@@ -1,5 +1,5 @@
 import React from 'react';
-import { uid } from '../../utils/ui';
+import { uid } from '../utils/ui';
 
 export interface InjectedUniqueIdProps {
   uid: string;

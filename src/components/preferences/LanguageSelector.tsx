@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeCurrentLanguage } from '../../actions/preferences';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers/index';
 import { CDispatch } from '../../store';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   UILanguage: string;

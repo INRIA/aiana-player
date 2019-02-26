@@ -2,10 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveChaptersTrack } from '../../actions/chapters';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { IRawChaptersTrack } from '../../utils/media';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   chaptersTracks: IRawChaptersTrack[];

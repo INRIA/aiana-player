@@ -2,10 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { IRawSlidesTrack } from '../../utils/media';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   slidesTracks: IRawSlidesTrack[];

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import withWindow from '../../hocs/with-window';
 import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
-import withWindow from '../hocs/withWindow';
 import SlidesStyles from './Styles';
 
 interface IProps {

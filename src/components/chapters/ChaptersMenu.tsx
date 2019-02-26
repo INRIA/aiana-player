@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import withWindow from '../../hocs/with-window';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers/index';
 import { IRawChaptersTrack, isActiveTrack } from '../../utils/media';
 import AssistiveText from '../a11y/AssistiveText';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
-import withWindow from '../hocs/withWindow';
 import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';
 

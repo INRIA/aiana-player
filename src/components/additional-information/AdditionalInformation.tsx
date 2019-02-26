@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import withWindow from '../../hocs/with-window';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { markdownToJSX } from '../../utils/strings';
 import AssistiveText from '../a11y/AssistiveText';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
-import withWindow from '../hocs/withWindow';
 import StyledAdditionalInformation from './Styles';
 
 interface IProps extends InjectedUniqueIdProps {

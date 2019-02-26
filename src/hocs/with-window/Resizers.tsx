@@ -1,18 +1,18 @@
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
+import StyledSvg from '../../components/styled/StyledSvg';
+import ResizeEw from '../../components/svg/ResizeEw';
+import ResizeNesw from '../../components/svg/ResizeNesw';
+import ResizeNs from '../../components/svg/ResizeNs';
+import ResizeNwse from '../../components/svg/ResizeNwse';
 import {
   DIRECTION_BOTTOM,
   DIRECTION_LEFT,
   DIRECTION_RIGHT,
   DIRECTION_TOP
-} from '../../../constants';
-import { Direction } from '../../../types';
-import styled from '../../../utils/styled-components';
-import StyledSvg from '../../styled/StyledSvg';
-import ResizeEw from '../../svg/ResizeEw';
-import ResizeNesw from '../../svg/ResizeNesw';
-import ResizeNs from '../../svg/ResizeNs';
-import ResizeNwse from '../../svg/ResizeNwse';
+} from '../../constants';
+import { Direction } from '../../types';
+import styled from '../../utils/styled-components';
 import ResizeButton from './ResizeButton';
 
 interface IProps {

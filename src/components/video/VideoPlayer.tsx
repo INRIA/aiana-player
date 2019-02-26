@@ -14,13 +14,13 @@ import {
   updateMediaDuration
 } from '../../actions/player';
 import { updateSubtitlesTracksList } from '../../actions/subtitles';
+import withWindow from '../../hocs/with-window';
 import { IChaptersTrack } from '../../reducers/chapters';
 import { IAianaState } from '../../reducers/index';
 import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
-import withWindow from '../hocs/withWindow';
 import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';

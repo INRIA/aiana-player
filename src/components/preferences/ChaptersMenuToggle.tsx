@@ -2,8 +2,8 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setChaptersMenu } from '../../actions/chapters';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
 
 interface IStateProps {

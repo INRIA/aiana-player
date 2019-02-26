@@ -2,8 +2,8 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
+import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers/index';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
 
 interface IStateProps {
   currentPlaybackRate: number;

@@ -12,12 +12,12 @@ import {
   DIRECTION_TOP,
   END_KEY,
   HOME_KEY
-} from '../../../constants';
-import { IUIWindow } from '../../../reducers/preferences';
-import { Direction } from '../../../types';
-import { unitToPercent } from '../../../utils/math';
-import styled from '../../../utils/styled-components';
-import { bounded } from '../../../utils/ui';
+} from '../../constants';
+import { IUIWindow } from '../../reducers/preferences';
+import { Direction } from '../../types';
+import { unitToPercent } from '../../utils/math';
+import styled from '../../utils/styled-components';
+import { bounded } from '../../utils/ui';
 import DragWindowButton from './DragWindowButton';
 import Resizers from './Resizers';
 
