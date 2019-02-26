@@ -29,6 +29,8 @@ const StyledWindow = styled.div`
   .aip-windowed {
     height: 100%;
     overflow: auto;
+
+    border: 1px solid ${(props) => props.theme.bg};
   }
 `;
 

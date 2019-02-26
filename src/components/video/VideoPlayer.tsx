@@ -25,17 +25,6 @@ import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
 
-const StyledVideo = styled.video`
-  display: block;
-
-  margin: auto;
-
-  max-width: 100%;
-  max-height: 100%;
-
-  transform: translate3d(0, 0, 0);
-`;
-
 export interface ISource {
   type?: string;
   src: string;
@@ -74,48 +63,71 @@ interface IStateProps {
 
 interface IProps extends IStateProps, IDispatchProps {}
 
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledVideo = styled.video`
+  display: block;
+
+  margin: 0;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  transform: translate3d(0, 0, 0);
+`;
+
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();
 
   render() {
     return (
-      <StyledVideo
-        className="aip-video"
-        autoPlay={this.props.autoPlay}
-        innerRef={this.media}
-        onClick={this.clickHandler}
-        onLoadedMetadata={this.loadedMetadataHandler}
-        onProgress={this.progressHandler}
-        onSeeked={this.seekedHandler}
-        onSeeking={this.seekingHandler}
-        onTimeUpdate={this.timeUpdateHandler}
-        onVolumeChange={this.volumeChangeHandler}
-        playsInline={true}
-        preload={this.props.preload}
-        tabIndex={-1}
-      >
-        {this.props.sources.map((source, idx) => (
-          <source key={idx} {...source} />
-        ))}
-
-        {this.props.subtitlesSources
-          .filter(isDisplayableTrack)
-          .map((track, idx) => (
-            <MediaSubtitlesTrack key={idx} {...track} />
+      <StyledDiv>
+        <StyledVideo
+          className="aip-video"
+          autoPlay={this.props.autoPlay}
+          innerRef={this.media}
+          onClick={this.clickHandler}
+          onLoadedMetadata={this.loadedMetadataHandler}
+          onProgress={this.progressHandler}
+          onSeeked={this.seekedHandler}
+          onSeeking={this.seekingHandler}
+          onTimeUpdate={this.timeUpdateHandler}
+          onVolumeChange={this.volumeChangeHandler}
+          playsInline={true}
+          preload={this.props.preload}
+          tabIndex={-1}
+        >
+          {this.props.sources.map((source, idx) => (
+            <source key={idx} {...source} />
           ))}
 
-        {this.props.chaptersSources.map((track, idx) => (
-          <MediaChapterTrack key={idx} {...track} />
-        ))}
+          {this.props.subtitlesSources
+            .filter(isDisplayableTrack)
+            .map((track, idx) => (
+              <MediaSubtitlesTrack key={idx} {...track} />
+            ))}
 
-        {this.props.additionalInformationTracks.map((track, idx) => (
-          <AdditionalInfosTrack key={idx} {...track} />
-        ))}
+          {this.props.chaptersSources.map((track, idx) => (
+            <MediaChapterTrack key={idx} {...track} />
+          ))}
 
-        {this.props.slidesTracksSources.map((track, idx) => (
-          <SlidesTrack key={idx} {...track} />
-        ))}
-      </StyledVideo>
+          {this.props.additionalInformationTracks.map((track, idx) => (
+            <AdditionalInfosTrack key={idx} {...track} />
+          ))}
+
+          {this.props.slidesTracksSources.map((track, idx) => (
+            <SlidesTrack key={idx} {...track} />
+          ))}
+        </StyledVideo>
+      </StyledDiv>
     );
   }
 

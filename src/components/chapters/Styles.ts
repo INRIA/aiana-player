@@ -1,6 +1,8 @@
 import styled from '../../utils/styled-components';
 
 const StyledChapters = styled.nav`
+  width: 100%;
+
   padding: 1rem;
 
   display: flex;

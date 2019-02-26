@@ -1,6 +1,8 @@
 import styled from '../../utils/styled-components';
 
 const StyledAdditionalInformation = styled.aside`
+  width: 100%;
+
   padding: 1em;
 
   color: ${(props) => props.theme.bg};
