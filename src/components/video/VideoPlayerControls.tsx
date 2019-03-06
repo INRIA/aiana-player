@@ -11,6 +11,8 @@ import VolumeControl from '../buttons/VolumeControl';
 import NextChapter from '../chapters/controls/NextChapter';
 import PreviousChapter from '../chapters/controls/PreviousChapter';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
+import NextSlide from '../slides/controls/NextSlide';
+import PreviousSlide from '../slides/controls/PreviousSlide';
 import TimeStatus from '../time-status/TimeStatus';
 
 const StyledControlsWrapper = styled.div`
@@ -48,7 +50,9 @@ function VideoPlayerControls(props: IStateProps) {
       <SeekBarSlider />
       <StyledControls className="aip-controls">
         <div className="aip-controls-left">
+          <PreviousSlide />
           <PlayButton />
+          <NextSlide />
           <PreviousChapter />
           <NextChapter />
           <TimeStatus />
