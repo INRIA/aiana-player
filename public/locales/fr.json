@@ -17,7 +17,6 @@
   "controls.unmute": "Activer le son",
   "controls.volume.label": "Volume sonore",
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
-  "drag": "Déplacer la $t(window, { \"context\": \"{{ windowId }}\" })",
   "preferences.chapterstrack.label": "Langue des chapitres",
   "preferences.language.label": "Langue",
   "preferences.menu_enabled.label": "Afficher la liste des chapitres",
@@ -50,5 +49,7 @@
   "window_additionalInformation": "fenêtre d'informations supplémentaires",
   "window_chapters": "fenêtre des chapitres",
   "window_slides": "fenêtre des diapositives",
-  "window_video": "fenêtre vidéo"
+  "window_video": "fenêtre vidéo",
+  "window.close": "Fermer la $t(window, { \"context\": \"{{ windowId }}\" })",
+  "window.drag": "Déplacer la $t(window, { \"context\": \"{{ windowId }}\" })"
 }

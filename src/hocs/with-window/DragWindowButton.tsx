@@ -87,7 +87,9 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
 
     return (
       <StyledDragWindowButton
-        aria-label={this.props.t('drag', { windowId: this.props.windowId })}
+        aria-label={this.props.t('window.drag', {
+          windowId: this.props.windowId
+        })}
         className={classes}
         innerRef={this.controlsRef}
         onMouseDown={this.mouseDownHandler}

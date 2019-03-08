@@ -17,7 +17,6 @@
   "controls.unmute": "Unmute",
   "controls.volume.label": "Volume level",
   "controls.volume.valuetext": "{{ volumePct }}% volume",
-  "drag": "Drag the $t(window, { \"context\": \"{{ windowId }}\" })",
   "languages.en": "English",
   "languages.fr": "Français",
   "preferences.chapterstrack.label": "Chapters language",
@@ -55,5 +54,7 @@
   "window_additionalInformation": "additional information window",
   "window_chapters": "chapters window",
   "window_slides": "slides window",
-  "window_video": "video window"
+  "window_video": "video window",
+  "window.close": "Close the $t(window, { \"context\": \"{{ windowId }}\" })",
+  "window.drag": "Drag the $t(window, { \"context\": \"{{ windowId }}\" })"
 }
