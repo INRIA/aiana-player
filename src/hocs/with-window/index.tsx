@@ -18,6 +18,7 @@ import { Direction } from '../../types';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 import { bounded } from '../../utils/ui';
+import CloseWindowButton from './CloseWindowButton';
 import DragWindowButton from './DragWindowButton';
 import Resizers from './Resizers';
 
@@ -105,6 +106,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             keyUpdate={this.moveKeyDownHandler}
             windowId={this.props.windowId}
           />
+
+          <CloseWindowButton windowId={this.props.windowId} />
 
           <Resizers
             keyUpdate={this.resizeKeyUpdate}
