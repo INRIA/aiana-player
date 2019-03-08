@@ -14,15 +14,17 @@ const StyledDragWindowButton = styled(StyledButton)`
   display: block;
 
   height: 1.5rem;
-  width: 100%;
+  width: 50%;
 
   position: absolute;
   top: 0;
+  left: 25%;
+
   /* video doesn't want button to be displayed over it, unless a z-index is set */
   z-index: 1;
 
   opacity: 0;
-  background-color: ${(props) => hexToHsla(props.theme.bg, 0.75)};
+  background-color: transparent;
 
   &.activable:hover,
   &.is-dragging,
@@ -31,11 +33,19 @@ const StyledDragWindowButton = styled(StyledButton)`
   }
 
   &.focus-visible {
+    width: 100%;
     height: 100%;
+
+    left: 0;
+    background-color: ${(props) => hexToHsla(props.theme.fg, 0.65)};
+
+    svg {
+      fill: ${(props) => props.theme.bg};
+    }
   }
 
   svg {
-    fill: ${(props) => props.theme.fg};
+    fill: ${(props) => props.theme.bg};
   }
 
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
