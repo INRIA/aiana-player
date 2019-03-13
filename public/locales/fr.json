@@ -26,6 +26,7 @@
   "preferences.subtitlestrack.no_subtitle": "Aucun sous-titre",
   "preferences.theme-selector.label": "Thème",
   "preferences.title": "Préférences",
+  "preferences.windows_locked.label": "Vérouiller les fenêtres",
   "resizers.top": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure du haut",
   "resizers.top_right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant le coin en haut à droite",
   "resizers.right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure de droite",

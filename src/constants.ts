@@ -1,4 +1,4 @@
-import { IUIPlacement } from './reducers/preferences';
+import { IUIWindows } from './reducers/preferences';
 
 export const SECONDS_PER_HOUR = 3600;
 export const MINUTES_PER_HOUR = 60;
@@ -45,30 +45,36 @@ export const WINDOW_ID_ADDITIONAL_INFORMATION = 'additionalInformation';
 export const WINDOW_ID_SLIDES = 'slides';
 export const WINDOW_ID_VIDEO = 'video';
 
-export const DEFAULT_UI_PLACEMENT: IUIPlacement = {
+export const DEFAULT_WINDOWS_LOCK = false;
+
+export const DEFAULT_UI_WINDOWS: IUIWindows = {
   additionalInformation: {
-    height: 30,
-    left: 50,
+    height: 25,
+    left: 65,
+    locked: DEFAULT_WINDOWS_LOCK,
     top: 0,
-    width: 30
-  },
-  chapters: {
-    height: 30,
-    left: 0,
-    top: 50,
-    width: 30
-  },
-  slides: {
-    height: 35,
-    left: 5,
-    top: 5,
     width: 35
   },
+  chapters: {
+    height: 40,
+    left: 65,
+    locked: DEFAULT_WINDOWS_LOCK,
+    top: 25,
+    width: 35
+  },
+  slides: {
+    height: 100,
+    left: 0,
+    locked: DEFAULT_WINDOWS_LOCK,
+    top: 0,
+    width: 65
+  },
   video: {
-    height: 30,
-    left: 50,
-    top: 50,
-    width: 30
+    height: 35,
+    left: 65,
+    locked: DEFAULT_WINDOWS_LOCK,
+    top: 65,
+    width: 35
   }
 };
 

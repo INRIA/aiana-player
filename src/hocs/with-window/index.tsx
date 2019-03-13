@@ -40,6 +40,7 @@ export interface IWrappedComponentProps {
   height: number;
   isDraggable: boolean;
   left: number;
+  locked: boolean;
   minimumHeight?: number;
   minimumWidth?: number;
   top: number;
@@ -75,13 +76,13 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     IWrappedComponentProps,
     IHOCState
   > {
-    static defaultProps = defaultProps;
+    static readonly defaultProps = defaultProps;
 
     elementRef = React.createRef<HTMLDivElement>();
     containerWidth = 0;
     containerHeight = 0;
 
-    state = defaultState;
+    readonly state = defaultState;
 
     render() {
       return (
@@ -98,24 +99,30 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             width: `${this.props.width + this.state.widthDiff}%`
           }}
         >
-          <DragWindowButton
-            isDraggable={this.props.isDraggable}
-            dragEnd={this.dragEndHandler}
-            dragStart={this.dragStartHandler}
-            dragUpdate={this.dragUpdateHandler}
-            keyUpdate={this.moveKeyDownHandler}
-            windowId={this.props.windowId}
-          />
+          {!this.props.locked && (
+            <DragWindowButton
+              isDraggable={this.props.isDraggable}
+              dragEnd={this.dragEndHandler}
+              dragStart={this.dragStartHandler}
+              dragUpdate={this.dragUpdateHandler}
+              keyUpdate={this.moveKeyDownHandler}
+              windowId={this.props.windowId}
+            />
+          )}
 
-          <CloseWindowButton windowId={this.props.windowId} />
+          {!this.props.locked && (
+            <CloseWindowButton windowId={this.props.windowId} />
+          )}
 
-          <Resizers
-            keyUpdate={this.resizeKeyUpdate}
-            resizeStart={this.resizeStartHandler}
-            resizeUpdate={this.resizeUpdateHandler}
-            resizeEnd={this.resizeEndHandler}
-            windowId={this.props.windowId}
-          />
+          {!this.props.locked && (
+            <Resizers
+              keyUpdate={this.resizeKeyUpdate}
+              resizeStart={this.resizeStartHandler}
+              resizeUpdate={this.resizeUpdateHandler}
+              resizeEnd={this.resizeEndHandler}
+              windowId={this.props.windowId}
+            />
+          )}
           <div className="aip-windowed">
             <WrappedComponent {...this.props} />
           </div>

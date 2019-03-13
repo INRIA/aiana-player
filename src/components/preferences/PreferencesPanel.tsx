@@ -8,6 +8,7 @@ import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
 import ThemeSelector from './ThemeSelector';
+import WindowsLockToggle from './WindowsLockToggle';
 
 const StyledPanel = styled.div`
   /* TODO: remove debug styles */
@@ -72,6 +73,9 @@ function PreferencesPanel() {
         </li>
         <li className="aip-chapters-menu">
           <ChaptersMenuToggle />
+        </li>
+        <li className="aip-windows-lock">
+          <WindowsLockToggle />
         </li>
       </ul>
     </StyledPanel>

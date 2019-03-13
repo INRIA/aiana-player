@@ -8,7 +8,7 @@ import {
   WINDOW_ID_VIDEO
 } from '../constants';
 import { IAianaState } from '../reducers';
-import { IUIPlacement, IUIWindow } from '../reducers/preferences';
+import { IUIWindow, IUIWindows } from '../reducers/preferences';
 import styled from '../utils/styled-components';
 import AdditionalInformation from './additional-information/AdditionalInformation';
 import ChaptersMenu from './chapters/ChaptersMenu';
@@ -43,7 +43,7 @@ const StyledDiv = styled.div`
 interface IStateProps {
   additionalInformationText?: string;
   chaptersMenu: boolean;
-  uiPlacement: IUIPlacement;
+  uiWindows: IUIWindows;
 }
 
 interface IDispatchProps {
@@ -67,7 +67,7 @@ class Player extends Component<IPlayerProps, IState> {
     const {
       additionalInformationText,
       chaptersMenu,
-      uiPlacement,
+      uiWindows,
       updateWindowHandler
     } = this.props;
 
@@ -80,31 +80,35 @@ class Player extends Component<IPlayerProps, IState> {
               toggleDraggable={this.toggleDraggable}
               uiUpdateHandler={updateWindowHandler}
               windowId={WINDOW_ID_CHAPTERS}
-              {...uiPlacement.chapters}
+              {...uiWindows.chapters}
             />
           )}
+
           <VideoPlayer
             isDraggable={this.state.isDraggable}
             toggleDraggable={this.toggleDraggable}
             uiUpdateHandler={updateWindowHandler}
             windowId={WINDOW_ID_VIDEO}
-            {...uiPlacement.video}
+            {...uiWindows.video}
           />
+
           <Slides
             isDraggable={this.state.isDraggable}
             toggleDraggable={this.toggleDraggable}
             uiUpdateHandler={updateWindowHandler}
             windowId={WINDOW_ID_SLIDES}
-            {...uiPlacement.slides}
+            {...uiWindows.slides}
           />
+
           <AdditionalInformation
             isDraggable={this.state.isDraggable}
             text={additionalInformationText}
             toggleDraggable={this.toggleDraggable}
             uiUpdateHandler={updateWindowHandler}
             windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
-            {...uiPlacement.additionalInformation}
+            {...uiWindows.additionalInformation}
           />
+
           <MediaSubtitles />
         </div>
         <TimelineBar />
@@ -122,7 +126,7 @@ function mapStateToProps(state: IAianaState) {
   return {
     additionalInformationText: state.player.additionalInformationText,
     chaptersMenu: state.chapters.menuEnabled,
-    uiPlacement: state.preferences.uiPlacement
+    uiWindows: state.preferences.uiWindows
   };
 }
 
