@@ -29,6 +29,8 @@
   "preferences.theme-selector.label": "Theme",
   "preferences.title": "Preferences",
   "preferences.windows_locked.label": "Lock windows",
+  "preferences.windows_visibility.title": "Windows visibility",
+  "preferences.windows_visibility.label": "Show the $t(window, { \"context\": \"{{ windowId }}\" })",
   "resizers.top": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving top border",
   "resizers.top_right": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving top right corner",
   "resizers.right": "Resize the $t(window, { \"context\": \"{{ windowId }}\" }) by moving right border",

@@ -27,7 +27,11 @@ function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
 
   return (
     <React.Fragment>
-      <span id={props.uid}>{t('preferences.windows_visibility.label')}</span>
+      <span id={props.uid}>
+        {t('preferences.windows_visibility.label', {
+          windowId: props.windowId
+        })}
+      </span>
       <ToggleButton
         isOn={props.visible}
         labelledBy={props.uid}
