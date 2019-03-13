@@ -46,6 +46,7 @@ export const WINDOW_ID_SLIDES = 'slides';
 export const WINDOW_ID_VIDEO = 'video';
 
 export const DEFAULT_WINDOWS_LOCK = false;
+export const DEFAULT_WINDOW_VISIBILITY = true;
 
 export const DEFAULT_UI_WINDOWS: IUIWindows = {
   additionalInformation: {
@@ -53,6 +54,7 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
     left: 65,
     locked: DEFAULT_WINDOWS_LOCK,
     top: 0,
+    visible: DEFAULT_WINDOW_VISIBILITY,
     width: 35
   },
   chapters: {
@@ -60,6 +62,7 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
     left: 65,
     locked: DEFAULT_WINDOWS_LOCK,
     top: 25,
+    visible: DEFAULT_WINDOW_VISIBILITY,
     width: 35
   },
   slides: {
@@ -67,6 +70,7 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
     left: 0,
     locked: DEFAULT_WINDOWS_LOCK,
     top: 0,
+    visible: DEFAULT_WINDOW_VISIBILITY,
     width: 65
   },
   video: {
@@ -74,6 +78,7 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
     left: 65,
     locked: DEFAULT_WINDOWS_LOCK,
     top: 65,
+    visible: DEFAULT_WINDOW_VISIBILITY,
     width: 35
   }
 };

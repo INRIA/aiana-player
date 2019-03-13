@@ -1,10 +1,12 @@
 import React from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setWindowsLock } from '../../actions/preferences';
-import { DEFAULT_WINDOWS_LOCK } from '../../constants';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
-import ToggleButton from '../shared/toggle-button/ToggleButton';
+import { setWindowsLock } from '../../../actions/preferences';
+import { DEFAULT_WINDOWS_LOCK } from '../../../constants';
+import withUniqueId, {
+  InjectedUniqueIdProps
+} from '../../../hocs/withUniqueId';
+import ToggleButton from '../../shared/toggle-button/ToggleButton';
 
 interface IDispatchProps {
   setWindowsLock(locked: boolean): any;

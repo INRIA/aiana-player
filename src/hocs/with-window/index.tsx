@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import {
   ARROW_DOWN_KEY,
@@ -27,6 +28,10 @@ const StyledWindow = styled.div`
 
   background-color: ${(props) => props.theme.fg};
 
+  &.hidden {
+    display: none;
+  }
+
   .aip-windowed {
     height: 100%;
     overflow: auto;
@@ -44,6 +49,7 @@ export interface IWrappedComponentProps {
   minimumHeight?: number;
   minimumWidth?: number;
   top: number;
+  visible: boolean;
   width: number;
   windowId: string;
   toggleDraggable(isDraggable: boolean): void;
@@ -87,7 +93,10 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     render() {
       return (
         <StyledWindow
-          className="draggable"
+          className={classNames({
+            'aip-window': true,
+            hidden: !this.props.visible
+          })}
           innerRef={this.elementRef}
           style={{
             height: `${this.props.height + this.state.heightDiff}%`,

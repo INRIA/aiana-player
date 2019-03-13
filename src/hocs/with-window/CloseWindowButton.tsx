@@ -1,17 +1,27 @@
-import React, { Component } from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { setWindowVisibility } from '../../actions/preferences';
 import StyledButton from '../../components/styled/StyledButton';
 import StyledSvg from '../../components/styled/StyledSvg';
 import SvgCross from '../../components/svg/Cross';
+import { CDispatch } from '../../store';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 
-interface IProps extends WithTranslation {
+interface IOwnProps {
   windowId: string;
 }
 
+interface IDispatchProps {
+  clickHandler(): void;
+}
+
+interface IProps extends IOwnProps, IDispatchProps {}
+
 const CrossIcon = StyledSvg.withComponent(SvgCross);
 
+// FIXME: add styles
 const StyledCloseWindowButton = styled(StyledButton)`
   display: block;
 
@@ -31,18 +41,30 @@ const StyledCloseWindowButton = styled(StyledButton)`
   }
 `;
 
-class CloseWindowButton extends Component<IProps> {
-  render() {
-    return (
-      <StyledCloseWindowButton
-        aria-label={this.props.t('window.close', {
-          windowId: this.props.windowId
-        })}
-      >
-        <CrossIcon />
-      </StyledCloseWindowButton>
-    );
-  }
+function CloseWindowButton(props: IProps) {
+  const [t] = useTranslation();
+
+  return (
+    <StyledCloseWindowButton
+      aria-label={t('window.close', {
+        windowId: props.windowId
+      })}
+      onClick={props.clickHandler}
+    >
+      <CrossIcon />
+    </StyledCloseWindowButton>
+  );
 }
 
-export default withTranslation()(CloseWindowButton);
+function mapDispatchToProps(dispatch: CDispatch, ownProps: IOwnProps) {
+  return {
+    clickHandler() {
+      dispatch(setWindowVisibility(ownProps.windowId, false));
+    }
+  };
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CloseWindowButton);

@@ -7,6 +7,18 @@ import { TOGGLE_ACTIVITY } from './shared';
 export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
 export const WINDOWS_LOCK = 'aiana/WINDOWS_LOCK';
+export const CHANGE_WINDOW_VISIBILITY = 'aiana/CHANGE_WINDOW_VISIBILITY';
+
+export function setWindowVisibility(
+  windowId: string,
+  visible: boolean
+): AnyAction {
+  return {
+    type: CHANGE_WINDOW_VISIBILITY,
+    visible,
+    windowId
+  };
+}
 
 export function setWindowsLock(locked: boolean): AnyAction {
   return {

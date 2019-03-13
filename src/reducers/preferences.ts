@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import {
   CHANGE_LANGUAGE,
   CHANGE_THEME,
+  CHANGE_WINDOW_VISIBILITY,
   WINDOWS_LOCK
 } from '../actions/preferences';
 import {
@@ -30,6 +31,7 @@ export interface IUIWindow {
   left: number;
   locked: boolean;
   top: number;
+  visible: boolean;
   width: number;
 }
 
@@ -111,14 +113,36 @@ const preferences: Reducer = (state = initialState, action) => {
         }
       };
     case WINDOWS_LOCK: {
+      // FIXME: array please
       return {
         ...state,
         uiWindows: Object.keys(state.uiWindows).reduce(
-          (acc, windowName) => ({
+          (acc, windowId) => ({
             ...acc,
-            [windowName]: {
-              ...state.uiWindows[windowName],
+            [windowId]: {
+              ...state.uiWindows[windowId],
               locked: action.locked
+            }
+          }),
+          {}
+        )
+      };
+    }
+    case CHANGE_WINDOW_VISIBILITY: {
+      console.log('DRINGDRINGDRING');
+
+      // FIXME: array please, this is much less readable than a simple array...
+      return {
+        ...state,
+        uiWindows: Object.keys(state.uiWindows).reduce(
+          (acc, windowId) => ({
+            ...acc,
+            [windowId]: {
+              ...state.uiWindows[windowId],
+              visible:
+                action.windowId === windowId
+                  ? action.visible
+                  : !!state.uiWindows[windowId].visible
             }
           }),
           {}
