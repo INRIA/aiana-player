@@ -21,6 +21,7 @@ const StyledCloseWindowButton = styled(StyledButton)`
   position: absolute;
   top: 0;
   right: 1rem;
+  z-index: 1;
 
   background-color: #ff4136;
   box-shadow: inset 0 0 1px ${hexToHsla('#000', 0.65)};
