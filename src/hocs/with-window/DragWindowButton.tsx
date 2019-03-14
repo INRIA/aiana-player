@@ -5,53 +5,7 @@ import StyledButton from '../../components/styled/StyledButton';
 import StyledSvg from '../../components/styled/StyledSvg';
 import Move from '../../components/svg/Move';
 import { ESCAPE_KEY } from '../../constants';
-import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
-
-const StyledSvgIcon = StyledSvg.withComponent(Move);
-
-const StyledDragWindowButton = styled(StyledButton)`
-  display: block;
-
-  height: 1.5rem;
-  width: 50%;
-
-  position: absolute;
-  top: 0;
-  left: 25%;
-
-  /* video doesn't want button to be displayed over it, unless a z-index is set */
-  z-index: 1;
-
-  opacity: 0;
-  background-color: transparent;
-
-  &.activable:hover,
-  &.is-dragging,
-  &.focus-visible {
-    opacity: 1;
-  }
-
-  &.focus-visible {
-    width: 100%;
-    height: 100%;
-
-    left: 0;
-    background-color: ${(props) => hexToHsla(props.theme.fg, 0.65)};
-
-    svg {
-      fill: ${(props) => props.theme.bg};
-    }
-  }
-
-  svg {
-    fill: ${(props) => props.theme.bg};
-  }
-
-  &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
-    cursor: grab;
-  }
-`;
 
 interface IProps {
   isDraggable: boolean;
@@ -68,6 +22,26 @@ interface IState {
   isDragging: boolean;
 }
 
+const StyledSvgIcon = StyledSvg.withComponent(Move);
+
+const StyledDragWindowButton = styled(StyledButton)`
+  display: block;
+
+  height: 1.5rem;
+  width: 100%;
+
+  position: absolute;
+  left: 0;
+
+  svg {
+    fill: ${(props) => props.theme.bg};
+  }
+
+  &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
+    cursor: grab;
+  }
+`;
+
 const defaultState: IState = {
   isDragging: false
 };
@@ -80,7 +54,7 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   state = defaultState;
 
   render() {
-    const classes = classNames('draggable-control', {
+    const classes = classNames('aip-window-drag', {
       activable: this.props.isDraggable,
       'is-dragging': this.state.isDragging
     });

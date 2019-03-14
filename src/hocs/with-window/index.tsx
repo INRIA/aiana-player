@@ -23,23 +23,6 @@ import CloseWindowButton from './CloseWindowButton';
 import DragWindowButton from './DragWindowButton';
 import Resizers from './Resizers';
 
-const StyledWindow = styled.div`
-  position: absolute;
-
-  background-color: ${(props) => props.theme.fg};
-
-  &.hidden {
-    display: none;
-  }
-
-  .aip-windowed {
-    height: 100%;
-    overflow: auto;
-
-    border: 1px solid ${(props) => props.theme.bg};
-  }
-`;
-
 export interface IWrappedComponentProps {
   boundariesSelector?: string;
   height: number;
@@ -63,6 +46,51 @@ interface IHOCState {
   topDiff: number;
   widthDiff: number;
 }
+
+const StyledWindow = styled.div`
+  position: absolute;
+
+  background-color: ${(props) => props.theme.fg};
+
+  &.hidden {
+    display: none;
+  }
+
+  &:hover .aip-window-topbar.activable {
+    opacity: 1;
+  }
+
+  .aip-window-topbar {
+    width: calc(100% - 2px);
+    height: 2.5rem;
+
+    padding: 0.5rem 0;
+
+    position: absolute;
+    top: 1px;
+    left: 1px;
+
+    z-index: 1;
+
+    opacity: 0;
+    background-color: ${(props) => props.theme.clearFg};
+    border-bottom: 1px solid ${(props) => props.theme.bg};
+
+    &.activable {
+      &:hover,
+      &:focus-within {
+        opacity: 1;
+      }
+    }
+  }
+
+  .aip-windowed {
+    height: 100%;
+    overflow: auto;
+
+    border: 1px solid ${(props) => props.theme.bg};
+  }
+`;
 
 const defaultState: IHOCState = {
   heightDiff: 0,
@@ -109,18 +137,24 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           }}
         >
           {!this.props.locked && (
-            <DragWindowButton
-              isDraggable={this.props.isDraggable}
-              dragEnd={this.dragEndHandler}
-              dragStart={this.dragStartHandler}
-              dragUpdate={this.dragUpdateHandler}
-              keyUpdate={this.moveKeyDownHandler}
-              windowId={this.props.windowId}
-            />
-          )}
-
-          {!this.props.locked && (
-            <CloseWindowButton windowId={this.props.windowId} />
+            <div
+              className={classNames('aip-window-topbar', {
+                activable: this.props.isDraggable
+              })}
+            >
+              <DragWindowButton
+                isDraggable={this.props.isDraggable}
+                dragEnd={this.dragEndHandler}
+                dragStart={this.dragStartHandler}
+                dragUpdate={this.dragUpdateHandler}
+                keyUpdate={this.moveKeyDownHandler}
+                windowId={this.props.windowId}
+              />
+              <CloseWindowButton
+                windowId={this.props.windowId}
+                activable={this.props.isDraggable}
+              />
+            </div>
           )}
 
           {!this.props.locked && (
