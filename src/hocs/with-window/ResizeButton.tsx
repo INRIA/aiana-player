@@ -27,6 +27,7 @@ const StyledResizeButton = styled(StyledButton)`
 
     &.focus-visible {
       top: -${FOCUSED_OUTER_OVERFLOW_SIZE};
+      top: 0;
     }
   }
 
@@ -35,6 +36,7 @@ const StyledResizeButton = styled(StyledButton)`
 
     &.focus-visible {
       bottom: -${FOCUSED_OUTER_OVERFLOW_SIZE};
+      bottom: 0;
     }
   }
 
@@ -43,6 +45,7 @@ const StyledResizeButton = styled(StyledButton)`
 
     &.focus-visible {
       left: -${FOCUSED_OUTER_OVERFLOW_SIZE};
+      left: 0;
     }
   }
 
@@ -51,6 +54,7 @@ const StyledResizeButton = styled(StyledButton)`
 
     &.focus-visible {
       right: -${FOCUSED_OUTER_OVERFLOW_SIZE};
+      right: 0;
     }
   }
 

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import {
   ARROW_DOWN_KEY,
@@ -18,30 +19,20 @@ import { Direction } from '../../types';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 import { bounded } from '../../utils/ui';
+import CloseWindowButton from './CloseWindowButton';
 import DragWindowButton from './DragWindowButton';
 import Resizers from './Resizers';
-
-const StyledWindow = styled.div`
-  position: absolute;
-
-  background-color: ${(props) => props.theme.fg};
-
-  .aip-windowed {
-    height: 100%;
-    overflow: auto;
-
-    border: 1px solid ${(props) => props.theme.bg};
-  }
-`;
 
 export interface IWrappedComponentProps {
   boundariesSelector?: string;
   height: number;
   isDraggable: boolean;
   left: number;
+  locked: boolean;
   minimumHeight?: number;
   minimumWidth?: number;
   top: number;
+  visible: boolean;
   width: number;
   windowId: string;
   toggleDraggable(isDraggable: boolean): void;
@@ -55,6 +46,51 @@ interface IHOCState {
   topDiff: number;
   widthDiff: number;
 }
+
+const StyledWindow = styled.div`
+  position: absolute;
+
+  background-color: ${(props) => props.theme.fg};
+
+  &.hidden {
+    display: none;
+  }
+
+  &:hover .aip-window-topbar.activable {
+    opacity: 1;
+  }
+
+  .aip-window-topbar {
+    width: calc(100% - 2px);
+    height: 2.5rem;
+
+    padding: 0.5rem 0;
+
+    position: absolute;
+    top: 1px;
+    left: 1px;
+
+    z-index: 1;
+
+    opacity: 0;
+    background-color: ${(props) => props.theme.clearFg};
+    border-bottom: 1px solid ${(props) => props.theme.bg};
+
+    &.activable {
+      &:hover,
+      &:focus-within {
+        opacity: 1;
+      }
+    }
+  }
+
+  .aip-windowed {
+    height: 100%;
+    overflow: auto;
+
+    border: 1px solid ${(props) => props.theme.bg};
+  }
+`;
 
 const defaultState: IHOCState = {
   heightDiff: 0,
@@ -74,18 +110,21 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     IWrappedComponentProps,
     IHOCState
   > {
-    static defaultProps = defaultProps;
+    static readonly defaultProps = defaultProps;
 
     elementRef = React.createRef<HTMLDivElement>();
     containerWidth = 0;
     containerHeight = 0;
 
-    state = defaultState;
+    readonly state = defaultState;
 
     render() {
       return (
         <StyledWindow
-          className="draggable"
+          className={classNames({
+            'aip-window': true,
+            hidden: !this.props.visible
+          })}
           innerRef={this.elementRef}
           style={{
             height: `${this.props.height + this.state.heightDiff}%`,
@@ -97,22 +136,36 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             width: `${this.props.width + this.state.widthDiff}%`
           }}
         >
-          <DragWindowButton
-            isDraggable={this.props.isDraggable}
-            dragEnd={this.dragEndHandler}
-            dragStart={this.dragStartHandler}
-            dragUpdate={this.dragUpdateHandler}
-            keyUpdate={this.moveKeyDownHandler}
-            windowId={this.props.windowId}
-          />
+          {!this.props.locked && (
+            <div
+              className={classNames('aip-window-topbar', {
+                activable: this.props.isDraggable
+              })}
+            >
+              <DragWindowButton
+                isDraggable={this.props.isDraggable}
+                dragEnd={this.dragEndHandler}
+                dragStart={this.dragStartHandler}
+                dragUpdate={this.dragUpdateHandler}
+                keyUpdate={this.moveKeyDownHandler}
+                windowId={this.props.windowId}
+              />
+              <CloseWindowButton
+                windowId={this.props.windowId}
+                activable={this.props.isDraggable}
+              />
+            </div>
+          )}
 
-          <Resizers
-            keyUpdate={this.resizeKeyUpdate}
-            resizeStart={this.resizeStartHandler}
-            resizeUpdate={this.resizeUpdateHandler}
-            resizeEnd={this.resizeEndHandler}
-            windowId={this.props.windowId}
-          />
+          {!this.props.locked && (
+            <Resizers
+              keyUpdate={this.resizeKeyUpdate}
+              resizeStart={this.resizeStartHandler}
+              resizeUpdate={this.resizeUpdateHandler}
+              resizeEnd={this.resizeEndHandler}
+              windowId={this.props.windowId}
+            />
+          )}
           <div className="aip-windowed">
             <WrappedComponent {...this.props} />
           </div>

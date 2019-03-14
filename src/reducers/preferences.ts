@@ -1,5 +1,10 @@
 import { Reducer } from 'redux';
-import { CHANGE_LANGUAGE, CHANGE_THEME } from '../actions/preferences';
+import {
+  CHANGE_LANGUAGE,
+  CHANGE_THEME,
+  CHANGE_WINDOW_VISIBILITY,
+  WINDOWS_LOCK
+} from '../actions/preferences';
 import {
   CHANGE_UI_WINDOWS,
   LOAD_CONFIGURATION,
@@ -14,7 +19,7 @@ import {
   DEFAULT_SEEK_STEP,
   DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_THEME,
-  DEFAULT_UI_PLACEMENT,
+  DEFAULT_UI_WINDOWS,
   DEFAULT_VOLUME_STEP,
   DEFAULT_VOLUME_STEP_MULTIPLIER
 } from '../constants';
@@ -24,11 +29,13 @@ import { IAianaTheme } from '../utils/styled-components';
 export interface IUIWindow {
   height: number;
   left: number;
+  locked: boolean;
   top: number;
+  visible: boolean;
   width: number;
 }
 
-export interface IUIPlacement {
+export interface IUIWindows {
   additionalInformation: IUIWindow;
   chapters: IUIWindow;
   slides: IUIWindow;
@@ -51,7 +58,7 @@ export interface IPreferencesState {
   seekStep: number;
   seekStepMultiplier: number;
   themes: string[];
-  uiPlacement: IUIPlacement;
+  uiWindows: IUIWindows;
   volumeStep: number;
   volumeStepMultiplier: number;
 }
@@ -67,7 +74,7 @@ const initialState: IPreferencesState = {
   seekStep: DEFAULT_SEEK_STEP,
   seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
   themes: AVAILABLE_THEMES,
-  uiPlacement: DEFAULT_UI_PLACEMENT,
+  uiWindows: DEFAULT_UI_WINDOWS,
   volumeStep: DEFAULT_VOLUME_STEP,
   volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER
 };
@@ -97,14 +104,51 @@ const preferences: Reducer = (state = initialState, action) => {
     case CHANGE_UI_WINDOWS:
       return {
         ...state,
-        uiPlacement: {
-          ...state.uiPlacement,
+        uiWindows: {
+          ...state.uiWindows,
           [action.windowId]: {
-            ...state.uiPlacement[action.windowId],
+            ...state.uiWindows[action.windowId],
             ...action.window
           }
         }
       };
+    case WINDOWS_LOCK: {
+      // FIXME: array please
+      return {
+        ...state,
+        uiWindows: Object.keys(state.uiWindows).reduce(
+          (acc, windowId) => ({
+            ...acc,
+            [windowId]: {
+              ...state.uiWindows[windowId],
+              locked: action.locked
+            }
+          }),
+          {}
+        )
+      };
+    }
+    case CHANGE_WINDOW_VISIBILITY: {
+      console.log('DRINGDRINGDRING');
+
+      // FIXME: array please, this is much less readable than a simple array...
+      return {
+        ...state,
+        uiWindows: Object.keys(state.uiWindows).reduce(
+          (acc, windowId) => ({
+            ...acc,
+            [windowId]: {
+              ...state.uiWindows[windowId],
+              visible:
+                action.windowId === windowId
+                  ? action.visible
+                  : !!state.uiWindows[windowId].visible
+            }
+          }),
+          {}
+        )
+      };
+    }
     default:
       return state;
   }
