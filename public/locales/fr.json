@@ -19,7 +19,7 @@
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
   "preferences.chapterstrack.label": "Langue des chapitres",
   "preferences.language.label": "Langue de l'interface",
-  "preferences.menu_enabled.label": "Afficher la liste des chapitres",
+  "preferences.show_chapters.label": "Afficher les chapitres",
   "preferences.playbackrate.label": "Vitesse de lecture",
   "preferences.slidestrack.label": "Langue des diapositives",
   "preferences.subtitlestrack.label": "Sous-titres",

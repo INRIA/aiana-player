@@ -21,7 +21,7 @@
   "languages.fr": "Français",
   "preferences.chapterstrack.label": "Chapters language",
   "preferences.language.label": "Interface language",
-  "preferences.menu_enabled.label": "Show chapters list",
+  "preferences.show_chapters.label": "Show chapters",
   "preferences.playbackrate.label": "Playback speed",
   "preferences.slidestrack.label": "Slides language",
   "preferences.subtitlestrack.label": "Subtitles",

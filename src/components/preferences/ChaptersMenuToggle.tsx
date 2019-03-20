@@ -25,7 +25,7 @@ class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {
     return (
       <React.Fragment>
         <span id={this.props.uid}>
-          {this.props.t('preferences.menu_enabled.label')}
+          {this.props.t('preferences.show_chapters.label')}
         </span>
         <ToggleButton
           isOn={this.props.menuEnabled}
