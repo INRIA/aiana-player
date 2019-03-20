@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SvgBookmarkAdd(props: React.SVGProps<SVGSVGElement>) {
+function SvgBookmarkAdd(props: React.SVGAttributes<SVGSVGElement>) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 36 36" {...props}>
       <path

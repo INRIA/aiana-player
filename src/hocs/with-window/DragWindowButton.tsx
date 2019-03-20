@@ -3,7 +3,7 @@ import React from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import StyledButton from '../../components/styled/StyledButton';
 import StyledSvg from '../../components/styled/StyledSvg';
-import Move from '../../components/svg/Move';
+import MoveIcon from '../../components/svg/Move';
 import { ESCAPE_KEY } from '../../constants';
 import styled from '../../utils/styled-components';
 
@@ -21,8 +21,6 @@ interface IDragWindowButton extends IProps, WithTranslation {}
 interface IState {
   isDragging: boolean;
 }
-
-const StyledSvgIcon = StyledSvg.withComponent(Move);
 
 const StyledDragWindowButton = styled(StyledButton)`
   display: block;
@@ -65,11 +63,12 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
           windowId: this.props.windowId
         })}
         className={classes}
-        innerRef={this.controlsRef}
+        ref={this.controlsRef}
         onMouseDown={this.mouseDownHandler}
         onKeyDown={this.keyDownHandler}
+        type="button"
       >
-        <StyledSvgIcon aria-hidden="true" />
+        <StyledSvg as={MoveIcon} aria-hidden="true" />
       </StyledDragWindowButton>
     );
   }

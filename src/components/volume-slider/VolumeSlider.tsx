@@ -54,7 +54,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     return (
       <StyledVolumeSlider
         className="aip-volume"
-        innerRef={this.elementRef}
+        ref={this.elementRef}
         role="slider"
         tabIndex={0}
         aria-label={t('controls.volume.label')}

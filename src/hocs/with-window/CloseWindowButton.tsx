@@ -20,8 +20,6 @@ interface IDispatchProps {
 
 interface IProps extends IOwnProps, IDispatchProps {}
 
-const CrossIcon = StyledSvg.withComponent(SvgCross);
-
 const StyledCloseWindowButton = styled(StyledButton)`
   display: block;
 
@@ -55,8 +53,9 @@ function CloseWindowButton(props: IProps) {
       })}
       className={classes}
       onClick={props.clickHandler}
+      type="button"
     >
-      <CrossIcon />
+      <StyledSvg as={SvgCross} />
     </StyledCloseWindowButton>
   );
 }

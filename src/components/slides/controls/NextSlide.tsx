@@ -23,8 +23,6 @@ interface IDispatchProps {
 
 interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
 
-const StyledArrowForward = StyledSvg.withComponent(ArrowForward);
-
 // TODO: what to do when there is no slides at all?
 // Disable the element? Just hide it?
 
@@ -32,7 +30,7 @@ class NextSlide extends Component<INextSlide> {
   render() {
     return (
       <StyledButton onClick={this.clickHandler} type="button">
-        <StyledArrowForward aria-hidden="true" />
+        <StyledSvg as={ArrowForward} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_slide_next')}
         </AssistiveText>

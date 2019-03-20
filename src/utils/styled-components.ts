@@ -12,10 +12,9 @@ export interface IAianaTheme {
 const {
   default: styled,
   css,
-  injectGlobal,
   keyframes,
   ThemeProvider
 } = styledComponents as ThemedStyledComponentsModule<IAianaTheme>;
 
-export { css, injectGlobal, keyframes, ThemeProvider };
+export { css, keyframes, ThemeProvider };
 export default styled;

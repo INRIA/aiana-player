@@ -29,11 +29,6 @@ interface IProps {
 
 interface IResizers extends IProps, WithTranslation {}
 
-const StyledResizeNs = StyledSvg.withComponent(ResizeNs);
-const StyledResizeEw = StyledSvg.withComponent(ResizeEw);
-const StyledResizeNesw = StyledSvg.withComponent(ResizeNesw);
-const StyledResizeNwse = StyledSvg.withComponent(ResizeNwse);
-
 const StyledResizers = styled.div`
   .focus-visible[data-focus-visible-added] {
     background-color: ${(props) => props.theme.clearFg};
@@ -62,7 +57,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeNs aria-hidden="true" />
+          <StyledSvg as={ResizeNs} aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_right', {
@@ -73,7 +68,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNesw />
+          <StyledSvg as={ResizeNesw} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.right', {
@@ -83,7 +78,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeEw aria-hidden="true" />
+          <StyledSvg as={ResizeEw} aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_right', {
@@ -94,7 +89,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNwse />
+          <StyledSvg as={ResizeNwse} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom', {
@@ -104,7 +99,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeNs aria-hidden="true" />
+          <StyledSvg as={ResizeNs} aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_left', {
@@ -115,7 +110,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNesw />
+          <StyledSvg as={ResizeNesw} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.left', {
@@ -125,7 +120,7 @@ class Resizers extends React.Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledResizeEw aria-hidden="true" />
+          <StyledSvg as={ResizeEw} aria-hidden="true" />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_left', {
@@ -136,7 +131,7 @@ class Resizers extends React.Component<IResizers> {
           mouseDownHandler={this.mouseDownHandler}
           type="corner"
         >
-          <StyledResizeNwse />
+          <StyledSvg as={ResizeNwse} />
         </ResizeButton>
       </StyledResizers>
     );

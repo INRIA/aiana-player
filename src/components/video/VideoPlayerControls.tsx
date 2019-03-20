@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
-import AddBookmarkButton from '../buttons/add-bookmark/AddBookmarkButton';
+import AddBookmarkButton from '../buttons/add-bookmark';
 import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
 import PlayButton from '../buttons/play/PlayButton';
 import VolumeControl from '../buttons/VolumeControl';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SvgArrowForward(props: React.SVGProps<SVGSVGElement>) {
+function SvgArrowForward(props: React.SVGAttributes<SVGSVGElement>) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 36 36" {...props}>
       <path d="M8 16v4h17v-4z" />

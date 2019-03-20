@@ -22,8 +22,6 @@ interface IDispatchProps {
 
 interface INextChapter extends IStateProps, IDispatchProps, WithTranslation {}
 
-const StyledSkipNext = StyledSvg.withComponent(SkipNext);
-
 // TODO: what to do when there is no chapters at all?
 // Disable the element? Just hide it?
 
@@ -31,7 +29,7 @@ class NextChapter extends Component<INextChapter> {
   render() {
     return (
       <StyledButton onClick={this.clickHandler} type="button">
-        <StyledSkipNext aria-hidden="true" />
+        <StyledSvg as={SkipNext} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_chapter_next')}
         </AssistiveText>

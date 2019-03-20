@@ -8,10 +8,6 @@ import { IAianaState } from '../../../reducers/index';
 import styled from '../../../utils/styled-components';
 import PlayControlIcon from './ControlIcon';
 
-const StyledPlayButton = styled(StyledButton)`
-  width: 3em;
-`;
-
 export interface IPlayButtonProps {
   isPlaying: boolean;
   mediaElement?: HTMLMediaElement;
@@ -21,6 +17,10 @@ interface IDispatchProps {
   requestMediaPause: any;
   requestMediaPlay: any;
 }
+
+const StyledPlayButton = styled(StyledButton)`
+  width: 3em;
+`;
 
 interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}
 

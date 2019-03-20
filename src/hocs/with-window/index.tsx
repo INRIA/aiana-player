@@ -125,7 +125,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             'aip-window': true,
             hidden: !this.props.visible
           })}
-          innerRef={this.elementRef}
+          ref={this.elementRef}
           style={{
             height: `${this.props.height + this.state.heightDiff}%`,
             left: `${this.props.left}%`,
