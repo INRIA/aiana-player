@@ -1,9 +1,14 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Component } from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import styled from '../../utils/styled-components';
+import { uid } from '../../utils/ui';
+import AssistiveText from '../a11y/AssistiveText';
+import StyledSvg from '../shared/styled-svg';
+import SvgSettings from '../svg/Settings';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import LanguageSelector from './LanguageSelector';
+import { PanelToggle } from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
@@ -11,7 +16,11 @@ import ThemeSelector from './ThemeSelector';
 import WindowsVisibility from './windows/visibility/WindowsVisibility';
 import WindowsLockToggle from './windows/WindowsLockToggle';
 
-const StyledPanel = styled.div`
+interface IState {
+  isOpen: boolean;
+}
+
+const StyledPreferences = styled.div`
   /* TODO: remove debug styles */
   position: absolute;
   bottom: 4rem;
@@ -47,43 +56,72 @@ const StyledPanel = styled.div`
   }
 `;
 
-function PreferencesPanel() {
-  const [t] = useTranslation();
+const defaultState: IState = {
+  isOpen: false
+};
 
-  return (
-    <StyledPanel className="aip-preferences">
-      <h2>{t('preferences.title')}</h2>
-      <ul>
-        <li className="aip-language">
-          <LanguageSelector />
-        </li>
-        <li className="aip-playback-rate">
-          <PlaybackRateSelector />
-        </li>
-        <li className="aip-theme">
-          <ThemeSelector />
-        </li>
-        <li className="aip-subtitles-track">
-          <SubtitlesTrackSelector />
-        </li>
-        <li className="aip-chapters-track">
-          <ChaptersTrackSelector />
-        </li>
-        <li className="aip-slides-track">
-          <SlidesTrackSelector />
-        </li>
-        <li className="aip-chapters-menu">
-          <ChaptersMenuToggle />
-        </li>
-        <li className="aip-windows-lock">
-          <WindowsLockToggle />
-        </li>
-        <li className="aip-windows-visibility">
-          <WindowsVisibility />
-        </li>
-      </ul>
-    </StyledPanel>
-  );
+class PreferencesPanel extends Component<WithTranslation, IState> {
+  readonly state = defaultState;
+
+  render() {
+    const t = this.props.t;
+    const ariaLabelId = uid();
+
+    return (
+      <StyledPreferences
+        aria-labelledby={ariaLabelId}
+        className="aip-preferences"
+      >
+        <h2 id={ariaLabelId}>
+          <PanelToggle
+            isExpanded={this.state.isOpen}
+            clickHandler={this.togglePanel}
+          >
+            <AssistiveText>{t('preferences.title')}</AssistiveText>
+            <StyledSvg as={SvgSettings} />
+          </PanelToggle>
+        </h2>
+
+        <div className="aip-preferences-panel" hidden={!this.state.isOpen}>
+          <ul>
+            <li className="aip-language">
+              <LanguageSelector />
+            </li>
+            <li className="aip-playback-rate">
+              <PlaybackRateSelector />
+            </li>
+            <li className="aip-theme">
+              <ThemeSelector />
+            </li>
+            <li className="aip-subtitles-track">
+              <SubtitlesTrackSelector />
+            </li>
+            <li className="aip-chapters-track">
+              <ChaptersTrackSelector />
+            </li>
+            <li className="aip-slides-track">
+              <SlidesTrackSelector />
+            </li>
+            <li className="aip-chapters-menu">
+              <ChaptersMenuToggle />
+            </li>
+            <li className="aip-windows-lock">
+              <WindowsLockToggle />
+            </li>
+            <li className="aip-windows-visibility">
+              <WindowsVisibility />
+            </li>
+          </ul>
+        </div>
+      </StyledPreferences>
+    );
+  }
+
+  togglePanel = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  };
 }
 
-export default PreferencesPanel;
+export default withTranslation()(PreferencesPanel);
