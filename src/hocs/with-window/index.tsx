@@ -52,10 +52,6 @@ const StyledWindow = styled.div`
 
   background-color: ${(props) => props.theme.fg};
 
-  &.hidden {
-    display: none;
-  }
-
   &:hover .aip-window-topbar.activable {
     opacity: 1;
   }
@@ -121,10 +117,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     render() {
       return (
         <StyledWindow
-          className={classNames({
-            'aip-window': true,
-            hidden: !this.props.visible
-          })}
+          className="aip-window"
+          hidden={!this.props.visible}
           ref={this.elementRef}
           style={{
             height: `${this.props.height + this.state.heightDiff}%`,
