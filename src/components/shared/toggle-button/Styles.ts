@@ -1,5 +1,5 @@
 import styled from '../../../utils/styled-components';
-import StyledButton from '../../styled/StyledButton';
+import StyledButton from '../styled-button';
 
 const StyledToggleButton = styled(StyledButton)`
   width: auto;

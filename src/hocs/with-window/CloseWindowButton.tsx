@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWindowVisibility } from '../../actions/preferences';
-import StyledButton from '../../components/styled/StyledButton';
+import StyledButton from '../../components/shared/styled-button';
 import StyledSvg from '../../components/styled/StyledSvg';
 import SvgCross from '../../components/svg/Cross';
 import { CDispatch } from '../../store';

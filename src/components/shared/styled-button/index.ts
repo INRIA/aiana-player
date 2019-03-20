@@ -1,4 +1,4 @@
-import styled from '../../utils/styled-components';
+import styled from '../../../utils/styled-components';
 
 export default styled.button`
   display: inline-block;

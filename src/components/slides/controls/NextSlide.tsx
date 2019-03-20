@@ -5,7 +5,7 @@ import { seekNextSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
 import { IRawSlidesTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../styled/StyledButton';
+import StyledButton from '../../shared/styled-button';
 import StyledSvg from '../../styled/StyledSvg';
 import ArrowForward from '../../svg/ArrowForward';
 

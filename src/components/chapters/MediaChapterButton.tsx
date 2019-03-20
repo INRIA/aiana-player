@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers/index';
 import styled from '../../utils/styled-components';
-import StyledButton from '../styled/StyledButton';
+import StyledButton from '../shared/styled-button';
 
 interface IProps {
   isActive: boolean;

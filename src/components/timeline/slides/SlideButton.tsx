@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '../../../utils/styled-components';
-import StyledButton from '../../styled/StyledButton';
+import StyledButton from '../../shared/styled-button';
 import StyledSvg from '../../styled/StyledSvg';
 import SlideIcon from '../../svg/Slide';
 

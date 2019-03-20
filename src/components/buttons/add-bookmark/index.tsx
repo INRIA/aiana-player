@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addBookmark } from '../../../actions/bookmarks';
 import { IAianaState } from '../../../reducers';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../styled/StyledButton';
+import StyledButton from '../../shared/styled-button';
 import StyledSvg from '../../styled/StyledSvg';
 import BookmarkAddIcon from '../../svg/BookmarkAdd';
 

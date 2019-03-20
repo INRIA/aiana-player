@@ -3,9 +3,9 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
 import AssistiveText from '../../../components/a11y/AssistiveText';
-import StyledButton from '../../../components/styled/StyledButton';
 import { IAianaState } from '../../../reducers/index';
 import styled from '../../../utils/styled-components';
+import StyledButton from '../../shared/styled-button';
 import PlayControlIcon from './ControlIcon';
 
 export interface IPlayButtonProps {

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import StyledButton from '../../components/styled/StyledButton';
+import StyledButton from '../../components/shared/styled-button';
 import { ESCAPE_KEY } from '../../constants';
 import { Direction } from '../../types';
 import styled from '../../utils/styled-components';
