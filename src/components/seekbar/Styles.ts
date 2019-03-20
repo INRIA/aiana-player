@@ -3,8 +3,10 @@ import styled from '../../utils/styled-components';
 
 const StyledDiv = styled.div`
   display: block;
+
   height: 0.375em;
   width: 100%;
+
   cursor: pointer;
 
   .aip-progress-slider {

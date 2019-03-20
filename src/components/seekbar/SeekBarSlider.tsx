@@ -44,13 +44,13 @@ interface IDispatchProps {
 
 interface ISeekBarSlider extends IStateProps, IDispatchProps, WithTranslation {}
 
-class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
-  sliderRef = React.createRef<HTMLDivElement>();
+const defaultState: IState = {
+  sliderPosition: 0,
+  sliderWidth: 0
+};
 
-  state = {
-    sliderPosition: 0,
-    sliderWidth: 0
-  };
+class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
+  readonly state = defaultState;
 
   render() {
     const {
@@ -76,17 +76,13 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
-    const wrapperClassNames = classNames({
-      'aip-progress': true,
+    const wrapperClassNames = classNames('aip-progress', {
       'no-transition': isSeeking
     });
 
     return (
       <StyledDiv className={wrapperClassNames}>
         <div
-          ref={this.sliderRef}
-          className="aip-progress-slider"
-          role="slider"
           aria-label={t('controls.seekbar.label')}
           aria-valuemin={0}
           aria-valuemax={roundedDuration}
@@ -95,9 +91,11 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
             roundedCurrentTime,
             roundedDuration
           )}
-          tabIndex={0}
+          className="aip-progress-slider"
           onKeyDown={this.keyDownHandler}
           onMouseDown={this.mouseDownHandler}
+          role="slider"
+          tabIndex={0}
         >
           <div className="aip-seekbar">
             <div className="aip-seekbar-expander" />
@@ -158,13 +156,14 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   }
 
   private setPosition = () => {
-    if (!this.sliderRef.current) {
+    const sliderEl = document.querySelector('.aip-progress-slider');
+    if (!sliderEl) {
       return;
     }
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    const { left, width } = this.sliderRef.current.getBoundingClientRect();
+    const { left, width } = sliderEl.getBoundingClientRect();
 
     this.setState({
       sliderPosition: left,
@@ -180,22 +179,25 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     evt.currentTarget.focus();
 
     // trigger first recomputation to simulate simple click.
-    this.updateCurrentTime(evt.pageX);
+    const el = document.querySelector('.aip-progress')! as HTMLDivElement;
+    this.updateCurrentTime(evt.pageX - el.offsetLeft);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
   };
 
   private mouseUpHandler = (evt: MouseEvent) => {
-    this.sliderRef.current!.blur();
-    this.updateCurrentTime(evt.pageX);
+    (document.querySelector('.aip-progress-slider') as HTMLDivElement)!.blur();
+    const el = document.querySelector('.aip-progress')! as HTMLDivElement;
+    this.updateCurrentTime(evt.pageX - el.offsetLeft);
 
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
 
   private mouseMoveHandler = (evt: MouseEvent) => {
-    this.updateCurrentTime(evt.pageX);
+    const el = document.querySelector('.aip-progress')! as HTMLDivElement;
+    this.updateCurrentTime(evt.pageX - el.offsetLeft);
   };
 
   private updateCurrentTime = (mouseX: number) => {
