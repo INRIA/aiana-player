@@ -3,6 +3,7 @@ import styled from '../../utils/styled-components';
 
 export default styled.div`
   display: inline-block;
+
   width: 0em;
   height: 100%;
 
