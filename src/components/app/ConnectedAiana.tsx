@@ -18,7 +18,7 @@ import { ThemeProvider } from '../../utils/styled-components';
 import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
 import PreferencesPanel from '../preferences/PreferencesPanel';
-import StyledAiana from '../styled/StyledAiana';
+import StyledAiana from './StyledAiana';
 
 interface IStateProps {
   availableThemes: string[];

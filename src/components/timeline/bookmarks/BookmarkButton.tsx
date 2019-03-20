@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '../../../utils/styled-components';
 import StyledButton from '../../shared/styled-button';
-import StyledSvg from '../../styled/StyledSvg';
+import StyledSvg from '../../shared/styled-svg';
 import BookmarkIcon from '../../svg/Bookmark';
 
 interface IProps {

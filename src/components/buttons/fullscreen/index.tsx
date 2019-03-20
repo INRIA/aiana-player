@@ -2,10 +2,10 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleFullscreen } from '../../../actions/player';
-import AssistiveText from '../../../components/a11y/AssistiveText';
 import { IAianaState } from '../../../reducers/index';
 import { ExtendedHTMLElement } from '../../../types';
 import { isFullscreenEnabled } from '../../../utils/fullscreen';
+import AssistiveText from '../../a11y/AssistiveText';
 import StyledButton from '../../shared/styled-button';
 import ControlIcon from './ControlIcon';
 

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import StyledButton from '../../components/shared/styled-button';
-import StyledSvg from '../../components/styled/StyledSvg';
+import StyledSvg from '../../components/shared/styled-svg';
 import MoveIcon from '../../components/svg/Move';
 import { ESCAPE_KEY } from '../../constants';
 import styled from '../../utils/styled-components';

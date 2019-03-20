@@ -2,9 +2,9 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { muteMedia, unmuteMedia } from '../../../actions/player';
-import AssistiveText from '../../../components/a11y/AssistiveText';
 import { IAianaState } from '../../../reducers/index';
 import styled from '../../../utils/styled-components';
+import AssistiveText from '../../a11y/AssistiveText';
 import StyledButton from '../../shared/styled-button';
 import ControlIcon from './ControlIcon';
 

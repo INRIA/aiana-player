@@ -1,7 +1,7 @@
 import React from 'react';
-import VolumeSlider from '../../components/volume-slider/VolumeSlider';
 import styled from '../../utils/styled-components';
-import MuteButton from './mute/MuteButton';
+import VolumeSlider from '../volume-slider';
+import MuteButton from './mute';
 
 const StyledDiv = styled.div`
   display: inline-block;

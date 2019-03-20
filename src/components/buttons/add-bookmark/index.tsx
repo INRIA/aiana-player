@@ -5,7 +5,7 @@ import { addBookmark } from '../../../actions/bookmarks';
 import { IAianaState } from '../../../reducers';
 import AssistiveText from '../../a11y/AssistiveText';
 import StyledButton from '../../shared/styled-button';
-import StyledSvg from '../../styled/StyledSvg';
+import StyledSvg from '../../shared/styled-svg';
 import BookmarkAddIcon from '../../svg/BookmarkAdd';
 
 interface IStateProps {

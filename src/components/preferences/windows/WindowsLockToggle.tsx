@@ -6,7 +6,7 @@ import { DEFAULT_WINDOWS_LOCK } from '../../../constants';
 import withUniqueId, {
   InjectedUniqueIdProps
 } from '../../../hocs/withUniqueId';
-import ToggleButton from '../../shared/toggle-button/ToggleButton';
+import ToggleButton from '../../shared/toggle-button';
 
 interface IDispatchProps {
   setWindowsLock(locked: boolean): any;

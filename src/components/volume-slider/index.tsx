@@ -32,7 +32,7 @@ interface IDispatchProps {
   updateVolume(media: HTMLMediaElement, volume: number): void;
 }
 
-export interface IVolumeSliderProps
+interface IVolumeSliderProps
   extends IStateProps,
     IDispatchProps,
     WithTranslation {}

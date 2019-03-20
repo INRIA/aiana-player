@@ -6,7 +6,7 @@ import { IAianaState } from '../../../reducers';
 import { IRawSlidesTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import StyledButton from '../../shared/styled-button';
-import StyledSvg from '../../styled/StyledSvg';
+import StyledSvg from '../../shared/styled-svg';
 import ArrowForward from '../../svg/ArrowForward';
 
 interface IStateProps {

@@ -6,7 +6,7 @@ import withUniqueId, {
   InjectedUniqueIdProps
 } from '../../../../hocs/withUniqueId';
 import { CDispatch } from '../../../../store';
-import ToggleButton from '../../../shared/toggle-button/ToggleButton';
+import ToggleButton from '../../../shared/toggle-button';
 
 interface IOwnProps {
   visible: boolean;

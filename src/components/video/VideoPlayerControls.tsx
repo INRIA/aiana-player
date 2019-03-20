@@ -5,15 +5,15 @@ import { IAianaState } from '../../reducers';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import AddBookmarkButton from '../buttons/add-bookmark';
-import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
-import PlayButton from '../buttons/play/PlayButton';
+import FullscreenButton from '../buttons/fullscreen';
+import PlayButton from '../buttons/play';
 import VolumeControl from '../buttons/VolumeControl';
 import NextChapter from '../chapters/controls/NextChapter';
 import PreviousChapter from '../chapters/controls/PreviousChapter';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
 import NextSlide from '../slides/controls/NextSlide';
 import PreviousSlide from '../slides/controls/PreviousSlide';
-import TimeStatus from '../time-status/TimeStatus';
+import TimeStatus from '../time-status';
 
 const StyledControlsWrapper = styled.div`
   height: 3.75rem;

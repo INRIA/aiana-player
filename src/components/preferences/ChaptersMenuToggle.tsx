@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setChaptersMenu } from '../../actions/chapters';
 import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
-import ToggleButton from '../shared/toggle-button/ToggleButton';
+import ToggleButton from '../shared/toggle-button';
 
 interface IStateProps {
   menuEnabled: boolean;

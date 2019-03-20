@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledSvg from '../../styled/StyledSvg';
+import StyledSvg from '../../shared/styled-svg';
 import VolumeUnmutedIcon from '../../svg/VolumeFull';
 import VolumeMutedIcon from '../../svg/VolumeMuted';
 

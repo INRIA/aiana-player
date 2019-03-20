@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledSvg from '../../styled/StyledSvg';
+import StyledSvg from '../../shared/styled-svg';
 import FullscreenIcon from '../../svg/Fullscreen';
 import FullscreenExitIcon from '../../svg/FullscreenExit';
 

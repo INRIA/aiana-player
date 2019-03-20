@@ -1,6 +1,6 @@
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import StyledSvg from '../../components/styled/StyledSvg';
+import StyledSvg from '../../components/shared/styled-svg';
 import ResizeEw from '../../components/svg/ResizeEw';
 import ResizeNesw from '../../components/svg/ResizeNesw';
 import ResizeNs from '../../components/svg/ResizeNs';
