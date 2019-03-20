@@ -61,7 +61,7 @@ const defaultState: IState = {
 };
 
 class Player extends Component<IPlayerProps, IState> {
-  state = defaultState;
+  readonly state = defaultState;
 
   render() {
     const {

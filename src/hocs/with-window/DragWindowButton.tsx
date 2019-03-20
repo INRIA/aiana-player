@@ -49,7 +49,7 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   baseX = 0;
   baseY = 0;
 
-  state = defaultState;
+  readonly state = defaultState;
 
   render() {
     const classes = classNames('aip-window-drag', {
