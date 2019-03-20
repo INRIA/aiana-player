@@ -4,22 +4,21 @@ import StyledButton from '../../styled/StyledButton';
 import StyledSvg from '../../styled/StyledSvg';
 import BookmarkIcon from '../../svg/Bookmark';
 
-const StyledSvgIcon = StyledSvg.withComponent(BookmarkIcon);
-const StyledBookmarkIcon = styled(StyledSvgIcon)`
-  filter: url('#aip-filter-dropshadow');
-`;
-
 interface IProps {
   media?: HTMLMediaElement;
   time: number;
   onClick(media: HTMLMediaElement, time: number): void;
 }
 
+const FilteredSvg = styled(StyledSvg)`
+  filter: url('#aip-filter-dropshadow');
+`;
+
 class BookmarkButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler}>
-        <StyledBookmarkIcon />
+      <StyledButton onClick={this.clickHandler} type="button">
+        <FilteredSvg as={BookmarkIcon} />
       </StyledButton>
     );
   }

@@ -24,8 +24,6 @@ interface IDispatchProps {
 
 interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
 
-const StyledArrowBackward = StyledSvg.withComponent(ArrowBackward);
-
 // TODO: what to do when there is no slides at all?
 // Disable the element? Just hide it?
 
@@ -33,7 +31,7 @@ class PreviousSlide extends Component<IPreviousSlide> {
   render() {
     return (
       <StyledButton onClick={this.clickHandler} type="button">
-        <StyledArrowBackward aria-hidden="true" />
+        <StyledSvg as={ArrowBackward} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_slide_previous')}
         </AssistiveText>

@@ -35,7 +35,7 @@ interface IDispatchProps {
 interface IAiana extends IStateProps, IDispatchProps {}
 
 class Aiana extends Component<IAiana> {
-  private fullscreenRef = createRef<HTMLElement>();
+  private fullscreenRef = createRef<HTMLDivElement>();
 
   render() {
     return (
@@ -45,7 +45,7 @@ class Aiana extends Component<IAiana> {
             'aip-app': true,
             inactive: !this.props.isActive
           })}
-          innerRef={this.fullscreenRef}
+          ref={this.fullscreenRef}
         >
           <Suspense fallback={<div>I am loading</div>}>
             <InactivityTimer />

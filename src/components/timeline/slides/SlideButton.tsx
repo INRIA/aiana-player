@@ -4,11 +4,6 @@ import StyledButton from '../../styled/StyledButton';
 import StyledSvg from '../../styled/StyledSvg';
 import SlideIcon from '../../svg/Slide';
 
-const StyledSvgIcon = StyledSvg.withComponent(SlideIcon);
-const StyledSlideIcon = styled(StyledSvgIcon)`
-  filter: url('#aip-filter-dropshadow');
-`;
-
 interface IProps {
   label: string;
   media?: HTMLMediaElement;
@@ -16,11 +11,19 @@ interface IProps {
   onClick(media: HTMLMediaElement, time: number): void;
 }
 
+const FilteredSvg = styled(StyledSvg)`
+  filter: url('#aip-filter-dropshadow');
+`;
+
 class SlideButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledButton aria-label={this.props.label} onClick={this.clickHandler}>
-        <StyledSlideIcon aria-hidden="true" />
+      <StyledButton
+        aria-label={this.props.label}
+        onClick={this.clickHandler}
+        type="button"
+      >
+        <FilteredSvg as={SlideIcon} aria-hidden="true" />
       </StyledButton>
     );
   }

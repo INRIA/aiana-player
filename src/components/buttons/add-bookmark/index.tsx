@@ -2,10 +2,11 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { addBookmark } from '../../../actions/bookmarks';
-import AssistiveText from '../../../components/a11y/AssistiveText';
-import StyledButton from '../../../components/styled/StyledButton';
 import { IAianaState } from '../../../reducers';
-import ControlIcon from './ControlIcon';
+import AssistiveText from '../../a11y/AssistiveText';
+import StyledButton from '../../styled/StyledButton';
+import StyledSvg from '../../styled/StyledSvg';
+import BookmarkAddIcon from '../../svg/BookmarkAdd';
 
 interface IStateProps {
   currentTime: number;
@@ -23,8 +24,8 @@ interface IAddBookmarkButton
 class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler}>
-        <ControlIcon aria-hidden="true" />
+      <StyledButton type="button" onClick={this.clickHandler}>
+        <StyledSvg as={BookmarkAddIcon} aria-hidden="true" />
         <AssistiveText>{this.props.t('controls.add_bookmark')}</AssistiveText>
       </StyledButton>
     );

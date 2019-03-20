@@ -93,7 +93,7 @@ class VideoPlayer extends React.Component<IProps> {
         <StyledVideo
           className="aip-video"
           autoPlay={this.props.autoPlay}
-          innerRef={this.media}
+          ref={this.media}
           onClick={this.clickHandler}
           onLoadedMetadata={this.loadedMetadataHandler}
           onProgress={this.progressHandler}
