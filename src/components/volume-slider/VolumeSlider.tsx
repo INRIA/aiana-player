@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -36,15 +37,24 @@ export interface IVolumeSliderProps
     IDispatchProps,
     WithTranslation {}
 
-class VolumeSlider extends React.Component<IVolumeSliderProps> {
-  elementRef = React.createRef<HTMLDivElement>();
+interface IState {
+  isActive: boolean;
+}
+
+const defaultState: IState = {
+  isActive: false
+};
+
+class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
   sliderPosition = 0;
   sliderWidth = 0;
-  sliderRef = React.createRef<HTMLDivElement>();
+
+  readonly state = defaultState;
 
   render() {
     const { t } = this.props;
     const volumePercents = 100 * this.props.volume;
+    const elClasses = classNames('aip-volume', { active: this.state.isActive });
 
     // element width is 4em, and we must ensure the handle will not go to far
     // on the edges. The button width being 1em, it should be able to move on
@@ -53,10 +63,6 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
 
     return (
       <StyledVolumeSlider
-        className="aip-volume"
-        ref={this.elementRef}
-        role="slider"
-        tabIndex={0}
         aria-label={t('controls.volume.label')}
         aria-valuemin={0}
         aria-valuemax={100}
@@ -64,10 +70,12 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
         aria-valuetext={t('controls.volume.valuetext', {
           volumePct: volumePercents
         })}
+        className={elClasses}
         onKeyDown={this.keyDownHandler}
+        role="slider"
+        tabIndex={0}
       >
         <div
-          ref={this.sliderRef}
           className="aip-volume-slider"
           onMouseDownCapture={this.mouseDownHandler}
         >
@@ -126,9 +134,14 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
     // This triggers `:focus` state and prevents from hiding it from the user.
     evt.currentTarget.focus();
 
+    this.setState({
+      isActive: true
+    });
+
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    const { left, width } = this.sliderRef.current!.getBoundingClientRect();
+    const slider = document.querySelector('.aip-volume-slider');
+    const { left, width } = slider!.getBoundingClientRect();
 
     this.sliderPosition = left;
     this.sliderWidth = width;
@@ -141,7 +154,8 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
   };
 
   private mouseUpHandler = () => {
-    this.elementRef.current!.blur();
+    this.setState({ isActive: false });
+    (document.querySelector('.aip-volume') as HTMLButtonElement)!.blur();
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
@@ -161,11 +175,17 @@ class VolumeSlider extends React.Component<IVolumeSliderProps> {
       return;
     }
 
-    const positionDifference = bounded(mouseX, sliderX, sliderWidth);
-    const newVolume = unitToRatio(positionDifference, sliderWidth);
+    try {
+      const sliderXMax = sliderX + sliderWidth;
+      const boundedX = bounded(mouseX, sliderX, sliderXMax);
+      const positionDifference = boundedX - sliderX;
+      const newVolume = unitToRatio(positionDifference, sliderWidth);
 
-    if (newVolume !== volume) {
-      updateVolume(mediaElement, newVolume);
+      if (newVolume !== volume) {
+        updateVolume(mediaElement, newVolume);
+      }
+    } catch (error) {
+      //
     }
   };
 

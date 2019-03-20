@@ -5,9 +5,11 @@ export default styled.div`
   display: inline-block;
   width: 0em;
   height: 100%;
+
   cursor: pointer;
   transition: width 0.2s ease-in;
 
+  &.active,
   &.focus-visible,
   &:focus,
   &:hover {
