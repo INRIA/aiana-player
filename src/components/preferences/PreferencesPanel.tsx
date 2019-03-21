@@ -78,7 +78,7 @@ class PreferencesPanel extends Component<WithTranslation, IState> {
             clickHandler={this.togglePanel}
           >
             <AssistiveText>{t('preferences.title')}</AssistiveText>
-            <StyledSvg as={SvgSettings} />
+            <StyledSvg as={SvgSettings} aria-hidden="true" />
           </PanelToggle>
         </h2>
 
