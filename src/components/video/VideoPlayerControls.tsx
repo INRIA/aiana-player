@@ -10,16 +10,15 @@ import PlayButton from '../buttons/play';
 import VolumeControl from '../buttons/VolumeControl';
 import NextChapter from '../chapters/controls/NextChapter';
 import PreviousChapter from '../chapters/controls/PreviousChapter';
+import PreferencesPanel from '../preferences/PreferencesPanel';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
 import NextSlide from '../slides/controls/NextSlide';
 import PreviousSlide from '../slides/controls/PreviousSlide';
 import TimeStatus from '../time-status';
 
 const StyledControlsWrapper = styled.div`
-  height: 3.75rem;
-  padding: 0.8125rem 1rem 0.5rem;
-
-  position: relative;
+  /* height: 3.5625em */
+  padding: 0.8125em 1em 0.5em;
 
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 
@@ -32,10 +31,11 @@ const StyledControlsWrapper = styled.div`
 `;
 
 const StyledControls = styled.div`
+  height: 2.25em;
+  margin-top: 0.3125em;
+
   display: flex;
   justify-content: space-between;
-  height: 2.25rem;
-  margin-top: 0.3125rem;
 `;
 
 interface IStateProps {
@@ -60,6 +60,7 @@ function VideoPlayerControls(props: IStateProps) {
         </div>
         <div className="aip-controls-right">
           <AddBookmarkButton />
+          <PreferencesPanel />
           <FullscreenButton />
         </div>
       </StyledControls>
