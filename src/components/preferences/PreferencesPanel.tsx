@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import { uid } from '../../utils/ui';
 import AssistiveText from '../a11y/AssistiveText';
@@ -21,25 +22,39 @@ interface IState {
 }
 
 const StyledPreferences = styled.div`
-  /* TODO: remove debug styles */
-  position: absolute;
-  bottom: 4rem;
-  right: 4rem;
-
-  background-color: white;
-  margin-top: 16px;
-  padding: 16px;
-  border: 1px solid #000;
-  color: #000;
+  display: inline-block;
 
   h2 {
-    margin: 0 auto 0.5rem;
+    margin: 0;
+    font-size: 1em;
+
+    button {
+      &,
+      & svg {
+        display: block;
+      }
+    }
+  }
+
+  .aip-preferences-panel {
+    width: 100%;
+    height: calc(100% - 0.5em - 2.25em - 0.3125em);
+
+    padding: 1em;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    overflow: auto;
+    background-color: ${(props) => hexToHsla(props.theme.bg, 0.95)};
   }
 
   ul {
-    list-style: none;
     margin: 0;
     padding: 0;
+
+    list-style: none;
 
     li {
       padding: 0.5em 0;

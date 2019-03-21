@@ -17,7 +17,6 @@ import {
 import { ThemeProvider } from '../../utils/styled-components';
 import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
-import PreferencesPanel from '../preferences/PreferencesPanel';
 import StyledAiana from './StyledAiana';
 
 interface IStateProps {
@@ -51,7 +50,6 @@ class Aiana extends Component<IAiana> {
             <InactivityTimer />
             <SvgFilters />
             <Player />
-            <PreferencesPanel />
           </Suspense>
         </StyledAiana>
       </ThemeProvider>

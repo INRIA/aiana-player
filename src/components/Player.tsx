@@ -30,11 +30,13 @@ const StyledDiv = styled.div`
 
   .aip-windows {
     /*
-      timeline height is 2.25rem,
-      controls height is 3.75rem,
-      margin between the two is 0.3125rem
+      timeline height is 2.25em,
+      controls height is 3.5625em,
+      margin is 0.3125em
     */
-    height: calc(100% - 6.3125rem);
+    height: calc(
+      100% - 2.25em - 0.5em - 2.25em - 0.8125em - 0.3125em - 0.375em
+    );
 
     position: relative;
   }
