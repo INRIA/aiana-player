@@ -69,6 +69,10 @@ const StyledPreferences = styled.div`
       & + li {
         border-top: 1px solid ${(props) => props.theme.bg};
       }
+
+      > *:nth-child(2) {
+        flex-shrink: 0;
+      }
     }
   }
 `;
