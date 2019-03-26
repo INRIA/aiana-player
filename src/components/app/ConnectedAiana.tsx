@@ -20,6 +20,8 @@ import Player from '../Player';
 import StyledAiana from './StyledAiana';
 
 interface IStateProps {
+  fontFace: string;
+  fontSizeMultiplier: number;
   availableThemes: string[];
   currentTheme: string;
   isActive: boolean;
@@ -45,6 +47,10 @@ class Aiana extends Component<IAiana> {
             inactive: !this.props.isActive
           })}
           ref={this.fullscreenRef}
+          style={{
+            fontFamily: this.props.fontFace,
+            fontSize: `${this.props.fontSizeMultiplier}em`
+          }}
         >
           <Suspense fallback={<div>I am loading</div>}>
             <InactivityTimer />
@@ -75,6 +81,8 @@ function mapStateToProps(state: IAianaState) {
   return {
     availableThemes: state.preferences.themes,
     currentTheme: state.preferences.currentTheme,
+    fontFace: state.preferences.activeFontFace,
+    fontSizeMultiplier: state.preferences.activeFontSizeMultiplier,
     isActive: state.preferences.isActive
   };
 }

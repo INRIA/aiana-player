@@ -58,9 +58,9 @@ const StyledWindow = styled.div`
 
   .aip-window-topbar {
     width: calc(100% - 2px);
-    height: 2.5rem;
+    height: 2.5em;
 
-    padding: 0.5rem 0;
+    padding: 0.5em 0;
 
     position: absolute;
     top: 1px;

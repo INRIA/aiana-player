@@ -37,6 +37,17 @@ export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 export const DEFAULT_VOLUME_STEP = 0.1;
 export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;
 export const DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD = 1.0;
+export const DEFAULT_ACTIVE_FONT_FACE = 'system';
+export const DEFAULT_FONT_FACES = [
+  DEFAULT_ACTIVE_FONT_FACE,
+  'verdana',
+  'arial',
+  'helvetica',
+  'georgia',
+  'times new roman'
+];
+export const DEFAULT_FONT_SIZE_MULTIPLIER = 1.0;
+export const FONT_SIZE_MULTIPLIERS = [1.0, 1.2, 1.4, 1.6];
 
 export const DEFAULT_WINDOWS_CONTAINER = '.aip-windows';
 

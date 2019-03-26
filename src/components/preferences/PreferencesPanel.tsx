@@ -8,6 +8,8 @@ import StyledSvg from '../shared/styled-svg';
 import SvgSettings from '../svg/Settings';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
+import FontFaceSelector from './FontFaceSelector';
+import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
 import { PanelToggle } from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
@@ -47,9 +49,14 @@ const StyledPreferences = styled.div`
     position: absolute;
     bottom: calc(0.5em + 2.25em + 0.3125em);
     right: 0;
+    z-index: 2;
 
     overflow: auto;
     background-color: ${(props) => hexToHsla(props.theme.bg, 0.93)};
+
+    select {
+      font-size: inherit;
+    }
   }
 
   ul {
@@ -113,6 +120,12 @@ class PreferencesPanel extends Component<WithTranslation, IState> {
             </li>
             <li className="aip-theme">
               <ThemeSelector />
+            </li>
+            <li>
+              <FontFaceSelector />
+            </li>
+            <li>
+              <FontSizeSelector />
             </li>
             <li className="aip-subtitles-track">
               <SubtitlesTrackSelector />
