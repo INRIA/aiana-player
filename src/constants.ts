@@ -46,6 +46,8 @@ export const DEFAULT_FONT_FACES = [
   'georgia',
   'times new roman'
 ];
+export const DEFAULT_FONT_SIZE_MULTIPLIER = 1.0;
+export const FONT_SIZE_MULTIPLIERS = [1.0, 1.2, 1.4, 1.6];
 
 export const DEFAULT_WINDOWS_CONTAINER = '.aip-windows';
 

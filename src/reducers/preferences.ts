@@ -17,6 +17,7 @@ import {
   DEFAULT_ACTIVE_FONT_FACE,
   DEFAULT_AVAILABLE_LANGUAGES,
   DEFAULT_FONT_FACES,
+  DEFAULT_FONT_SIZE_MULTIPLIER,
   DEFAULT_LANG,
   DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   DEFAULT_SEEK_STEP,
@@ -24,7 +25,8 @@ import {
   DEFAULT_THEME,
   DEFAULT_UI_WINDOWS,
   DEFAULT_VOLUME_STEP,
-  DEFAULT_VOLUME_STEP_MULTIPLIER
+  DEFAULT_VOLUME_STEP_MULTIPLIER,
+  FONT_SIZE_MULTIPLIERS
 } from '../constants';
 import InriaTheme from '../themes/inria';
 import { IAianaTheme } from '../utils/styled-components';
@@ -47,9 +49,11 @@ export interface IUIWindows {
 
 export interface IPreferencesState {
   activeFontFace: string;
+  activeFontSizeMultiplier: number;
   currentTheme: string;
   customTheme: IAianaTheme;
   fontFaces: string[];
+  fontSizeMultipliers: number[];
   isActive: boolean;
   language: string;
   languages: string[];
@@ -70,9 +74,11 @@ export interface IPreferencesState {
 
 const initialState: IPreferencesState = {
   activeFontFace: DEFAULT_ACTIVE_FONT_FACE,
+  activeFontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
   fontFaces: DEFAULT_FONT_FACES,
+  fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
   isActive: true,
   language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
