@@ -50,6 +50,10 @@ const StyledPreferences = styled.div`
 
     overflow: auto;
     background-color: ${(props) => hexToHsla(props.theme.bg, 0.93)};
+
+    select {
+      font-size: inherit;
+    }
   }
 
   ul {
