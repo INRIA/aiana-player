@@ -8,6 +8,14 @@ export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
 export const WINDOWS_LOCK = 'aiana/WINDOWS_LOCK';
 export const CHANGE_WINDOW_VISIBILITY = 'aiana/CHANGE_WINDOW_VISIBILITY';
+export const UPDATE_ACTIVE_FONT_FACE = 'aiana/UPDATE_ACTIVE_FONT_FACE';
+
+export function updateActiveFontFace(fontFace: string): AnyAction {
+  return {
+    activeFontFace: fontFace,
+    type: UPDATE_ACTIVE_FONT_FACE
+  };
+}
 
 export function setWindowVisibility(
   windowId: string,

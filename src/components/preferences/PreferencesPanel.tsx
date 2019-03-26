@@ -8,6 +8,7 @@ import StyledSvg from '../shared/styled-svg';
 import SvgSettings from '../svg/Settings';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
+import FontFaceSelector from './FontFaceSelector';
 import LanguageSelector from './LanguageSelector';
 import { PanelToggle } from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
@@ -109,6 +110,9 @@ class PreferencesPanel extends Component<WithTranslation, IState> {
 
         <div className="aip-preferences-panel" hidden={!this.state.isOpen}>
           <ul>
+            <li>
+              <FontFaceSelector />
+            </li>
             <li className="aip-language">
               <LanguageSelector />
             </li>

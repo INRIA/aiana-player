@@ -3,6 +3,7 @@ import {
   CHANGE_LANGUAGE,
   CHANGE_THEME,
   CHANGE_WINDOW_VISIBILITY,
+  UPDATE_ACTIVE_FONT_FACE,
   WINDOWS_LOCK
 } from '../actions/preferences';
 import {
@@ -13,7 +14,9 @@ import {
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
+  DEFAULT_ACTIVE_FONT_FACE,
   DEFAULT_AVAILABLE_LANGUAGES,
+  DEFAULT_FONT_FACES,
   DEFAULT_LANG,
   DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   DEFAULT_SEEK_STEP,
@@ -43,8 +46,10 @@ export interface IUIWindows {
 }
 
 export interface IPreferencesState {
+  activeFontFace: string;
   currentTheme: string;
   customTheme: IAianaTheme;
+  fontFaces: string[];
   isActive: boolean;
   language: string;
   languages: string[];
@@ -64,8 +69,10 @@ export interface IPreferencesState {
 }
 
 const initialState: IPreferencesState = {
+  activeFontFace: DEFAULT_ACTIVE_FONT_FACE,
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
+  fontFaces: DEFAULT_FONT_FACES,
   isActive: true,
   language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
@@ -147,6 +154,11 @@ const preferences: Reducer = (state = initialState, action) => {
         )
       };
     }
+    case UPDATE_ACTIVE_FONT_FACE:
+      return {
+        ...state,
+        activeFontFace: action.activeFontFace
+      };
     default:
       return state;
   }

@@ -18,6 +18,7 @@
   "controls.volume.label": "Volume sonore",
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
   "preferences.chapterstrack.label": "Langue des chapitres",
+  "preferences.font_face.label": "Police de caractères",
   "preferences.language.label": "Langue de l'interface",
   "preferences.show_chapters.label": "Afficher les chapitres",
   "preferences.playbackrate.label": "Vitesse de lecture",

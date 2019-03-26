@@ -20,6 +20,7 @@
   "languages.en": "English",
   "languages.fr": "Français",
   "preferences.chapterstrack.label": "Chapters language",
+  "preferences.font_face.label": "Font family",
   "preferences.language.label": "Interface language",
   "preferences.show_chapters.label": "Show chapters",
   "preferences.playbackrate.label": "Playback speed",
