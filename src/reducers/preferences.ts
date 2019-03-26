@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import {
   CHANGE_LANGUAGE,
+  CHANGE_TEXT_HIGHLIGHTING,
   CHANGE_THEME,
   CHANGE_WINDOW_VISIBILITY,
   UPDATE_ACTIVE_FONT_FACE,
@@ -23,6 +24,7 @@ import {
   DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   DEFAULT_SEEK_STEP,
   DEFAULT_SEEK_STEP_MULTIPLIER,
+  DEFAULT_TEXT_HIGHLIGHTING,
   DEFAULT_THEME,
   DEFAULT_UI_WINDOWS,
   DEFAULT_VOLUME_STEP,
@@ -67,6 +69,7 @@ export interface IPreferencesState {
    */
   seekStep: number;
   seekStepMultiplier: number;
+  textHighlighting: boolean;
   themes: string[];
   uiWindows: IUIWindows;
   volumeStep: number;
@@ -87,6 +90,7 @@ const initialState: IPreferencesState = {
   previousChapterSeekThreshold: DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   seekStep: DEFAULT_SEEK_STEP,
   seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
+  textHighlighting: DEFAULT_TEXT_HIGHLIGHTING,
   themes: AVAILABLE_THEMES,
   uiWindows: DEFAULT_UI_WINDOWS,
   volumeStep: DEFAULT_VOLUME_STEP,
@@ -170,6 +174,11 @@ const preferences: Reducer = (state = initialState, action) => {
       return {
         ...state,
         activeFontSizeMultiplier: action.activeFontSizeMultiplier
+      };
+    case CHANGE_TEXT_HIGHLIGHTING:
+      return {
+        ...state,
+        textHighlighting: action.textHighlighting
       };
     default:
       return state;

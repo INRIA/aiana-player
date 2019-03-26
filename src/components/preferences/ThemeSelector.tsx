@@ -30,7 +30,7 @@ function ThemeSelector({
 
   return (
     <React.Fragment>
-      <span id={uid}>{t('preferences.theme-selector.label')}</span>
+      <span id={uid}>{t('preferences.theme_selector.label')}</span>
       <select
         aria-labelledby={uid}
         onChange={selectChangeHandler}

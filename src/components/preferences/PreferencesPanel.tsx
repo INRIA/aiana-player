@@ -15,6 +15,7 @@ import { PanelToggle } from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
+import TextHighlightingToggle from './TextHighlightingToggle';
 import ThemeSelector from './ThemeSelector';
 import WindowsVisibility from './windows/visibility/WindowsVisibility';
 import WindowsLockToggle from './windows/WindowsLockToggle';
@@ -126,6 +127,9 @@ class PreferencesPanel extends Component<WithTranslation, IState> {
             </li>
             <li>
               <FontSizeSelector />
+            </li>
+            <li>
+              <TextHighlightingToggle />
             </li>
             <li className="aip-subtitles-track">
               <SubtitlesTrackSelector />
