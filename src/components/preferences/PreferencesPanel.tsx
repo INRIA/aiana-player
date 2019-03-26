@@ -48,6 +48,7 @@ const StyledPreferences = styled.div`
     position: absolute;
     bottom: calc(0.5em + 2.25em + 0.3125em);
     right: 0;
+    z-index: 2;
 
     overflow: auto;
     background-color: ${(props) => hexToHsla(props.theme.bg, 0.93)};
