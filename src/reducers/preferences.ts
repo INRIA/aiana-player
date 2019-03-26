@@ -129,8 +129,6 @@ const preferences: Reducer = (state = initialState, action) => {
       };
     }
     case CHANGE_WINDOW_VISIBILITY: {
-      console.log('DRINGDRINGDRING');
-
       // FIXME: array please, this is much less readable than a simple array...
       return {
         ...state,
