@@ -37,18 +37,19 @@ const StyledPreferences = styled.div`
   }
 
   .aip-preferences-panel {
-    width: 100%;
-    height: calc(100% - 0.5em - 2.25em - 0.3125em);
+    width: 50%;
+    height: calc(100% - 0.5em - 2.25em - 0.3125em - 25%);
+    max-width: 25em;
+    max-height: 23em;
 
     padding: 1em;
 
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: calc(0.5em + 2.25em + 0.3125em);
+    right: 0;
 
-    border: 0.5em solid ${(props) => hexToHsla(props.theme.fg, 0.95)};
     overflow: auto;
-    background-color: ${(props) => hexToHsla(props.theme.bg, 0.95)};
+    background-color: ${(props) => hexToHsla(props.theme.bg, 0.93)};
   }
 
   ul {
