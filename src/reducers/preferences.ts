@@ -4,6 +4,7 @@ import {
   CHANGE_THEME,
   CHANGE_WINDOW_VISIBILITY,
   UPDATE_ACTIVE_FONT_FACE,
+  UPDATE_FONT_SIZE_MULTIPLIER,
   WINDOWS_LOCK
 } from '../actions/preferences';
 import {
@@ -164,6 +165,11 @@ const preferences: Reducer = (state = initialState, action) => {
       return {
         ...state,
         activeFontFace: action.activeFontFace
+      };
+    case UPDATE_FONT_SIZE_MULTIPLIER:
+      return {
+        ...state,
+        activeFontSizeMultiplier: action.activeFontSizeMultiplier
       };
     default:
       return state;
