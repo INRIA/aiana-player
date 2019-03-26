@@ -9,7 +9,7 @@ import ChaptersBar from './chapters/ChaptersBar';
 import SlidesBar from './slides/SlidesBar';
 
 const StyledTimelineBar = styled.div`
-  height: 2.25rem;
+  height: 2.25em;
   padding: 0 1em;
 
   position: relative;

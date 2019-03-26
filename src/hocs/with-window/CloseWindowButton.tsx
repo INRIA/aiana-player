@@ -23,11 +23,11 @@ interface IProps extends IOwnProps, IDispatchProps {}
 const StyledCloseWindowButton = styled(StyledButton)`
   display: block;
 
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.5em;
+  height: 1.5em;
 
   position: absolute;
-  right: 1rem;
+  right: 1em;
 
   z-index: 1;
 

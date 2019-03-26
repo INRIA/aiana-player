@@ -25,7 +25,7 @@ interface IState {
 const StyledDragWindowButton = styled(StyledButton)`
   display: block;
 
-  height: 1.5rem;
+  height: 1.5em;
   width: 100%;
 
   position: absolute;

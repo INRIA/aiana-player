@@ -3,7 +3,7 @@ import styled from '../../utils/styled-components';
 
 export const StyledSubtitles = styled.div`
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 0.5em;
   left: 50%;
   text-align: center;
 

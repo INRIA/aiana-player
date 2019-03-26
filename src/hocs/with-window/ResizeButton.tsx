@@ -14,9 +14,9 @@ interface IProps {
 }
 
 const OUTER_OVERFLOW_SIZE = '4px';
-const FOCUSED_OUTER_OVERFLOW_SIZE = '0.75rem';
-const FOCUSED_SIZE = '1.5rem';
-const CORNER_SIZE = '1rem';
+const FOCUSED_OUTER_OVERFLOW_SIZE = '0.75em';
+const FOCUSED_SIZE = '1.5em';
+const CORNER_SIZE = '1em';
 
 const StyledResizeButton = styled(StyledButton)`
   position: absolute;
@@ -61,9 +61,9 @@ const StyledResizeButton = styled(StyledButton)`
   &.border {
     &.top,
     &.bottom {
-      left: 1rem;
-      height: calc(0.5rem + ${OUTER_OVERFLOW_SIZE});
-      width: calc(100% - 2rem);
+      left: 1em;
+      height: calc(0.5em + ${OUTER_OVERFLOW_SIZE});
+      width: calc(100% - 2em);
 
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ns-resize;
@@ -76,9 +76,9 @@ const StyledResizeButton = styled(StyledButton)`
 
     &.left,
     &.right {
-      top: 1rem;
-      height: calc(100% - 2rem);
-      width: calc(0.5rem + ${OUTER_OVERFLOW_SIZE});
+      top: 1em;
+      height: calc(100% - 2em);
+      width: calc(0.5em + ${OUTER_OVERFLOW_SIZE});
 
       &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
         cursor: ew-resize;
