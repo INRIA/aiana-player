@@ -68,10 +68,10 @@ function VideoPlayerControls(props: IStateProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isActive: state.preferences.isActive
   };
 }
 
-export default connect(mapStateToProps)(VideoPlayerControls);
+export default connect(mapState)(VideoPlayerControls);

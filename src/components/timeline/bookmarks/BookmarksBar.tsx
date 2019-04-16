@@ -84,7 +84,7 @@ function BookmarksBar({
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     bookmarks: state.bookmarks,
     duration: state.player.duration,
@@ -92,11 +92,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   requestSeek
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(BookmarksBar);

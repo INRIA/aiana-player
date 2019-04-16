@@ -51,19 +51,19 @@ class PlayButton extends React.Component<IProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isPlaying: state.player.isPlaying,
     mediaElement: state.player.mediaElement
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   requestMediaPause,
   requestMediaPlay
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(PlayButton));

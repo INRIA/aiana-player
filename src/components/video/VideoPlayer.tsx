@@ -205,7 +205,7 @@ class VideoPlayer extends React.Component<IProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     additionalInformationTracks: state.player.additionalInformationTracks,
     autoPlay: state.player.autoPlay,
@@ -223,7 +223,7 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   changeVolume,
   mediaElementMounted,
   mediaElementUnounted,
@@ -239,6 +239,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withWindow(VideoPlayer));

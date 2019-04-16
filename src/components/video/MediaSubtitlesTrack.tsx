@@ -108,19 +108,19 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     subtitlesLanguage: state.subtitles.language,
     subtitlesTracks: state.subtitles.subtitlesTracks
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   addSubtitlesTrack,
   setSubtitlesText
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(MediaSubtitlesTrack);

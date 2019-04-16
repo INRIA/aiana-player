@@ -24,10 +24,10 @@ function MediaSubtitles({ subtitlesText }: IStateProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     subtitlesText: state.subtitles.subtitlesText
   };
 }
 
-export default connect(mapStateToProps)(MediaSubtitles);
+export default connect(mapState)(MediaSubtitles);

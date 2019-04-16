@@ -41,14 +41,14 @@ function LanguageSelector(props: ILanguageSelector) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     UILanguage: state.preferences.language,
     languages: state.preferences.languages
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
       dispatch(changeCurrentLanguage(evt.currentTarget.value));
@@ -57,6 +57,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withUniqueId(LanguageSelector));

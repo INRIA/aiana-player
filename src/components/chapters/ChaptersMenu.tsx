@@ -35,11 +35,11 @@ function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     chaptersText: state.chapters.currentText,
     chaptersTracks: state.chapters.chaptersTracks
   };
 }
 
-export default connect(mapStateToProps)(withWindow(withUniqueId(ChaptersMenu)));
+export default connect(mapState)(withWindow(withUniqueId(ChaptersMenu)));

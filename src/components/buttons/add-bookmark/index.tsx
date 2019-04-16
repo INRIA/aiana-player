@@ -36,17 +36,17 @@ class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     currentTime: state.player.currentTime
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   addBookmark
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(AddBookmarkButton));

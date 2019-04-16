@@ -55,11 +55,11 @@ class WindowsLockToggle extends React.Component<IWindowsLockToggle, IState> {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   setWindowsLock
 };
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatch
 )(withTranslation()(withUniqueId(WindowsLockToggle)));

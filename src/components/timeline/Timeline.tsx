@@ -50,10 +50,10 @@ function TimelineBar(props: IStateProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isActive: state.preferences.isActive
   };
 }
 
-export default connect(mapStateToProps)(TimelineBar);
+export default connect(mapState)(TimelineBar);

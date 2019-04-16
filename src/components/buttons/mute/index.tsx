@@ -55,19 +55,19 @@ class MuteButton extends React.Component<IMuteButton> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isMuted: state.player.isMuted,
     mediaElement: state.player.mediaElement
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   muteMedia,
   unmuteMedia
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(MuteButton));

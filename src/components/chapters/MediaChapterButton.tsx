@@ -45,17 +45,17 @@ class MediaChapterButton extends React.Component<IMediaChapterButton> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     media: state.player.mediaElement
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   requestSeek
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(MediaChapterButton);

@@ -124,7 +124,7 @@ class Player extends Component<IPlayerProps, IState> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     additionalInformationText: state.player.additionalInformationText,
     chaptersMenu: state.chapters.menuEnabled,
@@ -132,11 +132,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   updateWindowHandler: updateUIWindow
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(Player);

@@ -62,7 +62,7 @@ class NextSlide extends Component<INextSlide> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
@@ -72,11 +72,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   seekNextSlide
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(NextSlide));

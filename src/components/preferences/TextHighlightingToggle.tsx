@@ -41,17 +41,17 @@ class TextHighlightingToggle extends Component<IProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     textHighlighting: state.preferences.textHighlighting
   };
 }
 
-const mapDispatchToProps: IDispatchProps = {
+const mapDispatch: IDispatchProps = {
   dispatchSetTextHighlighting: setTextHighlighting
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(withUniqueId(TextHighlightingToggle)));

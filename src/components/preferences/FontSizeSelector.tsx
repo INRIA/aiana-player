@@ -38,14 +38,14 @@ function FontSizeSelector(props: IProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     activeMultiplier: state.preferences.activeFontSizeMultiplier,
     multipliers: state.preferences.fontSizeMultipliers
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
       const multiplier = Number.parseFloat(evt.currentTarget.value);
@@ -55,6 +55,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withUniqueId(FontSizeSelector));

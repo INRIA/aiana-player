@@ -21,10 +21,10 @@ function Slides({ text }: IProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     text: state.slides.currentSlideText
   };
 }
 
-export default connect(mapStateToProps)(withWindow(Slides));
+export default connect(mapState)(withWindow(Slides));

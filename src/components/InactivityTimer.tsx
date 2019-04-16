@@ -113,7 +113,7 @@ class InactivityTimer extends React.Component<IInactivityTimer> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isPlaying: state.player.isPlaying,
     isSeeking: state.player.isSeeking,
@@ -121,11 +121,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   toggleActivity
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(InactivityTimer);

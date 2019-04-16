@@ -76,18 +76,18 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     metadataTracks: state.player.metadataTracks
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   addMetadataTrack: addAdditionalInformationTrack,
   setAdditionalInformationsText: setAdditionalInformationText
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(AdditionalInfosTrack);

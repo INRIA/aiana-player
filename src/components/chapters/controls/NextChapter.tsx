@@ -57,7 +57,7 @@ class NextChapter extends Component<INextChapter> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     currentTime: state.player.currentTime,
@@ -66,11 +66,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   seekNextChapter
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(NextChapter));

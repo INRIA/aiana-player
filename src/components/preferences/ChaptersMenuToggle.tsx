@@ -41,17 +41,17 @@ class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     menuEnabled: state.chapters.menuEnabled
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   setChaptersMenu
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(withUniqueId(ChaptersMenuToggle)));
