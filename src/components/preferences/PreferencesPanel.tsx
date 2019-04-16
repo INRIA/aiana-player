@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import { uid } from '../../utils/ui';
@@ -19,10 +19,6 @@ import TextHighlightingToggle from './TextHighlightingToggle';
 import ThemeSelector from './ThemeSelector';
 import WindowsVisibility from './windows/visibility/WindowsVisibility';
 import WindowsLockToggle from './windows/WindowsLockToggle';
-
-interface IState {
-  isOpen: boolean;
-}
 
 const StyledPreferences = styled.div`
   display: inline-block;
@@ -85,81 +81,68 @@ const StyledPreferences = styled.div`
   }
 `;
 
-const defaultState: IState = {
-  isOpen: false
-};
+function PreferencesPanel() {
+  const [isOpen, togglePanel] = useState(false);
+  const [t] = useTranslation();
+  const ariaLabelId = uid();
 
-class PreferencesPanel extends Component<WithTranslation, IState> {
-  readonly state = defaultState;
+  return (
+    <StyledPreferences
+      aria-labelledby={ariaLabelId}
+      className="aip-preferences"
+    >
+      <h2 id={ariaLabelId}>
+        <PanelToggle
+          isExpanded={isOpen}
+          clickHandler={() => togglePanel(!isOpen)}
+        >
+          <AssistiveText>{t('preferences.title')}</AssistiveText>
+          <StyledSvg as={SvgSettings} aria-hidden="true" />
+        </PanelToggle>
+      </h2>
 
-  render() {
-    const t = this.props.t;
-    const ariaLabelId = uid();
-
-    return (
-      <StyledPreferences
-        aria-labelledby={ariaLabelId}
-        className="aip-preferences"
-      >
-        <h2 id={ariaLabelId}>
-          <PanelToggle
-            isExpanded={this.state.isOpen}
-            clickHandler={this.togglePanel}
-          >
-            <AssistiveText>{t('preferences.title')}</AssistiveText>
-            <StyledSvg as={SvgSettings} aria-hidden="true" />
-          </PanelToggle>
-        </h2>
-
-        <div className="aip-preferences-panel" hidden={!this.state.isOpen}>
-          <ul>
-            <li className="aip-language">
-              <LanguageSelector />
-            </li>
-            <li className="aip-playback-rate">
-              <PlaybackRateSelector />
-            </li>
-            <li className="aip-theme">
-              <ThemeSelector />
-            </li>
-            <li>
-              <FontFaceSelector />
-            </li>
-            <li>
-              <FontSizeSelector />
-            </li>
-            <li>
-              <TextHighlightingToggle />
-            </li>
-            <li className="aip-subtitles-track">
-              <SubtitlesTrackSelector />
-            </li>
-            <li className="aip-chapters-track">
-              <ChaptersTrackSelector />
-            </li>
-            <li className="aip-slides-track">
-              <SlidesTrackSelector />
-            </li>
-            <li className="aip-chapters-menu">
-              <ChaptersMenuToggle />
-            </li>
-            <li className="aip-windows-lock">
-              <WindowsLockToggle />
-            </li>
-            <li className="aip-windows-visibility">
-              <WindowsVisibility />
-            </li>
-          </ul>
-        </div>
-      </StyledPreferences>
-    );
-  }
-
-  togglePanel = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
+      <div className="aip-preferences-panel" hidden={!isOpen}>
+        <ul>
+          <li className="aip-language">
+            <LanguageSelector />
+          </li>
+          <li className="aip-playback-rate">
+            <PlaybackRateSelector />
+          </li>
+          <li className="aip-theme">
+            <ThemeSelector />
+          </li>
+          <li>
+            <FontFaceSelector />
+          </li>
+          <li>
+            <FontSizeSelector />
+          </li>
+          <li>
+            <TextHighlightingToggle />
+          </li>
+          <li className="aip-subtitles-track">
+            <SubtitlesTrackSelector />
+          </li>
+          <li className="aip-chapters-track">
+            <ChaptersTrackSelector />
+          </li>
+          <li className="aip-slides-track">
+            <SlidesTrackSelector />
+          </li>
+          <li className="aip-chapters-menu">
+            <ChaptersMenuToggle />
+          </li>
+          <li className="aip-windows-lock">
+            <WindowsLockToggle />
+          </li>
+          <li className="aip-windows-visibility">
+            <WindowsVisibility />
+          </li>
+        </ul>
+      </div>
+    </StyledPreferences>
+  );
 }
 
-export default withTranslation()(PreferencesPanel);
+export default PreferencesPanel;

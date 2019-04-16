@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { updateUIWindow } from '../actions/shared';
 import {
@@ -54,74 +54,60 @@ interface IDispatchProps {
 
 interface IPlayerProps extends IStateProps, IDispatchProps {}
 
-interface IState {
-  isDraggable: boolean;
-}
+function Player(props: IPlayerProps) {
+  const [isDraggable, setDraggable] = useState(true);
 
-const defaultState: IState = {
-  isDraggable: true
-};
+  const {
+    additionalInformationText,
+    chaptersMenu,
+    uiWindows,
+    updateWindowHandler
+  } = props;
 
-class Player extends Component<IPlayerProps, IState> {
-  readonly state = defaultState;
-
-  render() {
-    const {
-      additionalInformationText,
-      chaptersMenu,
-      uiWindows,
-      updateWindowHandler
-    } = this.props;
-
-    return (
-      <StyledDiv className="aip-player">
-        <div className="aip-windows">
-          {chaptersMenu && (
-            <ChaptersMenu
-              isDraggable={this.state.isDraggable}
-              toggleDraggable={this.toggleDraggable}
-              uiUpdateHandler={updateWindowHandler}
-              windowId={WINDOW_ID_CHAPTERS}
-              {...uiWindows.chapters}
-            />
-          )}
-
-          <VideoPlayer
-            isDraggable={this.state.isDraggable}
-            toggleDraggable={this.toggleDraggable}
+  return (
+    <StyledDiv className="aip-player">
+      <div className="aip-windows">
+        {chaptersMenu && (
+          <ChaptersMenu
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
             uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_VIDEO}
-            {...uiWindows.video}
+            windowId={WINDOW_ID_CHAPTERS}
+            {...uiWindows.chapters}
           />
+        )}
 
-          <Slides
-            isDraggable={this.state.isDraggable}
-            toggleDraggable={this.toggleDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_SLIDES}
-            {...uiWindows.slides}
-          />
+        <VideoPlayer
+          isDraggable={isDraggable}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_VIDEO}
+          {...uiWindows.video}
+        />
 
-          <AdditionalInformation
-            isDraggable={this.state.isDraggable}
-            text={additionalInformationText}
-            toggleDraggable={this.toggleDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
-            {...uiWindows.additionalInformation}
-          />
+        <Slides
+          isDraggable={isDraggable}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_SLIDES}
+          {...uiWindows.slides}
+        />
 
-          <MediaSubtitles />
-        </div>
-        <TimelineBar />
-        <VideoPlayerControls />
-      </StyledDiv>
-    );
-  }
+        <AdditionalInformation
+          isDraggable={isDraggable}
+          text={additionalInformationText}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
+          {...uiWindows.additionalInformation}
+        />
 
-  toggleDraggable = (isDraggable: boolean) => {
-    this.setState({ isDraggable });
-  };
+        <MediaSubtitles />
+      </div>
+      <TimelineBar />
+      <VideoPlayerControls />
+    </StyledDiv>
+  );
 }
 
 function mapState(state: IAianaState) {
