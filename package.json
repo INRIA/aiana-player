@@ -47,7 +47,8 @@
     "lint": "eslint -c .eslintrc.js \"src/**/*.ts\" \"src/**/*.tsx\"",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.11",
@@ -79,6 +80,7 @@
     "@typescript-eslint/parser": "^1.6.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "8.0.5",
+    "cypress": "^3.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.5",

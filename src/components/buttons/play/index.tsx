@@ -27,7 +27,11 @@ const StyledPlayButton = styled(StyledButton)`
 class PlayButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledPlayButton onClick={this.clickHandler} type="button">
+      <StyledPlayButton
+        className="aip-controls-btn-play"
+        onClick={this.clickHandler}
+        type="button"
+      >
         <PlayControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{this.getControlText()}</AssistiveText>
       </StyledPlayButton>
