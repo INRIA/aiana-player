@@ -19,7 +19,7 @@ import {
   leadingZero,
   secondsToHMS,
   secondsToHMSObject
-} from './time';
+} from '../utils/time';
 
 describe('find translation key for a given time duration', () => {
   test('should format as hours', () => {

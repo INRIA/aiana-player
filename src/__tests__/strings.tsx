@@ -1,5 +1,15 @@
 import { mount } from 'enzyme';
-import { formatSubtitles, markdownToJSX } from './strings';
+import { formatSubtitles, markdownToJSX, identity } from '../utils/strings';
+
+test('identity function', () => {
+  const str = 'a string';
+  const num = 123;
+  const obj = { prop: 'value' };
+
+  expect(identity(str)).toEqual(str);
+  expect(identity(num)).toEqual(num);
+  expect(identity(obj)).toEqual(obj);
+});
 
 describe('format subtitles', () => {
   test('with single line string', () => {

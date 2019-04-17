@@ -17,9 +17,9 @@ export function formatSubtitles(
   }
 }
 
-type Adapter = (input: string) => string;
+type Adapter<T> = (input: T) => T;
 
-function identity(input: string) {
+export function identity<T>(input: T) {
   return input;
 }
 
@@ -30,7 +30,7 @@ export function markdownToJSX(md: string): ReactElement<any> {
   return unsafeJSX(marked)(md);
 }
 
-function unsafeJSX(adapter: Adapter = identity) {
+function unsafeJSX(adapter: Adapter<string> = identity) {
   return (content: string): ReactElement<any> => (
     <div
       className="aip-marked"

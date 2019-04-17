@@ -1,4 +1,4 @@
-import { hexToHsla } from './colors';
+import { hexToHsla } from '../utils/colors';
 
 test('with valid hex colors', () => {
   expect(hexToHsla('#000000', 0)).toBe('hsla(0, 0%, 0%, 0)');

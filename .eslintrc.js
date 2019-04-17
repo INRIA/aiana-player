@@ -15,13 +15,15 @@ module.exports = {
   },
   settings: {
     react: {
-        version: 'detect',
-    },
+      version: 'detect'
+    }
   },
   rules: {
-    '@typescript-eslint/explicit-function-return-type': { allowExpressions: true },
+    '@typescript-eslint/explicit-function-return-type': {
+      allowExpressions: true
+    },
     '@typescript-eslint/explicit-member-accessibility': 'no-public',
-    '@typescript-eslint/interface-name-prefix' : 'always',
+    '@typescript-eslint/interface-name-prefix': 'always',
     '@typescript-eslint/no-explicit-any': false,
     '@typescript-eslint/no-non-null-assertion': false,
     '@typescript-eslint/no-use-before-define': false,

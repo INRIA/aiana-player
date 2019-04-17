@@ -1,4 +1,4 @@
-import { percentageToUnit, unitToPercent } from './math';
+import { percentageToUnit, unitToPercent } from '../utils/math';
 
 describe('convert unit to percentages', () => {
   const unitTotal = 25;
