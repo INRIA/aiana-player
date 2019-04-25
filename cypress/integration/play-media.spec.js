@@ -2,7 +2,7 @@ describe('Play button', () => {
   const sel = '.aip-controls-btn-play';
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
   });
 
   it('exists and is visible', () => {
