@@ -57,6 +57,7 @@ export interface IPlayerState {
    */
   playbackRate: number;
   playerElement?: ExtendedHTMLElement;
+  poster?: string;
   preload: string;
   seekingTime: number;
   sources: ISource[];

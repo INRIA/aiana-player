@@ -53,6 +53,7 @@ interface IStateProps {
   isMuted: boolean;
   isSeeking: boolean;
   playbackRate: number;
+  poster?: string;
   preload: string;
   slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
@@ -102,6 +103,7 @@ class VideoPlayer extends React.Component<IProps> {
           onTimeUpdate={this.timeUpdateHandler}
           onVolumeChange={this.volumeChangeHandler}
           playsInline={true}
+          poster={this.props.poster}
           preload={this.props.preload}
           tabIndex={-1}
         >
@@ -214,6 +216,7 @@ function mapState(state: IAianaState) {
     isMuted: state.player.isMuted,
     isSeeking: state.player.isSeeking,
     playbackRate: state.player.playbackRate,
+    poster: state.player.poster,
     preload: state.player.preload,
     slidesTracksSources: state.slides.sources,
     sources: state.player.sources,
