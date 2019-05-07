@@ -30,6 +30,27 @@ export function markdownToJSX(md: string): ReactElement<any> {
   return unsafeJSX(marked)(md);
 }
 
+export function markdownToJSXForReadability(md: string): ReactElement<any> {
+  return unsafeJSX(colored)(md);
+}
+
+function replacer(match: string) {
+  return `<span class="aip-hl">${match}</span>`;
+}
+
+function colored(content: string): string {
+  const pattern = /\b([\w\u00C0-\u00FF]+[']?[\w\u00C0-\u00FF]+)(?!>)/gi;
+  const separator = ' ';
+
+  // console.log(marked(content).split(separator));
+
+  return marked(content)
+    .split(separator)
+    .reduce(function(acc, current) {
+      return `${acc}${separator}${current.replace(pattern, replacer)}`;
+    }, '');
+}
+
 function unsafeJSX(adapter: Adapter<string> = identity) {
   return (content: string): ReactElement<any> => (
     <div

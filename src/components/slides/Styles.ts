@@ -80,6 +80,12 @@ const Styles = styled.section`
       margin-top: 0;
     }
   }
+
+  .aip-hl:nth-child(odd) {
+    color: ${(props) => props.theme.bg};
+    background-color: ${(props) => props.theme.highlight};
+    padding: 0 0.2em;
+  }
 `;
 
 export default Styles;

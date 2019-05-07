@@ -6,6 +6,7 @@ export interface IAianaTheme {
   clearFg: string;
   fg: string;
   focus: string;
+  highlight: string;
   main: string;
 }
 
