@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import marked from './marked';
+import { WORD_SEPARATOR } from '../constants';
 
 /**
  * Format input string to be displayed as single or multiline subtitles.
@@ -34,21 +35,53 @@ export function markdownToJSXForReadability(md: string): ReactElement<any> {
   return unsafeJSX(colored)(md);
 }
 
-function replacer(match: string) {
-  return `<span class="aip-hl">${match}</span>`;
+function getTextNodes(el: ChildNode): ChildNode[] {
+  return [...el.childNodes].reduce((acc, curNode) => {
+    if (curNode.nodeType === 1 && curNode.hasChildNodes()) {
+      return (acc as any).concat(getTextNodes(curNode));
+    }
+
+    if (
+      curNode.nodeType === 3 &&
+      curNode.textContent &&
+      curNode.textContent.trim().length > 0
+    ) {
+      return (acc as any).concat(curNode);
+    }
+
+    return acc;
+  }, []);
 }
 
+function createWordElement(text = ''): HTMLElement {
+  const el = document.createElement('span');
+  el.className = 'aip-word';
+  el.innerText = text;
+
+  return el;
+}
+
+// TODO: refactor this function into clearer parts.
 function colored(content: string): string {
-  const pattern = /\b([\w\u00C0-\u00FF]+[']?[\w\u00C0-\u00FF]+)(?!>)/gi;
-  const separator = ' ';
+  const htmlContent = document.createElement('div');
+  htmlContent.innerHTML = marked(content);
 
-  // console.log(marked(content).split(separator));
+  const textNodes = getTextNodes(htmlContent as ChildNode);
 
-  return marked(content)
-    .split(separator)
-    .reduce(function(acc, current) {
-      return `${acc}${separator}${current.replace(pattern, replacer)}`;
-    }, '');
+  [...textNodes].forEach((textNode) => {
+    const text = textNode.textContent!.trim() || '';
+    const parent = textNode.parentNode!;
+    text
+      .split(WORD_SEPARATOR)
+      .map(createWordElement)
+      .forEach((wordEl) => {
+        parent.insertBefore(wordEl, textNode);
+        parent.insertBefore(document.createTextNode(WORD_SEPARATOR), textNode);
+      });
+    parent.removeChild(textNode);
+  });
+
+  return htmlContent.innerHTML;
 }
 
 function unsafeJSX(adapter: Adapter<string> = identity) {

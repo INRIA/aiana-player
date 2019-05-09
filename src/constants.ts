@@ -137,3 +137,6 @@ export const TRACK_KIND_METADATA = 'metadata';
 
 export const TRACK_MODE_ACTIVE = 'showing';
 export const TRACK_MODE_HIDDEN = 'hidden';
+
+// export const WORD_PATTERN = /\b([\w\u00C0-\u00FF]+[']?[\w\u00C0-\u00FF]+)/gi;
+export const WORD_SEPARATOR = ' ';
