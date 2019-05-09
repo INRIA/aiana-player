@@ -1,6 +1,7 @@
 import React from 'react';
 import { IMediaCue } from '../../utils/media';
 import MediaChapterButton from './MediaChapterButton';
+import classNames from 'classnames';
 
 interface IProps {
   activeText?: string;
@@ -15,7 +16,7 @@ function ChaptersList({ activeText, chapters }: IProps) {
   return (
     <ol>
       {chapters.map(({ startTime, text }, idx) => (
-        <li key={idx} className={text === activeText ? 'active' : 'inactive'}>
+        <li key={idx} className={classNames({ active: text === activeText })}>
           <MediaChapterButton
             isActive={text === activeText}
             startTime={startTime}
