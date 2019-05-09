@@ -40,11 +40,11 @@ function ChaptersTrackSelector({
   selectedTrackChangedHandler,
   uid
 }: IChaptersTrackSelector) {
+  const [t] = useTranslation();
+
   if (!mediaElement) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <React.Fragment>

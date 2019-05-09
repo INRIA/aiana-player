@@ -40,11 +40,11 @@ function SlidesTrackSelector({
   selectedTrackChangedHandler,
   uid
 }: ISlidesTrackSelector) {
+  const [t] = useTranslation();
+
   if (!mediaElement) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <React.Fragment>

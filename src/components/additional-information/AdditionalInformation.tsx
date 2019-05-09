@@ -11,11 +11,11 @@ interface IProps extends InjectedUniqueIdProps {
 }
 
 function AdditionalInformation({ text, uid }: IProps) {
+  const [t] = useTranslation();
+
   if (!text) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <StyledAdditionalInformation

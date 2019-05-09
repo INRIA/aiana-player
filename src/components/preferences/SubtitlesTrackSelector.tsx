@@ -37,11 +37,11 @@ function SubtitlesTrackSelector({
   subtitlesTracks,
   uid
 }: ISubtitlesTrackSelector) {
+  const [t] = useTranslation();
+
   if (!mediaElement) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <React.Fragment>
