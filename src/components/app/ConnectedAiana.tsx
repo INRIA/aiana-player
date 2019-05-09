@@ -77,7 +77,7 @@ class Aiana extends Component<IAiana> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     availableThemes: state.preferences.themes,
     currentTheme: state.preferences.currentTheme,
@@ -87,13 +87,13 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   handleFetchInitialData,
   handleFullscreenChange,
   playerElementMounted
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(Aiana);

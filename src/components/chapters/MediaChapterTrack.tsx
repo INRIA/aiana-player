@@ -91,19 +91,19 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     language: state.chapters.language
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   addChaptersTrack,
   setChapterText
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(MediaChapterTrack);

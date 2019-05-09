@@ -31,10 +31,10 @@ function WindowsVisibility(props: IStateProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     windows: state.preferences.uiWindows
   };
 }
 
-export default connect(mapStateToProps)(WindowsVisibility);
+export default connect(mapState)(WindowsVisibility);

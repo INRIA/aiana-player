@@ -1,6 +1,7 @@
 {
+  "arrowParens": "always",
+  "proseWrap": "always",
   "semi": true,
   "singleQuote": true,
-  "arrowParens": "always",
-  "proseWrap": "always"
+  "tabWidth": 2
 }

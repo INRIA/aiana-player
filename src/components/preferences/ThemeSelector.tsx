@@ -30,7 +30,7 @@ function ThemeSelector({
 
   return (
     <React.Fragment>
-      <span id={uid}>{t('preferences.theme-selector.label')}</span>
+      <span id={uid}>{t('preferences.theme_selector.label')}</span>
       <select
         aria-labelledby={uid}
         onChange={selectChangeHandler}
@@ -44,14 +44,14 @@ function ThemeSelector({
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     currentTheme: state.preferences.currentTheme,
     themes: state.preferences.themes
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     selectChangeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
       dispatch(changeCurrentTheme(evt.currentTarget.value));
@@ -60,6 +60,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withUniqueId(ThemeSelector));

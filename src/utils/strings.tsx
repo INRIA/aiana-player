@@ -17,9 +17,9 @@ export function formatSubtitles(
   }
 }
 
-type Adapter = (input: string) => string;
+type Adapter<T> = (input: T) => T;
 
-function identity(input: string) {
+export function identity<T>(input: T) {
   return input;
 }
 
@@ -30,7 +30,28 @@ export function markdownToJSX(md: string): ReactElement<any> {
   return unsafeJSX(marked)(md);
 }
 
-function unsafeJSX(adapter: Adapter = identity) {
+export function markdownToJSXForReadability(md: string): ReactElement<any> {
+  return unsafeJSX(colored)(md);
+}
+
+function replacer(match: string) {
+  return `<span class="aip-hl">${match}</span>`;
+}
+
+function colored(content: string): string {
+  const pattern = /\b([\w\u00C0-\u00FF]+[']?[\w\u00C0-\u00FF]+)(?!>)/gi;
+  const separator = ' ';
+
+  // console.log(marked(content).split(separator));
+
+  return marked(content)
+    .split(separator)
+    .reduce(function(acc, current) {
+      return `${acc}${separator}${current.replace(pattern, replacer)}`;
+    }, '');
+}
+
+function unsafeJSX(adapter: Adapter<string> = identity) {
   return (content: string): ReactElement<any> => (
     <div
       className="aip-marked"

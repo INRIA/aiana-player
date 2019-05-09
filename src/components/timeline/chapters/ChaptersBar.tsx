@@ -44,7 +44,7 @@ function ChaptersBar({ chaptersTracks, duration, language }: IStateProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     duration: state.player.duration,
@@ -52,4 +52,4 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-export default connect(mapStateToProps)(ChaptersBar);
+export default connect(mapState)(ChaptersBar);

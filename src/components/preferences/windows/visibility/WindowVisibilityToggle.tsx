@@ -41,7 +41,7 @@ function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
   );
 }
 
-function mapDispatchToProps(dispatch: CDispatch, ownProps: IOwnProps) {
+function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
       dispatch(setWindowVisibility(ownProps.windowId, !ownProps.visible));
@@ -51,5 +51,5 @@ function mapDispatchToProps(dispatch: CDispatch, ownProps: IOwnProps) {
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatch
 )(withUniqueId(WindowVisibilityToggle));

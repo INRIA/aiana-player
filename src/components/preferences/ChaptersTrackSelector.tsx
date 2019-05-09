@@ -40,11 +40,11 @@ function ChaptersTrackSelector({
   selectedTrackChangedHandler,
   uid
 }: IChaptersTrackSelector) {
+  const [t] = useTranslation();
+
   if (!mediaElement) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <React.Fragment>
@@ -64,7 +64,7 @@ function ChaptersTrackSelector({
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     currentLanguage: state.chapters.language,
@@ -72,7 +72,7 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     selectedTrackChangedHandler: (
       evt: React.ChangeEvent<HTMLSelectElement>
@@ -83,6 +83,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withUniqueId(ChaptersTrackSelector));

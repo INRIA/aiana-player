@@ -54,18 +54,18 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isFullscreen: state.player.isFullscreen,
     playerElement: state.player.playerElement
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   toggleFullscreen
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(FullscreenButton));

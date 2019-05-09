@@ -37,11 +37,11 @@ function SubtitlesTrackSelector({
   subtitlesTracks,
   uid
 }: ISubtitlesTrackSelector) {
+  const [t] = useTranslation();
+
   if (!mediaElement) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <React.Fragment>
@@ -62,14 +62,14 @@ function SubtitlesTrackSelector({
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     mediaElement: state.player.mediaElement,
     subtitlesTracks: state.subtitles.subtitlesTracks
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     selectedTrackChangedHandler: (
       evt: React.ChangeEvent<HTMLSelectElement>
@@ -80,6 +80,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withUniqueId(SubtitlesTrackSelector));

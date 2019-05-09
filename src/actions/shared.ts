@@ -13,7 +13,7 @@ export const CHANGE_UI_WINDOWS = 'aiana/CHANGE_UI_WINDOWS';
 
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    const parsed = queryString.parse(location.search);
+    const parsed = queryString.parse(window.location.search);
 
     if (parsed.config) {
       axios.get(parsed.config as string).then(({ data }) => {

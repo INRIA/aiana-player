@@ -59,7 +59,7 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     currentPlaybackRate: state.player.playbackRate,
     mediaElement: state.player.mediaElement,
@@ -67,11 +67,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   changePlaybackRate
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(withUniqueId(PlaybackRateSelector)));

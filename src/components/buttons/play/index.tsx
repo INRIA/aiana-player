@@ -27,7 +27,11 @@ const StyledPlayButton = styled(StyledButton)`
 class PlayButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledPlayButton onClick={this.clickHandler} type="button">
+      <StyledPlayButton
+        className="aip-controls-btn-play"
+        onClick={this.clickHandler}
+        type="button"
+      >
         <PlayControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{this.getControlText()}</AssistiveText>
       </StyledPlayButton>
@@ -51,19 +55,19 @@ class PlayButton extends React.Component<IProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     isPlaying: state.player.isPlaying,
     mediaElement: state.player.mediaElement
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   requestMediaPause,
   requestMediaPlay
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(PlayButton));

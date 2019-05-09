@@ -23,15 +23,6 @@ const Styles = styled.section`
     h3,
     h4,
     h5,
-    h6 {
-      line-height: 1;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
     h6,
     ol,
     ul,
@@ -79,6 +70,12 @@ const Styles = styled.section`
     p {
       margin-top: 0;
     }
+  }
+
+  .aip-hl:nth-child(odd) {
+    color: ${(props) => props.theme.bg};
+    background-color: ${(props) => props.theme.highlight};
+    padding: 0 0.2em;
   }
 `;
 

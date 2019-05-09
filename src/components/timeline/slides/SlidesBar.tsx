@@ -66,6 +66,8 @@ function SlidesBar({
   media,
   requestSeek: requestSeekAction
 }: ISlidesBar) {
+  const [t] = useTranslation();
+
   const activeSlidesTrack =
     slidesTracks.find((track) => track.language === language) ||
     slidesTracks.find((track) => track.language === DEFAULT_LANG);
@@ -73,8 +75,6 @@ function SlidesBar({
   if (!activeSlidesTrack) {
     return null;
   }
-
-  const [t] = useTranslation();
 
   return (
     <StyledSlidesBar>
@@ -101,7 +101,7 @@ function SlidesBar({
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     duration: state.player.duration,
     language: state.slides.language,
@@ -110,11 +110,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   requestSeek
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(SlidesBar);

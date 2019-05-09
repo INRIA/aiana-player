@@ -53,6 +53,7 @@ interface IStateProps {
   isMuted: boolean;
   isSeeking: boolean;
   playbackRate: number;
+  poster?: string;
   preload: string;
   slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
@@ -102,6 +103,7 @@ class VideoPlayer extends React.Component<IProps> {
           onTimeUpdate={this.timeUpdateHandler}
           onVolumeChange={this.volumeChangeHandler}
           playsInline={true}
+          poster={this.props.poster}
           preload={this.props.preload}
           tabIndex={-1}
         >
@@ -205,7 +207,7 @@ class VideoPlayer extends React.Component<IProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     additionalInformationTracks: state.player.additionalInformationTracks,
     autoPlay: state.player.autoPlay,
@@ -214,6 +216,7 @@ function mapStateToProps(state: IAianaState) {
     isMuted: state.player.isMuted,
     isSeeking: state.player.isSeeking,
     playbackRate: state.player.playbackRate,
+    poster: state.player.poster,
     preload: state.player.preload,
     slidesTracksSources: state.slides.sources,
     sources: state.player.sources,
@@ -223,7 +226,7 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   changeVolume,
   mediaElementMounted,
   mediaElementUnounted,
@@ -239,6 +242,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withWindow(VideoPlayer));

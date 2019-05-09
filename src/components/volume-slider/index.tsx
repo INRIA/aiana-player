@@ -199,7 +199,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
   }
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     mediaElement: state.player.mediaElement,
     volume: state.player.volume,
@@ -207,7 +207,7 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     updateVolume: (media: HTMLMediaElement, volume: number) => {
       dispatch(requestChangeVolume(media, volume));
@@ -216,6 +216,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withTranslation()(VolumeSlider));

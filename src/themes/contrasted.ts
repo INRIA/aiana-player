@@ -8,6 +8,7 @@ const theme: IAianaTheme = {
     .string(),
   fg: '#fff',
   focus: '#fff',
+  highlight: '#ccc',
   main: '#fff'
 };
 

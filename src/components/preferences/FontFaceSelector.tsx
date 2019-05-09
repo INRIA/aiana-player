@@ -38,14 +38,14 @@ function FontFaceSelector(props: IProps) {
   );
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     activeFontFace: state.preferences.activeFontFace,
     fontFaces: state.preferences.fontFaces
   };
 }
 
-function mapDispatchToProps(dispatch: CDispatch) {
+function mapDispatch(dispatch: CDispatch) {
   return {
     changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
       dispatch(updateActiveFontFace(evt.currentTarget.value));
@@ -54,6 +54,6 @@ function mapDispatchToProps(dispatch: CDispatch) {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(withUniqueId(FontFaceSelector));

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { updateUIWindow } from '../actions/shared';
 import {
@@ -54,77 +54,63 @@ interface IDispatchProps {
 
 interface IPlayerProps extends IStateProps, IDispatchProps {}
 
-interface IState {
-  isDraggable: boolean;
+function Player(props: IPlayerProps) {
+  const [isDraggable, setDraggable] = useState(true);
+
+  const {
+    additionalInformationText,
+    chaptersMenu,
+    uiWindows,
+    updateWindowHandler
+  } = props;
+
+  return (
+    <StyledDiv className="aip-player">
+      <div className="aip-windows">
+        {chaptersMenu && (
+          <ChaptersMenu
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            windowId={WINDOW_ID_CHAPTERS}
+            {...uiWindows.chapters}
+          />
+        )}
+
+        <VideoPlayer
+          isDraggable={isDraggable}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_VIDEO}
+          {...uiWindows.video}
+        />
+
+        <Slides
+          isDraggable={isDraggable}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_SLIDES}
+          {...uiWindows.slides}
+        />
+
+        <AdditionalInformation
+          isDraggable={isDraggable}
+          text={additionalInformationText}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
+          {...uiWindows.additionalInformation}
+        />
+
+        <MediaSubtitles />
+      </div>
+      <TimelineBar />
+      <VideoPlayerControls />
+    </StyledDiv>
+  );
 }
 
-const defaultState: IState = {
-  isDraggable: true
-};
-
-class Player extends Component<IPlayerProps, IState> {
-  readonly state = defaultState;
-
-  render() {
-    const {
-      additionalInformationText,
-      chaptersMenu,
-      uiWindows,
-      updateWindowHandler
-    } = this.props;
-
-    return (
-      <StyledDiv className="aip-player">
-        <div className="aip-windows">
-          {chaptersMenu && (
-            <ChaptersMenu
-              isDraggable={this.state.isDraggable}
-              toggleDraggable={this.toggleDraggable}
-              uiUpdateHandler={updateWindowHandler}
-              windowId={WINDOW_ID_CHAPTERS}
-              {...uiWindows.chapters}
-            />
-          )}
-
-          <VideoPlayer
-            isDraggable={this.state.isDraggable}
-            toggleDraggable={this.toggleDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_VIDEO}
-            {...uiWindows.video}
-          />
-
-          <Slides
-            isDraggable={this.state.isDraggable}
-            toggleDraggable={this.toggleDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_SLIDES}
-            {...uiWindows.slides}
-          />
-
-          <AdditionalInformation
-            isDraggable={this.state.isDraggable}
-            text={additionalInformationText}
-            toggleDraggable={this.toggleDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
-            {...uiWindows.additionalInformation}
-          />
-
-          <MediaSubtitles />
-        </div>
-        <TimelineBar />
-        <VideoPlayerControls />
-      </StyledDiv>
-    );
-  }
-
-  toggleDraggable = (isDraggable: boolean) => {
-    this.setState({ isDraggable });
-  };
-}
-
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     additionalInformationText: state.player.additionalInformationText,
     chaptersMenu: state.chapters.menuEnabled,
@@ -132,11 +118,11 @@ function mapStateToProps(state: IAianaState) {
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   updateWindowHandler: updateUIWindow
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(Player);

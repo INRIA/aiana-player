@@ -1,5 +1,5 @@
-import React from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWindowsLock } from '../../../actions/preferences';
 import { DEFAULT_WINDOWS_LOCK } from '../../../constants';
@@ -12,54 +12,32 @@ interface IDispatchProps {
   setWindowsLock(locked: boolean): any;
 }
 
-interface IWindowsLockToggle
-  extends IDispatchProps,
-    InjectedUniqueIdProps,
-    WithTranslation {}
+interface IWindowsLockToggle extends IDispatchProps, InjectedUniqueIdProps {}
 
-interface IState {
-  locked: boolean;
+function WindowsLockToggle(props: IWindowsLockToggle) {
+  const [locked, setLocked] = useState(DEFAULT_WINDOWS_LOCK);
+  const [t] = useTranslation();
+
+  return (
+    <React.Fragment>
+      <span id={props.uid}>{t('preferences.windows_locked.label')}</span>
+      <ToggleButton
+        isOn={locked}
+        labelledBy={props.uid}
+        onClick={() => {
+          setLocked(!locked);
+          props.setWindowsLock(!locked);
+        }}
+      />
+    </React.Fragment>
+  );
 }
 
-const defaultState: IState = {
-  locked: DEFAULT_WINDOWS_LOCK
-};
-
-class WindowsLockToggle extends React.Component<IWindowsLockToggle, IState> {
-  readonly state = defaultState;
-
-  render() {
-    return (
-      <React.Fragment>
-        <span id={this.props.uid}>
-          {this.props.t('preferences.windows_locked.label')}
-        </span>
-        <ToggleButton
-          isOn={this.state.locked}
-          labelledBy={this.props.uid}
-          onClick={this.clickHandler}
-        />
-      </React.Fragment>
-    );
-  }
-
-  private clickHandler = () => {
-    this.setState(
-      {
-        locked: !this.state.locked
-      },
-      () => {
-        this.props.setWindowsLock(this.state.locked);
-      }
-    );
-  };
-}
-
-const mapDispatchToProps = {
+const mapDispatch = {
   setWindowsLock
 };
 
 export default connect(
   null,
-  mapDispatchToProps
-)(withTranslation()(withUniqueId(WindowsLockToggle)));
+  mapDispatch
+)(withUniqueId(WindowsLockToggle));

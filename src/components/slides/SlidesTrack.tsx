@@ -102,19 +102,19 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
   };
 }
 
-function mapStateToProps(state: IAianaState) {
+function mapState(state: IAianaState) {
   return {
     language: state.slides.language,
     slidesTracks: state.slides.slidesTracks
   };
 }
 
-const mapDispatchToProps = {
+const mapDispatch = {
   addSlidesTrack,
   setSlidesText
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(SlidesTrack);
