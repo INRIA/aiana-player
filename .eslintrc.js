@@ -1,11 +1,12 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
-    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
-    'plugin:prettier/recommended'
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+    'prettier/@typescript-eslint'
   ],
+  plugins: ['@typescript-eslint', 'react'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -19,14 +20,18 @@ module.exports = {
     }
   },
   rules: {
-    '@typescript-eslint/explicit-function-return-type': {
-      allowExpressions: true
-    },
-    '@typescript-eslint/explicit-member-accessibility': 'no-public',
-    '@typescript-eslint/interface-name-prefix': 'always',
-    '@typescript-eslint/no-explicit-any': false,
-    '@typescript-eslint/no-non-null-assertion': false,
-    '@typescript-eslint/no-use-before-define': false,
-    'react/display-name': false
+    '@typescript-eslint/explicit-function-return-type': [
+      0,
+      { allowExpressions: true }
+    ],
+    '@typescript-eslint/explicit-member-accessibility': [
+      2,
+      { accessibility: 'no-public' }
+    ],
+    '@typescript-eslint/interface-name-prefix': [2, 'always'],
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-use-before-define': 0,
+    'react/display-name': 0
   }
 };
