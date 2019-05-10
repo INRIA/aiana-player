@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import {
   CHANGE_LANGUAGE,
   CHANGE_TEXT_HIGHLIGHTING,
+  CHANGE_TEXT_UPPERCASE,
   CHANGE_THEME,
   CHANGE_WINDOW_VISIBILITY,
   UPDATE_ACTIVE_FONT_FACE,
@@ -29,7 +30,8 @@ import {
   DEFAULT_UI_WINDOWS,
   DEFAULT_VOLUME_STEP,
   DEFAULT_VOLUME_STEP_MULTIPLIER,
-  FONT_SIZE_MULTIPLIERS
+  FONT_SIZE_MULTIPLIERS,
+  DEFAULT_FONT_MODIFIER_UPPERCASE
 } from '../constants';
 import InriaTheme from '../themes/inria';
 import { IAianaTheme } from '../utils/styled-components';
@@ -56,6 +58,7 @@ export interface IPreferencesState {
   currentTheme: string;
   customTheme: IAianaTheme;
   fontFaces: string[];
+  fontModifierUppercase: boolean;
   fontSizeMultipliers: number[];
   isActive: boolean;
   language: string;
@@ -82,6 +85,7 @@ const initialState: IPreferencesState = {
   currentTheme: DEFAULT_THEME,
   customTheme: InriaTheme,
   fontFaces: DEFAULT_FONT_FACES,
+  fontModifierUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
   fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
   isActive: true,
   language: DEFAULT_LANG,
@@ -179,6 +183,11 @@ const preferences: Reducer = (state = initialState, action) => {
       return {
         ...state,
         textHighlighting: action.textHighlighting
+      };
+    case CHANGE_TEXT_UPPERCASE:
+      return {
+        ...state,
+        fontModifierUppercase: action.fontModifierUppercase
       };
     default:
       return state;

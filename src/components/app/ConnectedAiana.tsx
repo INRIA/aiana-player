@@ -21,6 +21,7 @@ import StyledAiana from './StyledAiana';
 
 interface IStateProps {
   fontFace: string;
+  fontModifierUppercase: boolean;
   fontSizeMultiplier: number;
   availableThemes: string[];
   currentTheme: string;
@@ -42,14 +43,16 @@ class Aiana extends Component<IAiana> {
     return (
       <ThemeProvider theme={themes[this.props.currentTheme]}>
         <StyledAiana
-          className={classNames({
-            'aip-app': true,
+          className={classNames('aip-app', {
             inactive: !this.props.isActive
           })}
           ref={this.fullscreenRef}
           style={{
             fontFamily: this.props.fontFace,
-            fontSize: `${this.props.fontSizeMultiplier}em`
+            fontSize: `${this.props.fontSizeMultiplier}em`,
+            textTransform: this.props.fontModifierUppercase
+              ? 'uppercase'
+              : 'none'
           }}
         >
           <Suspense fallback={<div>I am loading</div>}>
@@ -82,6 +85,7 @@ function mapState(state: IAianaState) {
     availableThemes: state.preferences.themes,
     currentTheme: state.preferences.currentTheme,
     fontFace: state.preferences.activeFontFace,
+    fontModifierUppercase: state.preferences.fontModifierUppercase,
     fontSizeMultiplier: state.preferences.activeFontSizeMultiplier,
     isActive: state.preferences.isActive
   };

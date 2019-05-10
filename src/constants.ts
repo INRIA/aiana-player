@@ -96,6 +96,7 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
 };
 
 export const DEFAULT_MOVE_STEP = 5;
+export const DEFAULT_FONT_MODIFIER_UPPERCASE = false;
 
 export const INACTIVITY_TIMER_DURATION = 3000;
 export const INACTIVITY_EVENTS = [
