@@ -11,6 +11,14 @@ export const CHANGE_WINDOW_VISIBILITY = 'aiana/CHANGE_WINDOW_VISIBILITY';
 export const UPDATE_ACTIVE_FONT_FACE = 'aiana/UPDATE_ACTIVE_FONT_FACE';
 export const UPDATE_FONT_SIZE_MULTIPLIER = 'aiana/UPDATE_FONT_SIZE_MULTIPLIER';
 export const CHANGE_TEXT_HIGHLIGHTING = 'aiana/CHANGE_TEXT_HIGHLIGHTING';
+export const CHANGE_TEXT_UPPERCASE = 'aiana/CHANGE_TEXT_UPPERCASE';
+
+export function setFontModifierUppercase(uppercase: boolean): AnyAction {
+  return {
+    fontModifierUppercase: uppercase,
+    type: CHANGE_TEXT_UPPERCASE
+  };
+}
 
 export function setTextHighlighting(textHighlighting: boolean): AnyAction {
   return {

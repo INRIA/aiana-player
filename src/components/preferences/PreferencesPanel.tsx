@@ -9,6 +9,7 @@ import SvgSettings from '../svg/Settings';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import FontFaceSelector from './FontFaceSelector';
+import FontModifierUppercaseToggle from './FontModifierUppercaseToggle';
 import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
 import { PanelToggle } from './panel-toggle';
@@ -82,8 +83,8 @@ const StyledPreferences = styled.div`
 `;
 
 function PreferencesPanel() {
-  const [isOpen, togglePanel] = useState(false);
   const [t] = useTranslation();
+  const [isOpen, togglePanel] = useState(false);
   const ariaLabelId = uid();
 
   return (
@@ -117,6 +118,9 @@ function PreferencesPanel() {
           </li>
           <li>
             <FontSizeSelector />
+          </li>
+          <li>
+            <FontModifierUppercaseToggle />
           </li>
           <li>
             <TextHighlightingToggle />
