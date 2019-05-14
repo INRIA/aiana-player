@@ -71,7 +71,7 @@ const Styles = styled.section`
     }
   }
 
-  .aip-hl:nth-child(odd) {
+  .aip-word:nth-child(odd) {
     color: ${(props) => props.theme.bg};
     background-color: ${(props) => props.theme.highlight};
     padding: 0 0.2em;
