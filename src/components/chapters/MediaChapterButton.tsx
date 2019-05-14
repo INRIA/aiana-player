@@ -21,8 +21,7 @@ interface IDispatchProps {
 interface IMediaChapterButton extends IProps, IStateProps, IDispatchProps {}
 
 const StyledChapterButton = styled(StyledButton)`
-  display: block;
-  width: 100%;
+  width: auto;
 `;
 
 class MediaChapterButton extends React.Component<IMediaChapterButton> {
