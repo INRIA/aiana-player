@@ -12,6 +12,14 @@ export const UPDATE_ACTIVE_FONT_FACE = 'aiana/UPDATE_ACTIVE_FONT_FACE';
 export const UPDATE_FONT_SIZE_MULTIPLIER = 'aiana/UPDATE_FONT_SIZE_MULTIPLIER';
 export const CHANGE_TEXT_HIGHLIGHTING = 'aiana/CHANGE_TEXT_HIGHLIGHTING';
 export const CHANGE_TEXT_UPPERCASE = 'aiana/CHANGE_TEXT_UPPERCASE';
+export const UPDATE_LINE_HEIGHT = 'aiana/CHANGE_LINE_HEIGHT';
+
+export function updateLineHeight(lineHeight: string): AnyAction {
+  return {
+    lineHeight,
+    type: UPDATE_LINE_HEIGHT
+  };
+}
 
 export function setFontModifierUppercase(uppercase: boolean): AnyAction {
   return {
