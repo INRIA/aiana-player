@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '../../utils/styled-components';
 
-const VisuallyHidden = styled.span`
+export const VisuallyHidden = styled.span`
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
   padding: 0;
