@@ -16,7 +16,7 @@ import {
 import { updateSubtitlesTracksList } from '../../actions/subtitles';
 import withWindow from '../../hocs/with-window';
 import { IChaptersTrack } from '../../reducers/chapters';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
@@ -92,7 +92,6 @@ class VideoPlayer extends React.Component<IProps> {
     return (
       <StyledDiv>
         <StyledVideo
-          className="aip-video"
           autoPlay={this.props.autoPlay}
           ref={this.media}
           onClick={this.clickHandler}

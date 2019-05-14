@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import styled from '../../utils/styled-components';
 import StyledButton from '../shared/styled-button';
 

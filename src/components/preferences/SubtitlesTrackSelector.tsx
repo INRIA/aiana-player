@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSubtitlesTrack } from '../../actions/subtitles';
 import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import {
   IRawSubtitlesTrack,

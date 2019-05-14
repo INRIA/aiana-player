@@ -10,10 +10,10 @@ import {
 import { IAianaState } from '../reducers';
 import { IUIWindow, IUIWindows } from '../reducers/preferences';
 import styled from '../utils/styled-components';
-import AdditionalInformation from './additional-information/AdditionalInformation';
+import AdditionalInformation from './AdditionalInformation';
 import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';
-import MediaSubtitles from './subtitles/MediaSubtitles';
+import MediaSubtitles from './Subtitles';
 import TimelineBar from './timeline/Timeline';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
@@ -65,7 +65,7 @@ function Player(props: IPlayerProps) {
   } = props;
 
   return (
-    <StyledDiv className="aip-player">
+    <StyledDiv>
       <div className="aip-windows">
         {chaptersMenu && (
           <ChaptersMenu

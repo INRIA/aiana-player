@@ -15,7 +15,6 @@ function ToggleButton({ isOn, label, labelledBy, onClick }: IProps) {
   return (
     <StyledToggleButton
       role="switch"
-      className="aip-switch"
       aria-label={label}
       aria-labelledby={labelledBy}
       aria-checked={isOn}

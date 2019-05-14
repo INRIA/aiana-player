@@ -14,11 +14,11 @@ import {
   PAGE_DOWN_KEY,
   PAGE_UP_KEY
 } from '../../constants';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import { unitToRatio } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { bounded } from '../../utils/ui';
-import TimeRangesBar from '../buffered/TimeRangesBar';
+import BufferedTimeRanges from '../BufferedTimeRanges';
 import StyledDiv from './Styles';
 
 const { round } = Math;
@@ -99,7 +99,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
         >
           <div className="aip-seekbar">
             <div className="aip-seekbar-expander" />
-            <TimeRangesBar />
+            <BufferedTimeRanges />
           </div>
 
           <div

@@ -7,7 +7,7 @@ import {
 } from '../../actions/player';
 import { handleFetchInitialData } from '../../actions/shared';
 import SvgFilters from '../../components/shared/filters';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import themes from '../../themes';
 import {
   addFullscreenChangeEventListener,

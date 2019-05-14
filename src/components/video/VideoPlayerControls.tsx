@@ -14,7 +14,7 @@ import PreferencesPanel from '../preferences/PreferencesPanel';
 import SeekBarSlider from '../seekbar/SeekBarSlider';
 import NextSlide from '../slides/controls/NextSlide';
 import PreviousSlide from '../slides/controls/PreviousSlide';
-import TimeStatus from '../time-status';
+import TimeStatus from '../TimeStatus';
 
 const StyledControlsWrapper = styled.div`
   /* height: 3.5625em */
@@ -36,6 +36,10 @@ const StyledControls = styled.div`
 
   display: flex;
   justify-content: space-between;
+
+  > * {
+    display: flex;
+  }
 `;
 
 interface IStateProps {
@@ -48,8 +52,8 @@ function VideoPlayerControls(props: IStateProps) {
       className={classNames({ inactive: !props.isActive })}
     >
       <SeekBarSlider />
-      <StyledControls className="aip-controls">
-        <div className="aip-controls-left">
+      <StyledControls>
+        <div>
           <PreviousSlide />
           <PlayButton />
           <NextSlide />
@@ -58,7 +62,7 @@ function VideoPlayerControls(props: IStateProps) {
           <TimeStatus />
           <VolumeControl />
         </div>
-        <div className="aip-controls-right">
+        <div>
           <AddBookmarkButton />
           <PreferencesPanel />
           <FullscreenButton />

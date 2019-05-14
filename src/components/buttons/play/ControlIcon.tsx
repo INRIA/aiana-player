@@ -8,11 +8,7 @@ interface IControlIcon {
 }
 
 function PlayControlIcon({ isPlaying }: IControlIcon) {
-  if (isPlaying) {
-    return <StyledSvg as={PauseIcon} aria-hidden="true" />;
-  }
-
-  return <StyledSvg as={PlayIcon} aria-hidden="true" />;
+  return <StyledSvg as={isPlaying ? PauseIcon : PlayIcon} aria-hidden="true" />;
 }
 
 export default PlayControlIcon;

@@ -2,7 +2,7 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
-import { IAianaState } from '../../../reducers/index';
+import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
 import StyledButton from '../../shared/styled-button';
@@ -21,17 +21,14 @@ interface IDispatchProps {
 interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}
 
 const StyledPlayButton = styled(StyledButton)`
-  width: 3em;
+  padding: 0 6px;
+  width: calc(2.25em + 2 * 6px);
 `;
 
 class PlayButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledPlayButton
-        className="aip-controls-btn-play"
-        onClick={this.clickHandler}
-        type="button"
-      >
+      <StyledPlayButton onClick={this.clickHandler} type="button">
         <PlayControlIcon isPlaying={this.props.isPlaying} />
         <AssistiveText>{this.getControlText()}</AssistiveText>
       </StyledPlayButton>

@@ -2,7 +2,7 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleFullscreen } from '../../../actions/player';
-import { IAianaState } from '../../../reducers/index';
+import { IAianaState } from '../../../reducers';
 import { ExtendedHTMLElement } from '../../../types';
 import { isFullscreenEnabled } from '../../../utils/fullscreen';
 import AssistiveText from '../../a11y/AssistiveText';

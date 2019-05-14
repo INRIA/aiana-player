@@ -16,7 +16,7 @@ import {
   VOLUME_MAXIMUM,
   VOLUME_MINIMUM
 } from '../../constants';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { unitToRatio } from '../../utils/math';
 import { bounded } from '../../utils/ui';

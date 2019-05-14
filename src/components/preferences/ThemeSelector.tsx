@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeCurrentTheme } from '../../actions/preferences';
 import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {

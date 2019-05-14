@@ -5,7 +5,7 @@ import {
   setAdditionalInformationText
 } from '../../actions/player';
 import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants';
-import { IAianaState } from '../../reducers/index';
+import { IAianaState } from '../../reducers';
 import {
   getLastActiveCueText,
   IRawMetadataTrack,
