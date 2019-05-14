@@ -9,7 +9,6 @@ const StyledChapters = styled.nav`
   flex-direction: column;
   justify-content: center;
 
-  line-height: 1.5;
   color: ${(props) => props.theme.bg};
   background-color: ${(props) => props.theme.fg};
 

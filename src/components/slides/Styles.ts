@@ -3,7 +3,6 @@ import styled from '../../utils/styled-components';
 const Styles = styled.section`
   padding: 1em;
 
-  line-height: 1.5;
   color: ${(props) => props.theme.bg};
   background-color: ${(props) => props.theme.fg};
 

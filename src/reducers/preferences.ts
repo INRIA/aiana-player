@@ -7,7 +7,8 @@ import {
   CHANGE_WINDOW_VISIBILITY,
   UPDATE_ACTIVE_FONT_FACE,
   UPDATE_FONT_SIZE_MULTIPLIER,
-  WINDOWS_LOCK
+  WINDOWS_LOCK,
+  UPDATE_LINE_HEIGHT
 } from '../actions/preferences';
 import {
   CHANGE_UI_WINDOWS,
@@ -31,7 +32,9 @@ import {
   DEFAULT_VOLUME_STEP,
   DEFAULT_VOLUME_STEP_MULTIPLIER,
   FONT_SIZE_MULTIPLIERS,
-  DEFAULT_FONT_MODIFIER_UPPERCASE
+  DEFAULT_FONT_MODIFIER_UPPERCASE,
+  DEFAULT_LINE_HEIGHT,
+  LINE_HEIGHT_VALUES
 } from '../constants';
 import InriaTheme from '../themes/inria';
 import { IAianaTheme } from '../utils/styled-components';
@@ -63,6 +66,8 @@ export interface IPreferencesState {
   isActive: boolean;
   language: string;
   languages: string[];
+  lineHeight: string;
+  lineHeightValues: string[];
   playbackRates: number[];
   previousChapterSeekThreshold: number;
 
@@ -90,6 +95,8 @@ const initialState: IPreferencesState = {
   isActive: true,
   language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
+  lineHeight: DEFAULT_LINE_HEIGHT,
+  lineHeightValues: LINE_HEIGHT_VALUES,
   playbackRates: AVAILABLE_PLAYBACK_RATES,
   previousChapterSeekThreshold: DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   seekStep: DEFAULT_SEEK_STEP,
@@ -188,6 +195,11 @@ const preferences: Reducer = (state = initialState, action) => {
       return {
         ...state,
         fontModifierUppercase: action.fontModifierUppercase
+      };
+    case UPDATE_LINE_HEIGHT:
+      return {
+        ...state,
+        lineHeight: action.lineHeight
       };
     default:
       return state;

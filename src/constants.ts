@@ -49,6 +49,20 @@ export const DEFAULT_FONT_FACES = [
 export const DEFAULT_FONT_SIZE_MULTIPLIER = 1.0;
 export const DEFAULT_TEXT_HIGHLIGHTING = false;
 export const FONT_SIZE_MULTIPLIERS = [1.0, 1.2, 1.4, 1.6];
+export const DEFAULT_LINE_HEIGHT = '1.5';
+export const LINE_HEIGHT_VALUES = [
+  '1',
+  '1.1',
+  '1.2',
+  '1.3',
+  '1.4',
+  DEFAULT_LINE_HEIGHT,
+  '1.6',
+  '1.7',
+  '1.8',
+  '1.9',
+  '2'
+];
 
 export const DEFAULT_WINDOWS_CONTAINER = '.aip-windows';
 

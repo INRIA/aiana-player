@@ -22,7 +22,6 @@ export const StyledSpan = styled.span`
     color: ${(props) => props.theme.fg};
     background: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 
-    line-height: 1.5em;
     font-size: 1.25em;
 
     white-space: nowrap;

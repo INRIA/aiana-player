@@ -26,6 +26,7 @@ interface IStateProps {
   availableThemes: string[];
   currentTheme: string;
   isActive: boolean;
+  lineHeight: string;
 }
 
 interface IDispatchProps {
@@ -50,6 +51,7 @@ class Aiana extends Component<IAiana> {
           style={{
             fontFamily: this.props.fontFace,
             fontSize: `${this.props.fontSizeMultiplier}em`,
+            lineHeight: this.props.lineHeight,
             textTransform: this.props.fontModifierUppercase
               ? 'uppercase'
               : 'none'
@@ -87,7 +89,8 @@ function mapState(state: IAianaState) {
     fontFace: state.preferences.activeFontFace,
     fontModifierUppercase: state.preferences.fontModifierUppercase,
     fontSizeMultiplier: state.preferences.activeFontSizeMultiplier,
-    isActive: state.preferences.isActive
+    isActive: state.preferences.isActive,
+    lineHeight: state.preferences.lineHeight
   };
 }
 
