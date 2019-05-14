@@ -4,8 +4,8 @@ import { addSubtitlesTrack, setSubtitlesText } from '../../actions/subtitles';
 import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from '../../constants';
 import { IAianaState } from '../../reducers';
 import {
-  getLastActiveCueText,
   IRawSubtitlesTrack,
+  getLastActiveCueText,
   isActiveTrack,
   rawSubtitlesTrack
 } from '../../utils/media';

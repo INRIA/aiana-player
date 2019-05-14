@@ -12,6 +12,7 @@ import FontFaceSelector from './FontFaceSelector';
 import FontModifierUppercaseToggle from './FontModifierUppercaseToggle';
 import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
+import LineHeightselector from './LineHeightselector';
 import { PanelToggle } from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
@@ -20,7 +21,6 @@ import TextHighlightingToggle from './TextHighlightingToggle';
 import ThemeSelector from './ThemeSelector';
 import WindowsVisibility from './windows/visibility/WindowsVisibility';
 import WindowsLockToggle from './windows/WindowsLockToggle';
-import LineHeightselector from './LineHeightselector';
 
 const StyledPreferences = styled.div`
   display: inline-block;

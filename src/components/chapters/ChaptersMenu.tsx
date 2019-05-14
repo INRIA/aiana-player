@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withWindow from '../../hocs/with-window';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { IRawChaptersTrack, isActiveTrack } from '../../utils/media';
 import AssistiveText from '../a11y/AssistiveText';
@@ -13,7 +13,7 @@ export interface IMediaChapters {
   chaptersTracks: IRawChaptersTrack[];
 }
 
-interface IProps extends IMediaChapters, InjectedUniqueIdProps {}
+interface IProps extends IMediaChapters, IInjectedUniqueIdProps {}
 
 function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   const activeChaptersTrack = chaptersTracks.find(isActiveTrack);

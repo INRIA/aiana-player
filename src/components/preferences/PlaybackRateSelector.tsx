@@ -2,7 +2,7 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 
 interface IStateProps {
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface IPlaybackRateSelector
-  extends InjectedUniqueIdProps,
+  extends IInjectedUniqueIdProps,
     IStateProps,
     IDispatchProps,
     WithTranslation {}

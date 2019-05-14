@@ -1,7 +1,7 @@
 import React from 'react';
 import { uid } from '../utils/ui';
 
-export interface InjectedUniqueIdProps {
+export interface IInjectedUniqueIdProps {
   uid: string;
 }
 

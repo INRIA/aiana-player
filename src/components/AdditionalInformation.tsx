@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import withWindow from '../hocs/with-window';
-import withUniqueId, { InjectedUniqueIdProps } from '../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../hocs/withUniqueId';
 import { markdownToJSX } from '../utils/strings';
-import AssistiveText from './a11y/AssistiveText';
 import styled from '../utils/styled-components';
+import AssistiveText from './a11y/AssistiveText';
 
-interface IProps extends InjectedUniqueIdProps {
+interface IProps extends IInjectedUniqueIdProps {
   text?: string;
 }
 

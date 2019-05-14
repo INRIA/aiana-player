@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setFontModifierUppercase } from '../../actions/preferences';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import ToggleButton from '../shared/toggle-button';
 
@@ -18,7 +18,7 @@ interface IProps
   extends IStateProps,
     IDispatchProps,
     WithTranslation,
-    InjectedUniqueIdProps {}
+    IInjectedUniqueIdProps {}
 
 class FontModifierUppercaseToggle extends Component<IProps> {
   render() {

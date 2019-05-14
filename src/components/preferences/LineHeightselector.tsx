@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateLineHeight } from '../../actions/preferences';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
@@ -15,7 +15,7 @@ interface IDispatchProps {
   changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface IProps extends IStateProps, IDispatchProps, InjectedUniqueIdProps {}
+interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
 
 function LineHeightSelector(props: IProps) {
   const [t] = useTranslation();

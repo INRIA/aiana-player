@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSubtitlesTrack } from '../../actions/subtitles';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import {
@@ -21,7 +21,7 @@ interface IDispatchProps {
 }
 
 interface ISubtitlesTrackSelector
-  extends InjectedUniqueIdProps,
+  extends IInjectedUniqueIdProps,
     IStateProps,
     IDispatchProps {}
 

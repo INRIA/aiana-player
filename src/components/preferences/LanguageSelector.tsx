@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeCurrentLanguage } from '../../actions/preferences';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
@@ -16,7 +16,7 @@ interface IDispatchProps {
 }
 
 interface ILanguageSelector
-  extends InjectedUniqueIdProps,
+  extends IInjectedUniqueIdProps,
     IStateProps,
     IDispatchProps {}
 

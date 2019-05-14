@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setWindowsLock } from '../../../actions/preferences';
 import { DEFAULT_WINDOWS_LOCK } from '../../../constants';
 import withUniqueId, {
-  InjectedUniqueIdProps
+  IInjectedUniqueIdProps
 } from '../../../hocs/withUniqueId';
 import ToggleButton from '../../shared/toggle-button';
 
@@ -12,7 +12,7 @@ interface IDispatchProps {
   setWindowsLock(locked: boolean): any;
 }
 
-interface IWindowsLockToggle extends IDispatchProps, InjectedUniqueIdProps {}
+interface IWindowsLockToggle extends IDispatchProps, IInjectedUniqueIdProps {}
 
 function WindowsLockToggle(props: IWindowsLockToggle) {
   const [locked, setLocked] = useState(DEFAULT_WINDOWS_LOCK);

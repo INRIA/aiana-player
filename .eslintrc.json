@@ -6,7 +6,7 @@
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint"
   ],
-  "plugins": ["@typescript-eslint", "react"],
+  "plugins": ["@typescript-eslint", "react", "import"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -32,6 +32,13 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-use-before-define": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "sort-imports": [
+      "off",
+      {
+        "ignoreCase": true,
+        "memberSyntaxSortOrder": ["none", "all", "single", "multiple"]
+      }
+    ]
   }
 }

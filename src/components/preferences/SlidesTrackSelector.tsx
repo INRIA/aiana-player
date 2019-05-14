@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { IRawSlidesTrack } from '../../utils/media';
@@ -18,7 +18,7 @@ interface IDispatchProps {
 }
 
 interface ISlidesTrackSelector
-  extends InjectedUniqueIdProps,
+  extends IInjectedUniqueIdProps,
     IStateProps,
     IDispatchProps {}
 

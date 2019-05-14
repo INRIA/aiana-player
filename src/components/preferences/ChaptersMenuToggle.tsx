@@ -2,7 +2,7 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setChaptersMenu } from '../../actions/chapters';
-import withUniqueId, { InjectedUniqueIdProps } from '../../hocs/withUniqueId';
+import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import ToggleButton from '../shared/toggle-button';
 
@@ -17,7 +17,7 @@ interface IDispatchProps {
 interface IChaptersMenuToggle
   extends IStateProps,
     IDispatchProps,
-    InjectedUniqueIdProps,
+    IInjectedUniqueIdProps,
     WithTranslation {}
 
 class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {

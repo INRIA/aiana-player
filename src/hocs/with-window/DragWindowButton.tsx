@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import StyledButton from '../../components/shared/styled-button';
 import StyledSvg from '../../components/shared/styled-svg';
 import MoveIcon from '../../components/svg/Move';

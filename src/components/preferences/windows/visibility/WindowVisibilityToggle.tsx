@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWindowVisibility } from '../../../../actions/preferences';
 import withUniqueId, {
-  InjectedUniqueIdProps
+  IInjectedUniqueIdProps
 } from '../../../../hocs/withUniqueId';
 import { CDispatch } from '../../../../store';
 import ToggleButton from '../../../shared/toggle-button';
@@ -20,7 +20,7 @@ interface IDispatchProps {
 interface IWindowVisibilityToggle
   extends IOwnProps,
     IDispatchProps,
-    InjectedUniqueIdProps {}
+    IInjectedUniqueIdProps {}
 
 function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
   const [t] = useTranslation();

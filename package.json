@@ -85,6 +85,7 @@
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.5",
     "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
