@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   changeVolume,
-  mediaElementMounted,
+  updateMediaElement,
   mediaElementUnounted,
   requestMediaPause,
   requestMediaPlay,
@@ -15,8 +15,9 @@ import {
 } from '../../actions/player';
 import { updateSubtitlesTracksList } from '../../actions/subtitles';
 import withWindow from '../../hocs/with-window';
-import { IChaptersTrack } from '../../reducers/chapters';
 import { IAianaState } from '../../reducers';
+import { IChaptersTrack } from '../../reducers/chapters';
+import { ISource } from '../../reducers/player';
 import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
@@ -25,16 +26,11 @@ import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
 
-export interface ISource {
-  type?: string;
-  src: string;
-}
-
 interface IDispatchProps {
   requestMediaPause: any;
   requestMediaPlay: any;
   changeVolume(volume: number): void;
-  mediaElementMounted(media: HTMLMediaElement): void;
+  updateMediaElement(media: HTMLMediaElement): void;
   mediaElementUnounted(): void;
   startSeeking(): void;
   stopSeeking(): void;
@@ -52,6 +48,7 @@ interface IStateProps {
   currentTime: number;
   isMuted: boolean;
   isSeeking: boolean;
+  mediaElement?: HTMLMediaElement;
   playbackRate: number;
   poster?: string;
   preload: string;
@@ -85,10 +82,20 @@ const StyledVideo = styled.video`
   transform: translate3d(0, 0, 0);
 `;
 
+function isSelectedSource(source: ISource): boolean {
+  return source.selected === true;
+}
+
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();
 
   render() {
+    const selectedSource = this.props.sources.find(isSelectedSource);
+
+    if (!selectedSource) {
+      return null;
+    }
+
     return (
       <StyledDiv>
         <StyledVideo
@@ -104,12 +111,9 @@ class VideoPlayer extends React.Component<IProps> {
           playsInline={true}
           poster={this.props.poster}
           preload={this.props.preload}
+          src={selectedSource.src}
           tabIndex={-1}
         >
-          {this.props.sources.map((source, idx) => (
-            <source key={idx} {...source} />
-          ))}
-
           {this.props.subtitlesSources
             .filter(isDisplayableTrack)
             .map((track, idx) => (
@@ -133,14 +137,24 @@ class VideoPlayer extends React.Component<IProps> {
   }
 
   componentDidMount() {
-    this.props.mediaElementMounted(this.media.current!);
+    this.updateMountedMedia();
   }
 
   componentWillUnmount() {
     this.props.mediaElementUnounted();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: IStateProps) {
+    const currentSource = this.props.sources.find(isSelectedSource);
+    const prevSource = prevProps.sources.find(isSelectedSource);
+
+    if (
+      currentSource &&
+      (!prevSource || (prevSource && currentSource.src !== prevSource.src))
+    ) {
+      this.props.updateMediaElement(this.media.current!);
+    }
+
     if (this.media.current!.playbackRate !== this.props.playbackRate) {
       this.media.current!.playbackRate = this.props.playbackRate;
     }
@@ -153,6 +167,12 @@ class VideoPlayer extends React.Component<IProps> {
       this.media.current!.muted = this.props.isMuted;
     }
   }
+
+  updateMountedMedia = () => {
+    if (this.media.current) {
+      this.props.updateMediaElement(this.media.current);
+    }
+  };
 
   private progressHandler = () => {
     this.props.updateBufferedRanges(this.media.current!.buffered);
@@ -214,6 +234,7 @@ function mapState(state: IAianaState) {
     currentTime: state.player.currentTime,
     isMuted: state.player.isMuted,
     isSeeking: state.player.isSeeking,
+    mediaElement: state.player.mediaElement,
     playbackRate: state.player.playbackRate,
     poster: state.player.poster,
     preload: state.player.preload,
@@ -227,7 +248,7 @@ function mapState(state: IAianaState) {
 
 const mapDispatch = {
   changeVolume,
-  mediaElementMounted,
+  updateMediaElement,
   mediaElementUnounted,
   requestMediaPause,
   requestMediaPlay,

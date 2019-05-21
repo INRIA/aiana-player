@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import {
   ADD_METADATA_TRACK,
-  MEDIA_ELEMENT_MOUNTED,
+  MEDIA_SOURCE_UPDATED,
   MEDIA_ELEMENT_UNMOUNTED,
   MEDIA_PAUSE,
   MEDIA_PLAY,
@@ -20,7 +20,6 @@ import {
 } from '../actions/player';
 import { LOAD_CONFIGURATION } from '../actions/shared';
 import { ITrack } from '../components/video/MediaSubtitlesTrack';
-import { ISource } from '../components/video/VideoPlayer';
 import {
   DEFAULT_MUTED,
   DEFAULT_PLAYBACK_RATE,
@@ -69,6 +68,13 @@ export interface IPlayerState {
   volume: number;
 }
 
+export interface ISource {
+  label: string;
+  type?: string;
+  selected?: boolean;
+  src: string;
+}
+
 const initialState: IPlayerState = {
   additionalInformationTracks: [],
   autoPlay: false,
@@ -104,7 +110,7 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         playerElement: action.playerElement
       };
-    case MEDIA_ELEMENT_MOUNTED:
+    case MEDIA_SOURCE_UPDATED:
       return {
         ...state,
         mediaElement: action.mediaElement
