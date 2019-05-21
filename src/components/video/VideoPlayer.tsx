@@ -82,7 +82,7 @@ const StyledVideo = styled.video`
   transform: translate3d(0, 0, 0);
 `;
 
-function isSelectedSource(source: ISource): boolean {
+export function isSelectedSource(source: ISource): boolean {
   return source.selected === true;
 }
 
@@ -153,6 +153,8 @@ class VideoPlayer extends React.Component<IProps> {
       (!prevSource || (prevSource && currentSource.src !== prevSource.src))
     ) {
       this.props.updateMediaElement(this.media.current!);
+      this.media.current!.currentTime = prevProps.currentTime;
+      this.props.requestMediaPlay(this.media.current!);
     }
 
     if (this.media.current!.playbackRate !== this.props.playbackRate) {

@@ -28,6 +28,7 @@ import {
 } from '../constants';
 import { ExtendedHTMLElement } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
+import { CHANGE_MEDIA_SOURCE } from '../actions/preferences';
 
 export interface IPlayerState {
   additionalInformationText?: string;
@@ -184,6 +185,18 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
         ...state,
         ...action.player
       };
+    case CHANGE_MEDIA_SOURCE: {
+      const sources = state.sources.map((source: ISource) => {
+        return {
+          ...source,
+          selected: source.src === action.mediaSource
+        };
+      });
+      return {
+        ...state,
+        sources
+      };
+    }
     default:
       return state;
   }
