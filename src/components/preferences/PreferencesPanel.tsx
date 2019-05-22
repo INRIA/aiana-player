@@ -21,6 +21,7 @@ import TextHighlightingToggle from './TextHighlightingToggle';
 import ThemeSelector from './ThemeSelector';
 import WindowsVisibility from './windows/visibility/WindowsVisibility';
 import WindowsLockToggle from './windows/WindowsLockToggle';
+import MediaSourceSelector from './MediaSourceSelector';
 
 const StyledPreferences = styled.div`
   display: inline-block;
@@ -106,6 +107,9 @@ function PreferencesPanel() {
         <ul>
           <li className="aip-language">
             <LanguageSelector />
+          </li>
+          <li>
+            <MediaSourceSelector />
           </li>
           <li className="aip-playback-rate">
             <PlaybackRateSelector />

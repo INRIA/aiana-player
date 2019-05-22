@@ -13,6 +13,14 @@ export const UPDATE_FONT_SIZE_MULTIPLIER = 'aiana/UPDATE_FONT_SIZE_MULTIPLIER';
 export const CHANGE_TEXT_HIGHLIGHTING = 'aiana/CHANGE_TEXT_HIGHLIGHTING';
 export const CHANGE_TEXT_UPPERCASE = 'aiana/CHANGE_TEXT_UPPERCASE';
 export const UPDATE_LINE_HEIGHT = 'aiana/CHANGE_LINE_HEIGHT';
+export const CHANGE_MEDIA_SOURCE = 'aiana/CHANGE_MEDIA_SOURCE';
+
+export function changeMediaSource(mediaSource: string): AnyAction {
+  return {
+    mediaSource,
+    type: CHANGE_MEDIA_SOURCE
+  };
+}
 
 export function updateLineHeight(lineHeight: string): AnyAction {
   return {

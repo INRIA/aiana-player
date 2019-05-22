@@ -22,6 +22,7 @@
   "preferences.font_size_multiplier.label": "Taille de la police de caractères",
   "preferences.language.label": "Langue de l'interface",
   "preferences.line_height.label": "Interlignage",
+  "preferences.media_source.label": "Source du média",
   "preferences.show_chapters.label": "Afficher les chapitres",
   "preferences.playbackrate.label": "Vitesse de lecture",
   "preferences.slidestrack.label": "Langue des diapositives",

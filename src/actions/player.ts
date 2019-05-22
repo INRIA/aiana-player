@@ -11,7 +11,7 @@ import { toggleActivity } from './shared';
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
 export const PLAYER_ELEMENT_MOUNTED = 'aiana/PLAYER_ELEMENT_MOUNTED';
-export const MEDIA_ELEMENT_MOUNTED = 'aiana/MEDIA_ELEMENT_MOUNTED';
+export const MEDIA_SOURCE_UPDATED = 'aiana/MEDIA_SOURCE_UPDATED';
 export const MEDIA_ELEMENT_UNMOUNTED = 'aiana/MEDIA_ELEMENT_UNMOUNTED';
 export const MEDIA_REQUEST_MUTE = 'aiana/MEDIA_REQUEST_MUTE';
 export const MEDIA_REQUEST_UNMUTE = 'aiana/MEDIA_REQUEST_UNMUTE';
@@ -118,10 +118,10 @@ export function playerElementMounted(playerElement: HTMLElement): AnyAction {
   };
 }
 
-export function mediaElementMounted(mediaElement: HTMLMediaElement): AnyAction {
+export function updateMediaElement(mediaElement: HTMLMediaElement): AnyAction {
   return {
     mediaElement,
-    type: MEDIA_ELEMENT_MOUNTED
+    type: MEDIA_SOURCE_UPDATED
   };
 }
 
