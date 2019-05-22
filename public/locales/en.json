@@ -64,6 +64,7 @@
   "window_additionalInformation": "additional information window",
   "window_chapters": "chapters window",
   "window_slides": "slides window",
+  "window_timeManagement": "time management window",
   "window_video": "video window",
   "window.close": "Close the $t(window, { \"context\": \"{{ windowId }}\" })",
   "window.drag": "Drag the $t(window, { \"context\": \"{{ windowId }}\" })"
