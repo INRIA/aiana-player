@@ -3,6 +3,14 @@ import { useTranslation } from 'react-i18next';
 import styled from '../../utils/styled-components';
 import AssistiveText from '../a11y/AssistiveText';
 import { uid } from '../../utils/ui';
+import { connect } from 'react-redux';
+import { IAianaState } from '../../reducers';
+import { unitToPercent } from '../../utils/math';
+
+interface IStateProps {
+  currentTime: number;
+  duration: number;
+}
 
 interface IProgressColors {
   done: string;
@@ -57,10 +65,10 @@ function progressColor(
   return colors.inProgress;
 }
 
-function TimeSpent() {
+function TimeSpent(props: IStateProps) {
   const [t] = useTranslation();
   const graphLabelId = `progress-${uid()}`;
-  const progress = 41;
+  const progress = unitToPercent(props.currentTime, props.duration);
 
   return (
     <StyledElement>
@@ -126,4 +134,11 @@ function TimeSpent() {
   );
 }
 
-export default TimeSpent;
+function mapState(state: IAianaState) {
+  return {
+    currentTime: state.player.currentTime,
+    duration: state.player.duration
+  };
+}
+
+export default connect(mapState)(TimeSpent);
