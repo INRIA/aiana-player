@@ -87,11 +87,25 @@ export function isSelectedSource(source: ISource): boolean {
   return source.selected === true;
 }
 
+function getCurrentSource(sources: ISource[]): ISource | void {
+  const selectedSource = sources.find(isSelectedSource);
+
+  if (selectedSource) {
+    return selectedSource;
+  }
+
+  const fallbackSource = sources[0];
+
+  if (fallbackSource) {
+    return fallbackSource;
+  }
+}
+
 class VideoPlayer extends React.Component<IProps> {
   private media = React.createRef<HTMLVideoElement>();
 
   render() {
-    const selectedSource = this.props.sources.find(isSelectedSource);
+    const selectedSource = getCurrentSource(this.props.sources);
 
     if (!selectedSource) {
       return null;
@@ -146,8 +160,8 @@ class VideoPlayer extends React.Component<IProps> {
   }
 
   componentDidUpdate(prevProps: IStateProps) {
-    const currentSource = this.props.sources.find(isSelectedSource);
-    const prevSource = prevProps.sources.find(isSelectedSource);
+    const currentSource = getCurrentSource(this.props.sources);
+    const prevSource = getCurrentSource(prevProps.sources);
 
     if (
       currentSource &&
