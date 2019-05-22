@@ -47,6 +47,7 @@ interface IStateProps {
   chaptersSources: IChaptersTrack[];
   currentTime: number;
   isMuted: boolean;
+  isPlaying: boolean;
   isSeeking: boolean;
   mediaElement?: HTMLMediaElement;
   playbackRate: number;
@@ -154,7 +155,9 @@ class VideoPlayer extends React.Component<IProps> {
     ) {
       this.props.updateMediaElement(this.media.current!);
       this.media.current!.currentTime = prevProps.currentTime;
-      this.props.requestMediaPlay(this.media.current!);
+      if (this.props.isPlaying) {
+        this.props.requestMediaPlay(this.media.current!);
+      }
     }
 
     if (this.media.current!.playbackRate !== this.props.playbackRate) {
@@ -235,6 +238,7 @@ function mapState(state: IAianaState) {
     chaptersSources: state.chapters.sources,
     currentTime: state.player.currentTime,
     isMuted: state.player.isMuted,
+    isPlaying: state.player.isPlaying,
     isSeeking: state.player.isSeeking,
     mediaElement: state.player.mediaElement,
     playbackRate: state.player.playbackRate,
