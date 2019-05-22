@@ -15,10 +15,14 @@ interface IStateProps {
 }
 
 const StyledElement = styled.div`
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 100%;
+
+  padding: 0.25em;
+
+  display: flex;
+
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
