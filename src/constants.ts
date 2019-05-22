@@ -70,6 +70,7 @@ export const WINDOW_ID_CHAPTERS = 'chapters';
 export const WINDOW_ID_ADDITIONAL_INFORMATION = 'additionalInformation';
 export const WINDOW_ID_SLIDES = 'slides';
 export const WINDOW_ID_VIDEO = 'video';
+export const WINDOW_ID_TIME_MANAGEMENT = 'timeManagement';
 
 export const DEFAULT_WINDOWS_LOCK = false;
 export const DEFAULT_WINDOW_VISIBILITY = true;
@@ -85,11 +86,11 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
   },
   chapters: {
     height: 40,
-    left: 65,
+    left: 50,
     locked: DEFAULT_WINDOWS_LOCK,
     top: 25,
     visible: DEFAULT_WINDOW_VISIBILITY,
-    width: 35
+    width: 50
   },
   slides: {
     height: 100,
@@ -97,15 +98,23 @@ export const DEFAULT_UI_WINDOWS: IUIWindows = {
     locked: DEFAULT_WINDOWS_LOCK,
     top: 0,
     visible: DEFAULT_WINDOW_VISIBILITY,
-    width: 65
+    width: 50
+  },
+  timeManagement: {
+    height: 25,
+    left: 50,
+    locked: DEFAULT_WINDOWS_LOCK,
+    top: 0,
+    visible: DEFAULT_WINDOW_VISIBILITY,
+    width: 15
   },
   video: {
     height: 35,
-    left: 65,
+    left: 50,
     locked: DEFAULT_WINDOWS_LOCK,
     top: 65,
     visible: DEFAULT_WINDOW_VISIBILITY,
-    width: 35
+    width: 50
   }
 };
 

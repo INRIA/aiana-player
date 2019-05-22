@@ -52,6 +52,7 @@ export interface IUIWindows {
   additionalInformation: IUIWindow;
   chapters: IUIWindow;
   slides: IUIWindow;
+  timeManagement: IUIWindow;
   video: IUIWindow;
 }
 

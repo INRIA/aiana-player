@@ -5,7 +5,8 @@ import {
   WINDOW_ID_ADDITIONAL_INFORMATION,
   WINDOW_ID_CHAPTERS,
   WINDOW_ID_SLIDES,
-  WINDOW_ID_VIDEO
+  WINDOW_ID_VIDEO,
+  WINDOW_ID_TIME_MANAGEMENT
 } from '../constants';
 import { IAianaState } from '../reducers';
 import { IUIWindow, IUIWindows } from '../reducers/preferences';
@@ -17,6 +18,7 @@ import MediaSubtitles from './Subtitles';
 import TimelineBar from './timeline/Timeline';
 import VideoPlayer from './video/VideoPlayer';
 import VideoPlayerControls from './video/VideoPlayerControls';
+import TimeSpent from './time-management/TimeSpent';
 
 const StyledDiv = styled.div`
   height: 100%;
@@ -100,6 +102,14 @@ function Player(props: IPlayerProps) {
           uiUpdateHandler={updateWindowHandler}
           windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
           {...uiWindows.additionalInformation}
+        />
+
+        <TimeSpent
+          isDraggable={isDraggable}
+          toggleDraggable={setDraggable}
+          uiUpdateHandler={updateWindowHandler}
+          windowId={WINDOW_ID_TIME_MANAGEMENT}
+          {...uiWindows.timeManagement}
         />
 
         <MediaSubtitles />

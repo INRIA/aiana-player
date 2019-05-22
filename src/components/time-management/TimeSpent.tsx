@@ -1,21 +1,17 @@
+import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from '../../utils/styled-components';
-import AssistiveText from '../a11y/AssistiveText';
-import { uid } from '../../utils/ui';
 import { connect } from 'react-redux';
+import withWindow from '../../hocs/with-window';
 import { IAianaState } from '../../reducers';
-import { unitToPercent } from '../../utils/math';
+import { degToRad, unitToPercent, percentageToUnit } from '../../utils/math';
+import styled from '../../utils/styled-components';
+import { uid } from '../../utils/ui';
+import AssistiveText from '../a11y/AssistiveText';
 
 interface IStateProps {
   currentTime: number;
   duration: number;
-}
-
-interface IProgressColors {
-  done: string;
-  inProgress: string;
-  todo: string;
 }
 
 const StyledElement = styled.div`
@@ -34,41 +30,57 @@ const StyledElement = styled.div`
       fill: #111;
     }
 
+    .progress-slice {
+      transition: fill 0.1s;
+
+      &.done {
+        fill: #4c7a34;
+      }
+
+      &.in-progress {
+        fill: #cbe8ba;
+      }
+
+      &.todo {
+        fill: #d6d6d6;
+      }
+    }
+
     .progress-current {
       fill: #fff;
       stroke: #111;
       stroke-linejoin: butt;
       stroke-dasharray: 0.1, 0.1;
       stroke-width: 0.03;
+      transition: 0.1s;
     }
   }
 `;
 
-function progressColor(
+const { PI, cos, floor, sin } = Math;
+
+function progressStatusClassName(
   progress: number,
   thresholdMin: number,
-  thresholdMax: number,
-  colors: IProgressColors = {
-    done: '#4c7a34',
-    inProgress: '#cbe8ba',
-    todo: '#d6d6d6'
-  }
-): string {
+  thresholdMax: number
+): string | null {
   if (progress >= thresholdMax) {
-    return colors.done;
+    return 'done';
   }
 
   if (progress < thresholdMin) {
-    return colors.todo;
+    return 'todo';
   }
 
-  return colors.inProgress;
+  return 'in-progress';
 }
 
-function TimeSpent(props: IStateProps) {
+function TimeSpent({ currentTime, duration }: IStateProps) {
   const [t] = useTranslation();
   const graphLabelId = `progress-${uid()}`;
-  const progress = unitToPercent(props.currentTime, props.duration);
+  const progress = unitToPercent(currentTime, duration);
+  const angleDeg = percentageToUnit(progress, 360);
+  const angle = degToRad(angleDeg);
 
   return (
     <StyledElement>
@@ -80,8 +92,11 @@ function TimeSpent(props: IStateProps) {
               className="progress-border"
             />
             <path
+              className={classNames(
+                'progress-slice',
+                progressStatusClassName(progress, 0, 25)
+              )}
               d="M 0.01 -0.99 A 1 1 0 0 1 0.99 -0.01 L 0.01 -0.01 Z"
-              fill={progressColor(progress, 0, 25)}
               transform="scale(0.99)"
             />
           </g>
@@ -91,8 +106,11 @@ function TimeSpent(props: IStateProps) {
               className="progress-border"
             />
             <path
+              className={classNames(
+                'progress-slice',
+                progressStatusClassName(progress, 25, 50)
+              )}
               d="M 0.99 0.01 A 1 1 0 0 1 0.01 0.99 L 0.01 0.01 Z"
-              fill={progressColor(progress, 25, 50)}
               transform="scale(0.99)"
             />
           </g>
@@ -102,8 +120,11 @@ function TimeSpent(props: IStateProps) {
               className="progress-border"
             />
             <path
+              className={classNames(
+                'progress-slice',
+                progressStatusClassName(progress, 50, 75)
+              )}
               d="M -0.01 0.99 A 1 1 0 0 1 -0.99 0.01 L -0.01 0.01 Z"
-              fill={progressColor(progress, 50, 75)}
               transform="scale(0.99)"
             />
           </g>
@@ -113,22 +134,26 @@ function TimeSpent(props: IStateProps) {
               className="progress-border"
             />
             <path
+              className={classNames(
+                'progress-slice',
+                progressStatusClassName(progress, 75, 100)
+              )}
               d="M -0.99 -0.01 A 1 1 0 0 1 -0.01 -0.99 L -0.01 -0.01 Z"
-              fill={progressColor(progress, 75, 100)}
               transform="scale(0.99)"
             />
           </g>
         </g>
-        <g className="progress-current">
-          <path
-            d="M 1 0 A 1 1 0 0 1 -0.866025403784439 0.5 L 0 0 Z"
-            transform="rotate(-90) scale(0.8)"
-          />
-        </g>
+        <path
+          className="progress-current"
+          d={`M 1 0 A 1 1 0 ${Number(angle > PI)} 1 ${cos(angle)} ${sin(
+            angle
+          )} L 0 0 Z`}
+          transform="rotate(-90) scale(0.8)"
+        />
       </svg>
 
       <AssistiveText id={graphLabelId}>
-        {t('progression.sequence_progress', { progress })}
+        {t('progression.sequence_progress', { progress: floor(progress) })}
       </AssistiveText>
     </StyledElement>
   );
@@ -141,4 +166,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(TimeSpent);
+export default connect(mapState)(withWindow(TimeSpent));

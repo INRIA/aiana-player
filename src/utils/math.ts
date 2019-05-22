@@ -34,3 +34,12 @@ export function percentageToUnit(
 ): number {
   return (percentage * unitTotal) / 100;
 }
+
+/**
+ * Converts an angle expressed in degrees to radians.
+ *
+ * @param angle The angle expressed in degrees.
+ */
+export function degToRad(angle: number): number {
+  return (angle * Math.PI) / 180;
+}
