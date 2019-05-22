@@ -35,6 +35,7 @@
   "preferences.windows_locked.label": "Verrouiller les fenêtres",
   "preferences.windows_visibility.title": "Visibilité des fenêtres",
   "preferences.windows_visibility.label": "Afficher la $t(window, { \"context\": \"{{ windowId }}\" })",
+  "progression.sequence_progress": "Progression dans la séquence : {{ progress }}%",
   "resizers.top": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure du haut",
   "resizers.top_right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant le coin en haut à droite",
   "resizers.right": "Redimensionner la $t(window, { \"context\": \"{{ windowId }}\" }) en déplaçant la bordure de droite",
@@ -58,6 +59,7 @@
   "window_additionalInformation": "fenêtre d'informations supplémentaires",
   "window_chapters": "fenêtre des chapitres",
   "window_slides": "fenêtre des diapositives",
+  "window_timeManagement": "fenêtre de gestion du temps",
   "window_video": "fenêtre vidéo",
   "window.close": "Fermer la $t(window, { \"context\": \"{{ windowId }}\" })",
   "window.drag": "Déplacer la $t(window, { \"context\": \"{{ windowId }}\" })"
