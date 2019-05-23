@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
-import { uid } from '../../utils/ui';
+import { uid } from '../../utils/uniqueId';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledSvg from '../shared/styled-svg';
 import SvgSettings from '../svg/Settings';

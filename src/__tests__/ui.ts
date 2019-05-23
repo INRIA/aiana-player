@@ -1,4 +1,5 @@
-import { bounded, uid } from '../utils/ui';
+import { bounded } from '../utils/ui';
+import { uid } from '../utils/uniqueId';
 
 describe('bounding values for ui purpose', () => {
   test('should work with any numeric value', () => {

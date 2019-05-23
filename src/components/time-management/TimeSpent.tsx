@@ -6,7 +6,7 @@ import withWindow from '../../hocs/with-window';
 import { IAianaState } from '../../reducers';
 import { degToRad, unitToPercent, percentageToUnit } from '../../utils/math';
 import styled from '../../utils/styled-components';
-import { uid } from '../../utils/ui';
+import { uid } from '../../utils/uniqueId';
 import AssistiveText from '../a11y/AssistiveText';
 
 interface IStateProps {
