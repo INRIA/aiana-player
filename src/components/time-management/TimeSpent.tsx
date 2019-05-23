@@ -147,6 +147,10 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
             />
           </g>
         </g>
+        {/*
+          `large-arc-flag` should be set to `1` when angle is greater than PI.
+          If not set, the arc will use the shortest possible path, i.e. `PI - angle`.
+        */}
         <path
           className="progress-current"
           d={`M 1 0 A 1 1 0 ${Number(angle > PI)} 1 ${cos(angle)} ${sin(
