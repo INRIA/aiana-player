@@ -35,14 +35,24 @@ export function markdownToJSXForReadability(md: string): ReactElement<any> {
   return unsafeJSX(colored)(md);
 }
 
+const ELEMENT_NODE = 1;
+const TEXT_NODE = 3;
+
+/**
+ * Extracts all text nodes from a given child node and returns them in an array.
+ * Node types are defined in the DOM Spec - Interface Node (https://dom.spec.whatwg.org/#interface-node).
+ * Node 1
+ *
+ * @param el The child node to parse
+ */
 function getTextNodes(el: ChildNode): ChildNode[] {
   return [...el.childNodes].reduce((acc, curNode) => {
-    if (curNode.nodeType === 1 && curNode.hasChildNodes()) {
+    if (curNode.nodeType === ELEMENT_NODE && curNode.hasChildNodes()) {
       return (acc as any).concat(getTextNodes(curNode));
     }
 
     if (
-      curNode.nodeType === 3 &&
+      curNode.nodeType === TEXT_NODE &&
       curNode.textContent &&
       curNode.textContent.trim().length > 0
     ) {
