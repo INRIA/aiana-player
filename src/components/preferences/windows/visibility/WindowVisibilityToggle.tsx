@@ -10,7 +10,7 @@ import ToggleButton from '../../../shared/toggle-button';
 
 interface IOwnProps {
   visible: boolean;
-  windowId: string;
+  windowName: string;
 }
 
 interface IDispatchProps {
@@ -29,7 +29,7 @@ function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
     <React.Fragment>
       <span id={props.uid}>
         {t('preferences.windows_visibility.label', {
-          windowId: props.windowId
+          windowName: props.windowName
         })}
       </span>
       <ToggleButton
@@ -44,7 +44,7 @@ function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
 function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
-      dispatch(setWindowVisibility(ownProps.windowId, !ownProps.visible));
+      dispatch(setWindowVisibility(ownProps.windowName, !ownProps.visible));
     }
   };
 }

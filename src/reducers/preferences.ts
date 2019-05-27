@@ -43,17 +43,10 @@ export interface IUIWindow {
   height: number;
   left: number;
   locked: boolean;
+  name: string;
   top: number;
   visible: boolean;
   width: number;
-}
-
-export interface IUIWindows {
-  additionalInformation: IUIWindow;
-  chapters: IUIWindow;
-  slides: IUIWindow;
-  timeManagement: IUIWindow;
-  video: IUIWindow;
 }
 
 export interface IPreferencesState {
@@ -80,7 +73,7 @@ export interface IPreferencesState {
   seekStepMultiplier: number;
   textHighlighting: boolean;
   themes: string[];
-  uiWindows: IUIWindows;
+  uiWindows: IUIWindow[];
   volumeStep: number;
   volumeStepMultiplier: number;
 }
@@ -134,49 +127,34 @@ const preferences: Reducer = (state = initialState, action) => {
     case CHANGE_UI_WINDOWS:
       return {
         ...state,
-        uiWindows: {
-          ...state.uiWindows,
-          [action.windowId]: {
-            ...state.uiWindows[action.windowId],
-            ...action.window
+        uiWindows: state.uiWindows.map((window: IUIWindow) => {
+          if (window.name === action.windowName) {
+            return {
+              ...window,
+              ...action.window
+            };
           }
-        }
+
+          return window;
+        })
       };
-    case WINDOWS_LOCK: {
-      // FIXME: array please
+    case WINDOWS_LOCK:
       return {
         ...state,
-        uiWindows: Object.keys(state.uiWindows).reduce(
-          (acc, windowId) => ({
-            ...acc,
-            [windowId]: {
-              ...state.uiWindows[windowId],
-              locked: action.locked
-            }
-          }),
-          {}
-        )
+        uiWindows: state.uiWindows.map((window: IUIWindow) => ({
+          ...window,
+          locked: action.locked
+        }))
       };
-    }
-    case CHANGE_WINDOW_VISIBILITY: {
-      // FIXME: array please, this is much less readable than a simple array...
+    case CHANGE_WINDOW_VISIBILITY:
       return {
         ...state,
-        uiWindows: Object.keys(state.uiWindows).reduce(
-          (acc, windowId) => ({
-            ...acc,
-            [windowId]: {
-              ...state.uiWindows[windowId],
-              visible:
-                action.windowId === windowId
-                  ? action.visible
-                  : !!state.uiWindows[windowId].visible
-            }
-          }),
-          {}
-        )
+        uiWindows: state.uiWindows.map((window: IUIWindow) => ({
+          ...window,
+          visible:
+            window.name === action.windowName ? action.visible : window.visible
+        }))
       };
-    }
     case UPDATE_ACTIVE_FONT_FACE:
       return {
         ...state,

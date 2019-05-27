@@ -2,27 +2,25 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../../../reducers';
-import { IUIWindows } from '../../../../reducers/preferences';
+import { IUIWindow } from '../../../../reducers/preferences';
 import WindowVisibilityToggle from './WindowVisibilityToggle';
 
 interface IStateProps {
-  windows: IUIWindows;
+  windows: IUIWindow[];
 }
 
 function WindowsVisibility(props: IStateProps) {
   const [t] = useTranslation();
 
-  // FIXME: windows should be an array
-
   return (
     <div>
       <div>{t('preferences.windows_visibility.title')}</div>
       <ul>
-        {Object.keys(props.windows).map((windowId) => (
-          <li key={windowId}>
+        {props.windows.map((window: IUIWindow) => (
+          <li key={window.name}>
             <WindowVisibilityToggle
-              windowId={windowId}
-              visible={props.windows[windowId].visible}
+              windowName={window.name}
+              visible={window.visible}
             />
           </li>
         ))}

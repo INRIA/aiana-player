@@ -31,10 +31,10 @@ export interface IWrappedComponentProps {
   locked: boolean;
   minimumHeight?: number;
   minimumWidth?: number;
+  name: string;
   top: number;
   visible: boolean;
   width: number;
-  windowId: string;
   toggleDraggable(isDraggable: boolean): void;
   uiUpdateHandler(name: string, window: Partial<IUIWindow>): void;
   [prop: string]: any;
@@ -142,10 +142,10 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
                 dragStart={this.dragStartHandler}
                 dragUpdate={this.dragUpdateHandler}
                 keyUpdate={this.moveKeyDownHandler}
-                windowId={this.props.windowId}
+                windowName={this.props.name}
               />
               <CloseWindowButton
-                windowId={this.props.windowId}
+                windowName={this.props.name}
                 activable={this.props.isDraggable}
               />
             </div>
@@ -157,7 +157,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               resizeStart={this.resizeStartHandler}
               resizeUpdate={this.resizeUpdateHandler}
               resizeEnd={this.resizeEndHandler}
-              windowId={this.props.windowId}
+              windowName={this.props.name}
             />
           )}
           <div className="aip-windowed">
@@ -177,7 +177,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       // Only dispatch when window got resize
       if (Object.keys(resizer).length > 0) {
-        this.props.uiUpdateHandler(this.props.windowId, resizer);
+        this.props.uiUpdateHandler(this.props.name, resizer);
       }
     };
 
@@ -466,7 +466,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
     };
 
     private resizeEndHandler = () => {
-      this.props.uiUpdateHandler(this.props.windowId, {
+      this.props.uiUpdateHandler(this.props.name, {
         height: this.props.height + this.state.heightDiff,
         left:
           this.props.left +
@@ -485,33 +485,33 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       switch (key) {
         case ARROW_RIGHT_KEY:
-          this.props.uiUpdateHandler(this.props.windowId, {
+          this.props.uiUpdateHandler(this.props.name, {
             left: this.boundedLeftPosition(this.props.left + DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_UP_KEY:
-          this.props.uiUpdateHandler(this.props.windowId, {
+          this.props.uiUpdateHandler(this.props.name, {
             top: this.boundedTopPosition(this.props.top - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_LEFT_KEY:
-          this.props.uiUpdateHandler(this.props.windowId, {
+          this.props.uiUpdateHandler(this.props.name, {
             left: this.boundedLeftPosition(this.props.left - DEFAULT_MOVE_STEP)
           });
           break;
         case ARROW_DOWN_KEY:
-          this.props.uiUpdateHandler(this.props.windowId, {
+          this.props.uiUpdateHandler(this.props.name, {
             top: this.boundedTopPosition(this.props.top + DEFAULT_MOVE_STEP)
           });
           break;
         case HOME_KEY:
-          this.props.uiUpdateHandler(this.props.windowId, {
+          this.props.uiUpdateHandler(this.props.name, {
             left: this.boundedLeftPosition(0),
             top: this.boundedTopPosition(0)
           });
           break;
         case END_KEY:
-          this.props.uiUpdateHandler(this.props.windowId, {
+          this.props.uiUpdateHandler(this.props.name, {
             left: this.boundedLeftPosition(100),
             top: this.boundedTopPosition(100)
           });
@@ -535,7 +535,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
      * Syncs properties and resets the diffs.
      */
     private dragEndHandler = () => {
-      this.props.uiUpdateHandler(this.props.windowId, {
+      this.props.uiUpdateHandler(this.props.name, {
         left: unitToPercent(
           this.elementRef.current!.offsetLeft + this.state.leftDiff,
           this.containerWidth

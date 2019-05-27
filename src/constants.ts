@@ -1,4 +1,4 @@
-import { IUIWindows } from './reducers/preferences';
+import { IUIWindow } from './reducers/preferences';
 
 export const SECONDS_PER_HOUR = 3600;
 export const MINUTES_PER_HOUR = 60;
@@ -75,48 +75,53 @@ export const WINDOW_ID_TIME_MANAGEMENT = 'timeManagement';
 export const DEFAULT_WINDOWS_LOCK = false;
 export const DEFAULT_WINDOW_VISIBILITY = true;
 
-export const DEFAULT_UI_WINDOWS: IUIWindows = {
-  additionalInformation: {
+export const DEFAULT_UI_WINDOWS: IUIWindow[] = [
+  {
     height: 25,
     left: 65,
     locked: DEFAULT_WINDOWS_LOCK,
+    name: 'additionalInformation',
     top: 0,
     visible: DEFAULT_WINDOW_VISIBILITY,
     width: 35
   },
-  chapters: {
+  {
     height: 40,
     left: 50,
     locked: DEFAULT_WINDOWS_LOCK,
+    name: 'chapters',
     top: 25,
     visible: DEFAULT_WINDOW_VISIBILITY,
     width: 50
   },
-  slides: {
+  {
     height: 100,
     left: 0,
     locked: DEFAULT_WINDOWS_LOCK,
+    name: 'slides',
     top: 0,
     visible: DEFAULT_WINDOW_VISIBILITY,
     width: 50
   },
-  timeManagement: {
+  {
     height: 25,
     left: 50,
     locked: DEFAULT_WINDOWS_LOCK,
+    name: 'timeManagement',
     top: 0,
     visible: DEFAULT_WINDOW_VISIBILITY,
     width: 15
   },
-  video: {
+  {
     height: 35,
     left: 50,
     locked: DEFAULT_WINDOWS_LOCK,
+    name: 'video',
     top: 65,
     visible: DEFAULT_WINDOW_VISIBILITY,
     width: 50
   }
-};
+];
 
 export const DEFAULT_MOVE_STEP = 5;
 export const DEFAULT_FONT_MODIFIER_UPPERCASE = false;

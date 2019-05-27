@@ -49,13 +49,13 @@ function loadConfiguration(configuration: any): AnyAction {
 }
 
 export function updateUIWindow(
-  windowId: string,
+  windowName: string,
   window: Partial<IUIWindow>
 ): AnyAction {
   return {
     type: CHANGE_UI_WINDOWS,
     window,
-    windowId
+    windowName
   };
 }
 

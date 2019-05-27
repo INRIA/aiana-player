@@ -58,13 +58,13 @@ export function updateActiveFontFace(fontFace: string): AnyAction {
 }
 
 export function setWindowVisibility(
-  windowId: string,
+  windowName: string,
   visible: boolean
 ): AnyAction {
   return {
     type: CHANGE_WINDOW_VISIBILITY,
     visible,
-    windowId
+    windowName
   };
 }
 

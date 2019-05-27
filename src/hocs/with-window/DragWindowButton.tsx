@@ -9,7 +9,7 @@ import styled from '../../utils/styled-components';
 
 interface IProps {
   isDraggable: boolean;
-  windowId: string;
+  windowName: string;
   dragEnd(): void;
   dragStart(): void;
   dragUpdate(deltaX: number, deltaY: number): void;
@@ -60,7 +60,7 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
     return (
       <StyledDragWindowButton
         aria-label={this.props.t('window.drag', {
-          windowId: this.props.windowId
+          windowName: this.props.windowName
         })}
         className={classes}
         ref={this.controlsRef}

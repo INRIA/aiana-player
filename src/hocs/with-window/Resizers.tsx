@@ -16,7 +16,7 @@ import styled from '../../utils/styled-components';
 import ResizeButton from './ResizeButton';
 
 interface IProps {
-  windowId: string;
+  windowName: string;
   keyUpdate(key: string, handlePosition: Direction[]): void;
   resizeEnd(): void;
   resizeStart(): void;
@@ -51,7 +51,7 @@ class Resizers extends React.Component<IResizers> {
       <StyledResizers>
         <ResizeButton
           label={this.props.t('resizers.top', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_TOP]}
           keyDownHandler={this.props.keyUpdate}
@@ -61,7 +61,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_right', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_TOP, DIRECTION_RIGHT]}
           keyDownHandler={this.props.keyUpdate}
@@ -72,7 +72,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.right', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_RIGHT]}
           keyDownHandler={this.props.keyUpdate}
@@ -82,7 +82,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_right', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_BOTTOM, DIRECTION_RIGHT]}
           keyDownHandler={this.props.keyUpdate}
@@ -93,7 +93,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_BOTTOM]}
           keyDownHandler={this.props.keyUpdate}
@@ -103,7 +103,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_left', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_BOTTOM, DIRECTION_LEFT]}
           keyDownHandler={this.props.keyUpdate}
@@ -114,7 +114,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.left', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_LEFT]}
           keyDownHandler={this.props.keyUpdate}
@@ -124,7 +124,7 @@ class Resizers extends React.Component<IResizers> {
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_left', {
-            windowId: this.props.windowId
+            windowName: this.props.windowName
           })}
           handlePositions={[DIRECTION_TOP, DIRECTION_LEFT]}
           keyDownHandler={this.props.keyUpdate}

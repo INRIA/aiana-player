@@ -9,7 +9,7 @@ import {
   WINDOW_ID_TIME_MANAGEMENT
 } from '../constants';
 import { IAianaState } from '../reducers';
-import { IUIWindow, IUIWindows } from '../reducers/preferences';
+import { IUIWindow } from '../reducers/preferences';
 import styled from '../utils/styled-components';
 import AdditionalInformation from './AdditionalInformation';
 import ChaptersMenu from './chapters/ChaptersMenu';
@@ -47,7 +47,7 @@ const StyledDiv = styled.div`
 interface IStateProps {
   additionalInformationText?: string;
   chaptersMenu: boolean;
-  uiWindows: IUIWindows;
+  uiWindows: IUIWindow[];
 }
 
 interface IDispatchProps {
@@ -55,6 +55,14 @@ interface IDispatchProps {
 }
 
 interface IPlayerProps extends IStateProps, IDispatchProps {}
+
+type Filter = (window: IUIWindow) => boolean;
+
+function byName(name: string): Filter {
+  return (window: IUIWindow) => {
+    return window.name === name;
+  };
+}
 
 function Player(props: IPlayerProps) {
   const [isDraggable, setDraggable] = useState(true);
@@ -66,51 +74,64 @@ function Player(props: IPlayerProps) {
     updateWindowHandler
   } = props;
 
+  const chaptersWindow = uiWindows.find(byName(WINDOW_ID_CHAPTERS));
+  const additionalInformationWindow = uiWindows.find(
+    byName(WINDOW_ID_ADDITIONAL_INFORMATION)
+  );
+  const slidesWindow = uiWindows.find(byName(WINDOW_ID_SLIDES));
+  const timeManagementWindow = uiWindows.find(
+    byName(WINDOW_ID_TIME_MANAGEMENT)
+  );
+  const videoWindow = uiWindows.find(byName(WINDOW_ID_VIDEO));
+
   return (
     <StyledDiv>
       <div className="aip-windows">
-        {chaptersMenu && (
+        {chaptersWindow && chaptersMenu && (
           <ChaptersMenu
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
             uiUpdateHandler={updateWindowHandler}
-            windowId={WINDOW_ID_CHAPTERS}
-            {...uiWindows.chapters}
+            {...chaptersWindow}
           />
         )}
 
-        <VideoPlayer
-          isDraggable={isDraggable}
-          toggleDraggable={setDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_VIDEO}
-          {...uiWindows.video}
-        />
+        {videoWindow && (
+          <VideoPlayer
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            {...videoWindow}
+          />
+        )}
 
-        <Slides
-          isDraggable={isDraggable}
-          toggleDraggable={setDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_SLIDES}
-          {...uiWindows.slides}
-        />
+        {slidesWindow && (
+          <Slides
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            {...slidesWindow}
+          />
+        )}
 
-        <AdditionalInformation
-          isDraggable={isDraggable}
-          text={additionalInformationText}
-          toggleDraggable={setDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_ADDITIONAL_INFORMATION}
-          {...uiWindows.additionalInformation}
-        />
+        {additionalInformationWindow && (
+          <AdditionalInformation
+            isDraggable={isDraggable}
+            text={additionalInformationText}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            {...additionalInformationWindow}
+          />
+        )}
 
-        <TimeSpent
-          isDraggable={isDraggable}
-          toggleDraggable={setDraggable}
-          uiUpdateHandler={updateWindowHandler}
-          windowId={WINDOW_ID_TIME_MANAGEMENT}
-          {...uiWindows.timeManagement}
-        />
+        {timeManagementWindow && (
+          <TimeSpent
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWindowHandler}
+            {...timeManagementWindow}
+          />
+        )}
 
         <MediaSubtitles />
       </div>

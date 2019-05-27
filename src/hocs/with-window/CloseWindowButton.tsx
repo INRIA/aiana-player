@@ -11,7 +11,7 @@ import styled from '../../utils/styled-components';
 
 interface IOwnProps {
   activable: boolean;
-  windowId: string;
+  windowName: string;
 }
 
 interface IDispatchProps {
@@ -49,7 +49,7 @@ function CloseWindowButton(props: IProps) {
   return (
     <StyledCloseWindowButton
       aria-label={t('window.close', {
-        windowId: props.windowId
+        windowName: props.windowName
       })}
       className={classes}
       onClick={props.clickHandler}
@@ -63,7 +63,7 @@ function CloseWindowButton(props: IProps) {
 function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
-      dispatch(setWindowVisibility(ownProps.windowId, false));
+      dispatch(setWindowVisibility(ownProps.windowName, false));
     }
   };
 }
