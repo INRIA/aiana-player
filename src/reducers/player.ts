@@ -24,7 +24,8 @@ import {
   DEFAULT_MUTED,
   DEFAULT_PLAYBACK_RATE,
   DEFAULT_PRELOAD,
-  DEFAULT_VOLUME
+  DEFAULT_VOLUME,
+  DEFAULT_AUTOPLAY
 } from '../constants';
 import { ExtendedHTMLElement } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
@@ -78,7 +79,7 @@ export interface ISource {
 
 const initialState: IPlayerState = {
   additionalInformationTracks: [],
-  autoPlay: false,
+  autoPlay: DEFAULT_AUTOPLAY,
   bufferedRanges: [],
   currentTime: 0,
   duration: 0,

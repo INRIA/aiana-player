@@ -25,6 +25,7 @@ export const VOLUME_MAXIMUM = 1;
 
 export const DEFAULT_CONFIGURATION_PATH = './configuration.json';
 export const DEFAULT_AVAILABLE_LANGUAGES = ['en', 'fr'];
+export const DEFAULT_AUTOPLAY = false;
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_MENU_ENABLED = true;
 export const DEFAULT_MUTED = false;
