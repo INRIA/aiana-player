@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { changeCurrentLanguage } from '../../actions/preferences';
+import { changeLanguage } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  UILanguage: string;
+  language: string;
   languages: string[];
 }
 
@@ -25,11 +25,11 @@ function LanguageSelector(props: ILanguageSelector) {
 
   return (
     <React.Fragment>
-      <span id={props.uid}>{t('preferences.language.label')}</span>
+      <span id={props.uid}>{t('preferences.UILanguage.label')}</span>
       <select
         aria-labelledby={props.uid}
         onChange={props.changeHandler}
-        value={props.UILanguage}
+        value={props.language}
       >
         {props.languages.map((language) => (
           <option key={language} value={language}>
@@ -43,7 +43,7 @@ function LanguageSelector(props: ILanguageSelector) {
 
 function mapState(state: IAianaState) {
   return {
-    UILanguage: state.preferences.language,
+    language: state.preferences.language,
     languages: state.preferences.languages
   };
 }
@@ -51,7 +51,7 @@ function mapState(state: IAianaState) {
 function mapDispatch(dispatch: CDispatch) {
   return {
     changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(changeCurrentLanguage(evt.currentTarget.value));
+      dispatch(changeLanguage(evt.currentTarget.value));
     }
   };
 }

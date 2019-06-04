@@ -9,6 +9,7 @@ export default styled.button`
   border: none;
   border-radius: 0;
   background-color: transparent;
+  font-family: inherit;
   font-size: 100%;
   color: inherit;
   text-align: inherit;

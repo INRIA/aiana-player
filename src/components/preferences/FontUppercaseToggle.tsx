@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setFontModifierUppercase } from '../../actions/preferences';
+import { setFontUppercase } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import ToggleButton from '../shared/toggle-button';
 
 interface IStateProps {
-  textUppercase: boolean;
+  fontUppercase: boolean;
 }
 
 interface IDispatchProps {
-  setFontModifierUppercase(textUppercase: boolean): void;
+  setFontUppercase(fontUppercase: boolean): void;
 }
 
 interface IProps
@@ -20,15 +20,15 @@ interface IProps
     WithTranslation,
     IInjectedUniqueIdProps {}
 
-class FontModifierUppercaseToggle extends Component<IProps> {
+class FontUppercaseToggle extends Component<IProps> {
   render() {
     return (
       <React.Fragment>
         <span id={this.props.uid}>
-          {this.props.t('preferences.text_uppercase.label')}
+          {this.props.t('preferences.font_uppercase.label')}
         </span>
         <ToggleButton
-          isOn={this.props.textUppercase}
+          isOn={this.props.fontUppercase}
           labelledBy={this.props.uid}
           onClick={this.clickHandler}
         />
@@ -37,21 +37,21 @@ class FontModifierUppercaseToggle extends Component<IProps> {
   }
 
   clickHandler = () => {
-    this.props.setFontModifierUppercase(!this.props.textUppercase);
+    this.props.setFontUppercase(!this.props.fontUppercase);
   };
 }
 
 function mapState(state: IAianaState) {
   return {
-    textUppercase: state.preferences.fontModifierUppercase
+    fontUppercase: state.preferences.fontUppercase
   };
 }
 
 const mapDispatch: IDispatchProps = {
-  setFontModifierUppercase: setFontModifierUppercase
+  setFontUppercase
 };
 
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(withUniqueId(FontModifierUppercaseToggle)));
+)(withTranslation()(withUniqueId(FontUppercaseToggle)));

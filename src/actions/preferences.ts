@@ -28,9 +28,9 @@ export function updateLineHeight(lineHeight: string): AnyAction {
   };
 }
 
-export function setFontModifierUppercase(uppercase: boolean): AnyAction {
+export function setFontUppercase(fontUppercase: boolean): AnyAction {
   return {
-    fontModifierUppercase: uppercase,
+    fontUppercase,
     type: CHANGE_TEXT_UPPERCASE
   };
 }
@@ -42,16 +42,18 @@ export function setTextHighlighting(textHighlighting: boolean): AnyAction {
   };
 }
 
-export function updateActiveFontSizeMultiplier(multiplier: number): AnyAction {
+export function updateFontSizeMultiplier(
+  fontSizeMultiplier: number
+): AnyAction {
   return {
-    activeFontSizeMultiplier: multiplier,
+    fontSizeMultiplier,
     type: UPDATE_FONT_SIZE_MULTIPLIER
   };
 }
 
 export function updateActiveFontFace(fontFace: string): AnyAction {
   return {
-    activeFontFace: fontFace,
+    fontFace,
     type: UPDATE_ACTIVE_FONT_FACE
   };
 }
@@ -74,23 +76,23 @@ export function setWindowsLock(locked: boolean): AnyAction {
   };
 }
 
-export function changeCurrentLanguage(language: string): ThunkResult<void> {
+export function changeLanguage(language: string): ThunkResult<void> {
   return async (dispatch: CDispatch) => {
     await i18n.changeLanguage(language);
-    dispatch(changeLanguage(language));
+    dispatch(changeUILanguage(language));
   };
 }
 
-function changeLanguage(language: string): AnyAction {
+function changeUILanguage(language: string): AnyAction {
   return {
     language,
     type: CHANGE_LANGUAGE
   };
 }
 
-export function changeCurrentTheme(themeName: string): AnyAction {
+export function changeActiveTheme(theme: string): AnyAction {
   return {
-    currentTheme: themeName,
+    theme,
     type: CHANGE_THEME
   };
 }

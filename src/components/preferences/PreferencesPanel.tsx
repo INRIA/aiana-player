@@ -9,10 +9,10 @@ import SvgSettings from '../svg/Settings';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import FontFaceSelector from './FontFaceSelector';
-import FontModifierUppercaseToggle from './FontModifierUppercaseToggle';
+import FontUppercaseToggle from './FontUppercaseToggle';
 import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
-import LineHeightselector from './LineHeightselector';
+import LineHeightSelector from './LineHeightSelector';
 import { PanelToggle } from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
@@ -124,10 +124,10 @@ function PreferencesPanel() {
             <FontSizeSelector />
           </li>
           <li>
-            <LineHeightselector />
+            <LineHeightSelector />
           </li>
           <li>
-            <FontModifierUppercaseToggle />
+            <FontUppercaseToggle />
           </li>
           <li>
             <TextHighlightingToggle />

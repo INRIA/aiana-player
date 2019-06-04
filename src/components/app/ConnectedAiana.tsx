@@ -19,11 +19,11 @@ import StyledAiana from './StyledAiana';
 
 interface IStateProps {
   fontFace: string;
-  fontModifierUppercase: boolean;
+  fontUppercase: boolean;
   fontSizeMultiplier: number;
-  availableThemes: string[];
-  currentTheme: string;
   lineHeight: string;
+  theme: string;
+  themes: string[];
 }
 
 interface IDispatchProps {
@@ -39,7 +39,7 @@ class Aiana extends Component<IAiana> {
 
   render() {
     return (
-      <ThemeProvider theme={themes[this.props.currentTheme]}>
+      <ThemeProvider theme={themes[this.props.theme]}>
         <StyledAiana
           className="aip-app"
           ref={this.fullscreenRef}
@@ -47,11 +47,10 @@ class Aiana extends Component<IAiana> {
             fontFamily: this.props.fontFace,
             fontSize: `${this.props.fontSizeMultiplier}em`,
             lineHeight: this.props.lineHeight,
-            textTransform: this.props.fontModifierUppercase
-              ? 'uppercase'
-              : 'none'
+            textTransform: this.props.fontUppercase ? 'uppercase' : 'none'
           }}
         >
+          {/* TODO: proper loader */}
           <Suspense fallback={<div>I am loading</div>}>
             <SvgFilters />
             <Player />
@@ -78,12 +77,12 @@ class Aiana extends Component<IAiana> {
 
 function mapState(state: IAianaState) {
   return {
-    availableThemes: state.preferences.themes,
-    currentTheme: state.preferences.currentTheme,
-    fontFace: state.preferences.activeFontFace,
-    fontModifierUppercase: state.preferences.fontModifierUppercase,
-    fontSizeMultiplier: state.preferences.activeFontSizeMultiplier,
-    lineHeight: state.preferences.lineHeight
+    fontFace: state.preferences.fontFace,
+    fontSizeMultiplier: state.preferences.fontSizeMultiplier,
+    fontUppercase: state.preferences.fontUppercase,
+    lineHeight: state.preferences.lineHeight,
+    theme: state.preferences.theme,
+    themes: state.preferences.themes
   };
 }
 

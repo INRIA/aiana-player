@@ -7,7 +7,7 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  activeFontFace: string;
+  fontFace: string;
   fontFaces: string[];
 }
 
@@ -26,7 +26,7 @@ function FontFaceSelector(props: IProps) {
       <select
         aria-labelledby={props.uid}
         onChange={props.changeHandler}
-        value={props.activeFontFace}
+        value={props.fontFace}
       >
         {props.fontFaces.map((fontFace) => (
           <option key={fontFace} value={fontFace}>
@@ -40,7 +40,7 @@ function FontFaceSelector(props: IProps) {
 
 function mapState(state: IAianaState) {
   return {
-    activeFontFace: state.preferences.activeFontFace,
+    fontFace: state.preferences.fontFace,
     fontFaces: state.preferences.fontFaces
   };
 }

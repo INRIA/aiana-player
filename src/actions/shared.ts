@@ -5,7 +5,7 @@ import { DEFAULT_CONFIGURATION_PATH } from '../constants';
 import { IUIWindow } from '../reducers/preferences';
 import { CDispatch } from '../store';
 import { ThunkResult } from '../types';
-import { changeCurrentLanguage } from './preferences';
+import { changeLanguage } from './preferences';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_UI_WINDOWS = 'aiana/CHANGE_UI_WINDOWS';
@@ -28,7 +28,7 @@ export function handleFetchInitialData(): ThunkResult<void> {
       );
     } else {
       axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
-        dispatch(changeCurrentLanguage(data.preferences.language));
+        dispatch(changeLanguage(data.preferences.language));
         dispatch(loadConfiguration(data));
       });
     }

@@ -14,7 +14,7 @@ import { CHANGE_UI_WINDOWS, LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
-  DEFAULT_ACTIVE_FONT_FACE,
+  DEFAULT_FONT_FACE,
   DEFAULT_AVAILABLE_LANGUAGES,
   DEFAULT_FONT_FACES,
   DEFAULT_FONT_MODIFIER_UPPERCASE,
@@ -44,11 +44,10 @@ export interface IUIWindow {
 }
 
 export interface IPreferencesState {
-  activeFontFace: string;
-  activeFontSizeMultiplier: number;
-  currentTheme: string;
+  fontFace: string;
   fontFaces: string[];
-  fontModifierUppercase: boolean;
+  fontUppercase: boolean;
+  fontSizeMultiplier: number;
   fontSizeMultipliers: number[];
   language: string;
   languages: string[];
@@ -64,6 +63,7 @@ export interface IPreferencesState {
   seekStep: number;
   seekStepMultiplier: number;
   textHighlighting: boolean;
+  theme: string;
   themes: string[];
   uiWindows: IUIWindow[];
   volumeStep: number;
@@ -71,12 +71,11 @@ export interface IPreferencesState {
 }
 
 const initialState: IPreferencesState = {
-  activeFontFace: DEFAULT_ACTIVE_FONT_FACE,
-  activeFontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
-  currentTheme: DEFAULT_THEME,
+  fontFace: DEFAULT_FONT_FACE,
   fontFaces: DEFAULT_FONT_FACES,
-  fontModifierUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
+  fontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
   fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
+  fontUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
   language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
   lineHeight: DEFAULT_LINE_HEIGHT,
@@ -86,6 +85,7 @@ const initialState: IPreferencesState = {
   seekStep: DEFAULT_SEEK_STEP,
   seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
   textHighlighting: DEFAULT_TEXT_HIGHLIGHTING,
+  theme: DEFAULT_THEME,
   themes: AVAILABLE_THEMES,
   uiWindows: DEFAULT_UI_WINDOWS,
   volumeStep: DEFAULT_VOLUME_STEP,
@@ -102,7 +102,7 @@ const preferences: Reducer = (state = initialState, action) => {
     case CHANGE_THEME:
       return {
         ...state,
-        currentTheme: action.currentTheme
+        theme: action.theme
       };
     case LOAD_CONFIGURATION:
       return {
@@ -143,12 +143,12 @@ const preferences: Reducer = (state = initialState, action) => {
     case UPDATE_ACTIVE_FONT_FACE:
       return {
         ...state,
-        activeFontFace: action.activeFontFace
+        fontFace: action.fontFace
       };
     case UPDATE_FONT_SIZE_MULTIPLIER:
       return {
         ...state,
-        activeFontSizeMultiplier: action.activeFontSizeMultiplier
+        fontSizeMultiplier: action.fontSizeMultiplier
       };
     case CHANGE_TEXT_HIGHLIGHTING:
       return {
@@ -158,7 +158,7 @@ const preferences: Reducer = (state = initialState, action) => {
     case CHANGE_TEXT_UPPERCASE:
       return {
         ...state,
-        fontModifierUppercase: action.fontModifierUppercase
+        fontUppercase: action.fontUppercase
       };
     case UPDATE_LINE_HEIGHT:
       return {

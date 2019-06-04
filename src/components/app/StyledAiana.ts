@@ -38,6 +38,10 @@ const StyledAiana = styled.div`
     outline: none;
   }
 
+  select {
+    font-family: inherit;
+  }
+
   /* TODO: remove debug styles */
   input[type='checkbox'],
   select {
