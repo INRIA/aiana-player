@@ -1,7 +1,4 @@
-import classNames from 'classnames';
 import React from 'react';
-import { connect } from 'react-redux';
-import { IAianaState } from '../../reducers';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import AddBookmarkButton from '../buttons/add-bookmark';
@@ -21,13 +18,6 @@ const StyledControlsWrapper = styled.div`
   padding: 0.8125em 1em 0.5em;
 
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
-
-  transition: none;
-
-  &.inactive {
-    opacity: 0;
-    transition: opacity 0.1s linear;
-  }
 `;
 
 const StyledControls = styled.div`
@@ -42,15 +32,9 @@ const StyledControls = styled.div`
   }
 `;
 
-interface IStateProps {
-  isActive: boolean;
-}
-
-function VideoPlayerControls(props: IStateProps) {
+function VideoPlayerControls() {
   return (
-    <StyledControlsWrapper
-      className={classNames({ inactive: !props.isActive })}
-    >
+    <StyledControlsWrapper>
       <SeekBarSlider />
       <StyledControls>
         <div>
@@ -72,10 +56,4 @@ function VideoPlayerControls(props: IStateProps) {
   );
 }
 
-function mapState(state: IAianaState) {
-  return {
-    isActive: state.preferences.isActive
-  };
-}
-
-export default connect(mapState)(VideoPlayerControls);
+export default VideoPlayerControls;

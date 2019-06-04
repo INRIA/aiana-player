@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { Component, createRef, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -15,7 +14,6 @@ import {
   removeFullscreenChangeEventListener
 } from '../../utils/fullscreen';
 import { ThemeProvider } from '../../utils/styled-components';
-import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
 import StyledAiana from './StyledAiana';
 
@@ -25,7 +23,6 @@ interface IStateProps {
   fontSizeMultiplier: number;
   availableThemes: string[];
   currentTheme: string;
-  isActive: boolean;
   lineHeight: string;
 }
 
@@ -44,9 +41,7 @@ class Aiana extends Component<IAiana> {
     return (
       <ThemeProvider theme={themes[this.props.currentTheme]}>
         <StyledAiana
-          className={classNames('aip-app', {
-            inactive: !this.props.isActive
-          })}
+          className="aip-app"
           ref={this.fullscreenRef}
           style={{
             fontFamily: this.props.fontFace,
@@ -58,7 +53,6 @@ class Aiana extends Component<IAiana> {
           }}
         >
           <Suspense fallback={<div>I am loading</div>}>
-            <InactivityTimer />
             <SvgFilters />
             <Player />
           </Suspense>
@@ -89,7 +83,6 @@ function mapState(state: IAianaState) {
     fontFace: state.preferences.activeFontFace,
     fontModifierUppercase: state.preferences.fontModifierUppercase,
     fontSizeMultiplier: state.preferences.activeFontSizeMultiplier,
-    isActive: state.preferences.isActive,
     lineHeight: state.preferences.lineHeight
   };
 }

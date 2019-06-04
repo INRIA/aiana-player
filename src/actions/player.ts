@@ -6,7 +6,6 @@ import {
   isDocumentFullscreen
 } from '../utils/fullscreen';
 import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
-import { toggleActivity } from './shared';
 
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
@@ -152,7 +151,6 @@ export function requestMediaPause(media: HTMLMediaElement): ThunkResult<void> {
     dispatch({ type: MEDIA_REQUEST_PAUSE });
     media.pause();
     dispatch(pauseMedia());
-    dispatch(toggleActivity(false));
   };
 }
 

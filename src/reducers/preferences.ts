@@ -10,11 +10,7 @@ import {
   UPDATE_LINE_HEIGHT,
   WINDOWS_LOCK
 } from '../actions/preferences';
-import {
-  CHANGE_UI_WINDOWS,
-  LOAD_CONFIGURATION,
-  TOGGLE_ACTIVITY
-} from '../actions/shared';
+import { CHANGE_UI_WINDOWS, LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
@@ -57,7 +53,6 @@ export interface IPreferencesState {
   fontFaces: string[];
   fontModifierUppercase: boolean;
   fontSizeMultipliers: number[];
-  isActive: boolean;
   language: string;
   languages: string[];
   lineHeight: string;
@@ -86,7 +81,6 @@ const initialState: IPreferencesState = {
   fontFaces: DEFAULT_FONT_FACES,
   fontModifierUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
   fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
-  isActive: true,
   language: DEFAULT_LANG,
   languages: DEFAULT_AVAILABLE_LANGUAGES,
   lineHeight: DEFAULT_LINE_HEIGHT,
@@ -104,11 +98,6 @@ const initialState: IPreferencesState = {
 
 const preferences: Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_ACTIVITY:
-      return {
-        ...state,
-        isActive: action.isActive
-      };
     case CHANGE_LANGUAGE:
       return {
         ...state,
