@@ -32,8 +32,6 @@ import {
   FONT_SIZE_MULTIPLIERS,
   LINE_HEIGHT_VALUES
 } from '../constants';
-import InriaTheme from '../themes/inria';
-import { IAianaTheme } from '../utils/styled-components';
 
 export interface IUIWindow {
   height: number;
@@ -49,7 +47,6 @@ export interface IPreferencesState {
   activeFontFace: string;
   activeFontSizeMultiplier: number;
   currentTheme: string;
-  customTheme: IAianaTheme;
   fontFaces: string[];
   fontModifierUppercase: boolean;
   fontSizeMultipliers: number[];
@@ -77,7 +74,6 @@ const initialState: IPreferencesState = {
   activeFontFace: DEFAULT_ACTIVE_FONT_FACE,
   activeFontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
   currentTheme: DEFAULT_THEME,
-  customTheme: InriaTheme,
   fontFaces: DEFAULT_FONT_FACES,
   fontModifierUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
   fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
