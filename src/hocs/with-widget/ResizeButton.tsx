@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import StyledButton from '../../components/shared/styled-button';
-import { ESCAPE_KEY } from '../../constants';
+import { ESCAPE_KEY } from '../../constants/keys';
 import { Direction } from '../../types';
 import styled from '../../utils/styled-components';
 

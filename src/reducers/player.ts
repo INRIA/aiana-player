@@ -26,7 +26,7 @@ import {
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME,
   DEFAULT_AUTOPLAY
-} from '../constants';
+} from '../constants/player';
 import { ExtendedHTMLElement } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
 import { CHANGE_MEDIA_SOURCE } from '../actions/preferences';

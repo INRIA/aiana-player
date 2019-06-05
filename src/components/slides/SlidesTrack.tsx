@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addSlidesTrack, setSlidesText } from '../../actions/slides';
-import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants';
+import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import {
   getLastActiveCueText,

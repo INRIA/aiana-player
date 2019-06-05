@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addSubtitlesTrack, setSubtitlesText } from '../../actions/subtitles';
-import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from '../../constants';
+import {
+  TRACK_KIND_SUBTITLES,
+  TRACK_MODE_HIDDEN
+} from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import {
   IRawSubtitlesTrack,

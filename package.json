@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@dashdashzako/random-hex-color": "^2.1.0",
+    "@types/lodash.throttle": "^4.1.6",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "color": "^3.1.0",
@@ -29,6 +30,7 @@
     "i18next-browser-languagedetector": "^3.0.1",
     "i18next-xhr-backend": "^2.0.1",
     "js-yaml": "^3.13.1",
+    "lodash.throttle": "^4.1.1",
     "marked": "^0.6.2",
     "query-string": "^6.2.0",
     "react": "^16.8.2",

@@ -1,19 +1,20 @@
 import classNames from 'classnames';
 import React from 'react';
 import {
+  DIRECTION_BOTTOM,
+  DIRECTION_LEFT,
+  DIRECTION_RIGHT,
+  DIRECTION_TOP
+} from '../../constants';
+import { DEFAULT_WIDGET_MOVE_STEP } from '../../constants/preferences';
+import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
-  DEFAULT_MOVE_STEP,
-  DEFAULT_WIDGETS_CONTAINER,
-  DIRECTION_BOTTOM,
-  DIRECTION_LEFT,
-  DIRECTION_RIGHT,
-  DIRECTION_TOP,
   END_KEY,
   HOME_KEY
-} from '../../constants';
+} from '../../constants/keys';
 import { IWidget } from '../../reducers/preferences';
 import { Direction } from '../../types';
 import { unitToPercent } from '../../utils/math';
@@ -22,6 +23,7 @@ import { bounded } from '../../utils/ui';
 import CloseWidgetButton from './CloseWidgetButton';
 import DragWidgetButton from './DragWidgetButton';
 import Resizers from './Resizers';
+import { WIDGETS_CONTAINER_CLASS } from '../../constants/widgets';
 
 export interface IWrappedComponentProps {
   boundariesSelector?: string;
@@ -96,7 +98,7 @@ const defaultState: IHOCState = {
 };
 
 const defaultProps: Partial<IWrappedComponentProps> = {
-  boundariesSelector: DEFAULT_WIDGETS_CONTAINER,
+  boundariesSelector: WIDGETS_CONTAINER_CLASS,
   minimumHeight: 20,
   minimumWidth: 20
 };
@@ -189,13 +191,13 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
           // widget will have its top and height updated
           if (key === ARROW_UP_KEY) {
             // widget will have its top lowered and height increased.
-            const expectedTop = this.props.top - DEFAULT_MOVE_STEP;
+            const expectedTop = this.props.top - DEFAULT_WIDGET_MOVE_STEP;
 
             if (expectedTop > 0) {
               // Expected `top` of the widget is still in bounds
 
               newCoords = {
-                height: this.props.height + DEFAULT_MOVE_STEP,
+                height: this.props.height + DEFAULT_WIDGET_MOVE_STEP,
                 top: expectedTop
               };
             } else {
@@ -207,7 +209,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
             }
           } else if (key === ARROW_DOWN_KEY) {
             // widget will have its top increased and height lowered.
-            const expectedHeight = this.props.height - DEFAULT_MOVE_STEP;
+            const expectedHeight = this.props.height - DEFAULT_WIDGET_MOVE_STEP;
 
             if (expectedHeight < this.props.minimumHeight!) {
               // Expected height of the widget is out of bounds
@@ -221,7 +223,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
               // Expected height of the widget is in bounds
               newCoords = {
                 height: expectedHeight,
-                top: this.props.top + DEFAULT_MOVE_STEP
+                top: this.props.top + DEFAULT_WIDGET_MOVE_STEP
               };
             }
           }
@@ -231,7 +233,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
           // widget will have its width updated
           if (key === ARROW_RIGHT_KEY) {
             // increase widget width
-            const expectedWidth = this.props.width + DEFAULT_MOVE_STEP;
+            const expectedWidth = this.props.width + DEFAULT_WIDGET_MOVE_STEP;
             const expectedRight = this.props.left + expectedWidth;
 
             if (expectedRight > 100) {
@@ -248,7 +250,9 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
           } else if (key === ARROW_LEFT_KEY) {
             // decrease widget width
             newCoords = {
-              width: this.boundedWidth(this.props.width - DEFAULT_MOVE_STEP)
+              width: this.boundedWidth(
+                this.props.width - DEFAULT_WIDGET_MOVE_STEP
+              )
             };
           }
 
@@ -257,7 +261,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
           // widget will have its height updated
           if (key === ARROW_DOWN_KEY) {
             // increase widget height
-            const expectedHeight = this.props.height + DEFAULT_MOVE_STEP;
+            const expectedHeight = this.props.height + DEFAULT_WIDGET_MOVE_STEP;
             const expectedBottom = this.props.top + expectedHeight;
 
             if (expectedBottom > 100) {
@@ -274,7 +278,9 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
           } else if (key === ARROW_UP_KEY) {
             // decrease widget height
             newCoords = {
-              height: this.boundedHeight(this.props.height - DEFAULT_MOVE_STEP)
+              height: this.boundedHeight(
+                this.props.height - DEFAULT_WIDGET_MOVE_STEP
+              )
             };
           }
           break;
@@ -282,13 +288,13 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
           // widget will have its width and left position updated
           if (key === ARROW_LEFT_KEY) {
             // decrease left position, increase width
-            const expectedLeft = this.props.left - DEFAULT_MOVE_STEP;
+            const expectedLeft = this.props.left - DEFAULT_WIDGET_MOVE_STEP;
 
             if (expectedLeft > 0) {
               // expected left border of the widget is in bounds
               newCoords = {
                 left: expectedLeft,
-                width: this.props.width + DEFAULT_MOVE_STEP
+                width: this.props.width + DEFAULT_WIDGET_MOVE_STEP
               };
             } else {
               // expected left border of the widget is out of bounds
@@ -299,7 +305,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
             }
           } else if (key === ARROW_RIGHT_KEY) {
             // increase left position, decrease width
-            const expectedWidth = this.props.width - DEFAULT_MOVE_STEP;
+            const expectedWidth = this.props.width - DEFAULT_WIDGET_MOVE_STEP;
 
             if (expectedWidth < this.props.minimumWidth!) {
               // expected left border of the widget is out of bounds
@@ -312,7 +318,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
             } else {
               // expected left border of the widget is in bounds
               newCoords = {
-                left: this.props.left + DEFAULT_MOVE_STEP,
+                left: this.props.left + DEFAULT_WIDGET_MOVE_STEP,
                 width: expectedWidth
               };
             }
@@ -486,22 +492,30 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       switch (key) {
         case ARROW_RIGHT_KEY:
           this.props.uiUpdateHandler(this.props.name, {
-            left: this.boundedLeftPosition(this.props.left + DEFAULT_MOVE_STEP)
+            left: this.boundedLeftPosition(
+              this.props.left + DEFAULT_WIDGET_MOVE_STEP
+            )
           });
           break;
         case ARROW_UP_KEY:
           this.props.uiUpdateHandler(this.props.name, {
-            top: this.boundedTopPosition(this.props.top - DEFAULT_MOVE_STEP)
+            top: this.boundedTopPosition(
+              this.props.top - DEFAULT_WIDGET_MOVE_STEP
+            )
           });
           break;
         case ARROW_LEFT_KEY:
           this.props.uiUpdateHandler(this.props.name, {
-            left: this.boundedLeftPosition(this.props.left - DEFAULT_MOVE_STEP)
+            left: this.boundedLeftPosition(
+              this.props.left - DEFAULT_WIDGET_MOVE_STEP
+            )
           });
           break;
         case ARROW_DOWN_KEY:
           this.props.uiUpdateHandler(this.props.name, {
-            top: this.boundedTopPosition(this.props.top + DEFAULT_MOVE_STEP)
+            top: this.boundedTopPosition(
+              this.props.top + DEFAULT_WIDGET_MOVE_STEP
+            )
           });
           break;
         case HOME_KEY:

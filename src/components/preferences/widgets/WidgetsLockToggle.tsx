@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWidgetsLock } from '../../../actions/preferences';
-import { DEFAULT_WIDGETS_LOCK } from '../../../constants';
+import { DEFAULT_WIDGETS_LOCK } from '../../../constants/widgets';
 import withUniqueId, {
   IInjectedUniqueIdProps
 } from '../../../hocs/withUniqueId';

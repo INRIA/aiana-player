@@ -3,19 +3,18 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
+import { VOLUME_MAXIMUM, VOLUME_MINIMUM } from '../../constants';
+import { DEFAULT_VOLUME_STEP_MULTIPLIER } from '../../constants/preferences';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
-  DEFAULT_VOLUME_STEP_MULTIPLIER,
   END_KEY,
   HOME_KEY,
   PAGE_DOWN_KEY,
-  PAGE_UP_KEY,
-  VOLUME_MAXIMUM,
-  VOLUME_MINIMUM
-} from '../../constants';
+  PAGE_UP_KEY
+} from '../../constants/keys';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { unitToRatio } from '../../utils/math';
@@ -178,7 +177,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
       const newVolume = unitToRatio(positionDifference, sliderWidth);
 
       if (newVolume !== volume) {
-        updateVolume(mediaElement, newVolume);
+        updateVolume(mediaElement, this.safeVolume(newVolume));
       }
     } catch (error) {
       //

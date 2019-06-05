@@ -7,7 +7,7 @@ import {
   WIDGET_ID_SLIDES,
   WIDGET_ID_VIDEO,
   WIDGET_ID_TIME_MANAGEMENT
-} from '../constants';
+} from '../constants/widgets';
 import { IAianaState } from '../reducers';
 import { IWidget } from '../reducers/preferences';
 import styled from '../utils/styled-components';

@@ -10,23 +10,35 @@ import { changeLanguage } from './preferences';
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
 
+interface IQueryString {
+  config?: string;
+  src?: string;
+}
+
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    const parsed = queryString.parse(window.location.search);
+    const parsedQueryString = queryString.parse(
+      window.location.search
+    ) as IQueryString;
 
-    if (parsed.config) {
-      axios.get(parsed.config as string).then(({ data }) => {
+    // supply config url
+    if (parsedQueryString.config) {
+      axios.get(parsedQueryString.config).then(({ data }) => {
         dispatch(loadConfiguration(data));
       });
-    } else if (parsed.src) {
+    }
+    // supply media src
+    else if (parsedQueryString.src) {
       dispatch(
         loadConfiguration({
           player: {
-            sources: [{ src: parsed.src }]
+            sources: [{ src: parsedQueryString.src }]
           }
         })
       );
-    } else {
+    }
+    // use hosted configuration
+    else {
       axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
         dispatch(changeLanguage(data.preferences.language));
         dispatch(loadConfiguration(data));

@@ -3,17 +3,17 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
+import { DEFAULT_SEEK_STEP_MULTIPLIER } from '../../constants/preferences';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
-  DEFAULT_SEEK_STEP_MULTIPLIER,
   END_KEY,
   HOME_KEY,
   PAGE_DOWN_KEY,
   PAGE_UP_KEY
-} from '../../constants';
+} from '../../constants/keys';
 import { IAianaState } from '../../reducers';
 import { unitToRatio } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';

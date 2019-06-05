@@ -5,7 +5,7 @@ import {
   SET_SLIDES_TEXT,
   UPDATE_ACTIVE_SLIDES_TRACK
 } from '../actions/slides';
-import { DEFAULT_LANG } from '../constants';
+import { DEFAULT_LANG } from '../constants/preferences';
 import { IRawSlidesTrack } from '../utils/media';
 
 export interface ISlidesTrack {

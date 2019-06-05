@@ -14,10 +14,14 @@ import { CHANGE_WIDGETS, LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
+  AVAILABLE_LANGUAGES,
+  SELECTABLE_FONT_FACES,
+  FONT_SIZE_MULTIPLIERS,
+  SELECTABLE_LINE_HEIGHTS
+} from '../constants';
+import {
   DEFAULT_FONT_FACE,
-  DEFAULT_AVAILABLE_LANGUAGES,
-  DEFAULT_FONT_FACES,
-  DEFAULT_FONT_MODIFIER_UPPERCASE,
+  DEFAULT_FONT_UPPERCASE,
   DEFAULT_FONT_SIZE_MULTIPLIER,
   DEFAULT_LANG,
   DEFAULT_LINE_HEIGHT,
@@ -26,12 +30,10 @@ import {
   DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_TEXT_HIGHLIGHTING,
   DEFAULT_THEME,
-  DEFAULT_WIDGETS as DEFAULT_UI_WIDGETS,
   DEFAULT_VOLUME_STEP,
-  DEFAULT_VOLUME_STEP_MULTIPLIER,
-  FONT_SIZE_MULTIPLIERS,
-  LINE_HEIGHT_VALUES
-} from '../constants';
+  DEFAULT_VOLUME_STEP_MULTIPLIER
+} from '../constants/preferences';
+import { DEFAULT_WIDGETS } from '../constants/widgets';
 
 export interface IWidget {
   height: number;
@@ -70,16 +72,16 @@ export interface IPreferencesState {
   widgets: IWidget[];
 }
 
-const initialState: IPreferencesState = {
+export const initialPreferencesState: IPreferencesState = {
   fontFace: DEFAULT_FONT_FACE,
-  fontFaces: DEFAULT_FONT_FACES,
+  fontFaces: SELECTABLE_FONT_FACES,
   fontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
   fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
-  fontUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
+  fontUppercase: DEFAULT_FONT_UPPERCASE,
   language: DEFAULT_LANG,
-  languages: DEFAULT_AVAILABLE_LANGUAGES,
+  languages: AVAILABLE_LANGUAGES,
   lineHeight: DEFAULT_LINE_HEIGHT,
-  lineHeightValues: LINE_HEIGHT_VALUES,
+  lineHeightValues: SELECTABLE_LINE_HEIGHTS,
   playbackRates: AVAILABLE_PLAYBACK_RATES,
   previousChapterSeekThreshold: DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   seekStep: DEFAULT_SEEK_STEP,
@@ -89,10 +91,10 @@ const initialState: IPreferencesState = {
   themes: AVAILABLE_THEMES,
   volumeStep: DEFAULT_VOLUME_STEP,
   volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER,
-  widgets: DEFAULT_UI_WIDGETS
+  widgets: DEFAULT_WIDGETS
 };
 
-const preferences: Reducer = (state = initialState, action) => {
+const preferences: Reducer = (state = initialPreferencesState, action) => {
   switch (action.type) {
     case CHANGE_LANGUAGE:
       return {

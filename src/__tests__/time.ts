@@ -1,3 +1,4 @@
+import { SECONDS_PER_HOUR, SECONDS_PER_MINUTE } from '../constants';
 import {
   I18N_DURATION_HOURS_KEY,
   I18N_DURATION_HOURS_MINUTES_KEY,
@@ -5,10 +6,8 @@ import {
   I18N_DURATION_HOURS_SECONDS_KEY,
   I18N_DURATION_MINUTES_KEY,
   I18N_DURATION_MINUTES_SECONDS_KEY,
-  I18N_DURATION_SECONDS_KEY,
-  SECONDS_PER_HOUR,
-  SECONDS_PER_MINUTE
-} from '../constants';
+  I18N_DURATION_SECONDS_KEY
+} from '../constants/i18n';
 import {
   durationTranslationKey,
   extractHours,

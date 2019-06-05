@@ -4,7 +4,7 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import StyledButton from '../../components/shared/styled-button';
 import StyledSvg from '../../components/shared/styled-svg';
 import MoveIcon from '../../components/svg/Move';
-import { ESCAPE_KEY } from '../../constants';
+import { ESCAPE_KEY } from '../../constants/keys';
 import styled from '../../utils/styled-components';
 
 interface IProps {
