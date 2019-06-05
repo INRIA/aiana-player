@@ -53,8 +53,8 @@ export interface IPreferencesState {
   fontSizeMultipliers: number[];
   language: string;
   languages: string[];
-  lineHeight: string;
-  lineHeightValues: string[];
+  lineHeight: number;
+  lineHeightValues: number[];
   playbackRates: number[];
   previousChapterSeekThreshold: number;
 

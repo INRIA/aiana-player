@@ -39,17 +39,17 @@ export const FONT_SIZE_MULTIPLIERS = [
 ];
 
 export const SELECTABLE_LINE_HEIGHTS = [
-  '1',
-  '1.1',
-  '1.2',
-  '1.3',
-  '1.4',
-  '1.5',
-  '1.6',
-  '1.7',
-  '1.8',
-  '1.9',
-  '2'
+  1,
+  1.1,
+  1.2,
+  1.3,
+  1.4,
+  1.5,
+  1.6,
+  1.7,
+  1.8,
+  1.9,
+  2
 ];
 
 export const AVAILABLE_PLAYBACK_RATES = [

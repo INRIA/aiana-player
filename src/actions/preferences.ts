@@ -21,7 +21,7 @@ export function changeMediaSource(mediaSource: string): AnyAction {
   };
 }
 
-export function updateLineHeight(lineHeight: string): AnyAction {
+export function updateLineHeight(lineHeight: number): AnyAction {
   return {
     lineHeight,
     type: UPDATE_LINE_HEIGHT

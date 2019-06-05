@@ -21,7 +21,7 @@ interface IStateProps {
   fontFace: string;
   fontUppercase: boolean;
   fontSizeMultiplier: number;
-  lineHeight: string;
+  lineHeight: number;
   theme: string;
   themes: string[];
 }
