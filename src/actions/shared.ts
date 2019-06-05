@@ -1,5 +1,4 @@
 import axios from 'axios';
-import yaml from 'js-yaml';
 import queryString from 'query-string';
 import { AnyAction } from 'redux';
 import { DEFAULT_CONFIGURATION_PATH } from '../constants';
@@ -37,7 +36,6 @@ export function handleFetchInitialData(): ThunkResult<void> {
 }
 
 function loadConfiguration(configuration: any): AnyAction {
-  console.log(yaml.safeDump(configuration.preferences));
   return {
     bookmarks: configuration.bookmarks,
     chapters: configuration.chapters,
