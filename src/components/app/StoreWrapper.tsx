@@ -77,7 +77,7 @@ function saveState(state: any) {
 
     // TODO: sync state on remote server if provided
   } catch (err) {
-    //
+    console.log(err);
   }
 }
 

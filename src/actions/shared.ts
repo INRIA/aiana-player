@@ -6,6 +6,7 @@ import { IWidget } from '../reducers/preferences';
 import { CDispatch } from '../store';
 import { ThunkResult } from '../types';
 import { changeLanguage } from './preferences';
+import { DEFAULT_LANG } from '../constants/preferences';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
@@ -40,7 +41,9 @@ export function handleFetchInitialData(): ThunkResult<void> {
     // use hosted configuration
     else {
       axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
-        dispatch(changeLanguage(data.preferences.language));
+        const language = data.preferences.language || DEFAULT_LANG;
+
+        dispatch(changeLanguage(language));
         dispatch(loadConfiguration(data));
       });
     }
