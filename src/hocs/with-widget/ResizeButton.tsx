@@ -139,14 +139,14 @@ class ResizeButton extends React.Component<IProps> {
     );
   }
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
     if (evt.key === ESCAPE_KEY) {
       evt.currentTarget.blur();
     }
     this.props.keyDownHandler(evt.key, [...this.props.handlePositions]);
   };
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     this.props.mouseDownHandler(evt.pageX, evt.pageY, [
       ...this.props.handlePositions

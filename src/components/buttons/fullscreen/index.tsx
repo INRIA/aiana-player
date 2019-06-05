@@ -37,7 +37,7 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
     );
   }
 
-  private clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
+  clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     if (this.props.playerElement) {
@@ -45,7 +45,7 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
     }
   };
 
-  private getControlText = (): string => {
+  getControlText = (): string => {
     if (this.props.isFullscreen) {
       return this.props.t('controls.fullscreen.exit');
     }

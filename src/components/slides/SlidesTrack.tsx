@@ -28,7 +28,7 @@ interface IDispatchProps {
 interface ISlideTrackProps extends IProps, IStateProps, IDispatchProps {}
 
 class SlidesTrack extends React.Component<ISlideTrackProps> {
-  private trackRef = React.createRef<HTMLTrackElement>();
+  trackRef = React.createRef<HTMLTrackElement>();
 
   render() {
     const { label, src, srcLang } = this.props;
@@ -86,14 +86,14 @@ class SlidesTrack extends React.Component<ISlideTrackProps> {
     }
   }
 
-  private loadHandler = () => {
+  loadHandler = () => {
     const slidesTrack: IRawSlidesTrack = rawSlidesTrack(
       this.trackRef.current!.track
     );
     this.props.addSlidesTrack(slidesTrack);
   };
 
-  private cueChangeHandler = () => {
+  cueChangeHandler = () => {
     if (this.props.srcLang === this.props.language) {
       const track = this.trackRef.current!.track;
       const currentText = getLastActiveCueText(track);

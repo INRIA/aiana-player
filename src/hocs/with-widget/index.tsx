@@ -167,7 +167,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private resizeKeyUpdate = (key: string, handlePositions: Direction[]) => {
+    resizeKeyUpdate = (key: string, handlePositions: Direction[]) => {
       const resizer = handlePositions.reduce(
         (prev: object, handlePosition: Direction) => {
           return Object.assign(prev, this.resizeKey(key, handlePosition));
@@ -181,7 +181,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       }
     };
 
-    private resizeKey = (key: string, handlePosition: Direction) => {
+    resizeKey = (key: string, handlePosition: Direction) => {
       let newCoords = {};
 
       switch (handlePosition) {
@@ -323,11 +323,11 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       return newCoords;
     };
 
-    private resizeStartHandler = () => {
+    resizeStartHandler = () => {
       this.setUpperBounds();
     };
 
-    private resizeUpdateHandler = (
+    resizeUpdateHandler = (
       xDiff: number,
       yDiff: number,
       handlePositions: Direction[]
@@ -348,7 +348,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
      * @param handlePosition The orientation of the resizing (the handle position)
      * @returns An object to use in order to set state
      */
-    private resize = (
+    resize = (
       xDiff: number,
       yDiff: number,
       handlePosition: Direction
@@ -465,7 +465,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       return newCoords;
     };
 
-    private resizeEndHandler = () => {
+    resizeEndHandler = () => {
       this.props.uiUpdateHandler(this.props.name, {
         height: this.props.height + this.state.heightDiff,
         left:
@@ -480,7 +480,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       this.setState(defaultState);
     };
 
-    private moveKeyDownHandler = (key: string) => {
+    moveKeyDownHandler = (key: string) => {
       this.setUpperBounds();
 
       switch (key) {
@@ -519,12 +519,12 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       }
     };
 
-    private dragStartHandler = () => {
+    dragStartHandler = () => {
       this.props.toggleDraggable(false);
       this.setUpperBounds();
     };
 
-    private dragUpdateHandler = (xDiff: number, yDiff: number) => {
+    dragUpdateHandler = (xDiff: number, yDiff: number) => {
       this.setState({
         leftDiff: this.safeXTranslate(xDiff),
         topDiff: this.safeYTranslate(yDiff)
@@ -534,7 +534,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
     /**
      * Syncs properties and resets the diffs.
      */
-    private dragEndHandler = () => {
+    dragEndHandler = () => {
       this.props.uiUpdateHandler(this.props.name, {
         left: unitToPercent(
           this.elementRef.current!.offsetLeft + this.state.leftDiff,
@@ -550,11 +550,11 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       this.props.toggleDraggable(true);
     };
 
-    private boundedWidth(w: number): number {
+    boundedWidth(w: number): number {
       return bounded(w, this.props.minimumWidth!, 100);
     }
 
-    private boundedHeight(h: number): number {
+    boundedHeight(h: number): number {
       return bounded(h, this.props.minimumHeight!, 100);
     }
 
@@ -564,7 +564,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
      * This should be ran everytime user is starting an interaction in order to
      * avoid misplacement due to resizing.
      */
-    private setUpperBounds() {
+    setUpperBounds() {
       const container = document.querySelector(
         this.props.boundariesSelector!
       ) as HTMLElement;
@@ -573,7 +573,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       this.containerHeight = container.offsetHeight;
     }
 
-    private safeXTranslate(deltaX: number): number {
+    safeXTranslate(deltaX: number): number {
       const { offsetLeft, offsetWidth } = this.elementRef.current!;
 
       return this.safeTranslate(
@@ -584,7 +584,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private safeYTranslate(deltaY: number): number {
+    safeYTranslate(deltaY: number): number {
       const { offsetTop, offsetHeight } = this.elementRef.current!;
 
       return this.safeTranslate(
@@ -595,7 +595,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private safeTranslate(
+    safeTranslate(
       delta: number,
       pos: number,
       size: number,
@@ -610,7 +610,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       return delta;
     }
 
-    private boundedLeftPosition(pct: number) {
+    boundedLeftPosition(pct: number) {
       return this.boundedPosition(
         pct,
         this.elementRef.current!.offsetWidth,
@@ -618,7 +618,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private boundedTopPosition(pct: number) {
+    boundedTopPosition(pct: number) {
       return this.boundedPosition(
         pct,
         this.elementRef.current!.offsetHeight,
@@ -626,11 +626,7 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
       );
     }
 
-    private boundedPosition(
-      pct: number,
-      positionPx: number,
-      maxPx: number
-    ): number {
+    boundedPosition(pct: number, positionPx: number, maxPx: number): number {
       return bounded(pct, 0, 100 - unitToPercent(positionPx, maxPx));
     }
   };

@@ -23,7 +23,7 @@ class BookmarkButton extends React.Component<IProps> {
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     const { onClick, media, time } = this.props;
     if (!media) {
       return;

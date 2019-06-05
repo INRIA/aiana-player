@@ -73,7 +73,7 @@ class DragWidgetButton extends React.Component<IDragWidgetButton, IState> {
     );
   }
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     evt.currentTarget.focus();
     this.setState({ isDragging: true });
@@ -87,19 +87,19 @@ class DragWidgetButton extends React.Component<IDragWidgetButton, IState> {
     this.props.dragStart();
   };
 
-  private mouseMoveHandler = (evt: MouseEvent) => {
+  mouseMoveHandler = (evt: MouseEvent) => {
     const deltaX = evt.pageX - this.baseX;
     const deltaY = evt.pageY - this.baseY;
 
     this.props.dragUpdate(deltaX, deltaY);
   };
 
-  private mouseUpHandler = () => {
+  mouseUpHandler = () => {
     this.controlsRef.current!.blur();
     this.interactionEnd();
   };
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
     if (evt.key === ESCAPE_KEY) {
       evt.currentTarget.blur();
       this.interactionEnd();
@@ -108,7 +108,7 @@ class DragWidgetButton extends React.Component<IDragWidgetButton, IState> {
     }
   };
 
-  private interactionEnd() {
+  interactionEnd() {
     document.removeEventListener('mousemove', this.mouseMoveHandler);
     document.removeEventListener('mouseup', this.mouseUpHandler);
 

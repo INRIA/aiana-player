@@ -35,7 +35,7 @@ class PlayButton extends React.Component<IProps> {
     );
   }
 
-  private clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
+  clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     if (this.props.isPlaying && this.props.mediaElement) {
@@ -45,7 +45,7 @@ class PlayButton extends React.Component<IProps> {
     }
   };
 
-  private getControlText = () => {
+  getControlText = () => {
     const { t, isPlaying } = this.props;
 
     return isPlaying ? t('controls.pause') : t('controls.play');

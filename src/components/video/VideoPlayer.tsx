@@ -102,7 +102,7 @@ function getCurrentSource(sources: ISource[]): ISource | void {
 }
 
 class VideoPlayer extends React.Component<IProps> {
-  private media = React.createRef<HTMLVideoElement>();
+  media = React.createRef<HTMLVideoElement>();
 
   render() {
     const selectedSource = getCurrentSource(this.props.sources);
@@ -193,11 +193,11 @@ class VideoPlayer extends React.Component<IProps> {
     }
   };
 
-  private progressHandler = () => {
+  progressHandler = () => {
     this.props.updateBufferedRanges(this.media.current!.buffered);
   };
 
-  private clickHandler = () => {
+  clickHandler = () => {
     if (this.media.current!.paused) {
       this.props.requestMediaPlay(this.media.current!);
     } else {
@@ -205,23 +205,23 @@ class VideoPlayer extends React.Component<IProps> {
     }
   };
 
-  private seekedHandler = () => {
+  seekedHandler = () => {
     if (this.props.isSeeking) {
       this.props.stopSeeking();
     }
   };
 
-  private seekingHandler = () => {
+  seekingHandler = () => {
     if (!this.props.isSeeking) {
       this.props.startSeeking();
     }
   };
 
-  private timeUpdateHandler = () => {
+  timeUpdateHandler = () => {
     this.props.updateCurrentTime(this.media.current!.currentTime);
   };
 
-  private loadedMetadataHandler = () => {
+  loadedMetadataHandler = () => {
     this.props.updateMediaDuration(this.media.current!.duration);
   };
 
@@ -230,7 +230,7 @@ class VideoPlayer extends React.Component<IProps> {
    * need to be performed to catch changes and dispatch them to update the
    * application state.
    */
-  private volumeChangeHandler = () => {
+  volumeChangeHandler = () => {
     const media = this.media.current!;
     const { isMuted, volume } = this.props;
 

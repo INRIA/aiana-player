@@ -36,7 +36,7 @@ class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     this.props.setChaptersMenu(!this.props.menuEnabled);
   };
 }

@@ -31,7 +31,7 @@ class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     this.props.addBookmark(this.props.currentTime);
   };
 }

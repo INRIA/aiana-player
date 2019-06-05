@@ -137,11 +137,7 @@ class Resizers extends Component<IResizers> {
     );
   }
 
-  private mouseDownHandler = (
-    x: number,
-    y: number,
-    handlePositions: Direction[]
-  ) => {
+  mouseDownHandler = (x: number, y: number, handlePositions: Direction[]) => {
     this.baseX = x;
     this.baseY = y;
     this.currentPositions = [...handlePositions];
@@ -152,14 +148,14 @@ class Resizers extends Component<IResizers> {
     this.props.resizeStart();
   };
 
-  private mouseMoveHandler = (evt: MouseEvent) => {
+  mouseMoveHandler = (evt: MouseEvent) => {
     const xDiff = evt.pageX - this.baseX;
     const yDiff = evt.pageY - this.baseY;
 
     this.props.resizeUpdate(xDiff, yDiff, [...this.currentPositions]);
   };
 
-  private mouseUpHandler = () => {
+  mouseUpHandler = () => {
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
 

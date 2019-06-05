@@ -36,7 +36,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     kind: TRACK_KIND_SUBTITLES
   };
 
-  private trackRef = React.createRef<HTMLTrackElement>();
+  trackRef = React.createRef<HTMLTrackElement>();
 
   render() {
     return (
@@ -80,7 +80,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     }
   }
 
-  private isActive() {
+  isActive() {
     const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
 
     if (!activeTrack) {
@@ -90,7 +90,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     return activeTrack.label === this.trackRef.current!.label;
   }
 
-  private loadHandler = () => {
+  loadHandler = () => {
     const chaptersTrack = rawSubtitlesTrack(
       this.trackRef.current!.track,
       this.props.subtitlesLanguage
@@ -98,7 +98,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     this.props.addSubtitlesTrack(chaptersTrack);
   };
 
-  private cueChangeHandler = () => {
+  cueChangeHandler = () => {
     if (!this.isActive()) {
       return;
     }

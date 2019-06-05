@@ -30,7 +30,7 @@ interface IDispatchProps {
 export interface IChapterTrack extends IProps, IStateProps, IDispatchProps {}
 
 class AdditionalInfosTrack extends React.Component<IChapterTrack> {
-  private trackRef = React.createRef<HTMLTrackElement>();
+  trackRef = React.createRef<HTMLTrackElement>();
 
   render() {
     const { label, src, srcLang } = this.props;
@@ -64,12 +64,12 @@ class AdditionalInfosTrack extends React.Component<IChapterTrack> {
     );
   }
 
-  private loadHandler = () => {
+  loadHandler = () => {
     const metadataTrack = rawTextTrack(this.trackRef.current!.track);
     this.props.addMetadataTrack(metadataTrack);
   };
 
-  private cueChangeHandler = () => {
+  cueChangeHandler = () => {
     const track = this.trackRef.current!.track;
     const currentText = getLastActiveCueText(track);
     this.props.setAdditionalInformationsText(currentText);

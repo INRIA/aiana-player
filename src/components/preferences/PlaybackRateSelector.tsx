@@ -43,7 +43,7 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
     );
   }
 
-  private onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+  onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     const {
       changePlaybackRate: changePlaybackRateAction,
       mediaElement

@@ -36,7 +36,7 @@ class MuteButton extends React.Component<IMuteButton> {
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     if (!this.props.mediaElement) {
       return;
     }
@@ -48,7 +48,7 @@ class MuteButton extends React.Component<IMuteButton> {
     }
   };
 
-  private getControlText = () => {
+  getControlText = () => {
     const { t, isMuted } = this.props;
 
     return isMuted ? t('controls.unmute') : t('controls.mute');

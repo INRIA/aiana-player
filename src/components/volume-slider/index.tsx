@@ -90,7 +90,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
     );
   }
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const { mediaElement, updateVolume, volume, volumeStep } = this.props;
 
     if (!mediaElement) {
@@ -127,7 +127,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
     }
   };
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
 
     // Force focus when element in being interacted with a pointer device.
@@ -153,22 +153,18 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
     document.addEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseUpHandler = () => {
+  mouseUpHandler = () => {
     this.setState({ isActive: false });
     (document.querySelector('.aip-volume') as HTMLDivElement)!.blur();
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseMoveHandler = (evt: MouseEvent) => {
+  mouseMoveHandler = (evt: MouseEvent) => {
     this.updateVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
-  private updateVolume = (
-    mouseX: number,
-    sliderX: number,
-    sliderWidth: number
-  ) => {
+  updateVolume = (mouseX: number, sliderX: number, sliderWidth: number) => {
     const { mediaElement, updateVolume, volume } = this.props;
 
     if (!mediaElement) {
@@ -194,7 +190,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
    *
    * @param inputVolume The unsafe wanted value for the volume
    */
-  private safeVolume(inputVolume: number): number {
+  safeVolume(inputVolume: number): number {
     return bounded(inputVolume, VOLUME_MINIMUM, VOLUME_MAXIMUM);
   }
 }

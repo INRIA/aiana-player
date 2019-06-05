@@ -35,7 +35,7 @@ interface IDispatchProps {
 interface IAiana extends IStateProps, IDispatchProps {}
 
 class Aiana extends Component<IAiana> {
-  private fullscreenRef = createRef<HTMLDivElement>();
+  fullscreenRef = createRef<HTMLDivElement>();
 
   render() {
     return (
@@ -70,7 +70,7 @@ class Aiana extends Component<IAiana> {
     removeFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
-  private fullscreenHandler = () => {
+  fullscreenHandler = () => {
     this.props.handleFullscreenChange(isDocumentFullscreen());
   };
 }
