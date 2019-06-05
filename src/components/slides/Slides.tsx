@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import withWindow from '../../hocs/with-window';
+import withWidget from '../../hocs/with-widget';
 import { IAianaState } from '../../reducers';
 import {
   markdownToJSX,
@@ -36,4 +36,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(withWindow(Slides));
+export default connect(mapState)(withWidget(Slides));

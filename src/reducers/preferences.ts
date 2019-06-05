@@ -4,13 +4,13 @@ import {
   CHANGE_TEXT_HIGHLIGHTING,
   CHANGE_TEXT_UPPERCASE,
   CHANGE_THEME,
-  CHANGE_WINDOW_VISIBILITY,
+  CHANGE_WIDGET_VISIBILITY,
   UPDATE_ACTIVE_FONT_FACE,
   UPDATE_FONT_SIZE_MULTIPLIER,
   UPDATE_LINE_HEIGHT,
-  WINDOWS_LOCK
+  WIDGETS_LOCK
 } from '../actions/preferences';
-import { CHANGE_UI_WINDOWS, LOAD_CONFIGURATION } from '../actions/shared';
+import { CHANGE_WIDGETS, LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
@@ -26,14 +26,14 @@ import {
   DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_TEXT_HIGHLIGHTING,
   DEFAULT_THEME,
-  DEFAULT_UI_WINDOWS,
+  DEFAULT_WIDGETS as DEFAULT_UI_WIDGETS,
   DEFAULT_VOLUME_STEP,
   DEFAULT_VOLUME_STEP_MULTIPLIER,
   FONT_SIZE_MULTIPLIERS,
   LINE_HEIGHT_VALUES
 } from '../constants';
 
-export interface IUIWindow {
+export interface IWidget {
   height: number;
   left: number;
   locked: boolean;
@@ -65,9 +65,9 @@ export interface IPreferencesState {
   textHighlighting: boolean;
   theme: string;
   themes: string[];
-  uiWindows: IUIWindow[];
   volumeStep: number;
   volumeStepMultiplier: number;
+  widgets: IWidget[];
 }
 
 const initialState: IPreferencesState = {
@@ -87,9 +87,9 @@ const initialState: IPreferencesState = {
   textHighlighting: DEFAULT_TEXT_HIGHLIGHTING,
   theme: DEFAULT_THEME,
   themes: AVAILABLE_THEMES,
-  uiWindows: DEFAULT_UI_WINDOWS,
   volumeStep: DEFAULT_VOLUME_STEP,
-  volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER
+  volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER,
+  widgets: DEFAULT_UI_WIDGETS
 };
 
 const preferences: Reducer = (state = initialState, action) => {
@@ -109,35 +109,35 @@ const preferences: Reducer = (state = initialState, action) => {
         ...state,
         ...action.preferences
       };
-    case CHANGE_UI_WINDOWS:
+    case CHANGE_WIDGETS:
       return {
         ...state,
-        uiWindows: state.uiWindows.map((window: IUIWindow) => {
-          if (window.name === action.windowName) {
+        widgets: state.widgets.map((widget: IWidget) => {
+          if (widget.name === action.widgetName) {
             return {
-              ...window,
-              ...action.window
+              ...widget,
+              ...action.widget
             };
           }
 
-          return window;
+          return widget;
         })
       };
-    case WINDOWS_LOCK:
+    case WIDGETS_LOCK:
       return {
         ...state,
-        uiWindows: state.uiWindows.map((window: IUIWindow) => ({
-          ...window,
+        widgets: state.widgets.map((widget: IWidget) => ({
+          ...widget,
           locked: action.locked
         }))
       };
-    case CHANGE_WINDOW_VISIBILITY:
+    case CHANGE_WIDGET_VISIBILITY:
       return {
         ...state,
-        uiWindows: state.uiWindows.map((window: IUIWindow) => ({
-          ...window,
+        widgets: state.widgets.map((widget: IWidget) => ({
+          ...widget,
           visible:
-            window.name === action.windowName ? action.visible : window.visible
+            widget.name === action.widgetName ? action.visible : widget.visible
         }))
       };
     case UPDATE_ACTIVE_FONT_FACE:

@@ -19,8 +19,8 @@ import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
 import TextHighlightingToggle from './TextHighlightingToggle';
 import ThemeSelector from './ThemeSelector';
-import WindowsVisibility from './windows/visibility/WindowsVisibility';
-import WindowsLockToggle from './windows/WindowsLockToggle';
+import WidgetsVisibility from './widgets/visibility/WidgetsVisibility';
+import WidgetsLockToggle from './widgets/WidgetsLockToggle';
 import MediaSourceSelector from './MediaSourceSelector';
 
 const StyledPreferences = styled.div`
@@ -144,11 +144,11 @@ function PreferencesPanel() {
           <li className="aip-chapters-menu">
             <ChaptersMenuToggle />
           </li>
-          <li className="aip-windows-lock">
-            <WindowsLockToggle />
+          <li className="aip-widgets-lock">
+            <WidgetsLockToggle />
           </li>
-          <li className="aip-windows-visibility">
-            <WindowsVisibility />
+          <li className="aip-widgets-visibility">
+            <WidgetsVisibility />
           </li>
         </ul>
       </div>

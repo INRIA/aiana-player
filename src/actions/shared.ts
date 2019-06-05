@@ -1,14 +1,15 @@
 import axios from 'axios';
+import yaml from 'js-yaml';
 import queryString from 'query-string';
 import { AnyAction } from 'redux';
 import { DEFAULT_CONFIGURATION_PATH } from '../constants';
-import { IUIWindow } from '../reducers/preferences';
+import { IWidget } from '../reducers/preferences';
 import { CDispatch } from '../store';
 import { ThunkResult } from '../types';
 import { changeLanguage } from './preferences';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
-export const CHANGE_UI_WINDOWS = 'aiana/CHANGE_UI_WINDOWS';
+export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
 
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
@@ -36,6 +37,7 @@ export function handleFetchInitialData(): ThunkResult<void> {
 }
 
 function loadConfiguration(configuration: any): AnyAction {
+  console.log(yaml.safeDump(configuration.preferences));
   return {
     bookmarks: configuration.bookmarks,
     chapters: configuration.chapters,
@@ -47,13 +49,13 @@ function loadConfiguration(configuration: any): AnyAction {
   };
 }
 
-export function updateUIWindow(
-  windowName: string,
-  window: Partial<IUIWindow>
+export function updateWidget(
+  widgetName: string,
+  widget: Partial<IWidget>
 ): AnyAction {
   return {
-    type: CHANGE_UI_WINDOWS,
-    window,
-    windowName
+    type: CHANGE_WIDGETS,
+    widget,
+    widgetName
   };
 }

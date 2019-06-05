@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import withWindow from '../../hocs/with-window';
+import withWidget from '../../hocs/with-widget';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { IRawChaptersTrack, isActiveTrack } from '../../utils/media';
@@ -42,4 +42,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(withWindow(withUniqueId(ChaptersMenu)));
+export default connect(mapState)(withWidget(withUniqueId(ChaptersMenu)));

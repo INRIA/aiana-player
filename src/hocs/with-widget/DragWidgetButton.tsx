@@ -9,20 +9,20 @@ import styled from '../../utils/styled-components';
 
 interface IProps {
   isDraggable: boolean;
-  windowName: string;
+  widgetName: string;
   dragEnd(): void;
   dragStart(): void;
   dragUpdate(deltaX: number, deltaY: number): void;
   keyUpdate(key: string): void;
 }
 
-interface IDragWindowButton extends IProps, WithTranslation {}
+interface IDragWidgetButton extends IProps, WithTranslation {}
 
 interface IState {
   isDragging: boolean;
 }
 
-const StyledDragWindowButton = styled(StyledButton)`
+const StyledDragWidgetButton = styled(StyledButton)`
   display: block;
 
   height: 1.5em;
@@ -44,7 +44,7 @@ const defaultState: IState = {
   isDragging: false
 };
 
-class DragWindowButton extends React.Component<IDragWindowButton, IState> {
+class DragWidgetButton extends React.Component<IDragWidgetButton, IState> {
   controlsRef = React.createRef<HTMLButtonElement>();
   baseX = 0;
   baseY = 0;
@@ -52,15 +52,15 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   readonly state = defaultState;
 
   render() {
-    const classes = classNames('aip-window-drag', {
+    const classes = classNames('aip-widget-drag', {
       activable: this.props.isDraggable,
       'is-dragging': this.state.isDragging
     });
 
     return (
-      <StyledDragWindowButton
-        aria-label={this.props.t('window.drag', {
-          windowName: this.props.windowName
+      <StyledDragWidgetButton
+        aria-label={this.props.t('widget.drag', {
+          widgetName: this.props.widgetName
         })}
         className={classes}
         ref={this.controlsRef}
@@ -69,7 +69,7 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
         type="button"
       >
         <StyledSvg as={MoveIcon} aria-hidden="true" />
-      </StyledDragWindowButton>
+      </StyledDragWidgetButton>
     );
   }
 
@@ -118,4 +118,4 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   }
 }
 
-export default withTranslation()(DragWindowButton);
+export default withTranslation()(DragWidgetButton);

@@ -6,7 +6,7 @@ import {
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
   DEFAULT_MOVE_STEP,
-  DEFAULT_WINDOWS_CONTAINER,
+  DEFAULT_WIDGETS_CONTAINER,
   DIRECTION_BOTTOM,
   DIRECTION_LEFT,
   DIRECTION_RIGHT,
@@ -14,13 +14,13 @@ import {
   END_KEY,
   HOME_KEY
 } from '../../constants';
-import { IUIWindow } from '../../reducers/preferences';
+import { IWidget } from '../../reducers/preferences';
 import { Direction } from '../../types';
 import { unitToPercent } from '../../utils/math';
 import styled from '../../utils/styled-components';
 import { bounded } from '../../utils/ui';
-import CloseWindowButton from './CloseWindowButton';
-import DragWindowButton from './DragWindowButton';
+import CloseWidgetButton from './CloseWidgetButton';
+import DragWidgetButton from './DragWidgetButton';
 import Resizers from './Resizers';
 
 export interface IWrappedComponentProps {
@@ -36,7 +36,7 @@ export interface IWrappedComponentProps {
   visible: boolean;
   width: number;
   toggleDraggable(isDraggable: boolean): void;
-  uiUpdateHandler(name: string, window: Partial<IUIWindow>): void;
+  uiUpdateHandler(name: string, widget: Partial<IWidget>): void;
   [prop: string]: any;
 }
 
@@ -47,16 +47,16 @@ interface IHOCState {
   widthDiff: number;
 }
 
-const StyledWindow = styled.div`
+const StyledWidget = styled.div`
   position: absolute;
 
   background-color: ${(props) => props.theme.fg};
 
-  &:hover .aip-window-topbar.activable {
+  &:hover .aip-widget-topbar.activable {
     opacity: 1;
   }
 
-  .aip-window-topbar {
+  .aip-widget-topbar {
     width: calc(100% - 2px);
     height: 2.5em;
 
@@ -80,7 +80,7 @@ const StyledWindow = styled.div`
     }
   }
 
-  .aip-windowed {
+  .aip-widgetized {
     height: 100%;
     overflow: auto;
 
@@ -96,13 +96,13 @@ const defaultState: IHOCState = {
 };
 
 const defaultProps: Partial<IWrappedComponentProps> = {
-  boundariesSelector: DEFAULT_WINDOWS_CONTAINER,
+  boundariesSelector: DEFAULT_WIDGETS_CONTAINER,
   minimumHeight: 20,
   minimumWidth: 20
 };
 
-function withWindow(WrappedComponent: React.ComponentType<any>) {
-  return class WithWindow extends React.Component<
+function withWidget(WrappedComponent: React.ComponentType<any>) {
+  return class WithWidget extends React.Component<
     IWrappedComponentProps,
     IHOCState
   > {
@@ -116,8 +116,8 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
     render() {
       return (
-        <StyledWindow
-          className="aip-window"
+        <StyledWidget
+          className="aip-widget"
           hidden={!this.props.visible}
           ref={this.elementRef}
           style={{
@@ -132,20 +132,20 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
         >
           {!this.props.locked && (
             <div
-              className={classNames('aip-window-topbar', {
+              className={classNames('aip-widget-topbar', {
                 activable: this.props.isDraggable
               })}
             >
-              <DragWindowButton
+              <DragWidgetButton
                 isDraggable={this.props.isDraggable}
                 dragEnd={this.dragEndHandler}
                 dragStart={this.dragStartHandler}
                 dragUpdate={this.dragUpdateHandler}
                 keyUpdate={this.moveKeyDownHandler}
-                windowName={this.props.name}
+                widgetName={this.props.name}
               />
-              <CloseWindowButton
-                windowName={this.props.name}
+              <CloseWidgetButton
+                widgetName={this.props.name}
                 activable={this.props.isDraggable}
               />
             </div>
@@ -157,13 +157,13 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
               resizeStart={this.resizeStartHandler}
               resizeUpdate={this.resizeUpdateHandler}
               resizeEnd={this.resizeEndHandler}
-              windowName={this.props.name}
+              widgetName={this.props.name}
             />
           )}
-          <div className="aip-windowed">
+          <div className="aip-widgetized">
             <WrappedComponent {...this.props} />
           </div>
-        </StyledWindow>
+        </StyledWidget>
       );
     }
 
@@ -173,9 +173,9 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
           return Object.assign(prev, this.resizeKey(key, handlePosition));
         },
         {}
-      ) as IUIWindow;
+      ) as IWidget;
 
-      // Only dispatch when window got resize
+      // Only dispatch when widget got resize
       if (Object.keys(resizer).length > 0) {
         this.props.uiUpdateHandler(this.props.name, resizer);
       }
@@ -186,31 +186,31 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
       switch (handlePosition) {
         case DIRECTION_TOP:
-          // window will have its top and height updated
+          // widget will have its top and height updated
           if (key === ARROW_UP_KEY) {
-            // window will have its top lowered and height increased.
+            // widget will have its top lowered and height increased.
             const expectedTop = this.props.top - DEFAULT_MOVE_STEP;
 
             if (expectedTop > 0) {
-              // Expected `top` of the window is still in bounds
+              // Expected `top` of the widget is still in bounds
 
               newCoords = {
                 height: this.props.height + DEFAULT_MOVE_STEP,
                 top: expectedTop
               };
             } else {
-              // Expected `top` of the window is not in bounds
+              // Expected `top` of the widget is not in bounds
               newCoords = {
                 height: this.props.height + this.props.top,
                 top: 0
               };
             }
           } else if (key === ARROW_DOWN_KEY) {
-            // window will have its top increased and height lowered.
+            // widget will have its top increased and height lowered.
             const expectedHeight = this.props.height - DEFAULT_MOVE_STEP;
 
             if (expectedHeight < this.props.minimumHeight!) {
-              // Expected height of the window is out of bounds
+              // Expected height of the widget is out of bounds
               newCoords = {
                 height: this.props.minimumHeight,
                 top:
@@ -218,7 +218,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
                   (this.props.height - this.props.minimumHeight!)
               };
             } else {
-              // Expected height of the window is in bounds
+              // Expected height of the widget is in bounds
               newCoords = {
                 height: expectedHeight,
                 top: this.props.top + DEFAULT_MOVE_STEP
@@ -228,25 +228,25 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
           break;
         case DIRECTION_RIGHT:
-          // window will have its width updated
+          // widget will have its width updated
           if (key === ARROW_RIGHT_KEY) {
-            // increase window width
+            // increase widget width
             const expectedWidth = this.props.width + DEFAULT_MOVE_STEP;
             const expectedRight = this.props.left + expectedWidth;
 
             if (expectedRight > 100) {
-              // expected right border of the window is out of bounds
+              // expected right border of the widget is out of bounds
               newCoords = {
                 width: 100 - this.props.left
               };
             } else {
-              // expected right border of the window is in bounds
+              // expected right border of the widget is in bounds
               newCoords = {
                 width: expectedWidth
               };
             }
           } else if (key === ARROW_LEFT_KEY) {
-            // decrease window width
+            // decrease widget width
             newCoords = {
               width: this.boundedWidth(this.props.width - DEFAULT_MOVE_STEP)
             };
@@ -254,44 +254,44 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
 
           break;
         case DIRECTION_BOTTOM:
-          // window will have its height updated
+          // widget will have its height updated
           if (key === ARROW_DOWN_KEY) {
-            // increase window height
+            // increase widget height
             const expectedHeight = this.props.height + DEFAULT_MOVE_STEP;
             const expectedBottom = this.props.top + expectedHeight;
 
             if (expectedBottom > 100) {
-              // expected bottom border of the window is out of bounds
+              // expected bottom border of the widget is out of bounds
               newCoords = {
                 height: 100 - this.props.top
               };
             } else {
-              // expected bottom border of the window is in bounds
+              // expected bottom border of the widget is in bounds
               newCoords = {
                 height: expectedHeight
               };
             }
           } else if (key === ARROW_UP_KEY) {
-            // decrease window height
+            // decrease widget height
             newCoords = {
               height: this.boundedHeight(this.props.height - DEFAULT_MOVE_STEP)
             };
           }
           break;
         case DIRECTION_LEFT:
-          // window will have its width and left position updated
+          // widget will have its width and left position updated
           if (key === ARROW_LEFT_KEY) {
             // decrease left position, increase width
             const expectedLeft = this.props.left - DEFAULT_MOVE_STEP;
 
             if (expectedLeft > 0) {
-              // expected left border of the window is in bounds
+              // expected left border of the widget is in bounds
               newCoords = {
                 left: expectedLeft,
                 width: this.props.width + DEFAULT_MOVE_STEP
               };
             } else {
-              // expected left border of the window is out of bounds
+              // expected left border of the widget is out of bounds
               newCoords = {
                 left: 0,
                 width: this.props.width + this.props.left
@@ -302,7 +302,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
             const expectedWidth = this.props.width - DEFAULT_MOVE_STEP;
 
             if (expectedWidth < this.props.minimumWidth!) {
-              // expected left border of the window is out of bounds
+              // expected left border of the widget is out of bounds
               newCoords = {
                 left:
                   this.props.left +
@@ -310,7 +310,7 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
                 width: this.props.minimumWidth!
               };
             } else {
-              // expected left border of the window is in bounds
+              // expected left border of the widget is in bounds
               newCoords = {
                 left: this.props.left + DEFAULT_MOVE_STEP,
                 width: expectedWidth
@@ -636,4 +636,4 @@ function withWindow(WrappedComponent: React.ComponentType<any>) {
   };
 }
 
-export default withWindow;
+export default withWidget;

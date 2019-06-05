@@ -14,7 +14,7 @@ import {
   updateMediaDuration
 } from '../../actions/player';
 import { updateSubtitlesTracksList } from '../../actions/subtitles';
-import withWindow from '../../hocs/with-window';
+import withWidget from '../../hocs/with-widget';
 import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
 import { ISource } from '../../reducers/player';
@@ -284,4 +284,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withWindow(VideoPlayer));
+)(withWidget(VideoPlayer));

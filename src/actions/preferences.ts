@@ -5,8 +5,8 @@ import { ThunkResult } from '../types';
 
 export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
-export const WINDOWS_LOCK = 'aiana/WINDOWS_LOCK';
-export const CHANGE_WINDOW_VISIBILITY = 'aiana/CHANGE_WINDOW_VISIBILITY';
+export const WIDGETS_LOCK = 'aiana/WIDGETS_LOCK';
+export const CHANGE_WIDGET_VISIBILITY = 'aiana/CHANGE_WIDGET_VISIBILITY';
 export const UPDATE_ACTIVE_FONT_FACE = 'aiana/UPDATE_ACTIVE_FONT_FACE';
 export const UPDATE_FONT_SIZE_MULTIPLIER = 'aiana/UPDATE_FONT_SIZE_MULTIPLIER';
 export const CHANGE_TEXT_HIGHLIGHTING = 'aiana/CHANGE_TEXT_HIGHLIGHTING';
@@ -58,21 +58,21 @@ export function updateActiveFontFace(fontFace: string): AnyAction {
   };
 }
 
-export function setWindowVisibility(
-  windowName: string,
+export function setWidgetVisibility(
+  widgetName: string,
   visible: boolean
 ): AnyAction {
   return {
-    type: CHANGE_WINDOW_VISIBILITY,
+    type: CHANGE_WIDGET_VISIBILITY,
     visible,
-    windowName
+    widgetName
   };
 }
 
-export function setWindowsLock(locked: boolean): AnyAction {
+export function setWidgetsLock(locked: boolean): AnyAction {
   return {
     locked,
-    type: WINDOWS_LOCK
+    type: WIDGETS_LOCK
   };
 }
 
