@@ -87,6 +87,7 @@ function PreferencesPanel() {
   const [t] = useTranslation();
   const [isOpen, togglePanel] = useState(false);
   const ariaLabelId = uid();
+  const prefsPanelId = uid();
 
   return (
     <StyledPreferences
@@ -97,13 +98,14 @@ function PreferencesPanel() {
         <PanelToggle
           isExpanded={isOpen}
           clickHandler={() => togglePanel(!isOpen)}
+          aria-controls={prefsPanelId}
         >
           <AssistiveText>{t('preferences.title')}</AssistiveText>
           <StyledSvg as={SvgSettings} aria-hidden="true" />
         </PanelToggle>
       </h2>
 
-      <div className="aip-preferences-panel" hidden={!isOpen}>
+      <div id={prefsPanelId} className="aip-preferences-panel" hidden={!isOpen}>
         <ul>
           <li className="aip-language">
             <LanguageSelector />
