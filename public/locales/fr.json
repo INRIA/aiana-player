@@ -25,6 +25,7 @@
   "preferences.media_source.label": "Source du média",
   "preferences.show_chapters.label": "Afficher les chapitres",
   "preferences.playbackrate.label": "Vitesse de lecture",
+  "preferences.presets_selector.label": "Configurations enregistrées",
   "preferences.slidestrack.label": "Langue des diapositives",
   "preferences.subtitlestrack.label": "Sous-titres",
   "preferences.subtitlestrack.no_subtitle": "Aucun sous-titre",

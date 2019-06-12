@@ -22,6 +22,14 @@ import ThemeSelector from './ThemeSelector';
 import WidgetsVisibility from './widgets/visibility/WidgetsVisibility';
 import WidgetsLockToggle from './widgets/WidgetsLockToggle';
 import MediaSourceSelector from './MediaSourceSelector';
+import PresetsSelector from './PresetsSelector';
+import { connect } from 'react-redux';
+import { IAianaState } from '../../reducers';
+import { IPreset } from '../../reducers/presets';
+
+interface IPreferencesPanel {
+  presets: IPreset[];
+}
 
 const StyledPreferences = styled.div`
   display: inline-block;
@@ -83,7 +91,7 @@ const StyledPreferences = styled.div`
   }
 `;
 
-function PreferencesPanel() {
+function PreferencesPanel(props: IPreferencesPanel) {
   const [t] = useTranslation();
   const [isOpen, togglePanel] = useState(false);
   const ariaLabelId = uid();
@@ -107,6 +115,9 @@ function PreferencesPanel() {
 
       <div id={prefsPanelId} className="aip-preferences-panel" hidden={!isOpen}>
         <ul>
+          <li>
+            <PresetsSelector presets={props.presets} />
+          </li>
           <li className="aip-language">
             <LanguageSelector />
           </li>
@@ -158,4 +169,10 @@ function PreferencesPanel() {
   );
 }
 
-export default PreferencesPanel;
+function mapState(state: IAianaState) {
+  return {
+    presets: state.presets
+  };
+}
+
+export default connect(mapState)(PreferencesPanel);

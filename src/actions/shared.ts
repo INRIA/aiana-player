@@ -1,12 +1,14 @@
 import axios from 'axios';
+import yaml from 'js-yaml';
+import cloneDeep from 'lodash.clonedeep';
 import queryString from 'query-string';
 import { AnyAction } from 'redux';
 import { DEFAULT_CONFIGURATION_PATH } from '../constants';
-import { IWidget } from '../reducers/preferences';
+import { IWidget, initialPreferencesState } from '../reducers/preferences';
 import { CDispatch } from '../store';
 import { ThunkResult } from '../types';
 import { changeLanguage } from './preferences';
-import { DEFAULT_LANG } from '../constants/preferences';
+import { IPreset } from '../reducers/presets';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
@@ -16,6 +18,7 @@ interface IQueryString {
   src?: string;
 }
 
+// FIXME: language and defaults handling isn't robust enough.
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
     const parsedQueryString = queryString.parse(
@@ -41,14 +44,41 @@ export function handleFetchInitialData(): ThunkResult<void> {
     // use hosted configuration
     else {
       axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
-        const language = data.preferences.language || DEFAULT_LANG;
+        const activePreset = data.presets.find((p: IPreset) => p.selected);
 
-        dispatch(changeLanguage(language));
-        dispatch(loadConfiguration(data));
+        const mergedPreferences = Object.assign(
+          cloneDeep(activePreset) || {},
+          cloneDeep(data.preferences)
+          // ,
+          // cloneDeep(getLocalConfiguration())
+        );
+
+        dispatch(changeLanguage(mergedPreferences.language));
+        dispatch(
+          loadConfiguration({
+            ...data,
+            preferences: mergedPreferences
+          })
+        );
       });
     }
   };
 }
+
+function getLocalConfiguration() {
+  const serializedPreferences = localStorage.getItem('aiana-preferences');
+
+  if (serializedPreferences === null) {
+    return {};
+  }
+
+  return {
+    ...initialPreferencesState,
+    ...yaml.safeLoad(serializedPreferences)
+  };
+}
+
+getLocalConfiguration();
 
 function loadConfiguration(configuration: any): AnyAction {
   return {
@@ -56,6 +86,7 @@ function loadConfiguration(configuration: any): AnyAction {
     chapters: configuration.chapters,
     player: configuration.player,
     preferences: configuration.preferences,
+    presets: configuration.presets,
     slides: configuration.slides,
     subtitles: configuration.subtitles,
     type: LOAD_CONFIGURATION

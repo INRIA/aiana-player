@@ -27,6 +27,7 @@
   "preferences.media_source.label": "Media source",
   "preferences.show_chapters.label": "Show chapters",
   "preferences.playbackrate.label": "Playback speed",
+  "preferences.presets_selector.label": "Saved presets",
   "preferences.slidestrack.label": "Slides language",
   "preferences.subtitlestrack.label": "Subtitles",
   "preferences.subtitlestrack.no_subtitle": "No subtitles",

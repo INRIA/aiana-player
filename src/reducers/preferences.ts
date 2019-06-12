@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep';
 import { Reducer } from 'redux';
 import {
   CHANGE_LANGUAGE,
@@ -34,6 +35,8 @@ import {
   DEFAULT_VOLUME_STEP_MULTIPLIER
 } from '../constants/preferences';
 import { DEFAULT_WIDGETS } from '../constants/widgets';
+import { CHANGE_ACTIVE_PRESET } from '../actions/presets';
+import { IPreset } from './presets';
 
 export interface IWidget {
   height: number;
@@ -96,6 +99,8 @@ export const initialPreferencesState: IPreferencesState = {
 
 const preferences: Reducer = (state = initialPreferencesState, action) => {
   switch (action.type) {
+    case CHANGE_ACTIVE_PRESET:
+      return action.preset;
     case CHANGE_LANGUAGE:
       return {
         ...state,
@@ -106,11 +111,15 @@ const preferences: Reducer = (state = initialPreferencesState, action) => {
         ...state,
         theme: action.theme
       };
-    case LOAD_CONFIGURATION:
-      return {
-        ...state,
-        ...action.preferences
-      };
+    case LOAD_CONFIGURATION: {
+      const activePreset = action.presets.find((p: IPreset) => p.selected);
+
+      return Object.assign(
+        cloneDeep(state),
+        activePreset ? cloneDeep(activePreset) : {}
+        // _.cloneDeep(action.preferences)
+      );
+    }
     case CHANGE_WIDGETS:
       return {
         ...state,
