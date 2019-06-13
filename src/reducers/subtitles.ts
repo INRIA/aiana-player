@@ -7,6 +7,7 @@ import {
   UPDATE_SUBTITLES_TRACKS_LIST
 } from '../actions/subtitles';
 import { IRawSubtitlesTrack } from '../utils/media';
+import { IStdAction } from '../types';
 
 export interface ISubtitlesTrack {
   label?: string;
@@ -53,12 +54,15 @@ function toggleSubtitlesTracks(
   });
 }
 
-const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
+const subtitles: Reducer<ISubtitlesState, IStdAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case ADD_SUBTITLES_TRACK: {
       const subtitlesTracks = [].concat(
         state.subtitlesTracks as any,
-        action.subtitlesTrack
+        action.payload.subtitlesTrack
       );
 
       return {
@@ -69,26 +73,26 @@ const subtitles: Reducer = (state: ISubtitlesState = initialState, action) => {
     case UPDATE_SUBTITLES_TRACKS_LIST:
       return {
         ...state,
-        subtitlesTracks: action.subtitlesTracks
+        subtitlesTracks: action.payload.subtitlesTracks
       };
     case UPDATE_ACTIVE_SUBTITLES_TRACK: {
       return {
         ...state,
         subtitlesTracks: toggleSubtitlesTracks(
           state.subtitlesTracks,
-          action.subtitlesTrackLanguage
+          action.payload.subtitlesTrackLanguage
         )
       };
     }
     case SET_SUBTITLE_TEXT:
       return {
         ...state,
-        subtitlesText: action.subtitlesText
+        subtitlesText: action.payload.subtitlesText
       };
     case LOAD_CONFIGURATION:
       return {
         ...state,
-        ...action.subtitles
+        ...action.payload.subtitles
       };
     default:
       return state;

@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { LOAD_CONFIGURATION } from '../actions/shared';
 import { IWidget } from './preferences';
 import { CHANGE_ACTIVE_PRESET } from '../actions/presets';
+import { IStdAction } from '../types';
 
 export interface IPreset {
   fontFace: string;
@@ -28,16 +29,18 @@ export interface IPreset {
   widgets: IWidget[];
 }
 
-const presets: Reducer = (state: IPreset[] = [], action) => {
+const presets: Reducer<IPreset[], IStdAction> = (state = [], action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PRESET:
       return state.map((preset) => ({
         ...preset,
-        selected: action.preset ? preset.name === action.preset.name : false
+        selected: action.payload.preset
+          ? preset.name === action.payload.preset.name
+          : false
       }));
     case LOAD_CONFIGURATION: {
-      const { presets: actionPresets = [] } = action;
-      return ([] as any).concat(...state, actionPresets);
+      const { presets: actionPresets = [] } = action.payload;
+      return ([] as IPreset[]).concat(...state, actionPresets);
     }
     default:
       return state;

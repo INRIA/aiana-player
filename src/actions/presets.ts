@@ -7,7 +7,6 @@ import { initialPreferencesState } from '../reducers/preferences';
 
 export const CHANGE_ACTIVE_PRESET = 'aiana/CHANGE_ACTIVE_PRESET';
 
-// FIXME: problem with language dispatch
 export function changeActivePreset(preset?: IPreset): ThunkResult<void> {
   return (dispatch: CDispatch) => {
     const safePreset = Object.assign(
@@ -18,7 +17,9 @@ export function changeActivePreset(preset?: IPreset): ThunkResult<void> {
     dispatch(changeLanguage(safePreset.language));
 
     dispatch({
-      preset: safePreset,
+      payload: {
+        preset: safePreset
+      },
       type: CHANGE_ACTIVE_PRESET
     });
   };

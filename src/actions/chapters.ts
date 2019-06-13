@@ -1,6 +1,5 @@
-import { AnyAction } from 'redux';
 import { CDispatch } from '../store';
-import { ThunkResult } from '../types';
+import { ThunkResult, IStdAction } from '../types';
 import { IRawChaptersTrack } from '../utils/media';
 import { requestSeek } from './player';
 
@@ -35,46 +34,58 @@ export function seekPreviousChapter(
   };
 }
 
-function previousChapter(from: number, to: number): AnyAction {
+function previousChapter(from: number, to: number): IStdAction {
   return {
-    from,
-    to,
+    payload: {
+      from,
+      to
+    },
     type: PREVIOUS_CHAPTER
   };
 }
 
-function nextChapter(from: number, to: number): AnyAction {
+function nextChapter(from: number, to: number): IStdAction {
   return {
-    from,
-    to,
+    payload: {
+      from,
+      to
+    },
     type: NEXT_CHAPTER
   };
 }
 
-export function addChaptersTrack(chaptersTrack: IRawChaptersTrack): AnyAction {
+export function addChaptersTrack(chaptersTrack: IRawChaptersTrack): IStdAction {
   return {
-    chaptersTrack,
+    payload: {
+      chaptersTrack
+    },
     type: ADD_CHAPTER_TRACK
   };
 }
 
-export function updateActiveChaptersTrack(language: string): AnyAction {
+export function updateActiveChaptersTrack(language: string): IStdAction {
   return {
-    language,
+    payload: {
+      language
+    },
     type: UPDATE_ACTIVE_CHAPTERS_TRACK
   };
 }
 
-export function setChapterText(text?: string): AnyAction {
+export function setChapterText(text?: string): IStdAction {
   return {
-    text,
+    payload: {
+      text
+    },
     type: UPDATE_CHAPTER_TEXT
   };
 }
 
-export function setChaptersMenu(enabled: boolean): AnyAction {
+export function setChaptersMenu(enabled: boolean): IStdAction {
   return {
-    enabled,
+    payload: {
+      enabled
+    },
     type: TOGGLE_CHAPTERS_MENU
   };
 }

@@ -1,7 +1,6 @@
-import { AnyAction } from 'redux';
 import i18n from '../i18n';
 import { CDispatch } from '../store';
-import { ThunkResult } from '../types';
+import { ThunkResult, IStdAction } from '../types';
 
 export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
@@ -14,46 +13,58 @@ export const CHANGE_TEXT_UPPERCASE = 'aiana/CHANGE_TEXT_UPPERCASE';
 export const UPDATE_LINE_HEIGHT = 'aiana/CHANGE_LINE_HEIGHT';
 export const CHANGE_MEDIA_SOURCE = 'aiana/CHANGE_MEDIA_SOURCE';
 
-export function changeMediaSource(mediaSource: string): AnyAction {
+export function changeMediaSource(mediaSource: string): IStdAction {
   return {
-    mediaSource,
+    payload: {
+      mediaSource
+    },
     type: CHANGE_MEDIA_SOURCE
   };
 }
 
-export function updateLineHeight(lineHeight: number): AnyAction {
+export function updateLineHeight(lineHeight: number): IStdAction {
   return {
-    lineHeight,
+    payload: {
+      lineHeight
+    },
     type: UPDATE_LINE_HEIGHT
   };
 }
 
-export function setFontUppercase(fontUppercase: boolean): AnyAction {
+export function setFontUppercase(fontUppercase: boolean): IStdAction {
   return {
-    fontUppercase,
+    payload: {
+      fontUppercase
+    },
     type: CHANGE_TEXT_UPPERCASE
   };
 }
 
-export function setTextHighlighting(textHighlighting: boolean): AnyAction {
+export function setTextHighlighting(textHighlighting: boolean): IStdAction {
   return {
-    textHighlighting,
+    payload: {
+      textHighlighting
+    },
     type: CHANGE_TEXT_HIGHLIGHTING
   };
 }
 
 export function updateFontSizeMultiplier(
   fontSizeMultiplier: number
-): AnyAction {
+): IStdAction {
   return {
-    fontSizeMultiplier,
+    payload: {
+      fontSizeMultiplier
+    },
     type: UPDATE_FONT_SIZE_MULTIPLIER
   };
 }
 
-export function updateActiveFontFace(fontFace: string): AnyAction {
+export function updateActiveFontFace(fontFace: string): IStdAction {
   return {
-    fontFace,
+    payload: {
+      fontFace
+    },
     type: UPDATE_ACTIVE_FONT_FACE
   };
 }
@@ -61,17 +72,21 @@ export function updateActiveFontFace(fontFace: string): AnyAction {
 export function setWidgetVisibility(
   widgetName: string,
   visible: boolean
-): AnyAction {
+): IStdAction {
   return {
-    type: CHANGE_WIDGET_VISIBILITY,
-    visible,
-    widgetName
+    payload: {
+      visible,
+      widgetName
+    },
+    type: CHANGE_WIDGET_VISIBILITY
   };
 }
 
-export function setWidgetsLock(locked: boolean): AnyAction {
+export function setWidgetsLock(locked: boolean): IStdAction {
   return {
-    locked,
+    payload: {
+      locked
+    },
     type: WIDGETS_LOCK
   };
 }
@@ -83,16 +98,20 @@ export function changeLanguage(language: string): ThunkResult<void> {
   };
 }
 
-function changeUILanguage(language: string): AnyAction {
+function changeUILanguage(language: string): IStdAction {
   return {
-    language,
+    payload: {
+      language
+    },
     type: CHANGE_LANGUAGE
   };
 }
 
-export function changeActiveTheme(theme: string): AnyAction {
+export function changeActiveTheme(theme: string): IStdAction {
   return {
-    theme,
+    payload: {
+      theme
+    },
     type: CHANGE_THEME
   };
 }

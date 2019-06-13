@@ -7,8 +7,8 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  activeMultiplier: number;
-  availableMultipliers: number[];
+  activeMultiplier?: number;
+  availableMultipliers?: number[];
 }
 
 interface IDispatchProps {
@@ -28,11 +28,12 @@ function FontSizeSelector(props: IProps) {
         onChange={props.changeHandler}
         value={props.activeMultiplier}
       >
-        {props.availableMultipliers.map((multiplier) => (
-          <option key={multiplier} value={multiplier}>
-            ×{multiplier}
-          </option>
-        ))}
+        {props.availableMultipliers &&
+          props.availableMultipliers.map((multiplier) => (
+            <option key={multiplier} value={multiplier}>
+              ×{multiplier}
+            </option>
+          ))}
       </select>
     </React.Fragment>
   );

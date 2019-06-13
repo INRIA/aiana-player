@@ -7,8 +7,8 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  activeTheme: string;
-  themes: string[];
+  activeTheme?: string;
+  themes?: string[];
 }
 
 interface IDispatchProps {
@@ -36,9 +36,10 @@ function ThemeSelector({
         onChange={selectChangeHandler}
         value={activeTheme}
       >
-        {themes.map((themeName) => (
-          <option key={themeName}>{themeName}</option>
-        ))}
+        {themes &&
+          themes.map((themeName) => (
+            <option key={themeName}>{themeName}</option>
+          ))}
       </select>
     </React.Fragment>
   );

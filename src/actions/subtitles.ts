@@ -1,5 +1,4 @@
-import { AnyAction } from 'redux';
-import { ThunkResult } from '../types';
+import { ThunkResult, IStdAction } from '../types';
 import { IRawSubtitlesTrack } from '../utils/media';
 
 export const UPDATE_SUBTITLES_TRACKS_LIST =
@@ -9,9 +8,11 @@ export const UPDATE_ACTIVE_SUBTITLES_TRACK =
 export const SET_SUBTITLE_TEXT = 'aiana/SET_SUBTITLE_TEXT';
 export const ADD_SUBTITLES_TRACK = 'aiana/ADD_SUBTITLES_TRACK';
 
-export function setSubtitlesText(text?: string): AnyAction {
+export function setSubtitlesText(text?: string): IStdAction {
   return {
-    subtitlesText: text,
+    payload: {
+      subtitlesText: text
+    },
     type: SET_SUBTITLE_TEXT
   };
 }
@@ -21,7 +22,9 @@ export function updateActiveSubtitlesTrack(
 ): ThunkResult<void> {
   return (dispatch) => {
     dispatch({
-      subtitlesTrackLanguage,
+      payload: {
+        subtitlesTrackLanguage
+      },
       type: UPDATE_ACTIVE_SUBTITLES_TRACK
     });
 
@@ -33,18 +36,22 @@ export function updateActiveSubtitlesTrack(
 
 export function addSubtitlesTrack(
   subtitlesTrack: IRawSubtitlesTrack
-): AnyAction {
+): IStdAction {
   return {
-    subtitlesTrack,
+    payload: {
+      subtitlesTrack
+    },
     type: ADD_SUBTITLES_TRACK
   };
 }
 
 export function updateSubtitlesTracksList(
   subtitlesTracks: IRawSubtitlesTrack[]
-): AnyAction {
+): IStdAction {
   return {
-    subtitlesTracks,
+    payload: {
+      subtitlesTracks
+    },
     type: UPDATE_SUBTITLES_TRACKS_LIST
   };
 }

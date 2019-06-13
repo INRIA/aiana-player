@@ -37,6 +37,7 @@ import {
 import { DEFAULT_WIDGETS } from '../constants/widgets';
 import { CHANGE_ACTIVE_PRESET } from '../actions/presets';
 import { IPreset } from './presets';
+import { IStdAction } from '../types';
 
 export interface IWidget {
   height: number;
@@ -97,37 +98,42 @@ export const initialPreferencesState: IPreferencesState = {
   widgets: DEFAULT_WIDGETS
 };
 
-const preferences: Reducer = (state = initialPreferencesState, action) => {
+const preferences: Reducer<IPreferencesState, IStdAction> = (
+  state = initialPreferencesState,
+  action
+) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PRESET:
-      return action.preset;
+      return action.payload.preset;
     case CHANGE_LANGUAGE:
       return {
         ...state,
-        language: action.language
+        language: action.payload.language
       };
     case CHANGE_THEME:
       return {
         ...state,
-        theme: action.theme
+        theme: action.payload.theme
       };
     case LOAD_CONFIGURATION: {
-      const activePreset = action.presets.find((p: IPreset) => p.selected);
+      const activePreset = action.payload.presets.find(
+        (p: IPreset) => p.selected
+      );
 
       return Object.assign(
-        cloneDeep(state),
-        activePreset ? cloneDeep(activePreset) : {}
-        // _.cloneDeep(action.preferences)
+        cloneDeep(initialPreferencesState),
+        cloneDeep(activePreset),
+        cloneDeep(state)
       );
     }
     case CHANGE_WIDGETS:
       return {
         ...state,
         widgets: state.widgets.map((widget: IWidget) => {
-          if (widget.name === action.widgetName) {
+          if (widget.name === action.payload.widgetName) {
             return {
               ...widget,
-              ...action.widget
+              ...action.payload.widget
             };
           }
 
@@ -139,7 +145,7 @@ const preferences: Reducer = (state = initialPreferencesState, action) => {
         ...state,
         widgets: state.widgets.map((widget: IWidget) => ({
           ...widget,
-          locked: action.locked
+          locked: action.payload.locked
         }))
       };
     case CHANGE_WIDGET_VISIBILITY:
@@ -148,33 +154,35 @@ const preferences: Reducer = (state = initialPreferencesState, action) => {
         widgets: state.widgets.map((widget: IWidget) => ({
           ...widget,
           visible:
-            widget.name === action.widgetName ? action.visible : widget.visible
+            widget.name === action.payload.widgetName
+              ? action.payload.visible
+              : widget.visible
         }))
       };
     case UPDATE_ACTIVE_FONT_FACE:
       return {
         ...state,
-        fontFace: action.fontFace
+        fontFace: action.payload.fontFace
       };
     case UPDATE_FONT_SIZE_MULTIPLIER:
       return {
         ...state,
-        fontSizeMultiplier: action.fontSizeMultiplier
+        fontSizeMultiplier: action.payload.fontSizeMultiplier
       };
     case CHANGE_TEXT_HIGHLIGHTING:
       return {
         ...state,
-        textHighlighting: action.textHighlighting
+        textHighlighting: action.payload.textHighlighting
       };
     case CHANGE_TEXT_UPPERCASE:
       return {
         ...state,
-        fontUppercase: action.fontUppercase
+        fontUppercase: action.payload.fontUppercase
       };
     case UPDATE_LINE_HEIGHT:
       return {
         ...state,
-        lineHeight: action.lineHeight
+        lineHeight: action.payload.lineHeight
       };
     default:
       return state;

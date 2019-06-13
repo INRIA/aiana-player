@@ -6,9 +6,9 @@ import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 
 interface IStateProps {
-  currentPlaybackRate: number;
+  currentPlaybackRate?: number;
   mediaElement?: HTMLMediaElement;
-  playbackRates: number[];
+  playbackRates?: number[];
 }
 
 interface IDispatchProps {
@@ -33,11 +33,12 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
           onChange={this.onPlayRateChange}
           value={currentPlaybackRate}
         >
-          {playbackRates.map((playbackRate) => (
-            <option key={playbackRate} value={playbackRate}>
-              ×{playbackRate}
-            </option>
-          ))}
+          {playbackRates &&
+            playbackRates.map((playbackRate) => (
+              <option key={playbackRate} value={playbackRate}>
+                ×{playbackRate}
+              </option>
+            ))}
         </select>
       </React.Fragment>
     );

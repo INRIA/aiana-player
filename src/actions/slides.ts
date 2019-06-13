@@ -1,6 +1,5 @@
-import { AnyAction } from 'redux';
 import { CDispatch } from '../store';
-import { ThunkResult } from '../types';
+import { ThunkResult, IStdAction } from '../types';
 import { IRawSlidesTrack } from '../utils/media';
 import { requestSeek } from './player';
 
@@ -33,39 +32,49 @@ export function seekPreviousSlide(
   };
 }
 
-function previousSlide(from: number, to: number): AnyAction {
+function previousSlide(from: number, to: number): IStdAction {
   return {
-    from,
-    to,
+    payload: {
+      from,
+      to
+    },
     type: PREVIOUS_SLIDE
   };
 }
 
-function nextSlide(from: number, to: number): AnyAction {
+function nextSlide(from: number, to: number): IStdAction {
   return {
-    from,
-    to,
+    payload: {
+      from,
+      to
+    },
     type: NEXT_SLIDE
   };
 }
 
 export function setSlidesText(text?: string) {
   return {
-    text,
+    payload: {
+      text
+    },
     type: SET_SLIDES_TEXT
   };
 }
 
-export function addSlidesTrack(track: IRawSlidesTrack): AnyAction {
+export function addSlidesTrack(track: IRawSlidesTrack): IStdAction {
   return {
-    track,
+    payload: {
+      track
+    },
     type: ADD_SLIDES_TRACK
   };
 }
 
-export function updateActiveSlidesTrack(language: string): AnyAction {
+export function updateActiveSlidesTrack(language: string): IStdAction {
   return {
-    language,
+    payload: {
+      language
+    },
     type: UPDATE_ACTIVE_SLIDES_TRACK
   };
 }

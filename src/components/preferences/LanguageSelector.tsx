@@ -7,8 +7,8 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  language: string;
-  languages: string[];
+  language?: string;
+  languages?: string[];
 }
 
 interface IDispatchProps {
@@ -31,11 +31,12 @@ function LanguageSelector(props: ILanguageSelector) {
         onChange={props.changeHandler}
         value={props.language}
       >
-        {props.languages.map((language) => (
-          <option key={language} value={language}>
-            {t(`languages.${language}`)}
-          </option>
-        ))}
+        {props.languages &&
+          props.languages.map((language) => (
+            <option key={language} value={language}>
+              {t(`languages.${language}`)}
+            </option>
+          ))}
       </select>
     </React.Fragment>
   );

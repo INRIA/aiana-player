@@ -26,7 +26,7 @@ function PresetsSelector({
 }: IPresetsSelector) {
   const [t] = useTranslation();
   const activePreset = presets.find((p) => p.selected === true);
-  const activePresetName = activePreset ? activePreset.name : undefined;
+  const activePresetName = activePreset ? activePreset.name : '';
 
   return (
     <React.Fragment>
@@ -36,6 +36,7 @@ function PresetsSelector({
         onChange={selectChangeHandler}
         value={activePresetName}
       >
+        <option key="empty_preset" value="" />
         {presets.map((preset) => (
           <option key={preset.name} value={preset.name}>
             {preset.name}
