@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setFontUppercase } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
@@ -14,31 +14,21 @@ interface IDispatchProps {
   setFontUppercase(fontUppercase: boolean): void;
 }
 
-interface IProps
-  extends IStateProps,
-    IDispatchProps,
-    WithTranslation,
-    IInjectedUniqueIdProps {}
+interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
 
-class FontUppercaseToggle extends Component<IProps> {
-  render() {
-    return (
-      <React.Fragment>
-        <span id={this.props.uid}>
-          {this.props.t('preferences.font_uppercase.label')}
-        </span>
-        <ToggleButton
-          isOn={this.props.fontUppercase}
-          labelledBy={this.props.uid}
-          onClick={this.clickHandler}
-        />
-      </React.Fragment>
-    );
-  }
+function FontUppercaseToggle(props: IProps) {
+  const [t] = useTranslation();
 
-  clickHandler = () => {
-    this.props.setFontUppercase(!this.props.fontUppercase);
-  };
+  return (
+    <React.Fragment>
+      <span id={props.uid}>{t('preferences.font_uppercase.label')}</span>
+      <ToggleButton
+        isOn={props.fontUppercase}
+        labelledBy={props.uid}
+        onClick={() => props.setFontUppercase(!props.fontUppercase)}
+      />
+    </React.Fragment>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -54,4 +44,4 @@ const mapDispatch: IDispatchProps = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(withUniqueId(FontUppercaseToggle)));
+)(withUniqueId(FontUppercaseToggle));

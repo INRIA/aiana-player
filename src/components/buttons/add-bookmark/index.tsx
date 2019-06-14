@@ -1,5 +1,5 @@
 import React from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { addBookmark } from '../../../actions/bookmarks';
 import { IAianaState } from '../../../reducers';
@@ -16,24 +16,22 @@ interface IDispatchProps {
   addBookmark(time: number): void;
 }
 
-interface IAddBookmarkButton
-  extends IStateProps,
-    IDispatchProps,
-    WithTranslation {}
+interface IAddBookmarkButton extends IStateProps, IDispatchProps {}
 
-class AddBookmarkButton extends React.Component<IAddBookmarkButton> {
-  render() {
-    return (
-      <StyledButton type="button" onClick={this.clickHandler}>
-        <StyledSvg as={BookmarkAddIcon} aria-hidden="true" />
-        <AssistiveText>{this.props.t('controls.add_bookmark')}</AssistiveText>
-      </StyledButton>
-    );
-  }
+function AddBookmarkButton(props: IAddBookmarkButton) {
+  const [t] = useTranslation();
 
-  clickHandler = () => {
-    this.props.addBookmark(this.props.currentTime);
-  };
+  return (
+    <StyledButton
+      type="button"
+      onClick={() => {
+        props.addBookmark(props.currentTime);
+      }}
+    >
+      <StyledSvg as={BookmarkAddIcon} aria-hidden="true" />
+      <AssistiveText>{t('controls.add_bookmark')}</AssistiveText>
+    </StyledButton>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -49,4 +47,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(AddBookmarkButton));
+)(AddBookmarkButton);

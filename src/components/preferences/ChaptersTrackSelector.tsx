@@ -5,11 +5,13 @@ import { updateActiveChaptersTrack } from '../../actions/chapters';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
-import { IRawChaptersTrack } from '../../utils/media';
+import {
+  IChaptersState,
+  getSelectedChaptersLanguage
+} from '../../reducers/chapters';
 
 interface IStateProps {
-  chaptersTracks: IRawChaptersTrack[];
-  currentLanguage: string;
+  chapters: IChaptersState;
   mediaElement?: HTMLMediaElement;
 }
 
@@ -22,20 +24,8 @@ interface IChaptersTrackSelector
     IStateProps,
     IDispatchProps {}
 
-function getSelectedValue(
-  tracks: IRawChaptersTrack[],
-  language: string
-): string {
-  const selectedTrack = tracks.find((track) => {
-    return track.language === language;
-  });
-
-  return selectedTrack ? selectedTrack.language : '';
-}
-
 function ChaptersTrackSelector({
-  chaptersTracks,
-  currentLanguage,
+  chapters,
   mediaElement,
   selectedTrackChangedHandler,
   uid
@@ -52,9 +42,9 @@ function ChaptersTrackSelector({
       <select
         aria-labelledby={uid}
         onChange={selectedTrackChangedHandler}
-        value={getSelectedValue(chaptersTracks, currentLanguage)}
+        value={getSelectedChaptersLanguage(chapters)}
       >
-        {chaptersTracks.map(({ language }) => (
+        {chapters.chaptersTracks.map(({ language }) => (
           <option key={language} value={language}>
             {t(`languages.${language}`)}
           </option>
@@ -66,8 +56,7 @@ function ChaptersTrackSelector({
 
 function mapState(state: IAianaState) {
   return {
-    chaptersTracks: state.chapters.chaptersTracks,
-    currentLanguage: state.chapters.language,
+    chapters: state.chapters,
     mediaElement: state.player.mediaElement
   };
 }

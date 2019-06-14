@@ -1,5 +1,5 @@
 import React from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setChaptersMenu } from '../../actions/chapters';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
@@ -17,28 +17,21 @@ interface IDispatchProps {
 interface IChaptersMenuToggle
   extends IStateProps,
     IDispatchProps,
-    IInjectedUniqueIdProps,
-    WithTranslation {}
+    IInjectedUniqueIdProps {}
 
-class ChaptersMenuToggle extends React.Component<IChaptersMenuToggle> {
-  render() {
-    return (
-      <React.Fragment>
-        <span id={this.props.uid}>
-          {this.props.t('preferences.show_chapters.label')}
-        </span>
-        <ToggleButton
-          isOn={this.props.menuEnabled}
-          labelledBy={this.props.uid}
-          onClick={this.clickHandler}
-        />
-      </React.Fragment>
-    );
-  }
+function ChaptersMenuToggle(props: IChaptersMenuToggle) {
+  const [t] = useTranslation();
 
-  clickHandler = () => {
-    this.props.setChaptersMenu(!this.props.menuEnabled);
-  };
+  return (
+    <React.Fragment>
+      <span id={props.uid}>{t('preferences.show_chapters.label')}</span>
+      <ToggleButton
+        isOn={props.menuEnabled}
+        labelledBy={props.uid}
+        onClick={() => props.setChaptersMenu(!props.menuEnabled)}
+      />
+    </React.Fragment>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -54,4 +47,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(withUniqueId(ChaptersMenuToggle)));
+)(withUniqueId(ChaptersMenuToggle));

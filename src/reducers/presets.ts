@@ -29,6 +29,12 @@ export interface IPreset {
   widgets: IWidget[];
 }
 
+// 'previousChapterSeekThreshold',
+// 'seekStep',
+// 'seekStepMultiplier',
+// 'volumeStep',
+// 'volumeStepMultiplier',
+
 const presets: Reducer<IPreset[], IStdAction> = (state = [], action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PRESET:
@@ -46,5 +52,9 @@ const presets: Reducer<IPreset[], IStdAction> = (state = [], action) => {
       return state;
   }
 };
+
+export function getActivePreset(state: IPreset[]): IPreset | undefined {
+  return state.find((p) => p.selected === true);
+}
 
 export default presets;

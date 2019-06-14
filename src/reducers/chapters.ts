@@ -85,4 +85,15 @@ const chapters: Reducer<IChaptersState, IStdAction> = (
   }
 };
 
+function getSelectedSubtitlesTrack(state: IChaptersState) {
+  return state.chaptersTracks.find(
+    (track) => track.language === state.language
+  );
+}
+
+export function getSelectedChaptersLanguage(state: IChaptersState): string {
+  const selectedTrack = getSelectedSubtitlesTrack(state);
+  return selectedTrack ? selectedTrack.language : '';
+}
+
 export default chapters;

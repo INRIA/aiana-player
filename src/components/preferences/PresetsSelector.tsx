@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeActivePreset } from '../../actions/presets';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
-import { IPreset } from '../../reducers/presets';
+import { IPreset, getActivePreset } from '../../reducers/presets';
 import { CDispatch } from '../../store';
 
 interface IProps {
+  // TODO: can presets be null?
   presets: IPreset[];
 }
 
@@ -25,7 +26,7 @@ function PresetsSelector({
   uid
 }: IPresetsSelector) {
   const [t] = useTranslation();
-  const activePreset = presets.find((p) => p.selected === true);
+  const activePreset = getActivePreset(presets);
   const activePresetName = activePreset ? activePreset.name : '';
 
   return (
@@ -36,7 +37,10 @@ function PresetsSelector({
         onChange={selectChangeHandler}
         value={activePresetName}
       >
-        <option key="empty_preset" value="" />
+        <option key="empty_preset" value="" disabled>
+          {/* TODO: use an explicit option text */}
+          ---
+        </option>
         {presets.map((preset) => (
           <option key={preset.name} value={preset.name}>
             {preset.name}
@@ -62,3 +66,5 @@ export default connect(
   null,
   mapDispatch
 )(withUniqueId(PresetsSelector));
+
+// TODO: diff preferences and preset here?

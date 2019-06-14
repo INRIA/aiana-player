@@ -6,8 +6,13 @@ import {
   UPDATE_ACTIVE_SUBTITLES_TRACK,
   UPDATE_SUBTITLES_TRACKS_LIST
 } from '../actions/subtitles';
-import { IRawSubtitlesTrack } from '../utils/media';
+import {
+  IRawSubtitlesTrack,
+  isActiveTrack,
+  isDisplayableTrack
+} from '../utils/media';
 import { IStdAction } from '../types';
+import { ITrack } from '../components/video/MediaSubtitlesTrack';
 
 export interface ISubtitlesTrack {
   label?: string;
@@ -37,21 +42,54 @@ const initialState = {
   subtitlesTracks: []
 };
 
+function toggleTrackActive(language: string) {
+  return function(track: IRawSubtitlesTrack): IRawSubtitlesTrack {
+    if (track.language === language) {
+      return {
+        ...track,
+        active: true
+      };
+    }
+
+    if (track.active === true) {
+      return {
+        ...track,
+        active: false
+      };
+    }
+
+    return {
+      ...track
+    };
+  };
+}
+
 function toggleSubtitlesTracks(
   tracks: IRawSubtitlesTrack[],
   language: string
 ): IRawSubtitlesTrack[] {
-  return tracks.map((track) => {
-    if (track.language === language) {
-      return { ...track, active: true };
-    }
+  return tracks.map(toggleTrackActive(language));
+}
 
-    if (track.active === true) {
-      return { ...track, active: false };
-    }
+export function getSelectedSubtitlesTrack(
+  subtitlesTracks: IRawSubtitlesTrack[]
+) {
+  return subtitlesTracks.find(isActiveTrack);
+}
 
-    return { ...track };
-  });
+export function getSelectedSubtitlesLanguage(state: ISubtitlesState): string {
+  const selectedTrack = getSelectedSubtitlesTrack(state.subtitlesTracks);
+  return selectedTrack ? selectedTrack.language : '';
+}
+
+export function getDisplayableSubtitlesTracks(
+  state: ISubtitlesState
+): IRawSubtitlesTrack[] {
+  return state.subtitlesTracks.filter(isDisplayableTrack);
+}
+
+export function getDisplayableSubtitlesSources(tracks: ITrack[]) {
+  return tracks.filter(isDisplayableTrack);
 }
 
 const subtitles: Reducer<ISubtitlesState, IStdAction> = (
@@ -60,8 +98,8 @@ const subtitles: Reducer<ISubtitlesState, IStdAction> = (
 ) => {
   switch (action.type) {
     case ADD_SUBTITLES_TRACK: {
-      const subtitlesTracks = [].concat(
-        state.subtitlesTracks as any,
+      const subtitlesTracks = ([] as IRawSubtitlesTrack[]).concat(
+        state.subtitlesTracks,
         action.payload.subtitlesTrack
       );
 

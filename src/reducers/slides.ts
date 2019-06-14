@@ -63,4 +63,17 @@ const slides: Reducer<ISlidesState, IStdAction> = (
   }
 };
 
+export function getSelectedTrack(
+  state: ISlidesState
+): IRawSlidesTrack | undefined {
+  return state.slidesTracks.find((track) => {
+    return track.language === state.language;
+  });
+}
+
+export function getSelectedTrackLanguage(state: ISlidesState): string {
+  const selectedTrack = getSelectedTrack(state);
+  return selectedTrack ? selectedTrack.language : '';
+}
+
 export default slides;

@@ -17,7 +17,7 @@ import { updateSubtitlesTracksList } from '../../actions/subtitles';
 import withWidget from '../../hocs/with-widget';
 import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
-import { ISource } from '../../reducers/player';
+import { ISource, getSelectedMediaSource } from '../../reducers/player';
 import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
@@ -83,12 +83,8 @@ const StyledVideo = styled.video`
   transform: translate3d(0, 0, 0);
 `;
 
-export function isSelectedSource(source: ISource): boolean {
-  return source.selected === true;
-}
-
-function getCurrentSource(sources: ISource[]): ISource | void {
-  const selectedSource = sources.find(isSelectedSource);
+function getCurrentSourceWithFallback(sources: ISource[]): ISource | void {
+  const selectedSource = getSelectedMediaSource(sources);
 
   if (selectedSource) {
     return selectedSource;
@@ -105,7 +101,7 @@ class VideoPlayer extends React.Component<IProps> {
   media = React.createRef<HTMLVideoElement>();
 
   render() {
-    const selectedSource = getCurrentSource(this.props.sources);
+    const selectedSource = getCurrentSourceWithFallback(this.props.sources);
 
     if (!selectedSource) {
       return null;
@@ -160,8 +156,8 @@ class VideoPlayer extends React.Component<IProps> {
   }
 
   componentDidUpdate(prevProps: IStateProps) {
-    const currentSource = getCurrentSource(this.props.sources);
-    const prevSource = getCurrentSource(prevProps.sources);
+    const currentSource = getCurrentSourceWithFallback(this.props.sources);
+    const prevSource = getCurrentSourceWithFallback(prevProps.sources);
 
     if (
       currentSource &&

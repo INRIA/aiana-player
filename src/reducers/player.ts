@@ -207,3 +207,11 @@ const player: Reducer<IPlayerState, IStdAction> = (
 };
 
 export default player;
+
+export function isSelectedSource(source: ISource): boolean {
+  return source.selected === true;
+}
+
+export function getSelectedMediaSource(sources: ISource[]) {
+  return sources.find(isSelectedSource);
+}

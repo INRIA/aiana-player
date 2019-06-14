@@ -12,6 +12,7 @@ import {
   isActiveTrack,
   rawSubtitlesTrack
 } from '../../utils/media';
+import { getSelectedSubtitlesTrack } from '../../reducers/subtitles';
 
 export interface ITrack {
   isDefault?: boolean;
@@ -74,11 +75,18 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   componentDidUpdate(prevProps: ITrackProps) {
-    const prevActiveTrack = prevProps.subtitlesTracks.find(isActiveTrack);
-    const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
+    const prevActiveTrack = getSelectedSubtitlesTrack(
+      prevProps.subtitlesTracks
+    );
+    const activeTrack = getSelectedSubtitlesTrack(this.props.subtitlesTracks);
 
     // this track is active, but wasn't so at previous state.
-    if (prevActiveTrack && prevActiveTrack.label !== activeTrack!.label) {
+    if (
+      (activeTrack && !prevActiveTrack) ||
+      (activeTrack &&
+        prevActiveTrack &&
+        prevActiveTrack.label !== activeTrack.label)
+    ) {
       this.cueChangeHandler();
     }
   }

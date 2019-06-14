@@ -7,12 +7,16 @@ export interface IBookmark {
   readonly time: number;
 }
 
-const bookmarks: Reducer<IBookmark[], IStdAction> = (state = [], action) => {
+type IBookmarkState = IBookmark[];
+
+function hasBookmark(time: number, state: IBookmarkState): boolean {
+  return state.find((b) => b.time === time) ? true : false;
+}
+
+const bookmarks: Reducer<IBookmarkState, IStdAction> = (state = [], action) => {
   switch (action.type) {
     case ADD_BOOKMARK: {
-      const bookmarkExists = state.find((b) => b.time === action.payload.time);
-
-      if (bookmarkExists) {
+      if (hasBookmark(action.payload.time, state)) {
         return state;
       }
       return ([] as IBookmark[]).concat(state, { time: action.payload.time });

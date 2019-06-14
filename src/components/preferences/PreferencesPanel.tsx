@@ -13,7 +13,7 @@ import FontUppercaseToggle from './FontUppercaseToggle';
 import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
 import LineHeightSelector from './LineHeightSelector';
-import { PanelToggle } from './panel-toggle';
+import PanelToggle from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';

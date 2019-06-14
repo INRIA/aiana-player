@@ -7,7 +7,7 @@ interface IPanelToggleProps {
   clickHandler: () => void;
 }
 
-export function PanelToggle(props: IPanelToggleProps) {
+function PanelToggle(props: IPanelToggleProps) {
   return (
     <StyledButton
       aria-expanded={props.isExpanded}
@@ -18,3 +18,5 @@ export function PanelToggle(props: IPanelToggleProps) {
     </StyledButton>
   );
 }
+
+export default PanelToggle;
