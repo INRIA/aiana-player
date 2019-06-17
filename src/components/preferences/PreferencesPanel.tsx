@@ -26,6 +26,7 @@ import PresetsSelector from './PresetsSelector';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { IPreset } from '../../reducers/presets';
+import ExportPreferences from './ExportPreferences';
 
 interface IPreferencesPanel {
   presets: IPreset[];
@@ -117,6 +118,9 @@ function PreferencesPanel(props: IPreferencesPanel) {
         <ul>
           <li>
             <PresetsSelector presets={props.presets} />
+          </li>
+          <li>
+            <ExportPreferences />
           </li>
           <li className="aip-language">
             <LanguageSelector />

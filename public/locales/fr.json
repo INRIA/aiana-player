@@ -18,6 +18,7 @@
   "controls.volume.label": "Volume sonore",
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
   "preferences.chapterstrack.label": "Langue des chapitres",
+  "preferences.export.label": "Exporter et télécharger les préférences",
   "preferences.font_face.label": "Police de caractères",
   "preferences.font_size_multiplier.label": "Taille de la police de caractères",
   "preferences.font_uppercase.label": "Texte en lettres capitales",

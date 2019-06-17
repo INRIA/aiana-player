@@ -5,9 +5,10 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import middleware from '../../middleware';
-import reducers from '../../reducers';
+import reducers, { IAianaState } from '../../reducers';
 import ConnectedAiana from './ConnectedAiana';
 import i18n from '../../i18n';
+import { preferencesToYAML } from '../../reducers/preferences';
 
 const store = createStore(
   reducers,
@@ -17,7 +18,7 @@ const store = createStore(
 
 store.subscribe(
   throttle(() => {
-    saveState(store.getState());
+    saveStateToLocalStorage(store.getState());
   }, 1000)
 );
 
@@ -42,31 +43,9 @@ function loadState() {
   }
 }
 
-function saveState(state: any) {
-  const exportedKeys = [
-    'fontFace',
-    'fontSizeMultiplier',
-    'fontUppercase',
-    'language',
-    'lineHeight',
-    'previousChapterSeekThreshold',
-    'seekStep',
-    'seekStepMultiplier',
-    'textHighlighting',
-    'theme',
-    'volumeStep',
-    'volumeStepMultiplier',
-    'widgets'
-  ];
-
+function saveStateToLocalStorage(state: IAianaState) {
   try {
-    const exportedPrefs = exportedKeys.reduce((acc, cur) => {
-      acc[cur] = state.preferences[cur];
-      return acc;
-    }, {});
-
-    const serializedPreferences = yaml.safeDump(exportedPrefs);
-
+    const serializedPreferences = preferencesToYAML(state.preferences);
     localStorage.setItem('aiana-preferences', serializedPreferences);
 
     // TODO: sync state on remote server if provided

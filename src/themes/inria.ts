@@ -2,6 +2,8 @@ import Color from 'color';
 import { IAianaTheme } from '../utils/styled-components';
 
 const theme: IAianaTheme = {
+  actionBg: '#0074D9',
+  actionFg: '#fff',
   bg: '#111',
   clearFg: Color('#eee')
     .lighten(0.3)

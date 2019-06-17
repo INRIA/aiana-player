@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash.clonedeep';
-import { Reducer } from 'redux';
+import { safeDump } from 'js-yaml';
+import { Reducer, DeepPartial } from 'redux';
 import {
   CHANGE_LANGUAGE,
   CHANGE_TEXT_HIGHLIGHTING,
@@ -190,3 +191,31 @@ const preferences: Reducer<IPreferencesState, IStdAction> = (
 };
 
 export default preferences;
+
+export function preferencesToYAML(state: DeepPartial<IPreferencesState>) {
+  const exportedKeys = [
+    'fontFace',
+    'fontSizeMultiplier',
+    'fontUppercase',
+    'language',
+    'lineHeight',
+    'previousChapterSeekThreshold',
+    'seekStep',
+    'seekStepMultiplier',
+    'textHighlighting',
+    'theme',
+    'volumeStep',
+    'volumeStepMultiplier',
+    'widgets'
+  ];
+
+  try {
+    const exportedPrefs = exportedKeys.reduce((acc, cur) => {
+      return Object.assign(acc, { [cur]: cloneDeep(state[cur]) });
+    }, {});
+
+    return safeDump(exportedPrefs);
+  } catch (err) {
+    return '';
+  }
+}
