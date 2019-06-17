@@ -29,12 +29,6 @@ export interface IPreset {
   widgets: IWidget[];
 }
 
-// 'previousChapterSeekThreshold',
-// 'seekStep',
-// 'seekStepMultiplier',
-// 'volumeStep',
-// 'volumeStepMultiplier',
-
 const presets: Reducer<IPreset[], IStdAction> = (state = [], action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PRESET:
