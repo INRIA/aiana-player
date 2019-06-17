@@ -9,12 +9,17 @@ import {
   IPreferencesState,
   preferencesToYAML
 } from '../../reducers/preferences';
+import { exportPreferences } from '../../actions/preferences';
 
 interface IMapState {
   preferences: IPreferencesState;
 }
 
-interface IExportPreferences extends IMapState, WithTranslation {}
+interface IMapDispatch {
+  exportPreferences(preferences: Partial<IPreferencesState>): void;
+}
+
+interface IExportPreferences extends IMapState, IMapDispatch, WithTranslation {}
 
 const ActionButton = styled.button`
   width: auto;
@@ -26,6 +31,7 @@ class ExportPreferences extends Component<IExportPreferences> {
       type: 'text/plain;charset=utf-8'
     });
     saveAs(blob, 'aiana-preferences.txt');
+    this.props.exportPreferences(this.props.preferences);
   };
 
   render() {
@@ -45,4 +51,11 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(withTranslation()(ExportPreferences));
+const mapDispatch = {
+  exportPreferences
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(withTranslation()(ExportPreferences));
