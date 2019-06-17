@@ -22,6 +22,7 @@
   "preferences.font_face.label": "Police de caractères",
   "preferences.font_size_multiplier.label": "Taille de la police de caractères",
   "preferences.font_uppercase.label": "Texte en lettres capitales",
+  "preferences.import.label": "Charger un fichier de préférences",
   "preferences.line_height.label": "Interlignage",
   "preferences.media_source.label": "Source du média",
   "preferences.show_chapters.label": "Afficher les chapitres",

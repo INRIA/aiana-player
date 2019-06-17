@@ -28,6 +28,7 @@ import { IAianaState } from '../../reducers';
 import { IPreset } from '../../reducers/presets';
 import ExportPreferences from './ExportPreferences';
 import { IPreferencesState } from '../../reducers/preferences';
+import ImportPreferences from './ImportPreferences';
 
 interface IPreferencesPanel {
   preferences: IPreferencesState;
@@ -120,6 +121,9 @@ function PreferencesPanel(props: IPreferencesPanel) {
         <ul>
           <li>
             <PresetsSelector presets={props.presets} />
+          </li>
+          <li>
+            <ImportPreferences />
           </li>
           <li>
             <ExportPreferences preferences={props.preferences} />

@@ -1,7 +1,11 @@
 import i18n from '../i18n';
+import cloneDeep from 'lodash.clonedeep';
 import { CDispatch } from '../store';
 import { ThunkResult, IStdAction } from '../types';
-import { IPreferencesState } from '../reducers/preferences';
+import {
+  IPreferencesState,
+  initialPreferencesState
+} from '../reducers/preferences';
 
 export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
@@ -14,6 +18,24 @@ export const CHANGE_TEXT_UPPERCASE = 'aiana/CHANGE_TEXT_UPPERCASE';
 export const UPDATE_LINE_HEIGHT = 'aiana/CHANGE_LINE_HEIGHT';
 export const CHANGE_MEDIA_SOURCE = 'aiana/CHANGE_MEDIA_SOURCE';
 export const EXPORT_PREFERENCES = 'aiana/EXPORT_PREFERENCES';
+export const IMPORT_PREFERENCES = 'aiana/IMPORT_PREFERENCES';
+
+export function importPreferences(
+  preferences: Partial<IPreferencesState>
+): ThunkResult<void> {
+  return (dispatch) => {
+    const mergedPreferences = Object.assign(
+      cloneDeep(initialPreferencesState),
+      cloneDeep(preferences)
+    );
+
+    dispatch(changeLanguage(mergedPreferences.language));
+    dispatch({
+      payload: mergedPreferences,
+      type: IMPORT_PREFERENCES
+    });
+  };
+}
 
 export function exportPreferences(
   preferences: Partial<IPreferencesState>

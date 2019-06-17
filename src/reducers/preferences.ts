@@ -10,7 +10,8 @@ import {
   UPDATE_ACTIVE_FONT_FACE,
   UPDATE_FONT_SIZE_MULTIPLIER,
   UPDATE_LINE_HEIGHT,
-  WIDGETS_LOCK
+  WIDGETS_LOCK,
+  IMPORT_PREFERENCES
 } from '../actions/preferences';
 import { CHANGE_WIDGETS, LOAD_CONFIGURATION } from '../actions/shared';
 import {
@@ -104,6 +105,8 @@ const preferences: Reducer<IPreferencesState, IStdAction> = (
   action
 ) => {
   switch (action.type) {
+    case IMPORT_PREFERENCES:
+      return action.payload;
     case CHANGE_ACTIVE_PRESET:
       return action.payload.preset;
     case CHANGE_LANGUAGE:
