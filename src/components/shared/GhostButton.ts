@@ -1,4 +1,4 @@
-import styled from '../../../utils/styled-components';
+import styled from '../../utils/styled-components';
 
 export default styled.button`
   display: inline-block;
@@ -6,7 +6,7 @@ export default styled.button`
   height: 100%;
   padding: 0;
 
-  border: none;
+  border: 2px solid transparent;
   border-radius: 0;
   background-color: transparent;
   font-family: inherit;
@@ -16,7 +16,18 @@ export default styled.button`
   line-height: inherit;
   overflow: hidden;
 
+  transition: border-color 0.1s;
+
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
     cursor: pointer;
+  }
+
+  &:focus:not([data-focus-visible-added]),
+  &[data-focus-visible-added] {
+    outline: none;
+  }
+
+  &[data-focus-visible-added] {
+    border-color: ${(props) => props.theme.focus};
   }
 `;

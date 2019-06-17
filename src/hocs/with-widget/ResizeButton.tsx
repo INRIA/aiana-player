@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import StyledButton from '../../components/shared/styled-button';
+import GhostButton from '../../components/shared/GhostButton';
 import { ESCAPE_KEY } from '../../constants/keys';
 import { Direction } from '../../types';
 import styled from '../../utils/styled-components';
@@ -18,7 +18,7 @@ const FOCUSED_OUTER_OVERFLOW_SIZE = '0.75em';
 const FOCUSED_SIZE = '1.5em';
 const CORNER_SIZE = '1em';
 
-const StyledResizeButton = styled(StyledButton)`
+const StyledResizeButton = styled(GhostButton)`
   position: absolute;
   z-index: 1;
 

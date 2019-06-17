@@ -5,7 +5,7 @@ import { seekPreviousChapter } from '../../../actions/chapters';
 import { IAianaState } from '../../../reducers';
 import { IRawChaptersTrack, isActiveTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import SkipPrevious from '../../svg/SkipPrevious';
 
@@ -31,12 +31,12 @@ interface IPreviousChapter
 class PreviousChapter extends Component<IPreviousChapter> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler} type="button">
         <StyledSvg as={SkipPrevious} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_chapter_previous')}
         </AssistiveText>
-      </StyledButton>
+      </GhostButton>
     );
   }
 

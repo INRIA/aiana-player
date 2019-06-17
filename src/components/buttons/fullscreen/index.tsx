@@ -6,7 +6,7 @@ import { IAianaState } from '../../../reducers';
 import { ExtendedHTMLElement } from '../../../types';
 import { isFullscreenEnabled } from '../../../utils/fullscreen';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import ControlIcon from './ControlIcon';
 
 interface IStateProps {
@@ -30,10 +30,10 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
     }
 
     return (
-      <StyledButton type="button" onClick={this.clickHandler}>
+      <GhostButton type="button" onClick={this.clickHandler}>
         <ControlIcon isFullscreen={this.props.isFullscreen} />
         <AssistiveText>{this.getControlText()}</AssistiveText>
-      </StyledButton>
+      </GhostButton>
     );
   }
 

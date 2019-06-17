@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers';
 import styled from '../../utils/styled-components';
-import StyledButton from '../shared/styled-button';
+import GhostButton from '../shared/GhostButton';
 
 interface IProps {
   children: ReactNode;
@@ -21,7 +21,7 @@ interface IDispatchProps {
 
 interface IMediaChapterButton extends IProps, IStateProps, IDispatchProps {}
 
-const StyledChapterButton = styled(StyledButton)`
+const StyledChapterButton = styled(GhostButton)`
   width: auto;
 `;
 

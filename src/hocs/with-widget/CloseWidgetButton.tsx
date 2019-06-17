@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWidgetVisibility } from '../../actions/preferences';
-import StyledButton from '../../components/shared/styled-button';
+import GhostButton from '../../components/shared/GhostButton';
 import StyledSvg from '../../components/shared/styled-svg';
 import SvgCross from '../../components/svg/Cross';
 import { CDispatch } from '../../store';
@@ -20,7 +20,7 @@ interface IDispatchProps {
 
 interface IProps extends IOwnProps, IDispatchProps {}
 
-const StyledCloseWidgetButton = styled(StyledButton)`
+const StyledCloseWidgetButton = styled(GhostButton)`
   display: block;
 
   width: 1.5em;

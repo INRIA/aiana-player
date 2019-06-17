@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addBookmark } from '../../../actions/bookmarks';
 import { IAianaState } from '../../../reducers';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import BookmarkAddIcon from '../../svg/BookmarkAdd';
 
@@ -22,7 +22,7 @@ function AddBookmarkButton(props: IAddBookmarkButton) {
   const [t] = useTranslation();
 
   return (
-    <StyledButton
+    <GhostButton
       type="button"
       onClick={() => {
         props.addBookmark(props.currentTime);
@@ -30,7 +30,7 @@ function AddBookmarkButton(props: IAddBookmarkButton) {
     >
       <StyledSvg as={BookmarkAddIcon} aria-hidden="true" />
       <AssistiveText>{t('controls.add_bookmark')}</AssistiveText>
-    </StyledButton>
+    </GhostButton>
   );
 }
 

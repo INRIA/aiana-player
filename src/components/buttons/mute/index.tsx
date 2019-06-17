@@ -5,10 +5,10 @@ import { muteMedia, unmuteMedia } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import ControlIcon from './ControlIcon';
 
-const StyledMuteButton = styled(StyledButton)`
+const StyledMuteButton = styled(GhostButton)`
   &:hover ~ .aip-volume {
     width: 4em;
   }
