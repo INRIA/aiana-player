@@ -27,8 +27,10 @@ import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 import { IPreset } from '../../reducers/presets';
 import ExportPreferences from './ExportPreferences';
+import { IPreferencesState } from '../../reducers/preferences';
 
 interface IPreferencesPanel {
+  preferences: IPreferencesState;
   presets: IPreset[];
 }
 
@@ -120,7 +122,7 @@ function PreferencesPanel(props: IPreferencesPanel) {
             <PresetsSelector presets={props.presets} />
           </li>
           <li>
-            <ExportPreferences />
+            <ExportPreferences preferences={props.preferences} />
           </li>
           <li className="aip-language">
             <LanguageSelector />
@@ -175,6 +177,7 @@ function PreferencesPanel(props: IPreferencesPanel) {
 
 function mapState(state: IAianaState) {
   return {
+    preferences: state.preferences,
     presets: state.presets
   };
 }
