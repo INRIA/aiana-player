@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { saveAs } from 'file-saver';
 import styled from '../../utils/styled-components';
 import { useTranslation } from 'react-i18next';
@@ -29,11 +29,9 @@ function ExportPreferences(props: IExportPreferences) {
   const [t] = useTranslation();
 
   return (
-    <Fragment>
-      <ActionButton as={Button} onClick={props.clickHandler}>
-        {t('preferences.export.label')}
-      </ActionButton>
-    </Fragment>
+    <ActionButton type="button" as={Button} onClick={props.clickHandler}>
+      {t('preferences.export.label')}
+    </ActionButton>
   );
 }
 
