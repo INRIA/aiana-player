@@ -1,11 +1,14 @@
 import React, { Component, ChangeEvent } from 'react';
 import { safeLoad } from 'js-yaml';
-import Button from '../shared/Button';
+import Button, { buttonMixin, focusMixin } from '../shared/Button';
 import styled from '../../utils/styled-components';
 import { connect } from 'react-redux';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { IPreferencesState } from '../../reducers/preferences';
 import { importPreferences } from '../../actions/preferences';
+import { uid } from '../../utils/uniqueId';
+import { visuallyHiddenMixin } from '../a11y/AssistiveText';
+import ImportPreferencesSelectedFile from './ImportPreferencesSelectedFile';
 
 interface IMapDispatch {
   importPreferences(preferences: Partial<IPreferencesState>): void;
@@ -17,8 +20,22 @@ interface IState {
   file: File | null;
 }
 
-const ActionButton = styled.button`
+const ActionButton = styled(Button)`
   width: auto;
+`;
+
+const FileInput = styled.input`
+  ${visuallyHiddenMixin};
+
+  &[data-focus-visible-added] ~ label {
+    ${focusMixin};
+
+    border-color: ${(props) => props.theme.actionBg};
+  }
+`;
+
+const Label = styled.label`
+  ${buttonMixin};
 `;
 
 class ImportPreferences extends Component<IImportPreferences, IState> {
@@ -26,17 +43,13 @@ class ImportPreferences extends Component<IImportPreferences, IState> {
     file: null
   };
 
-  // TODO: function to reset form
-
   changeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (evt.currentTarget.files) {
-      this.setState({
-        file: evt.currentTarget.files[0]
-      });
-    }
+    this.setState({
+      file: evt.currentTarget.files ? evt.currentTarget.files[0] : null
+    });
   };
 
-  clickHandler = () => {
+  loadFile = () => {
     const file = this.state.file;
 
     if (!file) {
@@ -48,23 +61,56 @@ class ImportPreferences extends Component<IImportPreferences, IState> {
     reader.onload = () => {
       if (reader.result) {
         this.props.importPreferences(safeLoad(reader.result as string));
+        this.resetForm();
       }
     };
 
     reader.readAsText(file, 'UTF-8');
   };
 
+  resetForm = () => {
+    this.setState({ file: null });
+  };
+
   render() {
+    const fileInputId = `aip-file-load-${uid()}`;
+
     return (
-      <form>
-        <label>
-          <span>{this.props.t('preferences.import.label')}</span>
-          <input type="file" onChange={this.changeHandler} />
-        </label>
-        <button type="reset">{this.props.t('preferences.import.reset')}</button>
-        <ActionButton type="button" as={Button} onClick={this.clickHandler}>
-          {this.props.t('preferences.import.action')}
-        </ActionButton>
+      <form
+        onReset={this.resetForm}
+        aria-label={this.props.t('preferences.import.title')}
+      >
+        <FileInput
+          id={fileInputId}
+          type="file"
+          accept=".txt,.yml,.yaml"
+          onChange={this.changeHandler}
+        />
+
+        <Label htmlFor={fileInputId} className="button--small">
+          {this.props.t('preferences.import.choose_file_label')}
+        </Label>
+
+        <ImportPreferencesSelectedFile file={this.state.file} />
+
+        {this.state.file && (
+          <ActionButton className="button--small" type="reset">
+            {this.props.t('preferences.import.reset')}
+          </ActionButton>
+        )}
+
+        {this.state.file && (
+          <ActionButton
+            className="button--small"
+            type="button"
+            onClick={this.loadFile}
+            disabled={!this.state.file}
+          >
+            {this.props.t('preferences.import.submit')}
+          </ActionButton>
+        )}
+
+        {/* TODO: load confirmation */}
       </form>
     );
   }
