@@ -29,7 +29,12 @@ function ExportPreferences(props: IExportPreferences) {
   const [t] = useTranslation();
 
   return (
-    <ActionButton type="button" as={Button} onClick={props.clickHandler}>
+    <ActionButton
+      type="button"
+      className="button--small"
+      as={Button}
+      onClick={props.clickHandler}
+    >
       {t('preferences.export.label')}
     </ActionButton>
   );
