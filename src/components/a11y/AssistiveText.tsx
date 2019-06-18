@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from '../../utils/styled-components';
+import React, { ReactNode } from 'react';
+import styled, { css } from '../../utils/styled-components';
 
-export const VisuallyHidden = styled.span`
+export const visuallyHiddenMixin = css`
   position: absolute;
   clip: rect(1px, 1px, 1px, 1px);
   padding: 0;
@@ -13,8 +13,12 @@ export const VisuallyHidden = styled.span`
   white-space: nowrap;
 `;
 
+export const VisuallyHidden = styled.span`
+  ${visuallyHiddenMixin};
+`;
+
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   id?: string;
 }
 
