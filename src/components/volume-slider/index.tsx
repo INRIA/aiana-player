@@ -3,19 +3,18 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
+import { VOLUME_MAXIMUM, VOLUME_MINIMUM } from '../../constants';
+import { DEFAULT_VOLUME_STEP_MULTIPLIER } from '../../constants/preferences';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
-  DEFAULT_VOLUME_STEP_MULTIPLIER,
   END_KEY,
   HOME_KEY,
   PAGE_DOWN_KEY,
-  PAGE_UP_KEY,
-  VOLUME_MAXIMUM,
-  VOLUME_MINIMUM
-} from '../../constants';
+  PAGE_UP_KEY
+} from '../../constants/keys';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { unitToRatio } from '../../utils/math';
@@ -90,7 +89,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
     );
   }
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const { mediaElement, updateVolume, volume, volumeStep } = this.props;
 
     if (!mediaElement) {
@@ -127,7 +126,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
     }
   };
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
 
     // Force focus when element in being interacted with a pointer device.
@@ -153,22 +152,18 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
     document.addEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseUpHandler = () => {
+  mouseUpHandler = () => {
     this.setState({ isActive: false });
     (document.querySelector('.aip-volume') as HTMLDivElement)!.blur();
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseMoveHandler = (evt: MouseEvent) => {
+  mouseMoveHandler = (evt: MouseEvent) => {
     this.updateVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
-  private updateVolume = (
-    mouseX: number,
-    sliderX: number,
-    sliderWidth: number
-  ) => {
+  updateVolume = (mouseX: number, sliderX: number, sliderWidth: number) => {
     const { mediaElement, updateVolume, volume } = this.props;
 
     if (!mediaElement) {
@@ -182,7 +177,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
       const newVolume = unitToRatio(positionDifference, sliderWidth);
 
       if (newVolume !== volume) {
-        updateVolume(mediaElement, newVolume);
+        updateVolume(mediaElement, this.safeVolume(newVolume));
       }
     } catch (error) {
       //
@@ -194,7 +189,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
    *
    * @param inputVolume The unsafe wanted value for the volume
    */
-  private safeVolume(inputVolume: number): number {
+  safeVolume(inputVolume: number): number {
     return bounded(inputVolume, VOLUME_MINIMUM, VOLUME_MAXIMUM);
   }
 }

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
 import { IAianaState } from '../../reducers';
 import styled from '../../utils/styled-components';
-import StyledButton from '../shared/styled-button';
+import GhostButton from '../shared/GhostButton';
 
 interface IProps {
+  children: ReactNode;
   isActive: boolean;
   startTime: number;
 }
@@ -20,28 +21,24 @@ interface IDispatchProps {
 
 interface IMediaChapterButton extends IProps, IStateProps, IDispatchProps {}
 
-const StyledChapterButton = styled(StyledButton)`
+const StyledChapterButton = styled(GhostButton)`
   width: auto;
 `;
 
-class MediaChapterButton extends React.Component<IMediaChapterButton> {
-  render() {
-    return (
-      <StyledChapterButton
-        aria-pressed={this.props.isActive}
-        onClick={this.clickHandler}
-        type="button"
-      >
-        {this.props.children}
-      </StyledChapterButton>
-    );
-  }
-
-  private clickHandler = () => {
-    if (this.props.media) {
-      this.props.requestSeek(this.props.media, this.props.startTime);
-    }
-  };
+function MediaChapterButton(props: IMediaChapterButton) {
+  return (
+    <StyledChapterButton
+      aria-pressed={props.isActive}
+      onClick={
+        props.media
+          ? () => props.requestSeek(props.media, props.startTime)
+          : undefined
+      }
+      type="button"
+    >
+      {props.children}
+    </StyledChapterButton>
+  );
 }
 
 function mapState(state: IAianaState) {

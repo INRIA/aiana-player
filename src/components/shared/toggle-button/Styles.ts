@@ -1,7 +1,7 @@
 import styled from '../../../utils/styled-components';
-import StyledButton from '../styled-button';
+import GhostButton from '../GhostButton';
 
-const StyledToggleButton = styled(StyledButton)`
+const StyledToggleButton = styled(GhostButton)`
   width: auto;
   height: auto;
   padding: 0.2em;

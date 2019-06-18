@@ -6,8 +6,10 @@ import {
   UPDATE_CHAPTER_TEXT
 } from '../actions/chapters';
 import { LOAD_CONFIGURATION } from '../actions/shared';
-import { DEFAULT_LANG, DEFAULT_MENU_ENABLED } from '../constants';
+import { DEFAULT_MENU_ENABLED } from '../constants';
+import { DEFAULT_LANG } from '../constants/preferences';
 import { IRawChaptersTrack } from '../utils/media';
+import { IStdAction } from '../types';
 
 export interface IChaptersTrack {
   label: string;
@@ -30,22 +32,25 @@ const initialState: IChaptersState = {
   sources: []
 };
 
-const chapters: Reducer = (state: IChaptersState = initialState, action) => {
+const chapters: Reducer<IChaptersState, IStdAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case TOGGLE_CHAPTERS_MENU:
       return {
         ...state,
-        menuEnabled: action.enabled
+        menuEnabled: action.payload.enabled
       };
     case UPDATE_CHAPTER_TEXT:
       return {
         ...state,
-        currentText: action.text
+        currentText: action.payload.text
       };
     case ADD_CHAPTER_TRACK: {
-      const chaptersTracks = [].concat(
-        state.chaptersTracks as any,
-        action.chaptersTrack
+      const chaptersTracks = ([] as IRawChaptersTrack[]).concat(
+        state.chaptersTracks,
+        action.payload.chaptersTrack as IRawChaptersTrack
       );
 
       return {
@@ -55,7 +60,7 @@ const chapters: Reducer = (state: IChaptersState = initialState, action) => {
     }
     case UPDATE_ACTIVE_CHAPTERS_TRACK: {
       const chaptersTracks = state.chaptersTracks.map((track) => {
-        if (track.language === action.language) {
+        if (track.language === action.payload.language) {
           return { ...track, active: true };
         }
         if (track.active === true) {
@@ -67,17 +72,28 @@ const chapters: Reducer = (state: IChaptersState = initialState, action) => {
       return {
         ...state,
         chaptersTracks,
-        language: action.language
+        language: action.payload.language
       };
     }
     case LOAD_CONFIGURATION:
       return {
         ...state,
-        ...action.chapters
+        ...action.payload.chapters
       };
     default:
       return state;
   }
 };
+
+function getSelectedSubtitlesTrack(state: IChaptersState) {
+  return state.chaptersTracks.find(
+    (track) => track.language === state.language
+  );
+}
+
+export function getSelectedChaptersLanguage(state: IChaptersState): string {
+  const selectedTrack = getSelectedSubtitlesTrack(state);
+  return selectedTrack ? selectedTrack.language : '';
+}
 
 export default chapters;

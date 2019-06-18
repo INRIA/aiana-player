@@ -1,68 +1,61 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { changeMediaSource } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
-import { ISource } from '../../reducers/player';
-import { isSelectedSource } from '../video/VideoPlayer';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import { ISource, getSelectedMediaSource } from '../../reducers/player';
+import { useTranslation } from 'react-i18next';
+import { CDispatch } from '../../store';
 
 interface IStateProps {
   media: HTMLMediaElement;
-  mediaSources: ISource[];
+  sources: ISource[];
 }
 
 interface IDispatchProps {
-  dispatchUpdateMediaSource(mediaSource: string): void;
+  changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface IProps
-  extends IStateProps,
-    IDispatchProps,
-    WithTranslation,
-    IInjectedUniqueIdProps {}
+interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
 
-class MediaSourceSelector extends Component<IProps> {
-  render() {
-    const selectedSource = this.props.mediaSources.find(isSelectedSource);
+function MediaSourceSelector(props: IProps) {
+  const [t] = useTranslation();
+  const selectedSource = getSelectedMediaSource(props.sources);
 
-    return (
-      <React.Fragment>
-        <span id={this.props.uid}>
-          {this.props.t('preferences.media_source.label')}
-        </span>
-        <select
-          aria-labelledby={this.props.uid}
-          onChange={this.changeHandler}
-          value={selectedSource ? selectedSource.src : undefined}
-        >
-          {this.props.mediaSources.map((mediaSource) => (
-            <option key={mediaSource.src} value={mediaSource.src}>
-              {mediaSource.label}
-            </option>
-          ))}
-        </select>
-      </React.Fragment>
-    );
-  }
-
-  changeHandler = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    this.props.dispatchUpdateMediaSource(evt.currentTarget.value);
-  };
+  return (
+    <React.Fragment>
+      <span id={props.uid}>{t('preferences.media_source.label')}</span>
+      <select
+        aria-labelledby={props.uid}
+        onChange={props.changeHandler}
+        value={selectedSource ? selectedSource.src : undefined}
+      >
+        {props.sources.map((mediaSource) => (
+          <option key={mediaSource.src} value={mediaSource.src}>
+            {mediaSource.label}
+          </option>
+        ))}
+      </select>
+    </React.Fragment>
+  );
 }
 
 function mapState(state: IAianaState) {
   return {
     media: state.player.mediaElement,
-    mediaSources: state.player.sources
+    sources: state.player.sources
   };
 }
 
-const mapDispatch: IDispatchProps = {
-  dispatchUpdateMediaSource: changeMediaSource
-};
+function mapDispatch(dispatch: CDispatch) {
+  return {
+    changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
+      dispatch(changeMediaSource(evt.currentTarget.value));
+    }
+  };
+}
 
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(withUniqueId(MediaSourceSelector)));
+)(withUniqueId(MediaSourceSelector));

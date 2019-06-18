@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addSubtitlesTrack, setSubtitlesText } from '../../actions/subtitles';
-import { TRACK_KIND_SUBTITLES, TRACK_MODE_HIDDEN } from '../../constants';
+import {
+  TRACK_KIND_SUBTITLES,
+  TRACK_MODE_HIDDEN
+} from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import {
   IRawSubtitlesTrack,
@@ -9,6 +12,7 @@ import {
   isActiveTrack,
   rawSubtitlesTrack
 } from '../../utils/media';
+import { getSelectedSubtitlesTrack } from '../../reducers/subtitles';
 
 export interface ITrack {
   isDefault?: boolean;
@@ -36,7 +40,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     kind: TRACK_KIND_SUBTITLES
   };
 
-  private trackRef = React.createRef<HTMLTrackElement>();
+  trackRef = React.createRef<HTMLTrackElement>();
 
   render() {
     return (
@@ -71,16 +75,23 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
   }
 
   componentDidUpdate(prevProps: ITrackProps) {
-    const prevActiveTrack = prevProps.subtitlesTracks.find(isActiveTrack);
-    const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
+    const prevActiveTrack = getSelectedSubtitlesTrack(
+      prevProps.subtitlesTracks
+    );
+    const activeTrack = getSelectedSubtitlesTrack(this.props.subtitlesTracks);
 
     // this track is active, but wasn't so at previous state.
-    if (prevActiveTrack && prevActiveTrack.label !== activeTrack!.label) {
+    if (
+      (activeTrack && !prevActiveTrack) ||
+      (activeTrack &&
+        prevActiveTrack &&
+        prevActiveTrack.label !== activeTrack.label)
+    ) {
       this.cueChangeHandler();
     }
   }
 
-  private isActive() {
+  isActive() {
     const activeTrack = this.props.subtitlesTracks.find(isActiveTrack);
 
     if (!activeTrack) {
@@ -90,7 +101,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     return activeTrack.label === this.trackRef.current!.label;
   }
 
-  private loadHandler = () => {
+  loadHandler = () => {
     const chaptersTrack = rawSubtitlesTrack(
       this.trackRef.current!.track,
       this.props.subtitlesLanguage
@@ -98,7 +109,7 @@ class MediaSubtitlesTrack extends React.Component<ITrackProps> {
     this.props.addSubtitlesTrack(chaptersTrack);
   };
 
-  private cueChangeHandler = () => {
+  cueChangeHandler = () => {
     if (!this.isActive()) {
       return;
     }

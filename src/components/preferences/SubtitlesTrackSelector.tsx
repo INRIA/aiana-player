@@ -6,14 +6,14 @@ import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import {
-  IRawSubtitlesTrack,
-  isActiveTrack,
-  isDisplayableTrack
-} from '../../utils/media';
+  ISubtitlesState,
+  getSelectedSubtitlesLanguage,
+  getDisplayableSubtitlesTracks
+} from '../../reducers/subtitles';
 
 interface IStateProps {
-  subtitlesTracks: IRawSubtitlesTrack[];
   mediaElement?: HTMLMediaElement;
+  subtitles: ISubtitlesState;
 }
 
 interface IDispatchProps {
@@ -25,16 +25,10 @@ interface ISubtitlesTrackSelector
     IStateProps,
     IDispatchProps {}
 
-export function getSelectedValue(tracks: IRawSubtitlesTrack[]): string {
-  const selectedTrack = tracks.find(isActiveTrack);
-
-  return selectedTrack ? selectedTrack.language : '';
-}
-
 function SubtitlesTrackSelector({
   mediaElement,
   selectedTrackChangedHandler,
-  subtitlesTracks,
+  subtitles,
   uid
 }: ISubtitlesTrackSelector) {
   const [t] = useTranslation();
@@ -49,10 +43,10 @@ function SubtitlesTrackSelector({
       <select
         aria-labelledby={uid}
         onChange={selectedTrackChangedHandler}
-        value={getSelectedValue(subtitlesTracks)}
+        value={getSelectedSubtitlesLanguage(subtitles)}
       >
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
-        {subtitlesTracks.filter(isDisplayableTrack).map(({ language }) => (
+        {getDisplayableSubtitlesTracks(subtitles).map(({ language }) => (
           <option key={language} value={language}>
             {t(`languages.${language}`)}
           </option>
@@ -65,7 +59,7 @@ function SubtitlesTrackSelector({
 function mapState(state: IAianaState) {
   return {
     mediaElement: state.player.mediaElement,
-    subtitlesTracks: state.subtitles.subtitlesTracks
+    subtitles: state.subtitles
   };
 }
 

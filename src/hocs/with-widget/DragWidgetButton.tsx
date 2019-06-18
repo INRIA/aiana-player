@@ -1,28 +1,28 @@
 import classNames from 'classnames';
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import StyledButton from '../../components/shared/styled-button';
+import GhostButton from '../../components/shared/GhostButton';
 import StyledSvg from '../../components/shared/styled-svg';
 import MoveIcon from '../../components/svg/Move';
-import { ESCAPE_KEY } from '../../constants';
+import { ESCAPE_KEY } from '../../constants/keys';
 import styled from '../../utils/styled-components';
 
 interface IProps {
   isDraggable: boolean;
-  windowName: string;
+  widgetName: string;
   dragEnd(): void;
   dragStart(): void;
   dragUpdate(deltaX: number, deltaY: number): void;
   keyUpdate(key: string): void;
 }
 
-interface IDragWindowButton extends IProps, WithTranslation {}
+interface IDragWidgetButton extends IProps, WithTranslation {}
 
 interface IState {
   isDragging: boolean;
 }
 
-const StyledDragWindowButton = styled(StyledButton)`
+const StyledDragWidgetButton = styled(GhostButton)`
   display: block;
 
   height: 1.5em;
@@ -44,7 +44,7 @@ const defaultState: IState = {
   isDragging: false
 };
 
-class DragWindowButton extends React.Component<IDragWindowButton, IState> {
+class DragWidgetButton extends React.Component<IDragWidgetButton, IState> {
   controlsRef = React.createRef<HTMLButtonElement>();
   baseX = 0;
   baseY = 0;
@@ -52,15 +52,15 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   readonly state = defaultState;
 
   render() {
-    const classes = classNames('aip-window-drag', {
+    const classes = classNames('aip-widget-drag', {
       activable: this.props.isDraggable,
       'is-dragging': this.state.isDragging
     });
 
     return (
-      <StyledDragWindowButton
-        aria-label={this.props.t('window.drag', {
-          windowName: this.props.windowName
+      <StyledDragWidgetButton
+        aria-label={this.props.t('widget.drag', {
+          widgetName: this.props.widgetName
         })}
         className={classes}
         ref={this.controlsRef}
@@ -69,11 +69,11 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
         type="button"
       >
         <StyledSvg as={MoveIcon} aria-hidden="true" />
-      </StyledDragWindowButton>
+      </StyledDragWidgetButton>
     );
   }
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     evt.currentTarget.focus();
     this.setState({ isDragging: true });
@@ -87,19 +87,19 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
     this.props.dragStart();
   };
 
-  private mouseMoveHandler = (evt: MouseEvent) => {
+  mouseMoveHandler = (evt: MouseEvent) => {
     const deltaX = evt.pageX - this.baseX;
     const deltaY = evt.pageY - this.baseY;
 
     this.props.dragUpdate(deltaX, deltaY);
   };
 
-  private mouseUpHandler = () => {
+  mouseUpHandler = () => {
     this.controlsRef.current!.blur();
     this.interactionEnd();
   };
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
     if (evt.key === ESCAPE_KEY) {
       evt.currentTarget.blur();
       this.interactionEnd();
@@ -108,7 +108,7 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
     }
   };
 
-  private interactionEnd() {
+  interactionEnd() {
     document.removeEventListener('mousemove', this.mouseMoveHandler);
     document.removeEventListener('mouseup', this.mouseUpHandler);
 
@@ -118,4 +118,4 @@ class DragWindowButton extends React.Component<IDragWindowButton, IState> {
   }
 }
 
-export default withTranslation()(DragWindowButton);
+export default withTranslation()(DragWidgetButton);

@@ -1,14 +1,6 @@
 import * as styledComponents from 'styled-components';
 import { ThemedStyledComponentsModule } from 'styled-components';
-
-export interface IAianaTheme {
-  bg: string;
-  clearFg: string;
-  fg: string;
-  focus: string;
-  highlight: string;
-  main: string;
-}
+import { IAianaTheme } from '../themes';
 
 const {
   default: styled,

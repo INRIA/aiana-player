@@ -8,11 +8,12 @@ interface IControlIcon {
 }
 
 function ControlIcon({ isFullscreen }: IControlIcon) {
-  if (isFullscreen) {
-    return <StyledSvg as={FullscreenExitIcon} aria-hidden="true" />;
-  }
-
-  return <StyledSvg as={FullscreenIcon} aria-hidden="true" />;
+  return (
+    <StyledSvg
+      as={isFullscreen ? FullscreenExitIcon : FullscreenIcon}
+      aria-hidden="true"
+    />
+  );
 }
 
 export default ControlIcon;

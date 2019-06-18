@@ -9,19 +9,31 @@ import SvgSettings from '../svg/Settings';
 import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import FontFaceSelector from './FontFaceSelector';
-import FontModifierUppercaseToggle from './FontModifierUppercaseToggle';
+import FontUppercaseToggle from './FontUppercaseToggle';
 import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
-import LineHeightselector from './LineHeightselector';
-import { PanelToggle } from './panel-toggle';
+import LineHeightSelector from './LineHeightSelector';
+import PanelToggle from './panel-toggle';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
 import TextHighlightingToggle from './TextHighlightingToggle';
 import ThemeSelector from './ThemeSelector';
-import WindowsVisibility from './windows/visibility/WindowsVisibility';
-import WindowsLockToggle from './windows/WindowsLockToggle';
+import WidgetsVisibility from './widgets/visibility/WidgetsVisibility';
+import WidgetsLockToggle from './widgets/WidgetsLockToggle';
 import MediaSourceSelector from './MediaSourceSelector';
+import PresetsSelector from './PresetsSelector';
+import { connect } from 'react-redux';
+import { IAianaState } from '../../reducers';
+import { IPreset } from '../../reducers/presets';
+import ExportPreferences from './ExportPreferences';
+import { IPreferencesState } from '../../reducers/preferences';
+import ImportPreferences from './ImportPreferences';
+
+interface IPreferencesPanel {
+  preferences: IPreferencesState;
+  presets: IPreset[];
+}
 
 const StyledPreferences = styled.div`
   display: inline-block;
@@ -83,10 +95,11 @@ const StyledPreferences = styled.div`
   }
 `;
 
-function PreferencesPanel() {
+function PreferencesPanel(props: IPreferencesPanel) {
   const [t] = useTranslation();
   const [isOpen, togglePanel] = useState(false);
   const ariaLabelId = uid();
+  const prefsPanelId = uid();
 
   return (
     <StyledPreferences
@@ -97,14 +110,24 @@ function PreferencesPanel() {
         <PanelToggle
           isExpanded={isOpen}
           clickHandler={() => togglePanel(!isOpen)}
+          aria-controls={prefsPanelId}
         >
           <AssistiveText>{t('preferences.title')}</AssistiveText>
           <StyledSvg as={SvgSettings} aria-hidden="true" />
         </PanelToggle>
       </h2>
 
-      <div className="aip-preferences-panel" hidden={!isOpen}>
+      <div id={prefsPanelId} className="aip-preferences-panel" hidden={!isOpen}>
         <ul>
+          <li>
+            <PresetsSelector presets={props.presets} />
+          </li>
+          <li>
+            <ImportPreferences />
+          </li>
+          <li>
+            <ExportPreferences preferences={props.preferences} />
+          </li>
           <li className="aip-language">
             <LanguageSelector />
           </li>
@@ -124,10 +147,10 @@ function PreferencesPanel() {
             <FontSizeSelector />
           </li>
           <li>
-            <LineHeightselector />
+            <LineHeightSelector />
           </li>
           <li>
-            <FontModifierUppercaseToggle />
+            <FontUppercaseToggle />
           </li>
           <li>
             <TextHighlightingToggle />
@@ -144,11 +167,11 @@ function PreferencesPanel() {
           <li className="aip-chapters-menu">
             <ChaptersMenuToggle />
           </li>
-          <li className="aip-windows-lock">
-            <WindowsLockToggle />
+          <li className="aip-widgets-lock">
+            <WidgetsLockToggle />
           </li>
-          <li className="aip-windows-visibility">
-            <WindowsVisibility />
+          <li className="aip-widgets-visibility">
+            <WidgetsVisibility />
           </li>
         </ul>
       </div>
@@ -156,4 +179,11 @@ function PreferencesPanel() {
   );
 }
 
-export default PreferencesPanel;
+function mapState(state: IAianaState) {
+  return {
+    preferences: state.preferences,
+    presets: state.presets
+  };
+}
+
+export default connect(mapState)(PreferencesPanel);

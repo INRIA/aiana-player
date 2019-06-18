@@ -1,12 +1,10 @@
-import { AnyAction } from 'redux';
-import { ExtendedHTMLElement, ThunkResult } from '../types';
+import { ExtendedHTMLElement, ThunkResult, IStdAction } from '../types';
 import {
   enterFullscreen,
   exitFullscreen,
   isDocumentFullscreen
 } from '../utils/fullscreen';
 import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
-import { toggleActivity } from './shared';
 
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
@@ -31,40 +29,48 @@ export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFO_TEXT = 'aiana/SET_ADDITIONAL_INFO_TEXT';
 export const SET_BUFFERED_RANGES = 'aiana/SET_BUFFERED_RANGES';
 
-export function updateBufferedRanges(timeRanges: TimeRanges): AnyAction {
+export function updateBufferedRanges(timeRanges: TimeRanges): IStdAction {
   return {
-    bufferedRanges: convertTimeRanges(timeRanges),
+    payload: {
+      bufferedRanges: convertTimeRanges(timeRanges)
+    },
     type: SET_BUFFERED_RANGES
   };
 }
 
-export function setAdditionalInformationText(text?: string): AnyAction {
+export function setAdditionalInformationText(text?: string): IStdAction {
   return {
-    text,
+    payload: {
+      text
+    },
     type: SET_ADDITIONAL_INFO_TEXT
   };
 }
 
 export function addAdditionalInformationTrack(
   track: IRawMetadataTrack
-): AnyAction {
+): IStdAction {
   return {
-    track,
+    payload: {
+      track
+    },
     type: ADD_METADATA_TRACK
   };
 }
 
-export function startSeeking(): AnyAction {
+export function startSeeking(): IStdAction {
   return toggleSeek(true);
 }
 
-export function stopSeeking(): AnyAction {
+export function stopSeeking(): IStdAction {
   return toggleSeek(false);
 }
 
-function toggleSeek(isSeeking: boolean): AnyAction {
+function toggleSeek(isSeeking: boolean): IStdAction {
   return {
-    isSeeking,
+    payload: {
+      isSeeking
+    },
     type: MEDIA_SEEK_TOGGLE
   };
 }
@@ -72,29 +78,35 @@ function toggleSeek(isSeeking: boolean): AnyAction {
 export function requestSeek(
   media: HTMLMediaElement,
   seekingTime: number
-): AnyAction {
+): IStdAction {
   media.currentTime = seekingTime;
 
   return seek(seekingTime);
 }
 
-function seek(seekingTime: number): AnyAction {
+function seek(seekingTime: number): IStdAction {
   return {
-    seekingTime,
+    payload: {
+      seekingTime
+    },
     type: MEDIA_REQUEST_SEEK
   };
 }
 
-export function updateCurrentTime(currentTime: number): AnyAction {
+export function updateCurrentTime(currentTime: number): IStdAction {
   return {
-    currentTime,
+    payload: {
+      currentTime
+    },
     type: MEDIA_UPDATE_TIME
   };
 }
 
-export function handleFullscreenChange(isFullscreen: boolean): AnyAction {
+export function handleFullscreenChange(isFullscreen: boolean): IStdAction {
   return {
-    isFullscreen,
+    payload: {
+      isFullscreen
+    },
     type: TOGGLE_FULLSCREEN
   };
 }
@@ -111,22 +123,27 @@ export function toggleFullscreen(
   };
 }
 
-export function playerElementMounted(playerElement: HTMLElement): AnyAction {
+export function playerElementMounted(playerElement: HTMLElement): IStdAction {
   return {
-    playerElement,
+    payload: {
+      playerElement
+    },
     type: PLAYER_ELEMENT_MOUNTED
   };
 }
 
-export function updateMediaElement(mediaElement: HTMLMediaElement): AnyAction {
+export function updateMediaElement(mediaElement: HTMLMediaElement): IStdAction {
   return {
-    mediaElement,
+    payload: {
+      mediaElement
+    },
     type: MEDIA_SOURCE_UPDATED
   };
 }
 
-export function mediaElementUnounted(): AnyAction {
+export function mediaElementUnounted(): IStdAction {
   return {
+    payload: null,
     type: MEDIA_ELEMENT_UNMOUNTED
   };
 }
@@ -140,9 +157,11 @@ export function requestMediaPlay(media: HTMLMediaElement): ThunkResult<void> {
   };
 }
 
-function playMedia(): AnyAction {
+function playMedia(): IStdAction {
   return {
-    isPlaying: true,
+    payload: {
+      isPlaying: true
+    },
     type: MEDIA_PLAY
   };
 }
@@ -152,13 +171,14 @@ export function requestMediaPause(media: HTMLMediaElement): ThunkResult<void> {
     dispatch({ type: MEDIA_REQUEST_PAUSE });
     media.pause();
     dispatch(pauseMedia());
-    dispatch(toggleActivity(false));
   };
 }
 
-function pauseMedia(): AnyAction {
+function pauseMedia(): IStdAction {
   return {
-    isPlaying: false,
+    payload: {
+      isPlaying: false
+    },
     type: MEDIA_PAUSE
   };
 }
@@ -166,11 +186,13 @@ function pauseMedia(): AnyAction {
 export function changePlaybackRate(
   media: HTMLMediaElement,
   playbackRate: number
-): AnyAction {
+): IStdAction {
   media.playbackRate = playbackRate;
 
   return {
-    playbackRate,
+    payload: {
+      playbackRate
+    },
     type: MEDIA_PLAYBACK_RATE
   };
 }
@@ -178,48 +200,58 @@ export function changePlaybackRate(
 export function requestChangeVolume(
   media: HTMLMediaElement,
   volume: number
-): AnyAction {
+): IStdAction {
   media.volume = volume;
 
   return {
-    type: MEDIA_REQUEST_VOLUME_CHANGE,
-    volume
+    payload: {
+      volume
+    },
+    type: MEDIA_REQUEST_VOLUME_CHANGE
   };
 }
 
-export function changeVolume(volume: number): AnyAction {
+export function changeVolume(volume: number): IStdAction {
   return {
-    type: MEDIA_VOLUME_CHANGE,
-    volume
+    payload: {
+      volume
+    },
+    type: MEDIA_VOLUME_CHANGE
   };
 }
 
-export function muteMedia(media: HTMLMediaElement): AnyAction {
+export function muteMedia(media: HTMLMediaElement): IStdAction {
   media.muted = true;
 
   return {
+    payload: null,
     type: MEDIA_REQUEST_MUTE
   };
 }
 
-export function unmuteMedia(media: HTMLMediaElement): AnyAction {
+export function unmuteMedia(media: HTMLMediaElement): IStdAction {
   media.muted = false;
 
   return {
+    payload: null,
     type: MEDIA_REQUEST_UNMUTE
   };
 }
 
-export function toggleMute(isMuted: boolean): AnyAction {
+export function toggleMute(isMuted: boolean): IStdAction {
   return {
-    isMuted,
+    payload: {
+      isMuted
+    },
     type: MEDIA_TOGGLE_MUTE
   };
 }
 
-export function updateMediaDuration(duration: number): AnyAction {
+export function updateMediaDuration(duration: number): IStdAction {
   return {
-    duration,
+    payload: {
+      duration
+    },
     type: MEDIA_UPDATE_DURATION
   };
 }

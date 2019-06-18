@@ -8,11 +8,12 @@ interface IControlIcon {
 }
 
 function ControlIcon({ isMuted }: IControlIcon) {
-  if (isMuted) {
-    return <StyledSvg as={VolumeMutedIcon} aria-hidden="true" />;
-  }
-
-  return <StyledSvg as={VolumeUnmutedIcon} aria-hidden="true" />;
+  return (
+    <StyledSvg
+      as={isMuted ? VolumeMutedIcon : VolumeUnmutedIcon}
+      aria-hidden="true"
+    />
+  );
 }
 
 export default ControlIcon;

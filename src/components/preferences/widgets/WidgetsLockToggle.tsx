@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setWindowsLock } from '../../../actions/preferences';
-import { DEFAULT_WINDOWS_LOCK } from '../../../constants';
+import { setWidgetsLock } from '../../../actions/preferences';
+import { DEFAULT_WIDGETS_LOCK } from '../../../constants/widgets';
 import withUniqueId, {
   IInjectedUniqueIdProps
 } from '../../../hocs/withUniqueId';
 import ToggleButton from '../../shared/toggle-button';
 
 interface IDispatchProps {
-  setWindowsLock(locked: boolean): any;
+  setWidgetsLock(locked: boolean): any;
 }
 
-interface IWindowsLockToggle extends IDispatchProps, IInjectedUniqueIdProps {}
+interface IWidgetsLockToggle extends IDispatchProps, IInjectedUniqueIdProps {}
 
-function WindowsLockToggle(props: IWindowsLockToggle) {
-  const [locked, setLocked] = useState(DEFAULT_WINDOWS_LOCK);
+function WidgetsLockToggle(props: IWidgetsLockToggle) {
+  const [locked, setLocked] = useState(DEFAULT_WIDGETS_LOCK);
   const [t] = useTranslation();
 
   return (
     <React.Fragment>
-      <span id={props.uid}>{t('preferences.windows_locked.label')}</span>
+      <span id={props.uid}>{t('preferences.widgets_locked.label')}</span>
       <ToggleButton
         isOn={locked}
         labelledBy={props.uid}
         onClick={() => {
           setLocked(!locked);
-          props.setWindowsLock(!locked);
+          props.setWidgetsLock(!locked);
         }}
       />
     </React.Fragment>
@@ -34,10 +34,10 @@ function WindowsLockToggle(props: IWindowsLockToggle) {
 }
 
 const mapDispatch = {
-  setWindowsLock
+  setWidgetsLock
 };
 
 export default connect(
   null,
   mapDispatch
-)(withUniqueId(WindowsLockToggle));
+)(withUniqueId(WidgetsLockToggle));

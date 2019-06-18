@@ -5,12 +5,11 @@ import { updateActiveSlidesTrack } from '../../actions/slides';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
-import { IRawSlidesTrack } from '../../utils/media';
+import { ISlidesState, getSelectedTrackLanguage } from '../../reducers/slides';
 
 interface IStateProps {
-  slidesTracks: IRawSlidesTrack[];
-  currentLanguage: string;
   mediaElement?: HTMLMediaElement;
+  slides: ISlidesState;
 }
 
 interface IDispatchProps {
@@ -22,22 +21,10 @@ interface ISlidesTrackSelector
     IStateProps,
     IDispatchProps {}
 
-export function getSelectedValue(
-  tracks: IRawSlidesTrack[],
-  language: string
-): string {
-  const selectedTrack = tracks.find((track) => {
-    return track.language === language;
-  });
-
-  return selectedTrack ? selectedTrack.language : '';
-}
-
 function SlidesTrackSelector({
-  slidesTracks,
-  currentLanguage,
   mediaElement,
   selectedTrackChangedHandler,
+  slides,
   uid
 }: ISlidesTrackSelector) {
   const [t] = useTranslation();
@@ -52,9 +39,9 @@ function SlidesTrackSelector({
       <select
         aria-labelledby={uid}
         onChange={selectedTrackChangedHandler}
-        value={getSelectedValue(slidesTracks, currentLanguage)}
+        value={getSelectedTrackLanguage(slides)}
       >
-        {slidesTracks.map(({ language }) => (
+        {slides.slidesTracks.map(({ language }) => (
           <option key={language} value={language}>
             {t(`languages.${language}`)}
           </option>
@@ -66,9 +53,8 @@ function SlidesTrackSelector({
 
 function mapState(state: IAianaState) {
   return {
-    currentLanguage: state.slides.language,
     mediaElement: state.player.mediaElement,
-    slidesTracks: state.slides.slidesTracks
+    slides: state.slides
   };
 }
 

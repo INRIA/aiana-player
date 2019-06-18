@@ -5,10 +5,10 @@ import { muteMedia, unmuteMedia } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import ControlIcon from './ControlIcon';
 
-const StyledMuteButton = styled(StyledButton)`
+const StyledMuteButton = styled(GhostButton)`
   &:hover ~ .aip-volume {
     width: 4em;
   }
@@ -36,7 +36,7 @@ class MuteButton extends React.Component<IMuteButton> {
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     if (!this.props.mediaElement) {
       return;
     }
@@ -48,7 +48,7 @@ class MuteButton extends React.Component<IMuteButton> {
     }
   };
 
-  private getControlText = () => {
+  getControlText = () => {
     const { t, isMuted } = this.props;
 
     return isMuted ? t('controls.unmute') : t('controls.mute');

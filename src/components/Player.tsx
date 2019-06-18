@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { updateUIWindow } from '../actions/shared';
+import { updateWidget } from '../actions/shared';
 import {
-  WINDOW_ID_ADDITIONAL_INFORMATION,
-  WINDOW_ID_CHAPTERS,
-  WINDOW_ID_SLIDES,
-  WINDOW_ID_VIDEO,
-  WINDOW_ID_TIME_MANAGEMENT
-} from '../constants';
+  WIDGET_ID_ADDITIONAL_INFORMATION,
+  WIDGET_ID_CHAPTERS,
+  WIDGET_ID_SLIDES,
+  WIDGET_ID_VIDEO,
+  WIDGET_ID_TIME_MANAGEMENT
+} from '../constants/widgets';
 import { IAianaState } from '../reducers';
-import { IUIWindow } from '../reducers/preferences';
+import { IWidget } from '../reducers/preferences';
 import styled from '../utils/styled-components';
 import AdditionalInformation from './AdditionalInformation';
 import ChaptersMenu from './chapters/ChaptersMenu';
@@ -30,7 +30,7 @@ const StyledDiv = styled.div`
 
   background-color: ${(props) => props.theme.bg};
 
-  .aip-windows {
+  .aip-widgets {
     /*
       timeline height is 2.25em,
       controls height is 3.5625em,
@@ -47,20 +47,20 @@ const StyledDiv = styled.div`
 interface IStateProps {
   additionalInformationText?: string;
   chaptersMenu: boolean;
-  uiWindows: IUIWindow[];
+  widgets: IWidget[];
 }
 
 interface IDispatchProps {
-  updateWindowHandler(name: string, window: Partial<IUIWindow>): void;
+  updateWidgetHandler(name: string, widget: Partial<IWidget>): void;
 }
 
 interface IPlayerProps extends IStateProps, IDispatchProps {}
 
-type Filter = (window: IUIWindow) => boolean;
+type Filter = (widget: IWidget) => boolean;
 
 function byName(name: string): Filter {
-  return (window: IUIWindow) => {
-    return window.name === name;
+  return (widget: IWidget) => {
+    return widget.name === name;
   };
 }
 
@@ -70,66 +70,64 @@ function Player(props: IPlayerProps) {
   const {
     additionalInformationText,
     chaptersMenu,
-    uiWindows,
-    updateWindowHandler
+    widgets,
+    updateWidgetHandler
   } = props;
 
-  const chaptersWindow = uiWindows.find(byName(WINDOW_ID_CHAPTERS));
-  const additionalInformationWindow = uiWindows.find(
-    byName(WINDOW_ID_ADDITIONAL_INFORMATION)
+  const chaptersWidget = widgets.find(byName(WIDGET_ID_CHAPTERS));
+  const additionalInformationWidget = widgets.find(
+    byName(WIDGET_ID_ADDITIONAL_INFORMATION)
   );
-  const slidesWindow = uiWindows.find(byName(WINDOW_ID_SLIDES));
-  const timeManagementWindow = uiWindows.find(
-    byName(WINDOW_ID_TIME_MANAGEMENT)
-  );
-  const videoWindow = uiWindows.find(byName(WINDOW_ID_VIDEO));
+  const slidesWidget = widgets.find(byName(WIDGET_ID_SLIDES));
+  const timeManagementWidget = widgets.find(byName(WIDGET_ID_TIME_MANAGEMENT));
+  const videoWidget = widgets.find(byName(WIDGET_ID_VIDEO));
 
   return (
     <StyledDiv>
-      <div className="aip-windows">
-        {chaptersWindow && chaptersMenu && (
+      <div className="aip-widgets">
+        {chaptersWidget && chaptersMenu && (
           <ChaptersMenu
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            {...chaptersWindow}
+            uiUpdateHandler={updateWidgetHandler}
+            {...chaptersWidget}
           />
         )}
 
-        {videoWindow && (
+        {videoWidget && (
           <VideoPlayer
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            {...videoWindow}
+            uiUpdateHandler={updateWidgetHandler}
+            {...videoWidget}
           />
         )}
 
-        {slidesWindow && (
+        {slidesWidget && (
           <Slides
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            {...slidesWindow}
+            uiUpdateHandler={updateWidgetHandler}
+            {...slidesWidget}
           />
         )}
 
-        {additionalInformationWindow && (
+        {additionalInformationWidget && (
           <AdditionalInformation
             isDraggable={isDraggable}
             text={additionalInformationText}
             toggleDraggable={setDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            {...additionalInformationWindow}
+            uiUpdateHandler={updateWidgetHandler}
+            {...additionalInformationWidget}
           />
         )}
 
-        {timeManagementWindow && (
+        {timeManagementWidget && (
           <TimeSpent
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
-            uiUpdateHandler={updateWindowHandler}
-            {...timeManagementWindow}
+            uiUpdateHandler={updateWidgetHandler}
+            {...timeManagementWidget}
           />
         )}
 
@@ -145,12 +143,12 @@ function mapState(state: IAianaState) {
   return {
     additionalInformationText: state.player.additionalInformationText,
     chaptersMenu: state.chapters.menuEnabled,
-    uiWindows: state.preferences.uiWindows
+    widgets: state.preferences.widgets
   };
 }
 
 const mapDispatch = {
-  updateWindowHandler: updateUIWindow
+  updateWidgetHandler: updateWidget
 };
 
 export default connect(

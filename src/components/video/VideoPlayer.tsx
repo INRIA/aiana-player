@@ -14,10 +14,10 @@ import {
   updateMediaDuration
 } from '../../actions/player';
 import { updateSubtitlesTracksList } from '../../actions/subtitles';
-import withWindow from '../../hocs/with-window';
+import withWidget from '../../hocs/with-widget';
 import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
-import { ISource } from '../../reducers/player';
+import { ISource, getSelectedMediaSource } from '../../reducers/player';
 import { ISlidesTrack } from '../../reducers/slides';
 import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
 import styled from '../../utils/styled-components';
@@ -83,12 +83,8 @@ const StyledVideo = styled.video`
   transform: translate3d(0, 0, 0);
 `;
 
-export function isSelectedSource(source: ISource): boolean {
-  return source.selected === true;
-}
-
-function getCurrentSource(sources: ISource[]): ISource | void {
-  const selectedSource = sources.find(isSelectedSource);
+function getCurrentSourceWithFallback(sources: ISource[]): ISource | void {
+  const selectedSource = getSelectedMediaSource(sources);
 
   if (selectedSource) {
     return selectedSource;
@@ -102,10 +98,10 @@ function getCurrentSource(sources: ISource[]): ISource | void {
 }
 
 class VideoPlayer extends React.Component<IProps> {
-  private media = React.createRef<HTMLVideoElement>();
+  media = React.createRef<HTMLVideoElement>();
 
   render() {
-    const selectedSource = getCurrentSource(this.props.sources);
+    const selectedSource = getCurrentSourceWithFallback(this.props.sources);
 
     if (!selectedSource) {
       return null;
@@ -160,8 +156,8 @@ class VideoPlayer extends React.Component<IProps> {
   }
 
   componentDidUpdate(prevProps: IStateProps) {
-    const currentSource = getCurrentSource(this.props.sources);
-    const prevSource = getCurrentSource(prevProps.sources);
+    const currentSource = getCurrentSourceWithFallback(this.props.sources);
+    const prevSource = getCurrentSourceWithFallback(prevProps.sources);
 
     if (
       currentSource &&
@@ -193,11 +189,11 @@ class VideoPlayer extends React.Component<IProps> {
     }
   };
 
-  private progressHandler = () => {
+  progressHandler = () => {
     this.props.updateBufferedRanges(this.media.current!.buffered);
   };
 
-  private clickHandler = () => {
+  clickHandler = () => {
     if (this.media.current!.paused) {
       this.props.requestMediaPlay(this.media.current!);
     } else {
@@ -205,23 +201,23 @@ class VideoPlayer extends React.Component<IProps> {
     }
   };
 
-  private seekedHandler = () => {
+  seekedHandler = () => {
     if (this.props.isSeeking) {
       this.props.stopSeeking();
     }
   };
 
-  private seekingHandler = () => {
+  seekingHandler = () => {
     if (!this.props.isSeeking) {
       this.props.startSeeking();
     }
   };
 
-  private timeUpdateHandler = () => {
+  timeUpdateHandler = () => {
     this.props.updateCurrentTime(this.media.current!.currentTime);
   };
 
-  private loadedMetadataHandler = () => {
+  loadedMetadataHandler = () => {
     this.props.updateMediaDuration(this.media.current!.duration);
   };
 
@@ -230,7 +226,7 @@ class VideoPlayer extends React.Component<IProps> {
    * need to be performed to catch changes and dispatch them to update the
    * application state.
    */
-  private volumeChangeHandler = () => {
+  volumeChangeHandler = () => {
     const media = this.media.current!;
     const { isMuted, volume } = this.props;
 
@@ -284,4 +280,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withWindow(VideoPlayer));
+)(withWidget(VideoPlayer));

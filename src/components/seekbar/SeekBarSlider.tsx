@@ -3,17 +3,17 @@ import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
+import { DEFAULT_SEEK_STEP_MULTIPLIER } from '../../constants/preferences';
 import {
   ARROW_DOWN_KEY,
   ARROW_LEFT_KEY,
   ARROW_RIGHT_KEY,
   ARROW_UP_KEY,
-  DEFAULT_SEEK_STEP_MULTIPLIER,
   END_KEY,
   HOME_KEY,
   PAGE_DOWN_KEY,
   PAGE_UP_KEY
-} from '../../constants';
+} from '../../constants/keys';
 import { IAianaState } from '../../reducers';
 import { unitToRatio } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
@@ -155,7 +155,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     window.removeEventListener('resize', this.setPosition);
   }
 
-  private setPosition = () => {
+  setPosition = () => {
     const sliderEl = document.querySelector('.aip-progress-slider');
     if (!sliderEl) {
       return;
@@ -171,7 +171,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     });
   };
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();
 
     // Force focus when element in being interacted with a pointer device.
@@ -186,7 +186,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     document.addEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseUpHandler = (evt: MouseEvent) => {
+  mouseUpHandler = (evt: MouseEvent) => {
     (document.querySelector('.aip-progress-slider') as HTMLDivElement)!.blur();
     const el = document.querySelector('.aip-progress')! as HTMLDivElement;
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
@@ -195,12 +195,12 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
 
-  private mouseMoveHandler = (evt: MouseEvent) => {
+  mouseMoveHandler = (evt: MouseEvent) => {
     const el = document.querySelector('.aip-progress')! as HTMLDivElement;
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
   };
 
-  private updateCurrentTime = (mouseX: number) => {
+  updateCurrentTime = (mouseX: number) => {
     const {
       currentTime,
       duration,
@@ -226,7 +226,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     }
   };
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
     const {
       currentTime,
       duration,
@@ -288,7 +288,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     }
   };
 
-  private safeTime(seekTime: number): number {
+  safeTime(seekTime: number): number {
     return bounded(seekTime, 0, this.props.duration);
   }
 }

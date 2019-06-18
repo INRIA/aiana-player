@@ -1,0 +1,13 @@
+export const DEFAULT_FONT_FACE = 'system';
+export const DEFAULT_FONT_SIZE_MULTIPLIER = 1.0;
+export const DEFAULT_FONT_UPPERCASE = false;
+export const DEFAULT_LANG = 'en';
+export const DEFAULT_LINE_HEIGHT = 1.5;
+export const DEFAULT_WIDGET_MOVE_STEP = 5;
+export const DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD = 1.0;
+export const DEFAULT_SEEK_STEP = 5;
+export const DEFAULT_SEEK_STEP_MULTIPLIER = 2;
+export const DEFAULT_TEXT_HIGHLIGHTING = false;
+export const DEFAULT_THEME = 'inria';
+export const DEFAULT_VOLUME_STEP = 0.1;
+export const DEFAULT_VOLUME_STEP_MULTIPLIER = 2;

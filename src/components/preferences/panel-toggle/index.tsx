@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 
 interface IPanelToggleProps {
   children: ReactNode;
@@ -7,14 +7,16 @@ interface IPanelToggleProps {
   clickHandler: () => void;
 }
 
-export function PanelToggle(props: IPanelToggleProps) {
+function PanelToggle(props: IPanelToggleProps) {
   return (
-    <StyledButton
+    <GhostButton
       aria-expanded={props.isExpanded}
       onClick={props.clickHandler}
       type="button"
     >
       {props.children}
-    </StyledButton>
+    </GhostButton>
   );
 }
+
+export default PanelToggle;

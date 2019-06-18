@@ -5,7 +5,7 @@ import { seekNextChapter } from '../../../actions/chapters';
 import { IAianaState } from '../../../reducers';
 import { IRawChaptersTrack, isActiveTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import SkipNext from '../../svg/SkipNext';
 
@@ -28,12 +28,12 @@ interface INextChapter extends IStateProps, IDispatchProps, WithTranslation {}
 class NextChapter extends Component<INextChapter> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler} type="button">
         <StyledSvg as={SkipNext} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_chapter_next')}
         </AssistiveText>
-      </StyledButton>
+      </GhostButton>
     );
   }
 

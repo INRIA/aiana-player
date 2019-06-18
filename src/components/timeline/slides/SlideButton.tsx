@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '../../../utils/styled-components';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import SlideIcon from '../../svg/Slide';
 
@@ -18,17 +18,17 @@ const FilteredSvg = styled(StyledSvg)`
 class SlideButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledButton
+      <GhostButton
         aria-label={this.props.label}
         onClick={this.clickHandler}
         type="button"
       >
         <FilteredSvg as={SlideIcon} aria-hidden="true" />
-      </StyledButton>
+      </GhostButton>
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     const { onClick, media, time } = this.props;
     if (!media) {
       return;

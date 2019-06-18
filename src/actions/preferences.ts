@@ -1,104 +1,152 @@
-import { AnyAction } from 'redux';
 import i18n from '../i18n';
+import cloneDeep from 'lodash.clonedeep';
 import { CDispatch } from '../store';
-import { ThunkResult } from '../types';
-import { TOGGLE_ACTIVITY } from './shared';
+import { ThunkResult, IStdAction } from '../types';
+import {
+  IPreferencesState,
+  initialPreferencesState
+} from '../reducers/preferences';
 
 export const CHANGE_LANGUAGE = 'aiana/CHANGE_LANGUAGE';
 export const CHANGE_THEME = 'aiana/CHANGE_THEME';
-export const WINDOWS_LOCK = 'aiana/WINDOWS_LOCK';
-export const CHANGE_WINDOW_VISIBILITY = 'aiana/CHANGE_WINDOW_VISIBILITY';
+export const WIDGETS_LOCK = 'aiana/WIDGETS_LOCK';
+export const CHANGE_WIDGET_VISIBILITY = 'aiana/CHANGE_WIDGET_VISIBILITY';
 export const UPDATE_ACTIVE_FONT_FACE = 'aiana/UPDATE_ACTIVE_FONT_FACE';
 export const UPDATE_FONT_SIZE_MULTIPLIER = 'aiana/UPDATE_FONT_SIZE_MULTIPLIER';
 export const CHANGE_TEXT_HIGHLIGHTING = 'aiana/CHANGE_TEXT_HIGHLIGHTING';
 export const CHANGE_TEXT_UPPERCASE = 'aiana/CHANGE_TEXT_UPPERCASE';
 export const UPDATE_LINE_HEIGHT = 'aiana/CHANGE_LINE_HEIGHT';
 export const CHANGE_MEDIA_SOURCE = 'aiana/CHANGE_MEDIA_SOURCE';
+export const EXPORT_PREFERENCES = 'aiana/EXPORT_PREFERENCES';
+export const IMPORT_PREFERENCES = 'aiana/IMPORT_PREFERENCES';
 
-export function changeMediaSource(mediaSource: string): AnyAction {
+export function importPreferences(
+  preferences: Partial<IPreferencesState>
+): ThunkResult<void> {
+  return (dispatch) => {
+    const mergedPreferences = Object.assign(
+      cloneDeep(initialPreferencesState),
+      cloneDeep(preferences)
+    );
+
+    dispatch(changeLanguage(mergedPreferences.language));
+    dispatch({
+      payload: mergedPreferences,
+      type: IMPORT_PREFERENCES
+    });
+  };
+}
+
+export function exportPreferences(
+  preferences: Partial<IPreferencesState>
+): IStdAction {
   return {
-    mediaSource,
+    payload: {
+      preferences
+    },
+    type: EXPORT_PREFERENCES
+  };
+}
+
+export function changeMediaSource(mediaSource: string): IStdAction {
+  return {
+    payload: {
+      mediaSource
+    },
     type: CHANGE_MEDIA_SOURCE
   };
 }
 
-export function updateLineHeight(lineHeight: string): AnyAction {
+export function updateLineHeight(lineHeight: number): IStdAction {
   return {
-    lineHeight,
+    payload: {
+      lineHeight
+    },
     type: UPDATE_LINE_HEIGHT
   };
 }
 
-export function setFontModifierUppercase(uppercase: boolean): AnyAction {
+export function setFontUppercase(fontUppercase: boolean): IStdAction {
   return {
-    fontModifierUppercase: uppercase,
+    payload: {
+      fontUppercase
+    },
     type: CHANGE_TEXT_UPPERCASE
   };
 }
 
-export function setTextHighlighting(textHighlighting: boolean): AnyAction {
+export function setTextHighlighting(textHighlighting: boolean): IStdAction {
   return {
-    textHighlighting,
+    payload: {
+      textHighlighting
+    },
     type: CHANGE_TEXT_HIGHLIGHTING
   };
 }
 
-export function updateActiveFontSizeMultiplier(multiplier: number): AnyAction {
+export function updateFontSizeMultiplier(
+  fontSizeMultiplier: number
+): IStdAction {
   return {
-    activeFontSizeMultiplier: multiplier,
+    payload: {
+      fontSizeMultiplier
+    },
     type: UPDATE_FONT_SIZE_MULTIPLIER
   };
 }
 
-export function updateActiveFontFace(fontFace: string): AnyAction {
+export function updateActiveFontFace(fontFace: string): IStdAction {
   return {
-    activeFontFace: fontFace,
+    payload: {
+      fontFace
+    },
     type: UPDATE_ACTIVE_FONT_FACE
   };
 }
 
-export function setWindowVisibility(
-  windowName: string,
+export function setWidgetVisibility(
+  widgetName: string,
   visible: boolean
-): AnyAction {
+): IStdAction {
   return {
-    type: CHANGE_WINDOW_VISIBILITY,
-    visible,
-    windowName
+    payload: {
+      visible,
+      widgetName
+    },
+    type: CHANGE_WIDGET_VISIBILITY
   };
 }
 
-export function setWindowsLock(locked: boolean): AnyAction {
+export function setWidgetsLock(locked: boolean): IStdAction {
   return {
-    locked,
-    type: WINDOWS_LOCK
+    payload: {
+      locked
+    },
+    type: WIDGETS_LOCK
   };
 }
 
-export function changeCurrentLanguage(language: string): ThunkResult<void> {
+export function changeLanguage(language: string): ThunkResult<void> {
   return async (dispatch: CDispatch) => {
     await i18n.changeLanguage(language);
-    dispatch(changeLanguage(language));
+    dispatch(changeUILanguage(language));
   };
 }
 
-function changeLanguage(language: string): AnyAction {
+function changeUILanguage(language: string): IStdAction {
   return {
-    language,
+    payload: {
+      language
+    },
     type: CHANGE_LANGUAGE
   };
 }
 
-export function changeCurrentTheme(themeName: string): AnyAction {
+export function changeActiveTheme(theme: string): IStdAction {
   return {
-    currentTheme: themeName,
+    payload: {
+      theme
+    },
     type: CHANGE_THEME
-  };
-}
-
-export function toggleActivity(isActive: boolean): AnyAction {
-  return {
-    isActive,
-    type: TOGGLE_ACTIVITY
   };
 }

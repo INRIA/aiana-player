@@ -7,8 +7,8 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  lineHeight: string;
-  lineHeightValues: string[];
+  lineHeight?: number;
+  lineHeightValues?: number[];
 }
 
 interface IDispatchProps {
@@ -28,11 +28,12 @@ function LineHeightSelector(props: IProps) {
         onChange={props.changeHandler}
         value={props.lineHeight}
       >
-        {props.lineHeightValues.map((lineHeight) => (
-          <option key={lineHeight} value={lineHeight}>
-            {lineHeight}
-          </option>
-        ))}
+        {props.lineHeightValues &&
+          props.lineHeightValues.map((lineHeight) => (
+            <option key={lineHeight} value={lineHeight}>
+              {lineHeight}
+            </option>
+          ))}
       </select>
     </React.Fragment>
   );
@@ -48,7 +49,7 @@ function mapState(state: IAianaState) {
 function mapDispatch(dispatch: CDispatch) {
   return {
     changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(updateLineHeight(evt.currentTarget.value));
+      dispatch(updateLineHeight(Number(evt.currentTarget.value)));
     }
   };
 }

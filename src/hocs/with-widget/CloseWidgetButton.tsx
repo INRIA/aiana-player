@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setWindowVisibility } from '../../actions/preferences';
-import StyledButton from '../../components/shared/styled-button';
+import { setWidgetVisibility } from '../../actions/preferences';
+import GhostButton from '../../components/shared/GhostButton';
 import StyledSvg from '../../components/shared/styled-svg';
 import SvgCross from '../../components/svg/Cross';
 import { CDispatch } from '../../store';
@@ -11,7 +11,7 @@ import styled from '../../utils/styled-components';
 
 interface IOwnProps {
   activable: boolean;
-  windowName: string;
+  widgetName: string;
 }
 
 interface IDispatchProps {
@@ -20,7 +20,7 @@ interface IDispatchProps {
 
 interface IProps extends IOwnProps, IDispatchProps {}
 
-const StyledCloseWindowButton = styled(StyledButton)`
+const StyledCloseWidgetButton = styled(GhostButton)`
   display: block;
 
   width: 1.5em;
@@ -39,31 +39,31 @@ const StyledCloseWindowButton = styled(StyledButton)`
   }
 `;
 
-function CloseWindowButton(props: IProps) {
+function CloseWidgetButton(props: IProps) {
   const [t] = useTranslation();
 
-  const classes = classNames('aip-window-close', {
+  const classes = classNames('aip-widget-close', {
     activable: props.activable
   });
 
   return (
-    <StyledCloseWindowButton
-      aria-label={t('window.close', {
-        windowName: props.windowName
+    <StyledCloseWidgetButton
+      aria-label={t('widget.close', {
+        widgetName: props.widgetName
       })}
       className={classes}
       onClick={props.clickHandler}
       type="button"
     >
       <StyledSvg as={SvgCross} />
-    </StyledCloseWindowButton>
+    </StyledCloseWidgetButton>
   );
 }
 
 function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
-      dispatch(setWindowVisibility(ownProps.windowName, false));
+      dispatch(setWidgetVisibility(ownProps.widgetName, false));
     }
   };
 }
@@ -71,4 +71,4 @@ function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
 export default connect(
   null,
   mapDispatch
-)(CloseWindowButton);
+)(CloseWidgetButton);

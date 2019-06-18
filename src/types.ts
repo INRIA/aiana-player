@@ -1,5 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import { IAianaState } from './reducers';
+import { AnyAction } from 'redux';
 
 /**
  * Default `Document` interface is missing proprietary implementations and some
@@ -32,3 +33,7 @@ export type ExtendedHTMLElement = IHTMLElement & HTMLElement;
 export type ExtendedDocument = IDocument & Document;
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
+
+export interface IStdAction extends AnyAction {
+  payload: any;
+}

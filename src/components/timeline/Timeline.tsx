@@ -1,7 +1,4 @@
-import classNames from 'classnames';
 import React from 'react';
-import { connect } from 'react-redux';
-import { IAianaState } from '../../reducers';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import BookmarksBar from './bookmarks/BookmarksBar';
@@ -29,18 +26,9 @@ const StyledTimelineBar = styled.div`
   }
 `;
 
-interface IStateProps {
-  isActive: boolean;
-}
-
-function TimelineBar(props: IStateProps) {
+function TimelineBar() {
   return (
-    <StyledTimelineBar
-      className={classNames({
-        'aip-content-timeline': true,
-        inactive: !props.isActive
-      })}
-    >
+    <StyledTimelineBar className="aip-content-timeline">
       <div>
         <ChaptersBar />
         <BookmarksBar />
@@ -50,10 +38,4 @@ function TimelineBar(props: IStateProps) {
   );
 }
 
-function mapState(state: IAianaState) {
-  return {
-    isActive: state.preferences.isActive
-  };
-}
-
-export default connect(mapState)(TimelineBar);
+export default TimelineBar;

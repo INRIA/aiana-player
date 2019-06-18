@@ -5,7 +5,7 @@ import { seekNextSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
 import { IRawSlidesTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import ArrowForward from '../../svg/ArrowForward';
 
@@ -29,12 +29,12 @@ interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
 class NextSlide extends Component<INextSlide> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler} type="button">
         <StyledSvg as={ArrowForward} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_slide_next')}
         </AssistiveText>
-      </StyledButton>
+      </GhostButton>
     );
   }
 

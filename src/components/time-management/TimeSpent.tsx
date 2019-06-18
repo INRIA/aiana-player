@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import withWindow from '../../hocs/with-window';
+import withWidget from '../../hocs/with-widget';
 import { IAianaState } from '../../reducers';
 import { degToRad, unitToPercent, percentageToUnit } from '../../utils/math';
 import styled from '../../utils/styled-components';
@@ -174,4 +174,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(withWindow(TimeSpent));
+export default connect(mapState)(withWidget(TimeSpent));

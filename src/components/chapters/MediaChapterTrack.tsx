@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addChaptersTrack, setChapterText } from '../../actions/chapters';
-import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from '../../constants';
+import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
 import {
@@ -27,7 +27,7 @@ export interface IMediaChapterTrack
     IDispatchProps {}
 
 class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
-  private trackRef = React.createRef<HTMLTrackElement>();
+  trackRef = React.createRef<HTMLTrackElement>();
 
   render() {
     return (
@@ -66,13 +66,13 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
     this.trackRef.current!.removeEventListener('cuechange', this.loadHandler);
   }
 
-  private isActive() {
+  isActive() {
     const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
 
     return activeTrack && activeTrack.label === this.trackRef.current!.label;
   }
 
-  private cueChangeHandler = () => {
+  cueChangeHandler = () => {
     if (!this.isActive()) {
       return;
     }
@@ -82,7 +82,7 @@ class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
     this.props.setChapterText(currentText);
   };
 
-  private loadHandler = () => {
+  loadHandler = () => {
     const chaptersTrack = rawChaptersTrack(
       this.trackRef.current!.track,
       this.props.language

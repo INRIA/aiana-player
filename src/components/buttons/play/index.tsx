@@ -5,7 +5,7 @@ import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import PlayControlIcon from './ControlIcon';
 
 export interface IPlayButtonProps {
@@ -20,7 +20,7 @@ interface IDispatchProps {
 
 interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}
 
-const StyledPlayButton = styled(StyledButton)`
+const StyledPlayButton = styled(GhostButton)`
   padding: 0 6px;
   width: calc(2.25em + 2 * 6px);
 `;
@@ -35,7 +35,7 @@ class PlayButton extends React.Component<IProps> {
     );
   }
 
-  private clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
+  clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     if (this.props.isPlaying && this.props.mediaElement) {
@@ -45,7 +45,7 @@ class PlayButton extends React.Component<IProps> {
     }
   };
 
-  private getControlText = () => {
+  getControlText = () => {
     const { t, isPlaying } = this.props;
 
     return isPlaying ? t('controls.pause') : t('controls.play');

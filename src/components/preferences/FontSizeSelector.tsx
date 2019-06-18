@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { updateActiveFontSizeMultiplier } from '../../actions/preferences';
+import { updateFontSizeMultiplier } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  activeMultiplier: number;
-  multipliers: number[];
+  activeMultiplier?: number;
+  availableMultipliers?: number[];
 }
 
 interface IDispatchProps {
@@ -28,11 +28,12 @@ function FontSizeSelector(props: IProps) {
         onChange={props.changeHandler}
         value={props.activeMultiplier}
       >
-        {props.multipliers.map((multiplier) => (
-          <option key={multiplier} value={multiplier}>
-            ×{multiplier}
-          </option>
-        ))}
+        {props.availableMultipliers &&
+          props.availableMultipliers.map((multiplier) => (
+            <option key={multiplier} value={multiplier}>
+              ×{multiplier}
+            </option>
+          ))}
       </select>
     </React.Fragment>
   );
@@ -40,8 +41,8 @@ function FontSizeSelector(props: IProps) {
 
 function mapState(state: IAianaState) {
   return {
-    activeMultiplier: state.preferences.activeFontSizeMultiplier,
-    multipliers: state.preferences.fontSizeMultipliers
+    activeMultiplier: state.preferences.fontSizeMultiplier,
+    availableMultipliers: state.preferences.fontSizeMultipliers
   };
 }
 
@@ -49,7 +50,7 @@ function mapDispatch(dispatch: CDispatch) {
   return {
     changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
       const multiplier = Number.parseFloat(evt.currentTarget.value);
-      dispatch(updateActiveFontSizeMultiplier(multiplier));
+      dispatch(updateFontSizeMultiplier(multiplier));
     }
   };
 }

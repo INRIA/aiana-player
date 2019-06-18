@@ -7,8 +7,8 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  activeFontFace: string;
-  fontFaces: string[];
+  fontFace?: string;
+  fontFaces?: string[];
 }
 
 interface IDispatchProps {
@@ -26,13 +26,14 @@ function FontFaceSelector(props: IProps) {
       <select
         aria-labelledby={props.uid}
         onChange={props.changeHandler}
-        value={props.activeFontFace}
+        value={props.fontFace}
       >
-        {props.fontFaces.map((fontFace) => (
-          <option key={fontFace} value={fontFace}>
-            {fontFace}
-          </option>
-        ))}
+        {props.fontFaces &&
+          props.fontFaces.map((fontFace) => (
+            <option key={fontFace} value={fontFace}>
+              {fontFace}
+            </option>
+          ))}
       </select>
     </React.Fragment>
   );
@@ -40,7 +41,7 @@ function FontFaceSelector(props: IProps) {
 
 function mapState(state: IAianaState) {
   return {
-    activeFontFace: state.preferences.activeFontFace,
+    fontFace: state.preferences.fontFace,
     fontFaces: state.preferences.fontFaces
   };
 }

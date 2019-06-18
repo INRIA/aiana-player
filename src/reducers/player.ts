@@ -26,8 +26,8 @@ import {
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME,
   DEFAULT_AUTOPLAY
-} from '../constants';
-import { ExtendedHTMLElement } from '../types';
+} from '../constants/player';
+import { ExtendedHTMLElement, IStdAction } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
 import { CHANGE_MEDIA_SOURCE } from '../actions/preferences';
 
@@ -95,27 +95,30 @@ const initialState: IPlayerState = {
   volume: DEFAULT_VOLUME
 };
 
-const player: Reducer = (state: IPlayerState = initialState, action) => {
+const player: Reducer<IPlayerState, IStdAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case SET_BUFFERED_RANGES:
       return {
         ...state,
-        bufferedRanges: action.bufferedRanges
+        bufferedRanges: action.payload.bufferedRanges
       };
     case TOGGLE_FULLSCREEN:
       return {
         ...state,
-        isFullscreen: action.isFullscreen
+        isFullscreen: action.payload.isFullscreen
       };
     case PLAYER_ELEMENT_MOUNTED:
       return {
         ...state,
-        playerElement: action.playerElement
+        playerElement: action.payload.playerElement
       };
     case MEDIA_SOURCE_UPDATED:
       return {
         ...state,
-        mediaElement: action.mediaElement
+        mediaElement: action.payload.mediaElement
       };
     case MEDIA_ELEMENT_UNMOUNTED:
       return {
@@ -127,54 +130,54 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
     case MEDIA_PAUSE:
       return {
         ...state,
-        isPlaying: action.isPlaying
+        isPlaying: action.payload.isPlaying
       };
     case MEDIA_PLAYBACK_RATE:
       return {
         ...state,
-        playbackRate: action.playbackRate
+        playbackRate: action.payload.playbackRate
       };
     case MEDIA_TOGGLE_MUTE:
       return {
         ...state,
-        isMuted: action.isMuted
+        isMuted: action.payload.isMuted
       };
     case MEDIA_REQUEST_VOLUME_CHANGE:
     case MEDIA_VOLUME_CHANGE:
       return {
         ...state,
-        volume: action.volume
+        volume: action.payload.volume
       };
     case MEDIA_UPDATE_DURATION:
       return {
         ...state,
-        duration: action.duration
+        duration: action.payload.duration
       };
     case MEDIA_UPDATE_TIME:
       return {
         ...state,
-        currentTime: action.currentTime
+        currentTime: action.payload.currentTime
       };
     case MEDIA_REQUEST_SEEK:
       return {
         ...state,
-        seekingTime: action.seekingTime
+        seekingTime: action.payload.seekingTime
       };
     case MEDIA_SEEK_TOGGLE:
       return {
         ...state,
-        isSeeking: action.isSeeking,
-        seekingTime: action.isSeeking ? state.seekingTime : 0
+        isSeeking: action.payload.isSeeking,
+        seekingTime: action.payload.isSeeking ? state.seekingTime : 0
       };
     case SET_ADDITIONAL_INFO_TEXT:
       return {
         ...state,
-        additionalInformationText: action.text
+        additionalInformationText: action.payload.text
       };
     case ADD_METADATA_TRACK:
       const metadataTracks = [].concat(
         state.metadataTracks as any,
-        action.track
+        action.payload.track
       );
 
       return {
@@ -184,13 +187,13 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
     case LOAD_CONFIGURATION:
       return {
         ...state,
-        ...action.player
+        ...action.payload.player
       };
     case CHANGE_MEDIA_SOURCE: {
       const sources = state.sources.map((source: ISource) => {
         return {
           ...source,
-          selected: source.src === action.mediaSource
+          selected: source.src === action.payload.mediaSource
         };
       });
       return {
@@ -204,3 +207,11 @@ const player: Reducer = (state: IPlayerState = initialState, action) => {
 };
 
 export default player;
+
+export function isSelectedSource(source: ISource): boolean {
+  return source.selected === true;
+}
+
+export function getSelectedMediaSource(sources: ISource[]) {
+  return sources.find(isSelectedSource);
+}

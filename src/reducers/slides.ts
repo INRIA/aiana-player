@@ -5,8 +5,9 @@ import {
   SET_SLIDES_TEXT,
   UPDATE_ACTIVE_SLIDES_TRACK
 } from '../actions/slides';
-import { DEFAULT_LANG } from '../constants';
+import { DEFAULT_LANG } from '../constants/preferences';
 import { IRawSlidesTrack } from '../utils/media';
+import { IStdAction } from '../types';
 
 export interface ISlidesTrack {
   label?: string;
@@ -27,10 +28,16 @@ const initialState: ISlidesState = {
   sources: []
 };
 
-const slides: Reducer = (state = initialState, action) => {
+const slides: Reducer<ISlidesState, IStdAction> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
     case ADD_SLIDES_TRACK:
-      const slidesTracks = [].concat(state.slidesTracks as any, action.track);
+      const slidesTracks = ([] as IRawSlidesTrack[]).concat(
+        state.slidesTracks,
+        action.payload.track
+      );
 
       return {
         ...state,
@@ -39,21 +46,34 @@ const slides: Reducer = (state = initialState, action) => {
     case SET_SLIDES_TEXT:
       return {
         ...state,
-        currentSlideText: action.text
+        currentSlideText: action.payload.text
       };
     case UPDATE_ACTIVE_SLIDES_TRACK:
       return {
         ...state,
-        language: action.language
+        language: action.payload.language
       };
     case LOAD_CONFIGURATION:
       return {
         ...state,
-        ...action.slides
+        ...action.payload.slides
       };
     default:
       return state;
   }
 };
+
+export function getSelectedTrack(
+  state: ISlidesState
+): IRawSlidesTrack | undefined {
+  return state.slidesTracks.find((track) => {
+    return track.language === state.language;
+  });
+}
+
+export function getSelectedTrackLanguage(state: ISlidesState): string {
+  const selectedTrack = getSelectedTrack(state);
+  return selectedTrack ? selectedTrack.language : '';
+}
 
 export default slides;

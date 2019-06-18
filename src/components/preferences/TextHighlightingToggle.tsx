@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setTextHighlighting } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
@@ -11,34 +11,24 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  dispatchSetTextHighlighting(textHighlighting: boolean): void;
+  setTextHighlighting(textHighlighting: boolean): void;
 }
 
-interface IProps
-  extends IStateProps,
-    IDispatchProps,
-    WithTranslation,
-    IInjectedUniqueIdProps {}
+interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
 
-class TextHighlightingToggle extends Component<IProps> {
-  render() {
-    return (
-      <React.Fragment>
-        <span id={this.props.uid}>
-          {this.props.t('preferences.text_highlighting.label')}
-        </span>
-        <ToggleButton
-          isOn={this.props.textHighlighting}
-          labelledBy={this.props.uid}
-          onClick={this.clickHandler}
-        />
-      </React.Fragment>
-    );
-  }
+function TextHighlightingToggle(props: IProps) {
+  const [t] = useTranslation();
 
-  clickHandler = () => {
-    this.props.dispatchSetTextHighlighting(!this.props.textHighlighting);
-  };
+  return (
+    <React.Fragment>
+      <span id={props.uid}>{t('preferences.text_highlighting.label')}</span>
+      <ToggleButton
+        isOn={props.textHighlighting}
+        labelledBy={props.uid}
+        onClick={() => props.setTextHighlighting(!props.textHighlighting)}
+      />
+    </React.Fragment>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -48,10 +38,10 @@ function mapState(state: IAianaState) {
 }
 
 const mapDispatch: IDispatchProps = {
-  dispatchSetTextHighlighting: setTextHighlighting
+  setTextHighlighting
 };
 
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(withUniqueId(TextHighlightingToggle)));
+)(withUniqueId(TextHighlightingToggle));

@@ -1,10 +1,12 @@
-import { AnyAction } from 'redux';
+import { IStdAction } from '../types';
 
 export const ADD_BOOKMARK = 'aiana/ADD_BOOKMARK';
 
-export function addBookmark(time: number): AnyAction {
+export function addBookmark(time: number): IStdAction {
   return {
-    time,
+    payload: {
+      time
+    },
     type: ADD_BOOKMARK
   };
 }

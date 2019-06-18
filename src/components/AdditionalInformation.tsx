@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import withWindow from '../hocs/with-window';
+import withWidget from '../hocs/with-widget';
 import withUniqueId, { IInjectedUniqueIdProps } from '../hocs/withUniqueId';
 import { markdownToJSX } from '../utils/strings';
 import styled from '../utils/styled-components';
@@ -63,4 +63,4 @@ function AdditionalInformation({ text, uid }: IProps) {
   );
 }
 
-export default withWindow(withUniqueId(AdditionalInformation));
+export default withWidget(withUniqueId(AdditionalInformation));

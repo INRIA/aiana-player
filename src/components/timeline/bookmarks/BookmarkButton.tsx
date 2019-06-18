@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '../../../utils/styled-components';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import BookmarkIcon from '../../svg/Bookmark';
 
@@ -17,13 +17,13 @@ const FilteredSvg = styled(StyledSvg)`
 class BookmarkButton extends React.Component<IProps> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler} type="button">
         <FilteredSvg as={BookmarkIcon} />
-      </StyledButton>
+      </GhostButton>
     );
   }
 
-  private clickHandler = () => {
+  clickHandler = () => {
     const { onClick, media, time } = this.props;
     if (!media) {
       return;

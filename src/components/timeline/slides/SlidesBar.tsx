@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../../actions/player';
-import { DEFAULT_LANG } from '../../../constants';
+import { DEFAULT_LANG } from '../../../constants/preferences';
 import { IAianaState } from '../../../reducers';
 import { unitToPercent } from '../../../utils/math';
 import { IRawSlidesTrack } from '../../../utils/media';

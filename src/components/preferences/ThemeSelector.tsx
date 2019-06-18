@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { changeCurrentTheme } from '../../actions/preferences';
+import { changeActiveTheme } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  currentTheme: string;
-  themes: string[];
+  activeTheme?: string;
+  themes?: string[];
 }
 
 interface IDispatchProps {
@@ -21,7 +21,7 @@ interface IThemeSelector
     IDispatchProps {}
 
 function ThemeSelector({
-  currentTheme,
+  activeTheme,
   selectChangeHandler,
   themes,
   uid
@@ -34,11 +34,12 @@ function ThemeSelector({
       <select
         aria-labelledby={uid}
         onChange={selectChangeHandler}
-        value={currentTheme}
+        value={activeTheme}
       >
-        {themes.map((themeName) => (
-          <option key={themeName}>{themeName}</option>
-        ))}
+        {themes &&
+          themes.map((themeName) => (
+            <option key={themeName}>{themeName}</option>
+          ))}
       </select>
     </React.Fragment>
   );
@@ -46,7 +47,7 @@ function ThemeSelector({
 
 function mapState(state: IAianaState) {
   return {
-    currentTheme: state.preferences.currentTheme,
+    activeTheme: state.preferences.theme,
     themes: state.preferences.themes
   };
 }
@@ -54,7 +55,7 @@ function mapState(state: IAianaState) {
 function mapDispatch(dispatch: CDispatch) {
   return {
     selectChangeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(changeCurrentTheme(evt.currentTarget.value));
+      dispatch(changeActiveTheme(evt.currentTarget.value));
     }
   };
 }

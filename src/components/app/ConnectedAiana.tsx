@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { Component, createRef, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -15,18 +14,16 @@ import {
   removeFullscreenChangeEventListener
 } from '../../utils/fullscreen';
 import { ThemeProvider } from '../../utils/styled-components';
-import InactivityTimer from '../InactivityTimer';
 import Player from '../Player';
 import StyledAiana from './StyledAiana';
 
 interface IStateProps {
   fontFace: string;
-  fontModifierUppercase: boolean;
+  fontUppercase: boolean;
   fontSizeMultiplier: number;
-  availableThemes: string[];
-  currentTheme: string;
-  isActive: boolean;
-  lineHeight: string;
+  lineHeight: number;
+  theme: string;
+  themes: string[];
 }
 
 interface IDispatchProps {
@@ -38,27 +35,23 @@ interface IDispatchProps {
 interface IAiana extends IStateProps, IDispatchProps {}
 
 class Aiana extends Component<IAiana> {
-  private fullscreenRef = createRef<HTMLDivElement>();
+  fullscreenRef = createRef<HTMLDivElement>();
 
   render() {
     return (
-      <ThemeProvider theme={themes[this.props.currentTheme]}>
+      <ThemeProvider theme={themes[this.props.theme]}>
         <StyledAiana
-          className={classNames('aip-app', {
-            inactive: !this.props.isActive
-          })}
+          className="aip-app"
           ref={this.fullscreenRef}
           style={{
             fontFamily: this.props.fontFace,
             fontSize: `${this.props.fontSizeMultiplier}em`,
             lineHeight: this.props.lineHeight,
-            textTransform: this.props.fontModifierUppercase
-              ? 'uppercase'
-              : 'none'
+            textTransform: this.props.fontUppercase ? 'uppercase' : 'none'
           }}
         >
+          {/* TODO: proper loader */}
           <Suspense fallback={<div>I am loading</div>}>
-            <InactivityTimer />
             <SvgFilters />
             <Player />
           </Suspense>
@@ -77,20 +70,19 @@ class Aiana extends Component<IAiana> {
     removeFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
-  private fullscreenHandler = () => {
+  fullscreenHandler = () => {
     this.props.handleFullscreenChange(isDocumentFullscreen());
   };
 }
 
 function mapState(state: IAianaState) {
   return {
-    availableThemes: state.preferences.themes,
-    currentTheme: state.preferences.currentTheme,
-    fontFace: state.preferences.activeFontFace,
-    fontModifierUppercase: state.preferences.fontModifierUppercase,
-    fontSizeMultiplier: state.preferences.activeFontSizeMultiplier,
-    isActive: state.preferences.isActive,
-    lineHeight: state.preferences.lineHeight
+    fontFace: state.preferences.fontFace,
+    fontSizeMultiplier: state.preferences.fontSizeMultiplier,
+    fontUppercase: state.preferences.fontUppercase,
+    lineHeight: state.preferences.lineHeight,
+    theme: state.preferences.theme,
+    themes: state.preferences.themes
   };
 }
 

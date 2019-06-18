@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setWindowVisibility } from '../../../../actions/preferences';
+import { setWidgetVisibility } from '../../../../actions/preferences';
 import withUniqueId, {
   IInjectedUniqueIdProps
 } from '../../../../hocs/withUniqueId';
@@ -10,26 +10,26 @@ import ToggleButton from '../../../shared/toggle-button';
 
 interface IOwnProps {
   visible: boolean;
-  windowName: string;
+  widgetName: string;
 }
 
 interface IDispatchProps {
   clickHandler(): void;
 }
 
-interface IWindowVisibilityToggle
+interface IWidgetVisibilityToggle
   extends IOwnProps,
     IDispatchProps,
     IInjectedUniqueIdProps {}
 
-function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
+function WidgetVisibilityToggle(props: IWidgetVisibilityToggle) {
   const [t] = useTranslation();
 
   return (
     <React.Fragment>
       <span id={props.uid}>
-        {t('preferences.windows_visibility.label', {
-          windowName: props.windowName
+        {t('preferences.widgets_visibility.label', {
+          widgetName: props.widgetName
         })}
       </span>
       <ToggleButton
@@ -44,7 +44,7 @@ function WindowVisibilityToggle(props: IWindowVisibilityToggle) {
 function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
-      dispatch(setWindowVisibility(ownProps.windowName, !ownProps.visible));
+      dispatch(setWidgetVisibility(ownProps.widgetName, !ownProps.visible));
     }
   };
 }
@@ -52,4 +52,4 @@ function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
 export default connect(
   null,
   mapDispatch
-)(withUniqueId(WindowVisibilityToggle));
+)(withUniqueId(WidgetVisibilityToggle));

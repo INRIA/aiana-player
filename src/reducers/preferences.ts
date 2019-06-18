@@ -1,27 +1,30 @@
-import { Reducer } from 'redux';
+import cloneDeep from 'lodash.clonedeep';
+import { safeDump } from 'js-yaml';
+import { Reducer, DeepPartial } from 'redux';
 import {
   CHANGE_LANGUAGE,
   CHANGE_TEXT_HIGHLIGHTING,
   CHANGE_TEXT_UPPERCASE,
   CHANGE_THEME,
-  CHANGE_WINDOW_VISIBILITY,
+  CHANGE_WIDGET_VISIBILITY,
   UPDATE_ACTIVE_FONT_FACE,
   UPDATE_FONT_SIZE_MULTIPLIER,
   UPDATE_LINE_HEIGHT,
-  WINDOWS_LOCK
+  WIDGETS_LOCK,
+  IMPORT_PREFERENCES
 } from '../actions/preferences';
-import {
-  CHANGE_UI_WINDOWS,
-  LOAD_CONFIGURATION,
-  TOGGLE_ACTIVITY
-} from '../actions/shared';
+import { CHANGE_WIDGETS, LOAD_CONFIGURATION } from '../actions/shared';
 import {
   AVAILABLE_PLAYBACK_RATES,
   AVAILABLE_THEMES,
-  DEFAULT_ACTIVE_FONT_FACE,
-  DEFAULT_AVAILABLE_LANGUAGES,
-  DEFAULT_FONT_FACES,
-  DEFAULT_FONT_MODIFIER_UPPERCASE,
+  AVAILABLE_LANGUAGES,
+  SELECTABLE_FONT_FACES,
+  FONT_SIZE_MULTIPLIERS,
+  SELECTABLE_LINE_HEIGHTS
+} from '../constants';
+import {
+  DEFAULT_FONT_FACE,
+  DEFAULT_FONT_UPPERCASE,
   DEFAULT_FONT_SIZE_MULTIPLIER,
   DEFAULT_LANG,
   DEFAULT_LINE_HEIGHT,
@@ -30,16 +33,15 @@ import {
   DEFAULT_SEEK_STEP_MULTIPLIER,
   DEFAULT_TEXT_HIGHLIGHTING,
   DEFAULT_THEME,
-  DEFAULT_UI_WINDOWS,
   DEFAULT_VOLUME_STEP,
-  DEFAULT_VOLUME_STEP_MULTIPLIER,
-  FONT_SIZE_MULTIPLIERS,
-  LINE_HEIGHT_VALUES
-} from '../constants';
-import InriaTheme from '../themes/inria';
-import { IAianaTheme } from '../utils/styled-components';
+  DEFAULT_VOLUME_STEP_MULTIPLIER
+} from '../constants/preferences';
+import { DEFAULT_WIDGETS } from '../constants/widgets';
+import { CHANGE_ACTIVE_PRESET } from '../actions/presets';
+import { IPreset } from './presets';
+import { IStdAction } from '../types';
 
-export interface IUIWindow {
+export interface IWidget {
   height: number;
   left: number;
   locked: boolean;
@@ -50,18 +52,15 @@ export interface IUIWindow {
 }
 
 export interface IPreferencesState {
-  activeFontFace: string;
-  activeFontSizeMultiplier: number;
-  currentTheme: string;
-  customTheme: IAianaTheme;
+  fontFace: string;
   fontFaces: string[];
-  fontModifierUppercase: boolean;
+  fontUppercase: boolean;
+  fontSizeMultiplier: number;
   fontSizeMultipliers: number[];
-  isActive: boolean;
   language: string;
   languages: string[];
-  lineHeight: string;
-  lineHeightValues: string[];
+  lineHeight: number;
+  lineHeightValues: number[];
   playbackRates: number[];
   previousChapterSeekThreshold: number;
 
@@ -72,113 +71,122 @@ export interface IPreferencesState {
   seekStep: number;
   seekStepMultiplier: number;
   textHighlighting: boolean;
+  theme: string;
   themes: string[];
-  uiWindows: IUIWindow[];
   volumeStep: number;
   volumeStepMultiplier: number;
+  widgets: IWidget[];
 }
 
-const initialState: IPreferencesState = {
-  activeFontFace: DEFAULT_ACTIVE_FONT_FACE,
-  activeFontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
-  currentTheme: DEFAULT_THEME,
-  customTheme: InriaTheme,
-  fontFaces: DEFAULT_FONT_FACES,
-  fontModifierUppercase: DEFAULT_FONT_MODIFIER_UPPERCASE,
+export const initialPreferencesState: IPreferencesState = {
+  fontFace: DEFAULT_FONT_FACE,
+  fontFaces: SELECTABLE_FONT_FACES,
+  fontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
   fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
-  isActive: true,
+  fontUppercase: DEFAULT_FONT_UPPERCASE,
   language: DEFAULT_LANG,
-  languages: DEFAULT_AVAILABLE_LANGUAGES,
+  languages: AVAILABLE_LANGUAGES,
   lineHeight: DEFAULT_LINE_HEIGHT,
-  lineHeightValues: LINE_HEIGHT_VALUES,
+  lineHeightValues: SELECTABLE_LINE_HEIGHTS,
   playbackRates: AVAILABLE_PLAYBACK_RATES,
   previousChapterSeekThreshold: DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
   seekStep: DEFAULT_SEEK_STEP,
   seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
   textHighlighting: DEFAULT_TEXT_HIGHLIGHTING,
+  theme: DEFAULT_THEME,
   themes: AVAILABLE_THEMES,
-  uiWindows: DEFAULT_UI_WINDOWS,
   volumeStep: DEFAULT_VOLUME_STEP,
-  volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER
+  volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER,
+  widgets: DEFAULT_WIDGETS
 };
 
-const preferences: Reducer = (state = initialState, action) => {
+const preferences: Reducer<IPreferencesState, IStdAction> = (
+  state = initialPreferencesState,
+  action
+) => {
   switch (action.type) {
-    case TOGGLE_ACTIVITY:
-      return {
-        ...state,
-        isActive: action.isActive
-      };
+    case IMPORT_PREFERENCES:
+      return action.payload;
+    case CHANGE_ACTIVE_PRESET:
+      return action.payload.preset;
     case CHANGE_LANGUAGE:
       return {
         ...state,
-        language: action.language
+        language: action.payload.language
       };
     case CHANGE_THEME:
       return {
         ...state,
-        currentTheme: action.currentTheme
+        theme: action.payload.theme
       };
-    case LOAD_CONFIGURATION:
+    case LOAD_CONFIGURATION: {
+      const activePreset = action.payload.presets.find(
+        (p: IPreset) => p.selected
+      );
+
+      return Object.assign(
+        cloneDeep(initialPreferencesState),
+        cloneDeep(activePreset),
+        cloneDeep(state)
+      );
+    }
+    case CHANGE_WIDGETS:
       return {
         ...state,
-        ...action.preferences
-      };
-    case CHANGE_UI_WINDOWS:
-      return {
-        ...state,
-        uiWindows: state.uiWindows.map((window: IUIWindow) => {
-          if (window.name === action.windowName) {
+        widgets: state.widgets.map((widget: IWidget) => {
+          if (widget.name === action.payload.widgetName) {
             return {
-              ...window,
-              ...action.window
+              ...widget,
+              ...action.payload.widget
             };
           }
 
-          return window;
+          return widget;
         })
       };
-    case WINDOWS_LOCK:
+    case WIDGETS_LOCK:
       return {
         ...state,
-        uiWindows: state.uiWindows.map((window: IUIWindow) => ({
-          ...window,
-          locked: action.locked
+        widgets: state.widgets.map((widget: IWidget) => ({
+          ...widget,
+          locked: action.payload.locked
         }))
       };
-    case CHANGE_WINDOW_VISIBILITY:
+    case CHANGE_WIDGET_VISIBILITY:
       return {
         ...state,
-        uiWindows: state.uiWindows.map((window: IUIWindow) => ({
-          ...window,
+        widgets: state.widgets.map((widget: IWidget) => ({
+          ...widget,
           visible:
-            window.name === action.windowName ? action.visible : window.visible
+            widget.name === action.payload.widgetName
+              ? action.payload.visible
+              : widget.visible
         }))
       };
     case UPDATE_ACTIVE_FONT_FACE:
       return {
         ...state,
-        activeFontFace: action.activeFontFace
+        fontFace: action.payload.fontFace
       };
     case UPDATE_FONT_SIZE_MULTIPLIER:
       return {
         ...state,
-        activeFontSizeMultiplier: action.activeFontSizeMultiplier
+        fontSizeMultiplier: action.payload.fontSizeMultiplier
       };
     case CHANGE_TEXT_HIGHLIGHTING:
       return {
         ...state,
-        textHighlighting: action.textHighlighting
+        textHighlighting: action.payload.textHighlighting
       };
     case CHANGE_TEXT_UPPERCASE:
       return {
         ...state,
-        fontModifierUppercase: action.fontModifierUppercase
+        fontUppercase: action.payload.fontUppercase
       };
     case UPDATE_LINE_HEIGHT:
       return {
         ...state,
-        lineHeight: action.lineHeight
+        lineHeight: action.payload.lineHeight
       };
     default:
       return state;
@@ -186,3 +194,31 @@ const preferences: Reducer = (state = initialState, action) => {
 };
 
 export default preferences;
+
+export function preferencesToYAML(state: DeepPartial<IPreferencesState>) {
+  const exportedKeys = [
+    'fontFace',
+    'fontSizeMultiplier',
+    'fontUppercase',
+    'language',
+    'lineHeight',
+    'previousChapterSeekThreshold',
+    'seekStep',
+    'seekStepMultiplier',
+    'textHighlighting',
+    'theme',
+    'volumeStep',
+    'volumeStepMultiplier',
+    'widgets'
+  ];
+
+  try {
+    const exportedPrefs = exportedKeys.reduce((acc, cur) => {
+      return Object.assign(acc, { [cur]: cloneDeep(state[cur]) });
+    }, {});
+
+    return safeDump(exportedPrefs);
+  } catch (err) {
+    return '';
+  }
+}

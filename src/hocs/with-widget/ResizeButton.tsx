@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
-import StyledButton from '../../components/shared/styled-button';
-import { ESCAPE_KEY } from '../../constants';
+import GhostButton from '../../components/shared/GhostButton';
+import { ESCAPE_KEY } from '../../constants/keys';
 import { Direction } from '../../types';
 import styled from '../../utils/styled-components';
 
@@ -18,7 +18,7 @@ const FOCUSED_OUTER_OVERFLOW_SIZE = '0.75em';
 const FOCUSED_SIZE = '1.5em';
 const CORNER_SIZE = '1em';
 
-const StyledResizeButton = styled(StyledButton)`
+const StyledResizeButton = styled(GhostButton)`
   position: absolute;
   z-index: 1;
 
@@ -139,14 +139,14 @@ class ResizeButton extends React.Component<IProps> {
     );
   }
 
-  private keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLButtonElement>) => {
     if (evt.key === ESCAPE_KEY) {
       evt.currentTarget.blur();
     }
     this.props.keyDownHandler(evt.key, [...this.props.handlePositions]);
   };
 
-  private mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     this.props.mouseDownHandler(evt.pageX, evt.pageY, [
       ...this.props.handlePositions

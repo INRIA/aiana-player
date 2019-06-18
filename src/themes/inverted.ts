@@ -1,7 +1,7 @@
 import Color from 'color';
-import { IAianaTheme } from '../utils/styled-components';
+import { themeFactory, IAianaTheme } from '.';
 
-const theme: IAianaTheme = {
+const theme: Partial<IAianaTheme> = {
   bg: '#fff',
   clearFg: Color('#000')
     .lighten(0.3)
@@ -12,4 +12,4 @@ const theme: IAianaTheme = {
   main: '#000'
 };
 
-export default theme;
+export default themeFactory(theme);

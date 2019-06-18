@@ -5,7 +5,7 @@ import { seekPreviousSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
 import { IRawSlidesTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
-import StyledButton from '../../shared/styled-button';
+import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import ArrowBackward from '../../svg/ArrowBackward';
 
@@ -30,12 +30,12 @@ interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
 class PreviousSlide extends Component<IPreviousSlide> {
   render() {
     return (
-      <StyledButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler} type="button">
         <StyledSvg as={ArrowBackward} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_slide_previous')}
         </AssistiveText>
-      </StyledButton>
+      </GhostButton>
     );
   }
 
