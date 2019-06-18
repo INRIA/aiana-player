@@ -1,8 +1,8 @@
 import Color from 'color';
-import { IAianaTheme } from '../utils/styled-components';
+import { IAianaTheme, themeFactory } from '.';
 
-const theme: IAianaTheme = {
-  actionBg: '#0074D9',
+const theme: Partial<IAianaTheme> = {
+  actionBg: '#0074d9', // blue
   actionFg: '#fff',
   bg: '#111',
   clearFg: Color('#eee')
@@ -11,7 +11,7 @@ const theme: IAianaTheme = {
   fg: '#eee',
   focus: '#0070d2',
   highlight: '#ff0',
-  main: '#e63312'
+  main: '#e63312' // red
 };
 
-export default theme;
+export default themeFactory(theme);
