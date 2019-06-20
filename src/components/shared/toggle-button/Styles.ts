@@ -8,12 +8,18 @@ const StyledToggleButton = styled(GhostButton)`
 
   display: flex;
 
-  border: 0 none;
+  border: 2px solid ${(props) => props.theme.bg};
   border-radius: 4px;
   background-color: ${(props) => props.theme.fg};
   font-size: 0.75em;
   font-weight: bold;
+  outline: 0;
   text-transform: lowercase;
+
+  &[data-focus-visible-added] {
+    border-color: ${(props) => props.theme.focus};
+    outline: 0;
+  }
 
   span {
     padding: 0.25em 0.5em;

@@ -13,7 +13,7 @@ export const buttonMixin = css`
   height: 100%;
   padding: 0.4em 0.8em;
 
-  border: 0 none;
+  border: 2px solid transparent;
   border-radius: 2px;
   background-color: ${(props) => props.theme.actionBg};
 
@@ -22,6 +22,7 @@ export const buttonMixin = css`
   color: ${(props) => props.theme.actionFg};
   text-align: inherit;
   line-height: inherit;
+  outline: 0;
   overflow: hidden;
 
   transition: background-color 0.1s;
@@ -52,9 +53,8 @@ export const buttonMixin = css`
       ${focusMixin};
     }
 
-    &:focus:not([data-focus-visible-added]),
     &[data-focus-visible-added] {
-      outline: solid 2px ${(props) => props.theme.actionBg};
+      border-color: ${(props) => props.theme.actionBg};
     }
   }
 `;

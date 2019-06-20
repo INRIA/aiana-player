@@ -27,10 +27,14 @@ const ActionButton = styled(Button)`
 const FileInput = styled.input`
   ${visuallyHiddenMixin};
 
-  &[data-focus-visible-added] ~ label {
-    ${focusMixin};
+  &:focus:not([data-focus-visible-added]),
+  &[data-focus-visible-added] {
+    ~ label {
+      ${focusMixin};
 
-    border-color: ${(props) => props.theme.actionBg};
+      border-color: ${(props) => props.theme.actionBg};
+      outline: 0;
+    }
   }
 `;
 

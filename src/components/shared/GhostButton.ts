@@ -15,6 +15,7 @@ export default styled.button`
   text-align: inherit;
   line-height: inherit;
   overflow: hidden;
+  outline: 0;
 
   transition: border-color 0.1s;
 
@@ -22,7 +23,6 @@ export default styled.button`
     cursor: pointer;
   }
 
-  &:focus:not([data-focus-visible-added]),
   &[data-focus-visible-added] {
     outline: solid 2px ${(props) => props.theme.focus};
   }
