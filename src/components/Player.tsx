@@ -36,9 +36,7 @@ const StyledDiv = styled.div`
       controls height is 3.5625em,
       margin is 0.3125em
     */
-    height: calc(
-      100% - 2.25em - 0.5em - 2.25em - 0.8125em - 0.3125em - 0.375em
-    );
+    height: calc(100% - 0.5em - 2.25em - 0.8125em - 0.3125em - 0.375em);
 
     position: relative;
   }
@@ -133,7 +131,7 @@ function Player(props: IPlayerProps) {
 
         <MediaSubtitles />
       </div>
-      <TimelineBar />
+      <TimelineBar display={false} />
       <VideoPlayerControls />
     </StyledDiv>
   );

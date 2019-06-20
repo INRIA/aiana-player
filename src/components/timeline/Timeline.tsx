@@ -5,6 +5,10 @@ import BookmarksBar from './bookmarks/BookmarksBar';
 import ChaptersBar from './chapters/ChaptersBar';
 import SlidesBar from './slides/SlidesBar';
 
+interface IProps {
+  display?: boolean;
+}
+
 const StyledTimelineBar = styled.div`
   height: 2.25em;
   padding: 0 1em;
@@ -26,7 +30,11 @@ const StyledTimelineBar = styled.div`
   }
 `;
 
-function TimelineBar() {
+function TimelineBar(props: IProps) {
+  if (!props.display) {
+    return null;
+  }
+
   return (
     <StyledTimelineBar className="aip-content-timeline">
       <div>
