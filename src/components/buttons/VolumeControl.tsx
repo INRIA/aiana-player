@@ -4,8 +4,7 @@ import VolumeSlider from '../volume-slider';
 import MuteButton from './mute';
 
 const StyledDiv = styled.div`
-  display: inline-block;
-  height: 100%;
+  display: flex;
 `;
 
 function VolumeControl() {

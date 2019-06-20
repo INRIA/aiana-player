@@ -35,7 +35,7 @@ interface IState {
 interface IRatingSlider extends IProps, IMapDispatch, WithTranslation {}
 
 const Slider = styled.div`
-  border: 2px solid transparent;
+  display: flex;
 
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
     cursor: pointer;
@@ -43,8 +43,7 @@ const Slider = styled.div`
 
   &:focus:not([data-focus-visible-added]),
   &[data-focus-visible-added] {
-    border-color: ${(props) => props.theme.actionBg};
-    outline: none;
+    outline: solid 2px ${(props) => props.theme.actionBg};
   }
 
   svg {
@@ -54,7 +53,7 @@ const Slider = styled.div`
 `;
 
 class RatingSlider extends Component<IRatingSlider, IState> {
-  state = {
+  readonly state = {
     expectedRating: 0,
     isHovering: false
   };
