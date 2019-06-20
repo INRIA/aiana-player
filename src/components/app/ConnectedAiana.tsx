@@ -16,6 +16,7 @@ import {
 import { ThemeProvider } from '../../utils/styled-components';
 import Player from '../Player';
 import StyledAiana from './StyledAiana';
+import Loader from '../Loader';
 
 interface IStateProps {
   fontFace: string;
@@ -51,10 +52,13 @@ class Aiana extends Component<IAiana> {
           }}
         >
           {/* TODO: proper loader */}
-          <Suspense fallback={<div>I am loading</div>}>
-            <SvgFilters />
-            <Player />
-          </Suspense>
+          <Loader />
+          <div style={{ display: 'none' }}>
+            <Suspense fallback={null}>
+              <SvgFilters />
+              <Player />
+            </Suspense>
+          </div>
         </StyledAiana>
       </ThemeProvider>
     );
