@@ -12,6 +12,13 @@ import SeekBarSlider from '../seekbar/SeekBarSlider';
 import NextSlide from '../slides/controls/NextSlide';
 import PreviousSlide from '../slides/controls/PreviousSlide';
 import TimeStatus from '../TimeStatus';
+import RatingSlider from '../rating/RatingSlider';
+import { connect } from 'react-redux';
+import { IAianaState } from '../../reducers';
+
+interface IMapSate {
+  rating: number;
+}
 
 const StyledControlsWrapper = styled.div`
   /* height: 3.5625em */
@@ -32,7 +39,7 @@ const StyledControls = styled.div`
   }
 `;
 
-function VideoPlayerControls() {
+function VideoPlayerControls(props: IMapSate) {
   return (
     <StyledControlsWrapper>
       <SeekBarSlider />
@@ -47,6 +54,11 @@ function VideoPlayerControls() {
           <VolumeControl />
         </div>
         <div>
+          <RatingSlider
+            currentRating={props.rating}
+            maxRating={5}
+            minRating={1}
+          />
           <AddBookmarkButton />
           <PreferencesPanel />
           <FullscreenButton />
@@ -56,4 +68,10 @@ function VideoPlayerControls() {
   );
 }
 
-export default VideoPlayerControls;
+function mapState(state: IAianaState) {
+  return {
+    rating: state.player.rating || 0
+  };
+}
+
+export default connect(mapState)(VideoPlayerControls);

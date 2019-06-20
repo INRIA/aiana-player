@@ -16,7 +16,8 @@ import {
   PLAYER_ELEMENT_MOUNTED,
   SET_ADDITIONAL_INFO_TEXT,
   SET_BUFFERED_RANGES,
-  TOGGLE_FULLSCREEN
+  TOGGLE_FULLSCREEN,
+  UPDATE_RATING
 } from '../actions/player';
 import { LOAD_CONFIGURATION } from '../actions/shared';
 import { ITrack } from '../components/video/MediaSubtitlesTrack';
@@ -60,6 +61,7 @@ export interface IPlayerState {
   playerElement?: ExtendedHTMLElement;
   poster?: string;
   preload: string;
+  rating?: number;
   seekingTime: number;
   sources: ISource[];
 
@@ -90,6 +92,7 @@ const initialState: IPlayerState = {
   metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
   preload: DEFAULT_PRELOAD,
+  rating: 0,
   seekingTime: 0,
   sources: [],
   volume: DEFAULT_VOLUME
@@ -99,26 +102,33 @@ const player: Reducer<IPlayerState, IStdAction> = (
   state = initialState,
   action
 ) => {
-  switch (action.type) {
+  const { payload, type } = action;
+
+  switch (type) {
+    case UPDATE_RATING:
+      return {
+        ...state,
+        rating: payload.rating
+      };
     case SET_BUFFERED_RANGES:
       return {
         ...state,
-        bufferedRanges: action.payload.bufferedRanges
+        bufferedRanges: payload.bufferedRanges
       };
     case TOGGLE_FULLSCREEN:
       return {
         ...state,
-        isFullscreen: action.payload.isFullscreen
+        isFullscreen: payload.isFullscreen
       };
     case PLAYER_ELEMENT_MOUNTED:
       return {
         ...state,
-        playerElement: action.payload.playerElement
+        playerElement: payload.playerElement
       };
     case MEDIA_SOURCE_UPDATED:
       return {
         ...state,
-        mediaElement: action.payload.mediaElement
+        mediaElement: payload.mediaElement
       };
     case MEDIA_ELEMENT_UNMOUNTED:
       return {
@@ -130,54 +140,54 @@ const player: Reducer<IPlayerState, IStdAction> = (
     case MEDIA_PAUSE:
       return {
         ...state,
-        isPlaying: action.payload.isPlaying
+        isPlaying: payload.isPlaying
       };
     case MEDIA_PLAYBACK_RATE:
       return {
         ...state,
-        playbackRate: action.payload.playbackRate
+        playbackRate: payload.playbackRate
       };
     case MEDIA_TOGGLE_MUTE:
       return {
         ...state,
-        isMuted: action.payload.isMuted
+        isMuted: payload.isMuted
       };
     case MEDIA_REQUEST_VOLUME_CHANGE:
     case MEDIA_VOLUME_CHANGE:
       return {
         ...state,
-        volume: action.payload.volume
+        volume: payload.volume
       };
     case MEDIA_UPDATE_DURATION:
       return {
         ...state,
-        duration: action.payload.duration
+        duration: payload.duration
       };
     case MEDIA_UPDATE_TIME:
       return {
         ...state,
-        currentTime: action.payload.currentTime
+        currentTime: payload.currentTime
       };
     case MEDIA_REQUEST_SEEK:
       return {
         ...state,
-        seekingTime: action.payload.seekingTime
+        seekingTime: payload.seekingTime
       };
     case MEDIA_SEEK_TOGGLE:
       return {
         ...state,
-        isSeeking: action.payload.isSeeking,
-        seekingTime: action.payload.isSeeking ? state.seekingTime : 0
+        isSeeking: payload.isSeeking,
+        seekingTime: payload.isSeeking ? state.seekingTime : 0
       };
     case SET_ADDITIONAL_INFO_TEXT:
       return {
         ...state,
-        additionalInformationText: action.payload.text
+        additionalInformationText: payload.text
       };
     case ADD_METADATA_TRACK:
       const metadataTracks = [].concat(
         state.metadataTracks as any,
-        action.payload.track
+        payload.track
       );
 
       return {
@@ -187,13 +197,13 @@ const player: Reducer<IPlayerState, IStdAction> = (
     case LOAD_CONFIGURATION:
       return {
         ...state,
-        ...action.payload.player
+        ...payload.player
       };
     case CHANGE_MEDIA_SOURCE: {
       const sources = state.sources.map((source: ISource) => {
         return {
           ...source,
-          selected: source.src === action.payload.mediaSource
+          selected: source.src === payload.mediaSource
         };
       });
       return {

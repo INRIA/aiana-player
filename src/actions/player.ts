@@ -29,6 +29,16 @@ export const ADD_METADATA_TRACK = 'aiana/ADD_METADATA_TRACK';
 export const SET_ADDITIONAL_INFO_TEXT = 'aiana/SET_ADDITIONAL_INFO_TEXT';
 export const SET_BUFFERED_RANGES = 'aiana/SET_BUFFERED_RANGES';
 
+export const UPDATE_RATING = 'aiana/UPDATE_RATING';
+export function updateRating(rating: number): IStdAction {
+  return {
+    payload: {
+      rating
+    },
+    type: UPDATE_RATING
+  };
+}
+
 export function updateBufferedRanges(timeRanges: TimeRanges): IStdAction {
   return {
     payload: {
