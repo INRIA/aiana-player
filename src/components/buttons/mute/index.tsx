@@ -7,10 +7,15 @@ import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import ControlIcon from './ControlIcon';
+import { sliderShownMixin } from '../../volume-slider/Styles';
 
 const StyledMuteButton = styled(GhostButton)`
-  &:hover ~ .aip-volume {
-    width: 4em;
+  &:hover,
+  &:focus:not([data-focus-visible-added]),
+  &[data-focus-visible-added] {
+    ~ .aip-volume {
+      ${sliderShownMixin};
+    }
   }
 `;
 

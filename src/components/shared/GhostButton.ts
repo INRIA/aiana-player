@@ -6,7 +6,7 @@ export default styled.button`
   height: 100%;
   padding: 0;
 
-  border: 2px solid transparent;
+  border: 0 none;
   border-radius: 0;
   background-color: transparent;
   font-family: inherit;
@@ -24,10 +24,6 @@ export default styled.button`
 
   &:focus:not([data-focus-visible-added]),
   &[data-focus-visible-added] {
-    outline: none;
-  }
-
-  &[data-focus-visible-added] {
-    border-color: ${(props) => props.theme.focus};
+    outline: solid 2px ${(props) => props.theme.focus};
   }
 `;

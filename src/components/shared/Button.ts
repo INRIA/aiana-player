@@ -13,7 +13,7 @@ export const buttonMixin = css`
   height: 100%;
   padding: 0.4em 0.8em;
 
-  border: 2px solid transparent;
+  border: 0 none;
   border-radius: 2px;
   background-color: ${(props) => props.theme.actionBg};
 
@@ -52,14 +52,10 @@ export const buttonMixin = css`
       ${focusMixin};
     }
 
+    &:focus:not([data-focus-visible-added]),
     &[data-focus-visible-added] {
-      border-color: ${(props) => props.theme.actionBg};
+      outline: solid 2px ${(props) => props.theme.actionBg};
     }
-  }
-
-  &:focus:not([data-focus-visible-added]),
-  &[data-focus-visible-added] {
-    outline: none;
   }
 `;
 

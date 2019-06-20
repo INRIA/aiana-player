@@ -1,5 +1,9 @@
 import { hexToHsla } from '../../utils/colors';
-import styled from '../../utils/styled-components';
+import styled, { css } from '../../utils/styled-components';
+
+export const sliderShownMixin = css`
+  width: 4em;
+`;
 
 export default styled.div`
   display: inline-block;
@@ -7,15 +11,27 @@ export default styled.div`
   width: 0em;
   height: 100%;
 
-  cursor: pointer;
+  outline: none;
+  border-width: 0;
+
   transition: width 0.2s ease-in;
 
+  &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
+    cursor: pointer;
+  }
+
   &.active,
+  &:hover,
   &.focus-visible,
-  &:focus,
-  &:hover {
-    width: 4em;
-    transition: width 0.2s cubic-bezier(0, 0, 0.2, 1);
+  &:focus:not([data-focus-visible-added]),
+  &[data-focus-visible-added] {
+    ${sliderShownMixin};
+  }
+
+  &.focus-visible,
+  &:focus:not([data-focus-visible-added]),
+  &[data-focus-visible-added] {
+    outline: solid 2px ${(props) => props.theme.actionBg};
   }
 
   .aip-volume-slider {

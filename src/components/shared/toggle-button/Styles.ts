@@ -8,7 +8,7 @@ const StyledToggleButton = styled(GhostButton)`
 
   display: flex;
 
-  border: 2px solid ${(props) => props.theme.bg};
+  border: 0 none;
   border-radius: 4px;
   background-color: ${(props) => props.theme.fg};
   font-size: 0.75em;
