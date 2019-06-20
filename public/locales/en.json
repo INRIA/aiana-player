@@ -20,7 +20,7 @@
   "languages.en": "English",
   "languages.fr": "Français",
   "media.rating.slider.label": "Rate this content",
-  "media.rating.slider.current_value": "You rated this content {{ currentRating }} out of {{ maxRating }}.`",
+  "media.rating.slider.current_value": "You rated this content {{ currentRating }} out of {{ maxRating }}.",
   "preferences.chapterstrack.label": "Chapters language",
   "preferences.export.label": "Download current preferences",
   "preferences.font_face.label": "Font family",
