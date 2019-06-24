@@ -51,14 +51,10 @@ class Aiana extends Component<IAiana> {
             textTransform: this.props.fontUppercase ? 'uppercase' : 'none'
           }}
         >
-          {/* TODO: proper loader */}
-          <Loader />
-          <div style={{ display: 'none' }}>
-            <Suspense fallback={null}>
-              <SvgFilters />
-              <Player />
-            </Suspense>
-          </div>
+          <Suspense fallback={<Loader />}>
+            <SvgFilters />
+            <Player />
+          </Suspense>
         </StyledAiana>
       </ThemeProvider>
     );

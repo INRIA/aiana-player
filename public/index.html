@@ -1,19 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="stylesheet" href="%PUBLIC_URL%/aiana.css" />
-    <title>Aiana - Accessible Media Player</title>
-  </head>
 
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <main id="root"></main>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="stylesheet" href="%PUBLIC_URL%/aiana.css" />
+  <title>Aiana - Accessible Media Player</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+
+  <main id="root">
+    <video src="https://d381hmu4snvm3e.cloudfront.net/videos/VYDltEXDaSUk/SD.mp4" type="video/mp4"
+      poster="/dev/media/poster.jpg" preload="auto">
+      <track kind="captions" src="/dev/en/subtitles.vtt" srclang="en" label="Subtitles" />
+      <track kind="captions" src="/dev/fr/subtitles.vtt" srclang="fr" label="Sous-titres" />
+
+      <track kind="chapters" src="/dev/en/chapters.vtt" srclang="en" label="Chapters" />
+      <track kind="chapters" src="/dev/fr/chapters.vtt" srclang="fr" label="Chapitres" />
+
+      <track kind="metadata" src="/dev/en/slides.vtt" srclang="en" label="Presentation Slides" />
+      <track kind="metadata" src="/dev/fr/slides.vtt" srclang="fr" label="Slides de Présentation" />
+
+      <track kind="metadata" src="/dev/en/additional-infos.vtt" srclang="en" label="Additional information" />
+      <track kind="metadata" src="/dev/fr/additional-infos.vtt" srclang="fr" label="Informations complémentaires" />
+    </video>
+  </main>
+
+  <script>
+    window.aiana = {
+      "container": '#root',
+      "bookmarks": [],
+      "chapters": {
+        "language": "fr",
+        "menuEnabled": true,
+        "sources": [
+          {
+            "label": "Chapitres",
+            "src": "/dev/fr/chapters.vtt",
+            "srcLang": "fr"
+          },
+          {
+            "label": "Chapters",
+            "src": "/dev/en/chapters.vtt",
+            "srcLang": "en"
+          }
+        ]
+      },
+      "player": {
+        "additionalInformationTracks": [
+          {
+            "kind": "metadata",
+            "label": "Additional information",
+            "src": "/dev/en/additional-infos.vtt",
+            "srcLang": "en"
+          },
+          {
+            "kind": "metadata",
+            "label": "Informations complémentaires",
+            "src": "/dev/fr/additional-infos.vtt",
+            "srcLang": "fr"
+          }
+        ],
+        "poster": "/dev/media/poster.jpg",
+        "rating": 4,
+        "sources": [
+          {
+            "label": "Side video (MP4)",
+            "src": "https://d381hmu4snvm3e.cloudfront.net/videos/VYDltEXDaSUk/SD.mp4",
+            "type": "video/mp4"
+          },
+          {
+            "label": "Standard video (MP4)",
+            "selected": true,
+            "src": "https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4",
+            "type": "video/mp4"
+          }
+        ]
+      },
+      "preferences": {},
+      "slides": {
+        "language": "fr",
+        "sources": [
+          {
+            "label": "Presentation Slides",
+            "src": "/dev/en/slides.vtt",
+            "srcLang": "en"
+          },
+          {
+            "label": "Slides de Présentation",
+            "src": "/dev/fr/slides.vtt",
+            "srcLang": "fr"
+          }
+        ]
+      },
+      "subtitles": {
+        "language": "fr",
+        "sources": [
+          {
+            "label": "Subtitles",
+            "src": "/dev/en/subtitles.vtt",
+            "srcLang": "en"
+          },
+          {
+            "label": "Sous-titres",
+            "src": "/dev/fr/subtitles.vtt",
+            "srcLang": "fr"
+          }
+        ]
+      }
+    }
+  </script>
+</body>
+
 </html>

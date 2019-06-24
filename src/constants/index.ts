@@ -10,6 +10,8 @@ export const DIRECTION_LEFT = 'left';
 export const VOLUME_MINIMUM = 0;
 export const VOLUME_MAXIMUM = 1;
 
+export const CONFIGURATION_KEY = 'aiana';
+export const CONTAINER_SELECTOR = '#root';
 export const DEFAULT_CONFIGURATION_PATH = './configuration.json';
 export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 

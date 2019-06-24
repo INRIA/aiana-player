@@ -2,12 +2,13 @@ import axios from 'axios';
 import yaml from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
 import queryString from 'query-string';
-import { DEFAULT_CONFIGURATION_PATH } from '../constants';
+import { DEFAULT_CONFIGURATION_PATH, CONFIGURATION_KEY } from '../constants';
 import { IWidget, initialPreferencesState } from '../reducers/preferences';
 import { CDispatch } from '../store';
 import { ThunkResult, IStdAction } from '../types';
 import { changeLanguage } from './preferences';
 import { IPreset } from '../reducers/presets';
+import { BASE_PRESETS } from '../constants/presets';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
@@ -24,13 +25,15 @@ export function handleFetchInitialData(): ThunkResult<void> {
       window.location.search
     ) as IQueryString;
 
-    // supply config url
+    // config url is supplied as query parameter
+    // ?config=https://domain.com/config.json
     if (parsedQueryString.config) {
       axios.get(parsedQueryString.config).then(({ data }) => {
         dispatch(loadConfiguration(data));
       });
     }
-    // supply media src
+    // media src is supplied as query parameter
+    // ?src=https://domain.com/video.mp4
     else if (parsedQueryString.src) {
       dispatch(
         loadConfiguration({
@@ -40,7 +43,30 @@ export function handleFetchInitialData(): ThunkResult<void> {
         })
       );
     }
-    // use hosted configuration
+    // configuration is supplied as `window` property
+    else if (getConfig(window)) {
+      const config = getConfig(window);
+
+      const presets = Object.assign(
+        cloneDeep(BASE_PRESETS),
+        cloneDeep(config.presets) || {}
+      );
+
+      const mergedPreferences = Object.assign(
+        cloneDeep(config.preferences),
+        getLocalConfiguration()
+      );
+
+      dispatch(changeLanguage(mergedPreferences.language));
+      dispatch(
+        loadConfiguration({
+          ...config,
+          preferences: mergedPreferences,
+          presets
+        })
+      );
+    }
+    // configuration is supplied as a file hosted on the server.
     else {
       axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
         const activePreset = data.presets.find((p: IPreset) => p.selected);
@@ -62,6 +88,12 @@ export function handleFetchInitialData(): ThunkResult<void> {
       // TODO: handle loading error
     }
   };
+}
+
+function getConfig(obj: any) {
+  if (CONFIGURATION_KEY in obj) {
+    return obj.aiana;
+  }
 }
 
 function getLocalConfiguration() {
