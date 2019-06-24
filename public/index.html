@@ -14,20 +14,22 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
 
   <main id="root">
-    <video src="https://d381hmu4snvm3e.cloudfront.net/videos/VYDltEXDaSUk/SD.mp4" type="video/mp4"
-      poster="/dev/media/poster.jpg" preload="auto">
-      <track kind="captions" src="/dev/en/subtitles.vtt" srclang="en" label="Subtitles" />
-      <track kind="captions" src="/dev/fr/subtitles.vtt" srclang="fr" label="Sous-titres" />
+    <div class="aip-app">
+      <video src="https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4" type="video/mp4"
+        poster="/dev/media/poster.jpg" preload="auto" controls>
+        <track kind="captions" src="/dev/en/subtitles.vtt" srclang="en" label="Subtitles" />
+        <track kind="captions" src="/dev/fr/subtitles.vtt" srclang="fr" label="Sous-titres" />
 
-      <track kind="chapters" src="/dev/en/chapters.vtt" srclang="en" label="Chapters" />
-      <track kind="chapters" src="/dev/fr/chapters.vtt" srclang="fr" label="Chapitres" />
+        <track kind="chapters" src="/dev/en/chapters.vtt" srclang="en" label="Chapters" />
+        <track kind="chapters" src="/dev/fr/chapters.vtt" srclang="fr" label="Chapitres" />
 
-      <track kind="metadata" src="/dev/en/slides.vtt" srclang="en" label="Presentation Slides" />
-      <track kind="metadata" src="/dev/fr/slides.vtt" srclang="fr" label="Slides de Présentation" />
+        <track kind="metadata" src="/dev/en/slides.vtt" srclang="en" label="Presentation Slides" />
+        <track kind="metadata" src="/dev/fr/slides.vtt" srclang="fr" label="Slides de Présentation" />
 
-      <track kind="metadata" src="/dev/en/additional-infos.vtt" srclang="en" label="Additional information" />
-      <track kind="metadata" src="/dev/fr/additional-infos.vtt" srclang="fr" label="Informations complémentaires" />
-    </video>
+        <track kind="metadata" src="/dev/en/additional-infos.vtt" srclang="en" label="Additional information" />
+        <track kind="metadata" src="/dev/fr/additional-infos.vtt" srclang="fr" label="Informations complémentaires" />
+      </video>
+    </div>
   </main>
 
   <script>

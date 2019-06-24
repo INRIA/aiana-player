@@ -15,3 +15,31 @@ body {
   font-size: 100%;
   font-family: system;
 }
+
+.aip-app {
+  display: block;
+  width: 800px;
+  height: 546px;
+
+  box-sizing: border-box;
+  background-color: inherit;
+  color: inherit;
+  font-size: 1em;
+  font-family: system, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+.aip-app *,
+.aip-app::before,
+.aip-app::after {
+  box-sizing: border-box;
+}
+
+.aip-app video {
+  display: block;
+  margin: 0;
+
+  max-width: 100%;
+  max-height: 100%;
+}
