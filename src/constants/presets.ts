@@ -1,8 +1,7 @@
 export const BASE_PRESETS = [
   {
     locked: true,
-    name: 'default',
-    selected: true
+    name: 'default'
   },
   {
     fontFace: 'system',
