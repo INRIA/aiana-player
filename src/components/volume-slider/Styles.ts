@@ -23,13 +23,13 @@ export default styled.div`
   &.active,
   &:hover,
   &.focus-visible,
-  &:focus:not([data-focus-visible-added]),
+  /* &:focus:not([data-focus-visible-added]), */
   &[data-focus-visible-added] {
     ${sliderShownMixin};
   }
 
   &.focus-visible,
-  &:focus:not([data-focus-visible-added]),
+  /* &:focus:not([data-focus-visible-added]), */
   &[data-focus-visible-added] {
     outline: solid 2px ${(props) => props.theme.actionBg};
   }

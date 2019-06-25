@@ -1,3 +1,5 @@
+import styled from '../../utils/styled-components';
+import classNames from 'classnames';
 import React, { Component, createRef, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -15,7 +17,6 @@ import {
 } from '../../utils/fullscreen';
 import { ThemeProvider } from '../../utils/styled-components';
 import Player from '../Player';
-import StyledAiana from './StyledAiana';
 import Loader from '../Loader';
 
 interface IStateProps {
@@ -35,6 +36,50 @@ interface IDispatchProps {
 
 interface IAiana extends IStateProps, IDispatchProps {}
 
+const StyledAiana = styled.div`
+  background-color: ${(props) => props.theme.bg};
+  color: ${(props) => props.theme.fg};
+
+  &:fullscreen {
+    @media screen and (min-width: 700px) {
+      font-size: calc((100% * (9 / 16)) + 1vw);
+    }
+
+    @media screen and (min-width: 2000px) {
+      font-size: calc(100% * (29 / 16));
+    }
+  }
+
+  &.inactive {
+    &,
+    & * {
+      cursor: none;
+    }
+  }
+
+  select {
+    font-family: inherit;
+  }
+
+  /* TODO: remove debug styles */
+  input[type='checkbox'],
+  select {
+    &[data-focus-visible-added] {
+      box-shadow: 0 0 0 2px ${(props) => props.theme.focus};
+      outline: none;
+    }
+
+    &:focus:not([data-focus-visible-added]) {
+      outline: none;
+    }
+  }
+
+  .aip-player-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 class Aiana extends Component<IAiana> {
   fullscreenRef = createRef<HTMLDivElement>();
 
@@ -42,18 +87,26 @@ class Aiana extends Component<IAiana> {
     return (
       <ThemeProvider theme={themes[this.props.theme]}>
         <StyledAiana
-          className="aip-app"
+          className={classNames('aip-app', {
+            'aip-app__fullscreen': isDocumentFullscreen()
+          })}
           ref={this.fullscreenRef}
           style={{
             fontFamily: this.props.fontFace,
-            fontSize: `${this.props.fontSizeMultiplier}em`,
             lineHeight: this.props.lineHeight,
             textTransform: this.props.fontUppercase ? 'uppercase' : 'none'
           }}
         >
           <Suspense fallback={<Loader />}>
             <SvgFilters />
-            <Player />
+            <div
+              className="aip-player-wrapper"
+              style={{
+                fontSize: `${this.props.fontSizeMultiplier}em`
+              }}
+            >
+              <Player />
+            </div>
           </Suspense>
         </StyledAiana>
       </ThemeProvider>

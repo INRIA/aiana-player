@@ -62,6 +62,16 @@ export const BASE_PRESETS = [
         top: 0,
         visible: true,
         width: 100
+      },
+      {
+        ghost: true,
+        height: 20,
+        left: 0,
+        locked: true,
+        name: 'subtitles',
+        top: 75,
+        visible: true,
+        width: 100
       }
     ]
   },
@@ -82,12 +92,12 @@ export const BASE_PRESETS = [
     widgets: [
       {
         height: 25,
-        left: 65,
+        left: 50,
         locked: true,
         name: 'additionalInformation',
         top: 0,
-        visible: false,
-        width: 35
+        visible: true,
+        width: 50
       },
       {
         height: 40,
@@ -95,7 +105,7 @@ export const BASE_PRESETS = [
         locked: true,
         name: 'chapters',
         top: 25,
-        visible: false,
+        visible: true,
         width: 50
       },
       {
@@ -117,13 +127,23 @@ export const BASE_PRESETS = [
         width: 15
       },
       {
-        height: 100,
+        height: 35,
         left: 50,
         locked: true,
         name: 'video',
-        top: 0,
+        top: 65,
         visible: true,
         width: 50
+      },
+      {
+        ghost: true,
+        height: 20,
+        left: 0,
+        locked: true,
+        name: 'subtitles',
+        top: 75,
+        visible: true,
+        width: 100
       }
     ]
   },
@@ -187,6 +207,16 @@ export const BASE_PRESETS = [
         top: 0,
         visible: true,
         width: 50
+      },
+      {
+        ghost: true,
+        height: 20,
+        left: 0,
+        locked: true,
+        name: 'subtitles',
+        top: 75,
+        visible: true,
+        width: 100
       }
     ]
   }

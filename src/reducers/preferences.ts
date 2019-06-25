@@ -42,6 +42,7 @@ import { IPreset } from './presets';
 import { IStdAction } from '../types';
 
 export interface IWidget {
+  ghost?: boolean;
   height: number;
   left: number;
   locked: boolean;

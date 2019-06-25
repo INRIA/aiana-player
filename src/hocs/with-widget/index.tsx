@@ -27,6 +27,7 @@ import { WIDGETS_CONTAINER_CLASS } from '../../constants/widgets';
 
 export interface IWrappedComponentProps {
   boundariesSelector?: string;
+  ghost?: boolean;
   height: number;
   isDraggable: boolean;
   left: number;
@@ -53,9 +54,28 @@ const StyledWidget = styled.div`
   position: absolute;
 
   background-color: ${(props) => props.theme.fg};
+  border: 1px solid ${(props) => props.theme.bg};
 
-  &:hover .aip-widget-topbar.activable {
-    opacity: 1;
+  &.aip-widget__ghost {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  &.aip-widget__locked {
+    pointer-events: none;
+
+    .aip-widgetized {
+      pointer-events: auto;
+    }
+  }
+
+  &:not(.aip-widget__locked):hover {
+    background-color: ${(props) => props.theme.fg};
+    border-color: ${(props) => props.theme.bg};
+
+    .aip-widget-topbar.activable {
+      opacity: 1;
+    }
   }
 
   .aip-widget-topbar {
@@ -85,8 +105,6 @@ const StyledWidget = styled.div`
   .aip-widgetized {
     height: 100%;
     overflow: auto;
-
-    border: 1px solid ${(props) => props.theme.bg};
   }
 `;
 
@@ -119,7 +137,10 @@ function withWidget(WrappedComponent: React.ComponentType<any>) {
     render() {
       return (
         <StyledWidget
-          className="aip-widget"
+          className={classNames('aip-widget', {
+            'aip-widget__ghost': this.props.ghost,
+            'aip-widget__locked': this.props.locked
+          })}
           hidden={!this.props.visible}
           ref={this.elementRef}
           style={{

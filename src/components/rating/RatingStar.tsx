@@ -25,13 +25,11 @@ const StyledStar = styled(SvgStar)`
 `;
 
 function RatingStar(props: IProps) {
-  const cls = classNames({
-    filled: props.associatedRating <= props.rating
-  });
-
   return (
     <StyledStar
-      className={cls}
+      className={classNames({
+        filled: props.associatedRating <= props.rating
+      })}
       onMouseEnter={() => props.mouseEnterHandler(props.associatedRating)}
       onClick={() => props.clickHandler(props.associatedRating)}
     />

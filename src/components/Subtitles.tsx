@@ -4,6 +4,7 @@ import { IAianaState } from '../reducers';
 import { formatSubtitles } from '../utils/strings';
 import { hexToHsla } from '../utils/colors';
 import styled from '../utils/styled-components';
+import withWidget from '../hocs/with-widget';
 
 interface IStateProps {
   subtitlesText?: string;
@@ -11,14 +12,13 @@ interface IStateProps {
 
 const StyledSubtitles = styled.div`
   width: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
 
-  position: absolute;
-  bottom: 0.5em;
-  left: 0;
   text-align: center;
 
   pointer-events: none;
@@ -45,7 +45,7 @@ function MediaSubtitles({ subtitlesText }: IStateProps) {
   }
 
   return (
-    <StyledSubtitles>
+    <StyledSubtitles className="aip-subtitles">
       {formatSubtitles(subtitlesText).map((textLine, index) => (
         <StyledSpan key={index}>{textLine}</StyledSpan>
       ))}
@@ -59,4 +59,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(MediaSubtitles);
+export default connect(mapState)(withWidget(MediaSubtitles));

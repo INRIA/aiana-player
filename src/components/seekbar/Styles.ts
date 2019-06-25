@@ -9,19 +9,24 @@ const StyledDiv = styled.div`
 
   cursor: pointer;
 
-  .aip-progress-slider {
+  .aip-progress__slider {
     height: 0.375em;
     width: 100%;
+
     position: relative;
+
     cursor: pointer;
 
-    &:focus:not([data-focus-visible-added]),
+    outline: none;
+
     &[data-focus-visible-added] {
-      outline: solid 2px ${(props) => props.theme.actionBg};
+      .aip-progress__seekbar {
+        outline: solid 2px ${(props) => props.theme.actionBg};
+      }
     }
   }
 
-  .aip-seekbar {
+  .aip-progress__seekbar {
     height: 0.375em;
     width: 100%;
     position: absolute;
@@ -29,14 +34,14 @@ const StyledDiv = styled.div`
     background-color: ${(props) => hexToHsla(props.theme.fg, 0.3)};
   }
 
-  .aip-seekbar-expander {
+  .aip-progress__seekbar__expander {
     position: absolute;
     bottom: calc(50% - 0.5em);
     width: 100%;
     height: 1.5em;
   }
 
-  .aip-play-progress {
+  .aip-progress__elapsed {
     height: 0.375em;
     width: 100%;
     position: absolute;
@@ -52,7 +57,7 @@ const StyledDiv = styled.div`
     }
   }
 
-  .aip-progress-slider-handle {
+  .aip-progress__slider-handle {
     position: absolute;
     top: calc(50% - 0.5em);
     left: 0;

@@ -39,9 +39,13 @@ const Slider = styled.div`
 
   &:not([aria-disabled='true']):not([disabled]):not([aria-hidden='true']) {
     cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 
-  &:focus:not([data-focus-visible-added]),
+  /* &:focus:not([data-focus-visible-added]), */
   &[data-focus-visible-added] {
     outline: solid 2px ${(props) => props.theme.actionBg};
   }

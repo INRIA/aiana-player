@@ -76,12 +76,12 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
-    const wrapperClassNames = classNames('aip-progress', {
-      'no-transition': isSeeking
-    });
-
     return (
-      <StyledDiv className={wrapperClassNames}>
+      <StyledDiv
+        className={classNames('aip-progress', {
+          'no-transition': isSeeking
+        })}
+      >
         <div
           aria-label={t('controls.seekbar.label')}
           aria-valuemin={0}
@@ -91,28 +91,30 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
             roundedCurrentTime,
             roundedDuration
           )}
-          className="aip-progress-slider"
+          className="aip-progress__slider"
           onKeyDown={this.keyDownHandler}
           onMouseDown={this.mouseDownHandler}
           role="slider"
           tabIndex={0}
         >
-          <div className="aip-seekbar">
-            <div className="aip-seekbar-expander" />
+          <div className="aip-progress__seekbar">
+            <div className="aip-progress__seekbar__expander" />
             <BufferedTimeRanges />
           </div>
 
           <div
-            className={`aip-play-progress ${isSeeking ? 'no-transition' : ''}`}
+            className={classNames('aip-progress__elapsed', {
+              'no-transition': isSeeking
+            })}
             style={{
               transform: `scaleX(${progressRatio})`
             }}
           />
 
           <div
-            className={`aip-progress-slider-handle ${
-              isSeeking ? 'no-transition' : ''
-            }`}
+            className={classNames('aip-progress__slider-handle', {
+              'no-transition': isSeeking
+            })}
             style={{
               transform: `translateX(calc(${this.state.sliderWidth *
                 progressRatio}px - 50%))`
@@ -156,7 +158,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   }
 
   setPosition = () => {
-    const sliderEl = document.querySelector('.aip-progress-slider');
+    const sliderEl = document.querySelector('.aip-progress__slider');
     if (!sliderEl) {
       return;
     }
@@ -187,7 +189,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   };
 
   mouseUpHandler = (evt: MouseEvent) => {
-    (document.querySelector('.aip-progress-slider') as HTMLDivElement)!.blur();
+    (document.querySelector('.aip-progress__slider') as HTMLDivElement)!.blur();
     const el = document.querySelector('.aip-progress')! as HTMLDivElement;
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
 

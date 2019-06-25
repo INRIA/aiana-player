@@ -31,7 +31,6 @@ body {
   box-sizing: border-box;
   background-color: #111;
   color: inherit;
-  font-size: 1em;
   font-family: system, sans-serif;
 
   -webkit-font-smoothing: antialiased;

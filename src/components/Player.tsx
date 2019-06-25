@@ -6,7 +6,8 @@ import {
   WIDGET_ID_CHAPTERS,
   WIDGET_ID_SLIDES,
   WIDGET_ID_VIDEO,
-  WIDGET_ID_TIME_MANAGEMENT
+  WIDGET_ID_TIME_MANAGEMENT,
+  WIDGET_ID_SUBTITLES
 } from '../constants/widgets';
 import { IAianaState } from '../reducers';
 import { IWidget } from '../reducers/preferences';
@@ -57,9 +58,7 @@ interface IPlayerProps extends IStateProps, IDispatchProps {}
 type Filter = (widget: IWidget) => boolean;
 
 function byName(name: string): Filter {
-  return (widget: IWidget) => {
-    return widget.name === name;
-  };
+  return (widget: IWidget) => widget.name === name;
 }
 
 function Player(props: IPlayerProps) {
@@ -79,6 +78,7 @@ function Player(props: IPlayerProps) {
   const slidesWidget = widgets.find(byName(WIDGET_ID_SLIDES));
   const timeManagementWidget = widgets.find(byName(WIDGET_ID_TIME_MANAGEMENT));
   const videoWidget = widgets.find(byName(WIDGET_ID_VIDEO));
+  const subtitlesWidget = widgets.find(byName(WIDGET_ID_SUBTITLES));
 
   return (
     <StyledDiv>
@@ -129,7 +129,14 @@ function Player(props: IPlayerProps) {
           />
         )}
 
-        <MediaSubtitles />
+        {subtitlesWidget && (
+          <MediaSubtitles
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWidgetHandler}
+            {...subtitlesWidget}
+          />
+        )}
       </div>
       <TimelineBar display={false} />
       <VideoPlayerControls />

@@ -74,6 +74,7 @@
   "widget_additionalInformation": "additional information widget",
   "widget_chapters": "chapters widget",
   "widget_slides": "slides widget",
+  "widget_subtitles": "subtitles widget",
   "widget_timeManagement": "time management widget",
   "widget_video": "video widget",
   "widget.close": "Close the $t(widget, { \"context\": \"{{ widgetName }}\" })",
