@@ -50,6 +50,7 @@ export interface IPlayerState {
   isSeeking: boolean;
 
   mediaElement?: HTMLMediaElement;
+  mediaId: string;
 
   metadataTracks: IRawMetadataTrack[];
 
@@ -89,6 +90,7 @@ const initialState: IPlayerState = {
   isMuted: DEFAULT_MUTED,
   isPlaying: false,
   isSeeking: false,
+  mediaId: '__unset__',
   metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
   preload: DEFAULT_PRELOAD,
