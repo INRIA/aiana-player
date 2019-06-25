@@ -59,14 +59,8 @@ const StyledWidget = styled.div`
   &.aip-widget__ghost {
     background-color: transparent;
     border-color: transparent;
-  }
 
-  &.aip-widget__locked {
     pointer-events: none;
-
-    .aip-widgetized {
-      pointer-events: auto;
-    }
   }
 
   &:not(.aip-widget__locked):hover {

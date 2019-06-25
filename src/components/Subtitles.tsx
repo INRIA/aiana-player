@@ -36,7 +36,7 @@ const StyledSpan = styled.span`
   font-size: 1.25em;
 
   white-space: nowrap;
-  pointer-events: all;
+  pointer-events: auto;
 `;
 
 function MediaSubtitles({ subtitlesText }: IStateProps) {
