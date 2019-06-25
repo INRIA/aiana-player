@@ -10,9 +10,15 @@ interface IStateProps {
 }
 
 const StyledSubtitles = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   position: absolute;
   bottom: 0.5em;
-  left: 50%;
+  left: 0;
   text-align: center;
 
   pointer-events: none;
@@ -20,21 +26,17 @@ const StyledSubtitles = styled.div`
 
 const StyledSpan = styled.span`
   display: block;
-  transform: translateX(-50%);
 
-  span {
-    display: inline-block;
-    padding: 0 0.3em;
+  padding: 0 0.3em;
 
-    border-radius: 0.2em;
-    color: ${(props) => props.theme.fg};
-    background: ${(props) => hexToHsla(props.theme.bg, 0.9)};
+  border-radius: 0.2em;
+  color: ${(props) => props.theme.fg};
+  background: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 
-    font-size: 1.25em;
+  font-size: 1.25em;
 
-    white-space: nowrap;
-    pointer-events: all;
-  }
+  white-space: nowrap;
+  pointer-events: all;
 `;
 
 function MediaSubtitles({ subtitlesText }: IStateProps) {
@@ -44,10 +46,8 @@ function MediaSubtitles({ subtitlesText }: IStateProps) {
 
   return (
     <StyledSubtitles>
-      {formatSubtitles(subtitlesText).map((line, index) => (
-        <StyledSpan key={index}>
-          <span>{line}</span>
-        </StyledSpan>
+      {formatSubtitles(subtitlesText).map((textLine, index) => (
+        <StyledSpan key={index}>{textLine}</StyledSpan>
       ))}
     </StyledSubtitles>
   );
