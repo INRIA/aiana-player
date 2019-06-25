@@ -16,18 +16,31 @@ body {
   font-family: system;
 }
 
+/*
+  The wanted canvas ratio is 16/9. To achieve that with a fixed width at
+  800px, height should be 450px plus the height of the controls.
+*/
 .aip-app {
   display: block;
   width: 800px;
   height: 546px;
 
+  max-width: 100%;
+  max-height: 100%;
+
   box-sizing: border-box;
-  background-color: inherit;
+  background-color: #111;
   color: inherit;
   font-size: 1em;
   font-family: system, sans-serif;
 
   -webkit-font-smoothing: antialiased;
+}
+
+.aip-app__unmounted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .aip-app *,
@@ -42,4 +55,7 @@ body {
 
   max-width: 100%;
   max-height: 100%;
+
+  cursor: pointer;
+  outline: none;
 }
