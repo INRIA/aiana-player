@@ -1,5 +1,5 @@
 import axios from 'axios';
-import yaml from 'js-yaml';
+import { safeLoad } from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
 import queryString from 'query-string';
 import { DEFAULT_CONFIGURATION_PATH, CONFIGURATION_KEY } from '../constants';
@@ -117,7 +117,7 @@ function getLocalConfiguration() {
 
   return Object.assign(
     cloneDeep(initialPreferencesState),
-    yaml.safeLoad(serializedPreferences)
+    safeLoad(serializedPreferences)
   );
 }
 
