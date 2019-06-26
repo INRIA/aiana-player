@@ -1,5 +1,5 @@
 import axios from 'axios';
-import yaml from 'js-yaml';
+import { safeLoad } from 'js-yaml';
 import cloneDeep from 'lodash.clonedeep';
 import queryString from 'query-string';
 import { DEFAULT_CONFIGURATION_PATH, CONFIGURATION_KEY } from '../constants';
@@ -9,41 +9,91 @@ import { ThunkResult, IStdAction } from '../types';
 import { changeLanguage } from './preferences';
 import { IPreset } from '../reducers/presets';
 import { BASE_PRESETS } from '../constants/presets';
+import md5 from 'md5';
+import { getLocalPlayerState } from '../reducers/player';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
 
 interface IQueryString {
   config?: string;
+  mid?: string;
   src?: string;
 }
 
+// TODO: split function
 // FIXME: language and defaults handling isn't robust enough.
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    const parsedQueryString = queryString.parse(
+    const parsedQueryString: IQueryString = queryString.parse(
       window.location.search
-    ) as IQueryString;
+    );
 
-    // config url is supplied as query parameter
-    // ?config=https://domain.com/config.json
-    if (parsedQueryString.config) {
-      axios.get(parsedQueryString.config).then(({ data }) => {
-        dispatch(loadConfiguration(data));
+    // media id is supplied as query parameter.
+    //
+    // ?mid=abc123
+    if (parsedQueryString.mid) {
+      const { mid } = parsedQueryString;
+      axios.get(`/api/${mid}.json`).then(({ data }) => {
+        const localState = getLocalPlayerState(mid);
+        const player = Object.assign({}, data.player, localState);
+        const merged = {
+          ...data,
+          player
+        };
+
+        dispatch(loadConfiguration(merged));
       });
     }
-    // media src is supplied as query parameter
+    // config url is supplied as query parameter.
+    //
+    // ?config=https://domain.com/config.json
+    else if (parsedQueryString.config) {
+      axios.get(parsedQueryString.config).then(({ data }) => {
+        try {
+          const localState = getLocalPlayerState(data.player.mediaId);
+          const player = Object.assign({}, data.player, localState);
+          const merged = {
+            ...data,
+            player
+          };
+
+          dispatch(loadConfiguration(merged));
+        } catch (e) {
+          dispatch(loadConfiguration(data));
+        }
+      });
+    }
+    // media source url or path is supplied as query parameter.
+    //
     // ?src=https://domain.com/video.mp4
     else if (parsedQueryString.src) {
-      dispatch(
-        loadConfiguration({
-          player: {
-            sources: [{ src: parsedQueryString.src }]
-          }
-        })
-      );
+      const mid = md5(parsedQueryString.src);
+      const player = {
+        mediaId: mid,
+        sources: [{ src: parsedQueryString.src }]
+      };
+
+      try {
+        const localState = getLocalPlayerState(mid);
+        const merged = Object.assign({}, player, localState);
+
+        dispatch(
+          loadConfiguration({
+            player: merged,
+            presets: cloneDeep(BASE_PRESETS)
+          })
+        );
+      } catch (e) {
+        dispatch(
+          loadConfiguration({
+            player,
+            presets: cloneDeep(BASE_PRESETS)
+          })
+        );
+      }
     }
-    // configuration is supplied as `window` property
+    // configuration is supplied as `window.aiana` property.
     else if (getConfig(window)) {
       const config = getConfig(window);
 
@@ -66,7 +116,8 @@ export function handleFetchInitialData(): ThunkResult<void> {
         })
       );
     }
-    // configuration is supplied as a file hosted on the server.
+    // configuration is supplied as a file hosted on the server,
+    // at the same level.
     else {
       axios.get(DEFAULT_CONFIGURATION_PATH).then(({ data }) => {
         const activePreset = data.presets.find((p: IPreset) => p.selected);
@@ -105,7 +156,7 @@ function getLocalConfiguration() {
 
   return Object.assign(
     cloneDeep(initialPreferencesState),
-    yaml.safeLoad(serializedPreferences)
+    safeLoad(serializedPreferences)
   );
 }
 

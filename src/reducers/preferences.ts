@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import { safeDump } from 'js-yaml';
+import { safeDump, safeLoad } from 'js-yaml';
 import { Reducer, DeepPartial } from 'redux';
 import {
   CHANGE_LANGUAGE,
@@ -221,5 +221,19 @@ export function preferencesToYAML(state: DeepPartial<IPreferencesState>) {
     return safeDump(exportedPrefs);
   } catch (err) {
     return '';
+  }
+}
+
+export function getLocalPreferencesState() {
+  try {
+    const serializedPreferences = localStorage.getItem('aiana-preferences');
+
+    if (serializedPreferences === null) {
+      return undefined;
+    }
+
+    return safeLoad(serializedPreferences);
+  } catch (err) {
+    return undefined;
   }
 }
