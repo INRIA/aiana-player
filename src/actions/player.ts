@@ -8,8 +8,6 @@ import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
 
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
-export const MEDIA_SOURCE_UPDATED = 'aiana/MEDIA_SOURCE_UPDATED';
-export const MEDIA_ELEMENT_UNMOUNTED = 'aiana/MEDIA_ELEMENT_UNMOUNTED';
 export const MEDIA_REQUEST_MUTE = 'aiana/MEDIA_REQUEST_MUTE';
 export const MEDIA_REQUEST_UNMUTE = 'aiana/MEDIA_REQUEST_UNMUTE';
 export const MEDIA_TOGGLE_MUTE = 'aiana/MEDIA_TOGGLE_MUTE';

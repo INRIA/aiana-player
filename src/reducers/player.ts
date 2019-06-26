@@ -1,8 +1,6 @@
 import { Reducer, DeepPartial } from 'redux';
 import {
   ADD_METADATA_TRACK,
-  MEDIA_SOURCE_UPDATED,
-  MEDIA_ELEMENT_UNMOUNTED,
   MEDIA_PAUSE,
   MEDIA_PLAY,
   MEDIA_PLAYBACK_RATE,
@@ -127,10 +125,6 @@ const player: Reducer<IPlayerState, IStdAction> = (
         ...state,
         isFullscreen: payload.isFullscreen
       };
-    case MEDIA_SOURCE_UPDATED:
-      return state;
-    case MEDIA_ELEMENT_UNMOUNTED:
-      return state;
     case MEDIA_PLAY:
     case MEDIA_PAUSE:
       return {

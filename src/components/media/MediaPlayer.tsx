@@ -37,7 +37,6 @@ interface IDispatchProps {
   updateBufferedRanges(timeRanges: TimeRanges): void;
   updateCurrentTime(time: number): void;
   updateMediaDuration(duration: number): void;
-  updateMediaElement(media: HTMLMediaElement): void;
   updateSubtitlesTracksList(subtitlesTracks: IRawSubtitlesTrack[]): void;
 }
 
@@ -148,14 +147,11 @@ class MediaPlayer extends React.Component<IProps> {
     );
   }
 
-  componentDidMount() {
-    this.updateMountedMedia();
-  }
-
   componentDidUpdate(prevProps: IStateProps) {
     const currentSource = getCurrentSourceWithFallback(this.props.sources);
     const prevSource = getCurrentSourceWithFallback(prevProps.sources);
 
+    // media source change
     if (
       currentSource &&
       (!prevSource || (prevSource && currentSource.src !== prevSource.src))
@@ -167,25 +163,21 @@ class MediaPlayer extends React.Component<IProps> {
       }
     }
 
+    // playback rate change
     if (this.media.current!.playbackRate !== this.props.playbackRate) {
       this.media.current!.playbackRate = this.props.playbackRate;
     }
 
+    // volume change
     if (this.media.current!.volume !== this.props.volume) {
       this.media.current!.volume = this.props.volume;
     }
 
+    // muted change
     if (this.media.current!.muted !== this.props.isMuted) {
       this.media.current!.muted = this.props.isMuted;
     }
   }
-
-  updateMountedMedia = () => {
-    if (this.media.current) {
-      this.props.updateMediaElement(this.media.current);
-      this.props.requestSeek(this.props.mediaSelector, this.props.currentTime);
-    }
-  };
 
   progressHandler = () => {
     this.props.updateBufferedRanges(this.media.current!.buffered);
