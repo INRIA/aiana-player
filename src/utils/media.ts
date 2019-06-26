@@ -1,4 +1,4 @@
-import { ITrack } from '../components/video/MediaSubtitlesTrack';
+import { ITrack } from '../components/media/MediaSubtitlesTrack';
 import {
   TRACK_MODE_ACTIVE,
   TRACK_KIND_SUBTITLES,

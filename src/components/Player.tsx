@@ -17,8 +17,8 @@ import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';
 import MediaSubtitles from './Subtitles';
 import TimelineBar from './timeline/Timeline';
-import VideoPlayer from './video/VideoPlayer';
-import VideoPlayerControls from './video/VideoPlayerControls';
+import MediaPlayer from './media/MediaPlayer';
+import VideoPlayerControls from './media/VideoPlayerControls';
 import TimeSpent from './time-management/TimeSpent';
 
 const StyledDiv = styled.div`
@@ -93,7 +93,7 @@ function Player(props: IPlayerProps) {
         )}
 
         {videoWidget && (
-          <VideoPlayer
+          <MediaPlayer
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
             uiUpdateHandler={updateWidgetHandler}

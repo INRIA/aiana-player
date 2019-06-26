@@ -19,7 +19,7 @@ import {
   UPDATE_RATING
 } from '../actions/player';
 import { LOAD_CONFIGURATION } from '../actions/shared';
-import { ITrack } from '../components/video/MediaSubtitlesTrack';
+import { ITrack } from '../components/media/MediaSubtitlesTrack';
 import {
   DEFAULT_MUTED,
   DEFAULT_PLAYBACK_RATE,

@@ -97,7 +97,7 @@ function getCurrentSourceWithFallback(sources: ISource[]): ISource | void {
   }
 }
 
-class VideoPlayer extends React.Component<IProps> {
+class MediaPlayer extends React.Component<IProps> {
   media = React.createRef<HTMLVideoElement>();
 
   render() {
@@ -278,4 +278,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withWidget(VideoPlayer));
+)(withWidget(MediaPlayer));

@@ -12,7 +12,7 @@ import {
   isDisplayableTrack
 } from '../utils/media';
 import { IStdAction } from '../types';
-import { ITrack } from '../components/video/MediaSubtitlesTrack';
+import { ITrack } from '../components/media/MediaSubtitlesTrack';
 
 export interface ISubtitlesTrack {
   label?: string;
