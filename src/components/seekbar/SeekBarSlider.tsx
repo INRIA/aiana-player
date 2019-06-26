@@ -92,6 +92,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
             roundedDuration
           )}
           className="aip-progress__slider"
+          onClick={this.clickHandler}
           onKeyDown={this.keyDownHandler}
           onMouseDown={this.mouseDownHandler}
           role="slider"
@@ -173,12 +174,14 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     });
   };
 
-  mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
-    evt.preventDefault();
-
+  clickHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
     evt.currentTarget.focus();
+  };
+
+  mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+    evt.preventDefault();
 
     // trigger first recomputation to simulate simple click.
     const el = document.querySelector('.aip-progress')! as HTMLDivElement;
