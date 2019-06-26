@@ -12,7 +12,7 @@ import SlideButton from './SlideButton';
 interface IStateProps {
   duration: number;
   language: string;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
   slidesTracks: IRawSlidesTrack[];
 }
 
@@ -63,7 +63,7 @@ function SlidesBar({
   slidesTracks,
   duration,
   language,
-  media,
+  mediaSelector,
   requestSeek: requestSeekAction
 }: ISlidesBar) {
   const [t] = useTranslation();
@@ -90,7 +90,7 @@ function SlidesBar({
               label={t('timeline.goto_and_play_slide', {
                 index: idx
               })}
-              media={media}
+              mediaSelector={mediaSelector}
               onClick={requestSeekAction}
               time={startTime}
             />
@@ -105,7 +105,7 @@ function mapState(state: IAianaState) {
   return {
     duration: state.player.duration,
     language: state.slides.language,
-    media: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     slidesTracks: state.slides.slidesTracks
   };
 }

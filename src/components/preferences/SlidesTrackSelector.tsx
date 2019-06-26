@@ -8,7 +8,6 @@ import { CDispatch } from '../../store';
 import { ISlidesState, getSelectedTrackLanguage } from '../../reducers/slides';
 
 interface IStateProps {
-  mediaElement?: HTMLMediaElement;
   slides: ISlidesState;
 }
 
@@ -22,16 +21,11 @@ interface ISlidesTrackSelector
     IDispatchProps {}
 
 function SlidesTrackSelector({
-  mediaElement,
   selectedTrackChangedHandler,
   slides,
   uid
 }: ISlidesTrackSelector) {
   const [t] = useTranslation();
-
-  if (!mediaElement) {
-    return null;
-  }
 
   return (
     <React.Fragment>
@@ -53,7 +47,6 @@ function SlidesTrackSelector({
 
 function mapState(state: IAianaState) {
   return {
-    mediaElement: state.player.mediaElement,
     slides: state.slides
   };
 }

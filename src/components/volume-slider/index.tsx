@@ -22,13 +22,13 @@ import { bounded } from '../../utils/ui';
 import StyledVolumeSlider from './Styles';
 
 interface IStateProps {
-  mediaElement?: HTMLMediaElement;
+  mediaSelector: string;
   volume: number;
   volumeStep: number;
 }
 
 interface IDispatchProps {
-  updateVolume(media: HTMLMediaElement, volume: number): void;
+  updateVolume(mediaSelector: string, volume: number): void;
 }
 
 interface IVolumeSliderProps
@@ -90,38 +90,34 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
   }
 
   keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
-    const { mediaElement, updateVolume, volume, volumeStep } = this.props;
-
-    if (!mediaElement) {
-      return;
-    }
+    const { mediaSelector, updateVolume, volume, volumeStep } = this.props;
 
     switch (evt.key) {
       case ARROW_RIGHT_KEY:
       case ARROW_UP_KEY:
-        updateVolume(mediaElement, this.safeVolume(volume + volumeStep));
+        updateVolume(mediaSelector, this.safeVolume(volume + volumeStep));
         break;
       case ARROW_LEFT_KEY:
       case ARROW_DOWN_KEY:
-        updateVolume(mediaElement, this.safeVolume(volume - volumeStep));
+        updateVolume(mediaSelector, this.safeVolume(volume - volumeStep));
         break;
       case PAGE_UP_KEY:
         updateVolume(
-          mediaElement,
+          mediaSelector,
           this.safeVolume(volume + DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
         );
         break;
       case PAGE_DOWN_KEY:
         updateVolume(
-          mediaElement,
+          mediaSelector,
           this.safeVolume(volume - DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
         );
         break;
       case HOME_KEY:
-        updateVolume(mediaElement, VOLUME_MINIMUM);
+        updateVolume(mediaSelector, VOLUME_MINIMUM);
         break;
       case END_KEY:
-        updateVolume(mediaElement, VOLUME_MAXIMUM);
+        updateVolume(mediaSelector, VOLUME_MAXIMUM);
         break;
     }
   };
@@ -164,11 +160,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
   };
 
   updateVolume = (mouseX: number, sliderX: number, sliderWidth: number) => {
-    const { mediaElement, updateVolume, volume } = this.props;
-
-    if (!mediaElement) {
-      return;
-    }
+    const { mediaSelector, updateVolume, volume } = this.props;
 
     try {
       const sliderXMax = sliderX + sliderWidth;
@@ -177,7 +169,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
       const newVolume = unitToRatio(positionDifference, sliderWidth);
 
       if (newVolume !== volume) {
-        updateVolume(mediaElement, this.safeVolume(newVolume));
+        updateVolume(mediaSelector, this.safeVolume(newVolume));
       }
     } catch (error) {
       //
@@ -196,7 +188,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
 
 function mapState(state: IAianaState) {
   return {
-    mediaElement: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     volume: state.player.volume,
     volumeStep: state.preferences.volumeStep
   };
@@ -204,8 +196,8 @@ function mapState(state: IAianaState) {
 
 function mapDispatch(dispatch: CDispatch) {
   return {
-    updateVolume: (media: HTMLMediaElement, volume: number) => {
-      dispatch(requestChangeVolume(media, volume));
+    updateVolume: (mediaSelector: string, volume: number) => {
+      dispatch(requestChangeVolume(mediaSelector, volume));
     }
   };
 }

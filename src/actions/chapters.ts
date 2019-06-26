@@ -13,23 +13,23 @@ export const PREVIOUS_CHAPTER = 'aiana/PREVIOUS_CHAPTER';
 export const NEXT_CHAPTER = 'aiana/NEXT_CHAPTER';
 
 export function seekNextChapter(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   from: number,
   to: number
 ): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    dispatch(requestSeek(media, to));
+    dispatch(requestSeek(mediaSelector, to));
     dispatch(nextChapter(from, to));
   };
 }
 
 export function seekPreviousChapter(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   from: number,
   to: number
 ): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    dispatch(requestSeek(media, to));
+    dispatch(requestSeek(mediaSelector, to));
     dispatch(previousChapter(from, to));
   };
 }

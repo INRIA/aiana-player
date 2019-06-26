@@ -33,9 +33,9 @@ interface IStateProps {
   duration: number;
   isFullscreen: boolean;
   isSeeking: boolean;
-  seekStep: number;
+  mediaSelector: string;
   seekingTime: number;
-  mediaElement?: HTMLMediaElement;
+  seekStep: number;
 }
 
 interface IDispatchProps {
@@ -53,18 +53,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
   readonly state = defaultState;
 
   render() {
-    const {
-      currentTime,
-      duration,
-      isSeeking,
-      seekingTime,
-      t,
-      mediaElement
-    } = this.props;
-
-    if (!mediaElement) {
-      return null;
-    }
+    const { currentTime, duration, isSeeking, seekingTime, t } = this.props;
 
     // If the slider is being used, its registered position should override
     // the `currentTime`. However, once media has seeked (which does not mean
@@ -160,6 +149,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
 
   setPosition = () => {
     const sliderEl = document.querySelector('.aip-progress__slider');
+
     if (!sliderEl) {
       return;
     }
@@ -209,13 +199,9 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     const {
       currentTime,
       duration,
-      mediaElement,
+      mediaSelector,
       requestSeek: requestSeekAction
     } = this.props;
-
-    if (!mediaElement) {
-      return;
-    }
 
     const positionDifference = bounded(
       mouseX,
@@ -227,7 +213,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
     );
 
     if (newCurrentTime !== currentTime) {
-      requestSeekAction(mediaElement, newCurrentTime);
+      requestSeekAction(mediaSelector, newCurrentTime);
     }
   };
 
@@ -236,15 +222,11 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
       currentTime,
       duration,
       isSeeking,
-      mediaElement,
+      mediaSelector,
       requestSeek: requestSeekAction,
       seekStep,
       seekingTime
     } = this.props;
-
-    if (!mediaElement) {
-      return;
-    }
 
     // User should be able to trigger this event multiple times before
     // the media `seeked` event is fired.
@@ -258,14 +240,14 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
       case ARROW_UP_KEY:
         {
           const nextTime = this.safeTime(sliderTime + seekStep);
-          requestSeekAction(mediaElement, nextTime);
+          requestSeekAction(mediaSelector, nextTime);
         }
         break;
       case ARROW_LEFT_KEY:
       case ARROW_DOWN_KEY:
         {
           const nextTime = this.safeTime(sliderTime - seekStep);
-          requestSeekAction(mediaElement, nextTime);
+          requestSeekAction(mediaSelector, nextTime);
         }
         break;
       case PAGE_UP_KEY:
@@ -273,7 +255,7 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
           const nextTime = this.safeTime(
             sliderTime + DEFAULT_SEEK_STEP_MULTIPLIER * seekStep
           );
-          requestSeekAction(mediaElement, nextTime);
+          requestSeekAction(mediaSelector, nextTime);
         }
         break;
       case PAGE_DOWN_KEY:
@@ -281,14 +263,14 @@ class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
           const nextTime = this.safeTime(
             sliderTime - DEFAULT_SEEK_STEP_MULTIPLIER * seekStep
           );
-          requestSeekAction(mediaElement, nextTime);
+          requestSeekAction(mediaSelector, nextTime);
         }
         break;
       case HOME_KEY:
-        requestSeekAction(mediaElement, 0);
+        requestSeekAction(mediaSelector, 0);
         break;
       case END_KEY:
-        requestSeekAction(mediaElement, duration);
+        requestSeekAction(mediaSelector, duration);
         break;
     }
   };
@@ -304,7 +286,7 @@ function mapState(state: IAianaState) {
     duration: state.player.duration,
     isFullscreen: state.player.isFullscreen,
     isSeeking: state.player.isSeeking,
-    mediaElement: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     seekStep: state.preferences.seekStep,
     seekingTime: state.player.seekingTime
   };

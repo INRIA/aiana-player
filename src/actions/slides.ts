@@ -11,23 +11,23 @@ export const PREVIOUS_SLIDE = 'aiana/PREVIOUS_SLIDE';
 export const NEXT_SLIDE = 'aiana/NEXT_SLIDE';
 
 export function seekNextSlide(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   from: number,
   to: number
 ): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    dispatch(requestSeek(media, to));
+    dispatch(requestSeek(mediaSelector, to));
     dispatch(nextSlide(from, to));
   };
 }
 
 export function seekPreviousSlide(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   from: number,
   to: number
 ): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    dispatch(requestSeek(media, to));
+    dispatch(requestSeek(mediaSelector, to));
     dispatch(previousSlide(from, to));
   };
 }

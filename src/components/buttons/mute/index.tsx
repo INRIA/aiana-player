@@ -21,12 +21,12 @@ const StyledMuteButton = styled(GhostButton)`
 
 interface IStateProps {
   isMuted: boolean;
-  mediaElement?: HTMLMediaElement;
+  mediaSelector: string;
 }
 
 interface IDispatchProps {
-  muteMedia(media: HTMLMediaElement): void;
-  unmuteMedia(media: HTMLMediaElement): void;
+  muteMedia(mediaSelector: string): void;
+  unmuteMedia(mediaSelector: string): void;
 }
 
 interface IMuteButton extends IStateProps, IDispatchProps, WithTranslation {}
@@ -42,14 +42,10 @@ class MuteButton extends React.Component<IMuteButton> {
   }
 
   clickHandler = () => {
-    if (!this.props.mediaElement) {
-      return;
-    }
-
     if (this.props.isMuted) {
-      this.props.unmuteMedia(this.props.mediaElement);
+      this.props.unmuteMedia(this.props.mediaSelector);
     } else {
-      this.props.muteMedia(this.props.mediaElement);
+      this.props.muteMedia(this.props.mediaSelector);
     }
   };
 
@@ -63,7 +59,7 @@ class MuteButton extends React.Component<IMuteButton> {
 function mapState(state: IAianaState) {
   return {
     isMuted: state.player.isMuted,
-    mediaElement: state.player.mediaElement
+    mediaSelector: state.player.mediaSelector
   };
 }
 

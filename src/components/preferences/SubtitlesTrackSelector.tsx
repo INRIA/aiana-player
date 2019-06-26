@@ -12,7 +12,6 @@ import {
 } from '../../reducers/subtitles';
 
 interface IStateProps {
-  mediaElement?: HTMLMediaElement;
   subtitles: ISubtitlesState;
 }
 
@@ -26,16 +25,11 @@ interface ISubtitlesTrackSelector
     IDispatchProps {}
 
 function SubtitlesTrackSelector({
-  mediaElement,
   selectedTrackChangedHandler,
   subtitles,
   uid
 }: ISubtitlesTrackSelector) {
   const [t] = useTranslation();
-
-  if (!mediaElement) {
-    return null;
-  }
 
   return (
     <React.Fragment>
@@ -58,7 +52,6 @@ function SubtitlesTrackSelector({
 
 function mapState(state: IAianaState) {
   return {
-    mediaElement: state.player.mediaElement,
     subtitles: state.subtitles
   };
 }

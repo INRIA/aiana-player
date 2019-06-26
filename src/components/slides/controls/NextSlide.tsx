@@ -13,12 +13,12 @@ interface IStateProps {
   currentTime: number;
   duration: number;
   language: string;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
   slidesTracks: IRawSlidesTrack[];
 }
 
 interface IDispatchProps {
-  seekNextSlide(media: HTMLMediaElement, from: number, to: number): void;
+  seekNextSlide(mediaSelector: string, from: number, to: number): void;
 }
 
 interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
@@ -55,7 +55,7 @@ class NextSlide extends Component<INextSlide> {
 
     // If last cue is already played, seek to the end of the media.
     this.props.seekNextSlide(
-      this.props.media!,
+      this.props.mediaSelector,
       this.props.currentTime,
       nextSlideCue ? nextSlideCue.startTime : this.props.duration
     );
@@ -67,7 +67,7 @@ function mapState(state: IAianaState) {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
     language: state.slides.language,
-    media: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     slidesTracks: state.slides.slidesTracks
   };
 }

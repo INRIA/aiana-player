@@ -85,10 +85,14 @@ function toggleSeek(isSeeking: boolean): IStdAction {
 }
 
 export function requestSeek(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   seekingTime: number
 ): IStdAction {
-  media.currentTime = seekingTime;
+  const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+
+  if (media) {
+    media.currentTime = seekingTime;
+  }
 
   return seek(seekingTime);
 }
@@ -133,28 +137,17 @@ export function toggleFullscreen(selector: string): ThunkResult<void> {
   };
 }
 
-export function updateMediaElement(mediaElement: HTMLMediaElement): IStdAction {
-  return {
-    payload: {
-      mediaElement
-    },
-    type: MEDIA_SOURCE_UPDATED
-  };
-}
-
-export function mediaElementUnounted(): IStdAction {
-  return {
-    payload: null,
-    type: MEDIA_ELEMENT_UNMOUNTED
-  };
-}
-
-export function requestMediaPlay(media: HTMLMediaElement): ThunkResult<void> {
+export function requestMediaPlay(mediaSelector: string): ThunkResult<void> {
   return (dispatch) => {
     dispatch({ type: MEDIA_REQUEST_PLAY });
-    media.play().then(() => {
+    const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+    if (media) {
+      media.play().then(() => {
+        dispatch(playMedia());
+      });
+    } else {
       dispatch(playMedia());
-    });
+    }
   };
 }
 
@@ -167,10 +160,13 @@ function playMedia(): IStdAction {
   };
 }
 
-export function requestMediaPause(media: HTMLMediaElement): ThunkResult<void> {
+export function requestMediaPause(mediaSelector: string): ThunkResult<void> {
   return (dispatch) => {
     dispatch({ type: MEDIA_REQUEST_PAUSE });
-    media.pause();
+    const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+    if (media) {
+      media.pause();
+    }
     dispatch(pauseMedia());
   };
 }
@@ -185,10 +181,14 @@ function pauseMedia(): IStdAction {
 }
 
 export function changePlaybackRate(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   playbackRate: number
 ): IStdAction {
-  media.playbackRate = playbackRate;
+  const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+
+  if (media) {
+    media.playbackRate = playbackRate;
+  }
 
   return {
     payload: {
@@ -199,10 +199,14 @@ export function changePlaybackRate(
 }
 
 export function requestChangeVolume(
-  media: HTMLMediaElement,
+  mediaSelector: string,
   volume: number
 ): IStdAction {
-  media.volume = volume;
+  const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+
+  if (media) {
+    media.volume = volume;
+  }
 
   return {
     payload: {
@@ -221,8 +225,12 @@ export function changeVolume(volume: number): IStdAction {
   };
 }
 
-export function muteMedia(media: HTMLMediaElement): IStdAction {
-  media.muted = true;
+export function muteMedia(mediaSelector: string): IStdAction {
+  const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+
+  if (media) {
+    media.muted = true;
+  }
 
   return {
     payload: null,
@@ -230,8 +238,12 @@ export function muteMedia(media: HTMLMediaElement): IStdAction {
   };
 }
 
-export function unmuteMedia(media: HTMLMediaElement): IStdAction {
-  media.muted = false;
+export function unmuteMedia(mediaSelector: string): IStdAction {
+  const media = document.querySelector(mediaSelector) as HTMLMediaElement;
+
+  if (media) {
+    media.muted = false;
+  }
 
   return {
     payload: null,

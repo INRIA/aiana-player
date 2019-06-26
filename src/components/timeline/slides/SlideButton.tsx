@@ -6,9 +6,9 @@ import SlideIcon from '../../svg/Slide';
 
 interface IProps {
   label: string;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
   time: number;
-  onClick(media: HTMLMediaElement, time: number): void;
+  onClick(mediaSelector: string, time: number): void;
 }
 
 const FilteredSvg = styled(StyledSvg)`
@@ -29,11 +29,7 @@ class SlideButton extends React.Component<IProps> {
   }
 
   clickHandler = () => {
-    const { onClick, media, time } = this.props;
-    if (!media) {
-      return;
-    }
-    onClick(media, time);
+    this.props.onClick(this.props.mediaSelector, this.props.time);
   };
 }
 

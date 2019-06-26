@@ -25,7 +25,8 @@ import {
   DEFAULT_PLAYBACK_RATE,
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME,
-  DEFAULT_AUTOPLAY
+  DEFAULT_AUTOPLAY,
+  MEDIA_SELECTOR
 } from '../constants/player';
 import { IStdAction } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
@@ -51,7 +52,7 @@ export interface IPlayerState {
 
   isSeeking: boolean;
 
-  mediaElement?: HTMLMediaElement;
+  mediaSelector: string;
   mediaId: string;
 
   metadataTracks: IRawMetadataTrack[];
@@ -93,6 +94,7 @@ export const initialPlayerState: IPlayerState = {
   isPlaying: false,
   isSeeking: false,
   mediaId: '__unset__',
+  mediaSelector: MEDIA_SELECTOR,
   metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
   playerSelector: APP_ROOT_SELECTOR,
@@ -126,16 +128,9 @@ const player: Reducer<IPlayerState, IStdAction> = (
         isFullscreen: payload.isFullscreen
       };
     case MEDIA_SOURCE_UPDATED:
-      return {
-        ...state,
-        mediaElement: payload.mediaElement
-      };
+      return state;
     case MEDIA_ELEMENT_UNMOUNTED:
-      return {
-        ...state,
-        isPlaying: false,
-        mediaElement: undefined
-      };
+      return state;
     case MEDIA_PLAY:
     case MEDIA_PAUSE:
       return {

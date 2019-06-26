@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   changeVolume,
-  updateMediaElement,
-  mediaElementUnounted,
   requestMediaPause,
   requestMediaPlay,
   requestSeek,
@@ -26,13 +24,13 @@ import MediaChapterTrack from '../chapters/MediaChapterTrack';
 import SlidesTrack from '../slides/SlidesTrack';
 import AdditionalInfosTrack from './AdditionalInfosTrack';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
+import { MEDIA_CLASSNAME } from '../../constants/player';
 
 interface IDispatchProps {
-  requestMediaPause: any;
-  requestMediaPlay: any;
   changeVolume(volume: number): void;
-  mediaElementUnounted(): void;
-  requestSeek(media: HTMLMediaElement, seekingTime: number): void;
+  requestMediaPause(mediaSelector: string): void;
+  requestMediaPlay(mediaSelector: string): void;
+  requestSeek(mediaSelector: string, seekingTime: number): void;
   startSeeking(): void;
   stopSeeking(): void;
   toggleMute(muted: boolean): void;
@@ -51,7 +49,7 @@ interface IStateProps {
   isMuted: boolean;
   isPlaying: boolean;
   isSeeking: boolean;
-  mediaElement?: HTMLMediaElement;
+  mediaSelector: string;
   playbackRate: number;
   poster?: string;
   preload: string;
@@ -113,6 +111,7 @@ class VideoPlayer extends React.Component<IProps> {
       <StyledDiv>
         <StyledVideo
           autoPlay={this.props.autoPlay}
+          className={MEDIA_CLASSNAME}
           ref={this.media}
           onClick={this.clickHandler}
           onLoadedMetadata={this.loadedMetadataHandler}
@@ -153,27 +152,18 @@ class VideoPlayer extends React.Component<IProps> {
     this.updateMountedMedia();
   }
 
-  componentWillUnmount() {
-    this.props.mediaElementUnounted();
-  }
-
   componentDidUpdate(prevProps: IStateProps) {
     const currentSource = getCurrentSourceWithFallback(this.props.sources);
     const prevSource = getCurrentSourceWithFallback(prevProps.sources);
-
-    if (!prevProps.mediaElement && this.props.mediaElement) {
-      this.props.requestSeek(this.props.mediaElement, this.props.currentTime);
-    }
 
     if (
       currentSource &&
       (!prevSource || (prevSource && currentSource.src !== prevSource.src))
     ) {
-      this.props.updateMediaElement(this.media.current!);
       this.media.current!.currentTime = prevProps.currentTime;
 
       if (this.props.isPlaying) {
-        this.props.requestMediaPlay(this.media.current!);
+        this.props.requestMediaPlay(this.props.mediaSelector);
       }
     }
 
@@ -193,7 +183,7 @@ class VideoPlayer extends React.Component<IProps> {
   updateMountedMedia = () => {
     if (this.media.current) {
       this.props.updateMediaElement(this.media.current);
-      this.props.requestSeek(this.media.current, this.props.currentTime);
+      this.props.requestSeek(this.props.mediaSelector, this.props.currentTime);
     }
   };
 
@@ -203,9 +193,9 @@ class VideoPlayer extends React.Component<IProps> {
 
   clickHandler = () => {
     if (this.media.current!.paused) {
-      this.props.requestMediaPlay(this.media.current!);
+      this.props.requestMediaPlay(this.props.mediaSelector);
     } else {
-      this.props.requestMediaPause(this.media.current!);
+      this.props.requestMediaPause(this.props.mediaSelector);
     }
   };
 
@@ -227,6 +217,7 @@ class VideoPlayer extends React.Component<IProps> {
 
   loadedMetadataHandler = () => {
     this.props.updateMediaDuration(this.media.current!.duration);
+    this.props.requestSeek(this.props.mediaSelector, this.props.currentTime);
   };
 
   /**
@@ -258,7 +249,7 @@ function mapState(state: IAianaState) {
     isMuted: state.player.isMuted,
     isPlaying: state.player.isPlaying,
     isSeeking: state.player.isSeeking,
-    mediaElement: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     playbackRate: state.player.playbackRate,
     poster: state.player.poster,
     preload: state.player.preload,
@@ -272,8 +263,6 @@ function mapState(state: IAianaState) {
 
 const mapDispatch = {
   changeVolume,
-  updateMediaElement,
-  mediaElementUnounted,
   requestMediaPause,
   requestMediaPlay,
   requestSeek,

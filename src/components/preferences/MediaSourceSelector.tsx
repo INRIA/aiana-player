@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { CDispatch } from '../../store';
 
 interface IStateProps {
-  media: HTMLMediaElement;
   sources: ISource[];
 }
 
@@ -42,7 +41,6 @@ function MediaSourceSelector(props: IProps) {
 
 function mapState(state: IAianaState) {
   return {
-    media: state.player.mediaElement,
     sources: state.player.sources
   };
 }

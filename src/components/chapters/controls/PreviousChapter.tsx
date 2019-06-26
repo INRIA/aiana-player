@@ -12,12 +12,12 @@ import SkipPrevious from '../../svg/SkipPrevious';
 interface IStateProps {
   chaptersTracks: IRawChaptersTrack[];
   currentTime: number;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
   seekThreshold: number;
 }
 
 interface IDispatchProps {
-  seekPreviousChapter(media: HTMLMediaElement, from: number, to: number): void;
+  seekPreviousChapter(mediaSelector: string, from: number, to: number): void;
 }
 
 interface IPreviousChapter
@@ -57,7 +57,7 @@ class PreviousChapter extends Component<IPreviousChapter> {
 
     // If there is no cue found, seek to the beginning of the media.
     this.props.seekPreviousChapter(
-      this.props.media!,
+      this.props.mediaSelector,
       this.props.currentTime,
       previousChapterCue ? previousChapterCue.startTime : 0
     );
@@ -68,7 +68,7 @@ function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     currentTime: state.player.currentTime,
-    media: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     seekThreshold: state.preferences.previousChapterSeekThreshold
   };
 }

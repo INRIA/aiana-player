@@ -10,7 +10,7 @@ import PlayControlIcon from './ControlIcon';
 
 export interface IPlayButtonProps {
   isPlaying: boolean;
-  mediaElement?: HTMLMediaElement;
+  mediaSelector: string;
 }
 
 interface IDispatchProps {
@@ -38,10 +38,10 @@ class PlayButton extends React.Component<IProps> {
   clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    if (this.props.isPlaying && this.props.mediaElement) {
-      this.props.requestMediaPause(this.props.mediaElement);
-    } else if (!this.props.isPlaying && this.props.mediaElement) {
-      this.props.requestMediaPlay(this.props.mediaElement);
+    if (this.props.isPlaying) {
+      this.props.requestMediaPause(this.props.mediaSelector);
+    } else if (!this.props.isPlaying) {
+      this.props.requestMediaPlay(this.props.mediaSelector);
     }
   };
 
@@ -55,7 +55,7 @@ class PlayButton extends React.Component<IProps> {
 function mapState(state: IAianaState) {
   return {
     isPlaying: state.player.isPlaying,
-    mediaElement: state.player.mediaElement
+    mediaSelector: state.player.mediaSelector
   };
 }
 

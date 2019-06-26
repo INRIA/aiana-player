@@ -12,11 +12,11 @@ interface IProps {
 }
 
 interface IStateProps {
-  media?: HTMLMediaElement;
+  mediaSelector: string;
 }
 
 interface IDispatchProps {
-  requestSeek: any;
+  requestSeek(mediaSelector: string, time: number): void;
 }
 
 interface IMediaChapterButton extends IProps, IStateProps, IDispatchProps {}
@@ -29,11 +29,7 @@ function MediaChapterButton(props: IMediaChapterButton) {
   return (
     <StyledChapterButton
       aria-pressed={props.isActive}
-      onClick={
-        props.media
-          ? () => props.requestSeek(props.media, props.startTime)
-          : undefined
-      }
+      onClick={() => props.requestSeek(props.mediaSelector, props.startTime)}
       type="button"
     >
       {props.children}
@@ -43,7 +39,7 @@ function MediaChapterButton(props: IMediaChapterButton) {
 
 function mapState(state: IAianaState) {
   return {
-    media: state.player.mediaElement
+    mediaSelector: state.player.mediaSelector
   };
 }
 

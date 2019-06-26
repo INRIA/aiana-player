@@ -13,11 +13,11 @@ interface IStateProps {
   chaptersTracks: IRawChaptersTrack[];
   currentTime: number;
   duration: number;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
 }
 
 interface IDispatchProps {
-  seekNextChapter(media: HTMLMediaElement, from: number, to: number): void;
+  seekNextChapter(mediaSelector: string, from: number, to: number): void;
 }
 
 interface INextChapter extends IStateProps, IDispatchProps, WithTranslation {}
@@ -50,7 +50,7 @@ class NextChapter extends Component<INextChapter> {
 
     // If last cue is already played, seek to the end of the media.
     this.props.seekNextChapter(
-      this.props.media!,
+      this.props.mediaSelector,
       this.props.currentTime,
       nextChapterCue ? nextChapterCue.startTime : this.props.duration
     );
@@ -62,7 +62,7 @@ function mapState(state: IAianaState) {
     chaptersTracks: state.chapters.chaptersTracks,
     currentTime: state.player.currentTime,
     duration: state.player.duration,
-    media: state.player.mediaElement
+    mediaSelector: state.player.mediaSelector
   };
 }
 

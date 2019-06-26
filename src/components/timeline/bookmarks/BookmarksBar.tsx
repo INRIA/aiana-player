@@ -10,7 +10,7 @@ import BookmarkButton from './BookmarkButton';
 interface IStateProps {
   bookmarks: IBookmark[];
   duration: number;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
 }
 
 interface IDispatchProps {
@@ -59,7 +59,7 @@ const StyledBookmarksBar = styled.nav`
 function BookmarksBar({
   bookmarks,
   duration,
-  media,
+  mediaSelector,
   requestSeek: requestSeekAction
 }: IBookmarksBar) {
   return (
@@ -74,7 +74,7 @@ function BookmarksBar({
           >
             <BookmarkButton
               onClick={requestSeekAction}
-              media={media}
+              mediaSelector={mediaSelector}
               time={time}
             />
           </li>
@@ -88,7 +88,7 @@ function mapState(state: IAianaState) {
   return {
     bookmarks: state.bookmarks,
     duration: state.player.duration,
-    media: state.player.mediaElement
+    mediaSelector: state.player.mediaSelector
   };
 }
 

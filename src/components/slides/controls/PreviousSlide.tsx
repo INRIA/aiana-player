@@ -13,13 +13,13 @@ interface IStateProps {
   currentTime: number;
   duration: number;
   language: string;
-  media?: HTMLMediaElement;
+  mediaSelector: string;
   seekThreshold: number;
   slidesTracks: IRawSlidesTrack[];
 }
 
 interface IDispatchProps {
-  seekPreviousSlide(media: HTMLMediaElement, from: number, to: number): void;
+  seekPreviousSlide(mediaSelector: string, from: number, to: number): void;
 }
 
 interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
@@ -60,7 +60,7 @@ class PreviousSlide extends Component<IPreviousSlide> {
 
     // If there is no cue found, seek to the beginning of the media.
     this.props.seekPreviousSlide(
-      this.props.media!,
+      this.props.mediaSelector,
       this.props.currentTime,
       previousSlideCue ? previousSlideCue.startTime : 0
     );
@@ -72,7 +72,7 @@ function mapState(state: IAianaState) {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
     language: state.slides.language,
-    media: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     seekThreshold: state.preferences.previousChapterSeekThreshold,
     slidesTracks: state.slides.slidesTracks
   };

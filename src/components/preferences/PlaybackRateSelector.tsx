@@ -7,12 +7,12 @@ import { IAianaState } from '../../reducers';
 
 interface IStateProps {
   currentPlaybackRate?: number;
-  mediaElement?: HTMLMediaElement;
+  mediaSelector: string;
   playbackRates?: number[];
 }
 
 interface IDispatchProps {
-  changePlaybackRate(media: HTMLMediaElement, playbackRate: number): void;
+  changePlaybackRate(mediaSelector: string, playbackRate: number): void;
 }
 
 interface IPlaybackRateSelector
@@ -45,25 +45,16 @@ class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
   }
 
   onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    const {
-      changePlaybackRate: changePlaybackRateAction,
-      mediaElement
-    } = this.props;
-
-    if (!mediaElement) {
-      return;
-    }
-
     const playbackRateValue = Number(evt.currentTarget.value);
 
-    changePlaybackRateAction(mediaElement, playbackRateValue);
+    this.props.changePlaybackRate(this.props.mediaSelector, playbackRateValue);
   };
 }
 
 function mapState(state: IAianaState) {
   return {
     currentPlaybackRate: state.player.playbackRate,
-    mediaElement: state.player.mediaElement,
+    mediaSelector: state.player.mediaSelector,
     playbackRates: state.preferences.playbackRates
   };
 }

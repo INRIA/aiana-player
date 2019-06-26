@@ -12,7 +12,6 @@ import {
 
 interface IStateProps {
   chapters: IChaptersState;
-  mediaElement?: HTMLMediaElement;
 }
 
 interface IDispatchProps {
@@ -26,15 +25,10 @@ interface IChaptersTrackSelector
 
 function ChaptersTrackSelector({
   chapters,
-  mediaElement,
   selectedTrackChangedHandler,
   uid
 }: IChaptersTrackSelector) {
   const [t] = useTranslation();
-
-  if (!mediaElement) {
-    return null;
-  }
 
   return (
     <React.Fragment>
@@ -56,8 +50,7 @@ function ChaptersTrackSelector({
 
 function mapState(state: IAianaState) {
   return {
-    chapters: state.chapters,
-    mediaElement: state.player.mediaElement
+    chapters: state.chapters
   };
 }
 
