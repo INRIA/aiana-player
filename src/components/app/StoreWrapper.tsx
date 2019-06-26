@@ -1,4 +1,3 @@
-import yaml from 'js-yaml';
 import throttle from 'lodash.throttle';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -8,7 +7,11 @@ import middleware from '../../middleware';
 import reducers, { IAianaState } from '../../reducers';
 import ConnectedAiana from './ConnectedAiana';
 import i18n from '../../i18n';
-import { preferencesToYAML } from '../../reducers/preferences';
+import {
+  preferencesToYAML,
+  getLocalPreferencesState
+} from '../../reducers/preferences';
+import { stateToYAML as playerToYAML } from '../../reducers/player';
 
 const store = createStore(
   reducers,
@@ -24,13 +27,7 @@ store.subscribe(
 
 function loadState() {
   try {
-    const serializedPreferences = localStorage.getItem('aiana-preferences');
-
-    if (serializedPreferences === null) {
-      return undefined;
-    }
-
-    const preferences = yaml.safeLoad(serializedPreferences);
+    const preferences = getLocalPreferencesState();
 
     // TODO: should be async
     i18n.changeLanguage(preferences.language);
@@ -47,6 +44,15 @@ function saveStateToLocalStorage(state: IAianaState) {
   try {
     const serializedPreferences = preferencesToYAML(state.preferences);
     localStorage.setItem('aiana-preferences', serializedPreferences);
+
+    if (state.player.mediaId !== '__unset__') {
+      const serializedPlayer = playerToYAML(state.player);
+
+      localStorage.setItem(
+        `aiana-media-${state.player.mediaId}`,
+        serializedPlayer
+      );
+    }
 
     // TODO: sync state on remote server if provided
   } catch (err) {

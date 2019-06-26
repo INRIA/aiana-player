@@ -1,4 +1,6 @@
-export const BASE_PRESETS = [
+import { IPreset } from '../reducers/presets';
+
+export const BASE_PRESETS: Partial<IPreset>[] = [
   {
     locked: true,
     name: 'default'

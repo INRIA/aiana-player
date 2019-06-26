@@ -1,4 +1,4 @@
-import { Reducer } from 'redux';
+import { Reducer, DeepPartial } from 'redux';
 import {
   ADD_METADATA_TRACK,
   MEDIA_SOURCE_UPDATED,
@@ -31,6 +31,8 @@ import {
 import { ExtendedHTMLElement, IStdAction } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
 import { CHANGE_MEDIA_SOURCE } from '../actions/preferences';
+import { safeDump, safeLoad } from 'js-yaml';
+import { cloneDeep } from 'lodash';
 
 export interface IPlayerState {
   additionalInformationText?: string;
@@ -80,7 +82,7 @@ export interface ISource {
   src: string;
 }
 
-const initialState: IPlayerState = {
+export const initialPlayerState: IPlayerState = {
   additionalInformationTracks: [],
   autoPlay: DEFAULT_AUTOPLAY,
   bufferedRanges: [],
@@ -101,7 +103,7 @@ const initialState: IPlayerState = {
 };
 
 const player: Reducer<IPlayerState, IStdAction> = (
-  state = initialState,
+  state = initialPlayerState,
   action
 ) => {
   const { payload, type } = action;
@@ -196,11 +198,12 @@ const player: Reducer<IPlayerState, IStdAction> = (
         ...state,
         metadataTracks
       };
-    case LOAD_CONFIGURATION:
-      return {
-        ...state,
-        ...payload.player
-      };
+    case LOAD_CONFIGURATION: {
+      return Object.assign(
+        cloneDeep(initialPlayerState),
+        cloneDeep(payload.player)
+      );
+    }
     case CHANGE_MEDIA_SOURCE: {
       const sources = state.sources.map((source: ISource) => {
         return {
@@ -219,6 +222,41 @@ const player: Reducer<IPlayerState, IStdAction> = (
 };
 
 export default player;
+
+export function getLocalPlayerState(mid: string) {
+  try {
+    const localStorageState = localStorage.getItem(`aiana-media-${mid}`);
+
+    if (localStorageState === null) {
+      return undefined;
+    }
+
+    return safeLoad(localStorageState);
+  } catch (err) {
+    return undefined;
+  }
+}
+
+export function stateToYAML(state: DeepPartial<IPlayerState>) {
+  const exportedKeys = [
+    'currentTime',
+    'isMuted',
+    'mediaId',
+    'playbackRate',
+    'rating',
+    'volume'
+  ];
+
+  try {
+    const exportedState = exportedKeys.reduce((acc, cur) => {
+      return Object.assign(acc, { [cur]: state[cur] });
+    }, {});
+
+    return safeDump(exportedState);
+  } catch (err) {
+    return '';
+  }
+}
 
 export function isSelectedSource(source: ISource): boolean {
   return source.selected === true;

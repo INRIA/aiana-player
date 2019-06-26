@@ -9,6 +9,8 @@ import { ThunkResult, IStdAction } from '../types';
 import { changeLanguage } from './preferences';
 import { IPreset } from '../reducers/presets';
 import { BASE_PRESETS } from '../constants/presets';
+import md5 from 'md5';
+import { getLocalPlayerState } from '../reducers/player';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
@@ -19,40 +21,77 @@ interface IQueryString {
   src?: string;
 }
 
+// TODO: split function
 // FIXME: language and defaults handling isn't robust enough.
 export function handleFetchInitialData(): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    const parsedQueryString = queryString.parse(
+    const parsedQueryString: IQueryString = queryString.parse(
       window.location.search
-    ) as IQueryString;
+    );
 
     // media id is supplied as query parameter.
     //
     // ?mid=abc123
     if (parsedQueryString.mid) {
-      axios.get(`/api/${parsedQueryString.mid}.json`).then(({ data }) => {
-        dispatch(loadConfiguration(data));
+      const { mid } = parsedQueryString;
+      axios.get(`/api/${mid}.json`).then(({ data }) => {
+        const localState = getLocalPlayerState(mid);
+        const player = Object.assign({}, data.player, localState);
+        const merged = {
+          ...data,
+          player
+        };
+
+        dispatch(loadConfiguration(merged));
       });
     }
-    // config url is supplied as query parameter
+    // config url is supplied as query parameter.
     //
     // ?config=https://domain.com/config.json
     else if (parsedQueryString.config) {
       axios.get(parsedQueryString.config).then(({ data }) => {
-        dispatch(loadConfiguration(data));
+        try {
+          const localState = getLocalPlayerState(data.player.mediaId);
+          const player = Object.assign({}, data.player, localState);
+          const merged = {
+            ...data,
+            player
+          };
+
+          dispatch(loadConfiguration(merged));
+        } catch (e) {
+          dispatch(loadConfiguration(data));
+        }
       });
     }
-    // media src is supplied as query parameter
+    // media source url or path is supplied as query parameter.
     //
     // ?src=https://domain.com/video.mp4
     else if (parsedQueryString.src) {
-      dispatch(
-        loadConfiguration({
-          player: {
-            sources: [{ src: parsedQueryString.src }]
-          }
-        })
-      );
+      const mid = md5(parsedQueryString.src);
+      const player = {
+        mediaId: mid,
+        sources: [{ src: parsedQueryString.src }]
+      };
+
+      try {
+        const localState = getLocalPlayerState(mid);
+        const merged = Object.assign({}, player, localState);
+
+        dispatch(
+          loadConfiguration({
+            player: merged,
+            presets: cloneDeep(BASE_PRESETS)
+          })
+        );
+      } catch (e) {
+        dispatch(
+          loadConfiguration({
+            player,
+            presets: cloneDeep(BASE_PRESETS)
+          })
+        );
+      }
     }
     // configuration is supplied as `window.aiana` property.
     else if (getConfig(window)) {
