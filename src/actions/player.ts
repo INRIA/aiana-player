@@ -8,7 +8,6 @@ import { convertTimeRanges, IRawMetadataTrack } from '../utils/media';
 
 export const TOGGLE_FULLSCREEN = 'aiana/TOGGLE_FULLSCREEN';
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
-export const PLAYER_ELEMENT_MOUNTED = 'aiana/PLAYER_ELEMENT_MOUNTED';
 export const MEDIA_SOURCE_UPDATED = 'aiana/MEDIA_SOURCE_UPDATED';
 export const MEDIA_ELEMENT_UNMOUNTED = 'aiana/MEDIA_ELEMENT_UNMOUNTED';
 export const MEDIA_REQUEST_MUTE = 'aiana/MEDIA_REQUEST_MUTE';
@@ -121,24 +120,16 @@ export function handleFullscreenChange(isFullscreen: boolean): IStdAction {
   };
 }
 
-export function toggleFullscreen(
-  rootElement: ExtendedHTMLElement
-): ThunkResult<void> {
+export function toggleFullscreen(selector: string): ThunkResult<void> {
   return () => {
     if (isDocumentFullscreen()) {
       exitFullscreen();
     } else {
-      enterFullscreen(rootElement);
+      const el = document.querySelector(selector);
+      if (el) {
+        enterFullscreen(el as ExtendedHTMLElement);
+      }
     }
-  };
-}
-
-export function playerElementMounted(playerElement: HTMLElement): IStdAction {
-  return {
-    payload: {
-      playerElement
-    },
-    type: PLAYER_ELEMENT_MOUNTED
   };
 }
 

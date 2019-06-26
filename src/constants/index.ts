@@ -19,6 +19,9 @@ export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 // TODO: delete this option
 export const DEFAULT_MENU_ENABLED = true;
 
+export const APP_ROOT_CLASSNAME = 'aip-app';
+export const APP_ROOT_SELECTOR = `.${APP_ROOT_CLASSNAME}`;
+
 export const SELECTABLE_FONT_FACES = [
   'system',
   'verdana',

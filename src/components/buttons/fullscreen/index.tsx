@@ -3,7 +3,6 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleFullscreen } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
-import { ExtendedHTMLElement } from '../../../types';
 import { isFullscreenEnabled } from '../../../utils/fullscreen';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
@@ -11,11 +10,11 @@ import ControlIcon from './ControlIcon';
 
 interface IStateProps {
   isFullscreen: boolean;
-  playerElement?: ExtendedHTMLElement;
+  playerSelector: string;
 }
 
 interface IDispatchProps {
-  toggleFullscreen: any;
+  toggleFullscreen(selector: string): void;
 }
 
 interface IFullscreenButton
@@ -40,9 +39,7 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
   clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    if (this.props.playerElement) {
-      this.props.toggleFullscreen(this.props.playerElement);
-    }
+    this.props.toggleFullscreen(this.props.playerSelector);
   };
 
   getControlText = (): string => {
@@ -57,7 +54,7 @@ class FullscreenButton extends React.Component<IFullscreenButton> {
 function mapState(state: IAianaState) {
   return {
     isFullscreen: state.player.isFullscreen,
-    playerElement: state.player.playerElement
+    playerSelector: state.player.playerSelector
   };
 }
 

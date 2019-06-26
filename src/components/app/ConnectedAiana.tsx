@@ -1,11 +1,8 @@
 import styled from '../../utils/styled-components';
 import classNames from 'classnames';
-import React, { Component, createRef, Suspense } from 'react';
+import React, { Component, Suspense } from 'react';
 import { connect } from 'react-redux';
-import {
-  handleFullscreenChange,
-  playerElementMounted
-} from '../../actions/player';
+import { handleFullscreenChange } from '../../actions/player';
 import { handleFetchInitialData } from '../../actions/shared';
 import SvgFilters from '../../components/shared/filters';
 import { IAianaState } from '../../reducers';
@@ -31,7 +28,6 @@ interface IStateProps {
 interface IDispatchProps {
   handleFetchInitialData(): void;
   handleFullscreenChange(isFullscreen: boolean): void;
-  playerElementMounted(playerElement: HTMLElement): void;
 }
 
 interface IAiana extends IStateProps, IDispatchProps {}
@@ -81,8 +77,6 @@ const StyledAiana = styled.div`
 `;
 
 class Aiana extends Component<IAiana> {
-  fullscreenRef = createRef<HTMLDivElement>();
-
   render() {
     return (
       <ThemeProvider theme={themes[this.props.theme]}>
@@ -90,7 +84,6 @@ class Aiana extends Component<IAiana> {
           className={classNames('aip-app', {
             'aip-app__fullscreen': isDocumentFullscreen()
           })}
-          ref={this.fullscreenRef}
           style={{
             fontFamily: this.props.fontFace,
             lineHeight: this.props.lineHeight,
@@ -115,7 +108,6 @@ class Aiana extends Component<IAiana> {
 
   componentDidMount() {
     this.props.handleFetchInitialData();
-    this.props.playerElementMounted(this.fullscreenRef.current!);
     addFullscreenChangeEventListener(this.fullscreenHandler);
   }
 
@@ -141,8 +133,7 @@ function mapState(state: IAianaState) {
 
 const mapDispatch = {
   handleFetchInitialData,
-  handleFullscreenChange,
-  playerElementMounted
+  handleFullscreenChange
 };
 
 export default connect(

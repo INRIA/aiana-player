@@ -13,7 +13,6 @@ import {
   MEDIA_UPDATE_DURATION,
   MEDIA_UPDATE_TIME,
   MEDIA_VOLUME_CHANGE,
-  PLAYER_ELEMENT_MOUNTED,
   SET_ADDITIONAL_INFO_TEXT,
   SET_BUFFERED_RANGES,
   TOGGLE_FULLSCREEN,
@@ -28,11 +27,12 @@ import {
   DEFAULT_VOLUME,
   DEFAULT_AUTOPLAY
 } from '../constants/player';
-import { ExtendedHTMLElement, IStdAction } from '../types';
+import { IStdAction } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
 import { CHANGE_MEDIA_SOURCE } from '../actions/preferences';
 import { safeDump, safeLoad } from 'js-yaml';
 import { cloneDeep } from 'lodash';
+import { APP_ROOT_SELECTOR } from '../constants';
 
 export interface IPlayerState {
   additionalInformationText?: string;
@@ -61,7 +61,7 @@ export interface IPlayerState {
    * expressed as a multiple of the normal speed of the media resource.
    */
   playbackRate: number;
-  playerElement?: ExtendedHTMLElement;
+  playerSelector: string;
   poster?: string;
   preload: string;
   rating?: number;
@@ -95,6 +95,7 @@ export const initialPlayerState: IPlayerState = {
   mediaId: '__unset__',
   metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
+  playerSelector: APP_ROOT_SELECTOR,
   preload: DEFAULT_PRELOAD,
   rating: 0,
   seekingTime: 0,
@@ -123,11 +124,6 @@ const player: Reducer<IPlayerState, IStdAction> = (
       return {
         ...state,
         isFullscreen: payload.isFullscreen
-      };
-    case PLAYER_ELEMENT_MOUNTED:
-      return {
-        ...state,
-        playerElement: payload.playerElement
       };
     case MEDIA_SOURCE_UPDATED:
       return {
