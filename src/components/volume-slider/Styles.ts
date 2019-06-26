@@ -23,18 +23,16 @@ export default styled.div`
   &.active,
   &:hover,
   &.focus-visible,
-  /* &:focus:not([data-focus-visible-added]), */
   &[data-focus-visible-added] {
     ${sliderShownMixin};
   }
 
   &.focus-visible,
-  /* &:focus:not([data-focus-visible-added]), */
   &[data-focus-visible-added] {
     outline: solid 2px ${(props) => props.theme.actionBg};
   }
 
-  .aip-volume-slider {
+  .aip-volume__slider {
     height: 100%;
     width: 100%;
     position: relative;
@@ -42,7 +40,7 @@ export default styled.div`
     touch-action: none;
   }
 
-  .aip-volume-slider-handle {
+  .aip-volume__handle {
     position: absolute;
     top: calc(50% - 0.5em);
     height: 1em;

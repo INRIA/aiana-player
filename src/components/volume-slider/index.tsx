@@ -75,11 +75,11 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
         tabIndex={0}
       >
         <div
-          className="aip-volume-slider"
+          className="aip-volume__slider"
           onMouseDownCapture={this.mouseDownHandler}
         >
           <div
-            className="aip-volume-slider-handle"
+            className="aip-volume__handle"
             style={{
               left: `${position}%`
             }}
@@ -135,7 +135,7 @@ class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    const slider = document.querySelector('.aip-volume-slider');
+    const slider = document.querySelector('.aip-volume__slider');
     const { left, width } = slider!.getBoundingClientRect();
 
     this.sliderPosition = left;

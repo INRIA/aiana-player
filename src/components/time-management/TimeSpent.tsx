@@ -30,11 +30,11 @@ const StyledElement = styled.div`
     width: 100%;
     height: 100%;
 
-    .progress-border {
+    .progress__border {
       fill: #111;
     }
 
-    .progress-slice {
+    .progress__slice {
       transition: fill 0.1s;
 
       &.done {
@@ -50,7 +50,7 @@ const StyledElement = styled.div`
       }
     }
 
-    .progress-current {
+    .progress__current {
       fill: #fff;
       stroke: #111;
       stroke-linejoin: butt;
@@ -93,11 +93,11 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
           <g>
             <path
               d="M 0 -1 A 1 1 0 0 1 1 0 L 0 0 Z"
-              className="progress-border"
+              className="progress__border"
             />
             <path
               className={classNames(
-                'progress-slice',
+                'progress__slice',
                 progressStatusClassName(progress, 0, 25)
               )}
               d="M 0.01 -0.99 A 1 1 0 0 1 0.99 -0.01 L 0.01 -0.01 Z"
@@ -107,11 +107,11 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
           <g>
             <path
               d="M 1 0 A 1 1 0 0 1 0 1 L 0 0 Z"
-              className="progress-border"
+              className="progress__border"
             />
             <path
               className={classNames(
-                'progress-slice',
+                'progress__slice',
                 progressStatusClassName(progress, 25, 50)
               )}
               d="M 0.99 0.01 A 1 1 0 0 1 0.01 0.99 L 0.01 0.01 Z"
@@ -121,11 +121,11 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
           <g>
             <path
               d="M 0 1 A 1 1 0 0 1 -1 0 L 0 0 Z"
-              className="progress-border"
+              className="progress__border"
             />
             <path
               className={classNames(
-                'progress-slice',
+                'progress__slice',
                 progressStatusClassName(progress, 50, 75)
               )}
               d="M -0.01 0.99 A 1 1 0 0 1 -0.99 0.01 L -0.01 0.01 Z"
@@ -135,11 +135,11 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
           <g>
             <path
               d="M -1 0 A 1 1 0 0 1 0 -1 L 0 0 Z"
-              className="progress-border"
+              className="progress__border"
             />
             <path
               className={classNames(
-                'progress-slice',
+                'progress__slice',
                 progressStatusClassName(progress, 75, 100)
               )}
               d="M -0.99 -0.01 A 1 1 0 0 1 -0.01 -0.99 L -0.01 -0.01 Z"
@@ -152,7 +152,7 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
           If not set, the arc will use the shortest possible path, i.e. `PI - angle`.
         */}
         <path
-          className="progress-current"
+          className="progress__current"
           d={`M 1 0 A 1 1 0 ${Number(angle > PI)} 1 ${cos(angle)} ${sin(
             angle
           )} L 0 0 Z`}
