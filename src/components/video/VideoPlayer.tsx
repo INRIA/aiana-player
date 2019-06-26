@@ -6,6 +6,7 @@ import {
   mediaElementUnounted,
   requestMediaPause,
   requestMediaPlay,
+  requestSeek,
   startSeeking,
   stopSeeking,
   toggleMute,
@@ -30,14 +31,15 @@ interface IDispatchProps {
   requestMediaPause: any;
   requestMediaPlay: any;
   changeVolume(volume: number): void;
-  updateMediaElement(media: HTMLMediaElement): void;
   mediaElementUnounted(): void;
+  requestSeek(media: HTMLMediaElement, seekingTime: number): void;
   startSeeking(): void;
   stopSeeking(): void;
   toggleMute(muted: boolean): void;
   updateBufferedRanges(timeRanges: TimeRanges): void;
   updateCurrentTime(time: number): void;
   updateMediaDuration(duration: number): void;
+  updateMediaElement(media: HTMLMediaElement): void;
   updateSubtitlesTracksList(subtitlesTracks: IRawSubtitlesTrack[]): void;
 }
 
@@ -159,12 +161,17 @@ class VideoPlayer extends React.Component<IProps> {
     const currentSource = getCurrentSourceWithFallback(this.props.sources);
     const prevSource = getCurrentSourceWithFallback(prevProps.sources);
 
+    if (!prevProps.mediaElement && this.props.mediaElement) {
+      this.props.requestSeek(this.props.mediaElement, this.props.currentTime);
+    }
+
     if (
       currentSource &&
       (!prevSource || (prevSource && currentSource.src !== prevSource.src))
     ) {
       this.props.updateMediaElement(this.media.current!);
       this.media.current!.currentTime = prevProps.currentTime;
+
       if (this.props.isPlaying) {
         this.props.requestMediaPlay(this.media.current!);
       }
@@ -186,6 +193,7 @@ class VideoPlayer extends React.Component<IProps> {
   updateMountedMedia = () => {
     if (this.media.current) {
       this.props.updateMediaElement(this.media.current);
+      this.props.requestSeek(this.media.current, this.props.currentTime);
     }
   };
 
@@ -268,6 +276,7 @@ const mapDispatch = {
   mediaElementUnounted,
   requestMediaPause,
   requestMediaPlay,
+  requestSeek,
   startSeeking,
   stopSeeking,
   toggleMute,
