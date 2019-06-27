@@ -97,6 +97,9 @@ export function handleFetchInitialData(): ThunkResult<void> {
     else if (getConfig(window)) {
       const config = getConfig(window);
 
+      const localState = getLocalPlayerState(config.player.mediaId);
+      const player = Object.assign({}, config.player, localState);
+
       const presets = Object.assign(
         cloneDeep(BASE_PRESETS),
         cloneDeep(config.presets) || {}
@@ -108,10 +111,12 @@ export function handleFetchInitialData(): ThunkResult<void> {
       );
 
       dispatch(changeLanguage(mergedPreferences.language));
+
       dispatch(
         loadConfiguration({
           ...config,
           preferences: mergedPreferences,
+          player,
           presets
         })
       );
