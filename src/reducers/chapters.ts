@@ -85,14 +85,20 @@ const chapters: Reducer<IChaptersState, IStdAction> = (
   }
 };
 
-function getSelectedSubtitlesTrack(state: IChaptersState) {
+export function getSelectedChaptersTrack(state: IChaptersState) {
   return state.chaptersTracks.find(
     (track) => track.language === state.language
   );
 }
 
+export function getSelectedChaptersTrackCues(state: IChaptersState) {
+  const track = getSelectedChaptersTrack(state);
+
+  return !track ? undefined : [...track.cues];
+}
+
 export function getSelectedChaptersLanguage(state: IChaptersState): string {
-  const selectedTrack = getSelectedSubtitlesTrack(state);
+  const selectedTrack = getSelectedChaptersTrack(state);
   return selectedTrack ? selectedTrack.language : '';
 }
 

@@ -6,6 +6,7 @@ export const WIDGET_ID_SLIDES = 'slides';
 export const WIDGET_ID_VIDEO = 'video';
 export const WIDGET_ID_TIME_MANAGEMENT = 'timeManagement';
 export const WIDGET_ID_SUBTITLES = 'subtitles';
+export const WIDGET_ID_TRANSCRIPT = 'transcript';
 
 export const WIDGETS_CONTAINER_CLASS = '.aip-widgets';
 export const DEFAULT_WIDGETS_LOCK = false;
@@ -66,5 +67,14 @@ export const DEFAULT_WIDGETS: IWidget[] = [
     top: 75,
     visible: DEFAULT_WIDGET_VISIBILITY,
     width: 100
+  },
+  {
+    height: 100,
+    left: 50,
+    locked: DEFAULT_WIDGETS_LOCK,
+    name: WIDGET_ID_TRANSCRIPT,
+    top: 0,
+    visible: DEFAULT_WIDGET_VISIBILITY,
+    width: 50
   }
 ];
