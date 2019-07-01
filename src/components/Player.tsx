@@ -19,7 +19,7 @@ import Slides from './slides/Slides';
 import MediaSubtitles from './Subtitles';
 import TimelineBar from './timeline/Timeline';
 import MediaPlayer from './media/MediaPlayer';
-import VideoPlayerControls from './media/VideoPlayerControls';
+import MediaPlayerControls from './media/MediaPlayerControls';
 import TimeSpent from './time-management/TimeSpent';
 import InteractiveTranscript from './transcript/Transcript';
 
@@ -145,7 +145,7 @@ function Player(props: IPlayerProps) {
         )}
       </div>
       <TimelineBar display={false} />
-      <VideoPlayerControls />
+      <MediaPlayerControls />
     </StyledDiv>
   );
 }

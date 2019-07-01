@@ -39,7 +39,7 @@ const StyledControls = styled.div`
   }
 `;
 
-function VideoPlayerControls(props: IMapSate) {
+function MediaPlayerControls(props: IMapSate) {
   return (
     <StyledControlsWrapper>
       <SeekBarSlider />
@@ -74,4 +74,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(VideoPlayerControls);
+export default connect(mapState)(MediaPlayerControls);
