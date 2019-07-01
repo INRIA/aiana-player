@@ -73,6 +73,7 @@
   "widget_slides": "widget des diapositives",
   "widget_subtitles": "widget des sous-titres",
   "widget_timeManagement": "widget de gestion du temps",
+  "widget_transcript": "widget de transcription",
   "widget_video": "widget vidéo",
   "widget.close": "Fermer la $t(widget, { \"context\": \"{{ widgetName }}\" })",
   "widget.drag": "Déplacer la $t(widget, { \"context\": \"{{ widgetName }}\" })"
