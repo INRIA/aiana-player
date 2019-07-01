@@ -1,7 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
-import styled from '../../utils/styled-components';
 import { IMergedCues } from './Transcript';
+import SubtitlesCueText from './SubtitlesCueText';
 
 interface IProps {
   cues?: IMergedCues[];
@@ -9,17 +8,6 @@ interface IProps {
   mediaSelector: string;
   clickHandler(mediaSelector: string, seekingTime: number): void;
 }
-
-const StyledSpan = styled.span`
-  &:hover {
-    background-color: ${(props) => props.theme.highlight};
-    cursor: pointer;
-  }
-
-  &.current {
-    background-color: ${(props) => props.theme.highlight};
-  }
-`;
 
 function SubtitlesCues({
   cues,
@@ -34,15 +22,13 @@ function SubtitlesCues({
   return (
     <p>
       {cues.map((cue) => (
-        <StyledSpan
-          className={classNames({
-            current: cue.startTime <= currentTime && cue.endTime >= currentTime
-          })}
+        <SubtitlesCueText
+          clickHandler={clickHandler}
+          cue={cue}
+          currentTime={currentTime}
           key={`subtitle_${cue.startTime}_${cue.endTime}`}
-          onClick={() => clickHandler(mediaSelector, cue.startTime)}
-        >
-          {`${cue.text} `}
-        </StyledSpan>
+          mediaSelector={mediaSelector}
+        />
       ))}
     </p>
   );

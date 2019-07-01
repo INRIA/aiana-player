@@ -16,6 +16,7 @@ import SubtitlesCues from './SubtitlesCues';
 import { useTranslation } from 'react-i18next';
 import { requestSeek } from '../../actions/player';
 import DownloadTranscript from './DownloadTranscript';
+import ChapterCue from './ChapterCue';
 
 interface IMapState {
   chapters: IChaptersState;
@@ -38,11 +39,6 @@ const StyledArticle = styled.article`
   padding: 1em;
 
   color: ${(props) => props.theme.bg};
-
-  .aip-transcript__chapter:hover {
-    cursor: pointer;
-    background: ${(props) => props.theme.highlight};
-  }
 `;
 
 /**
@@ -104,7 +100,13 @@ function Transcript(props: ITranscript) {
         {chaptersCues &&
           sortedCues.map((cue) => (
             <Fragment key={`chapter_${cue.startTime}_${cue.endTime}`}>
-              <h3 className="aip-transcript__chapter">{cue.text}</h3>
+              <ChapterCue
+                clickHandler={props.requestSeek}
+                cue={cue}
+                currentTime={props.currentTime}
+                mediaSelector={props.mediaSelector}
+              />
+
               <SubtitlesCues
                 clickHandler={props.requestSeek}
                 cues={cue.subtitlesCues}
