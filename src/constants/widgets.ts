@@ -61,12 +61,12 @@ export const DEFAULT_WIDGETS: IWidget[] = [
   {
     ghost: true,
     height: 20,
-    left: 0,
+    left: 25,
     locked: DEFAULT_WIDGETS_LOCK,
     name: WIDGET_ID_SUBTITLES,
     top: 75,
     visible: DEFAULT_WIDGET_VISIBILITY,
-    width: 100
+    width: 50
   },
   {
     height: 100,

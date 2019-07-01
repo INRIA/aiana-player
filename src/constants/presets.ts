@@ -70,12 +70,12 @@ export const BASE_PRESETS: Partial<IPreset>[] = [
       {
         ghost: true,
         height: 20,
-        left: 0,
+        left: 25,
         locked: true,
         name: 'subtitles',
         top: 75,
         visible: true,
-        width: 100
+        width: 50
       },
       {
         height: 100,
@@ -151,12 +151,12 @@ export const BASE_PRESETS: Partial<IPreset>[] = [
       {
         ghost: true,
         height: 20,
-        left: 0,
+        left: 25,
         locked: true,
         name: 'subtitles',
         top: 75,
         visible: true,
-        width: 100
+        width: 50
       },
       {
         height: 100,
@@ -233,12 +233,12 @@ export const BASE_PRESETS: Partial<IPreset>[] = [
       {
         ghost: true,
         height: 20,
-        left: 0,
+        left: 25,
         locked: true,
         name: 'subtitles',
         top: 75,
         visible: true,
-        width: 100
+        width: 50
       },
       {
         height: 100,
