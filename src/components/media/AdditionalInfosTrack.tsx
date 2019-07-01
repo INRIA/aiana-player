@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, Component } from 'react';
 import { connect } from 'react-redux';
 import {
   addAdditionalInformationTrack,
