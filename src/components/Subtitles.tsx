@@ -20,8 +20,6 @@ const StyledSubtitles = styled.div`
   justify-content: flex-end;
 
   text-align: center;
-
-  pointer-events: none;
 `;
 
 const StyledSpan = styled.span`

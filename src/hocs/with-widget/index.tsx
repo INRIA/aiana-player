@@ -60,7 +60,9 @@ const StyledWidget = styled.div`
     background-color: transparent;
     border-color: transparent;
 
-    pointer-events: none;
+    &.aip-widget__locked {
+      pointer-events: none;
+    }
   }
 
   &:not(.aip-widget__locked):hover {
