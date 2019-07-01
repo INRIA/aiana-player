@@ -2,6 +2,10 @@ import React from 'react';
 import AssistiveText from './a11y/AssistiveText';
 import styled from '../utils/styled-components';
 
+interface IProps {
+  text?: string;
+}
+
 const P = styled.p`
   height: 100%;
   width: 100%;
@@ -13,7 +17,7 @@ const P = styled.p`
   align-items: center;
   justify-content: center;
 
-  .aip-loader-icon {
+  .aip-loader__icon {
     display: block;
     width: 50px;
     height: 50px;
@@ -42,14 +46,14 @@ const P = styled.p`
   }
 `;
 
-function Loader() {
+function Loader({ text }: IProps) {
   return (
-    <P role="alert" aria-live="assertive">
-      <span className="aip-loader-icon" aria-hidden="true">
+    <P className="aip-loader" role="alert" aria-live="assertive">
+      <span className="aip-loader__icon" aria-hidden="true">
         <span />
         <span />
       </span>
-      <AssistiveText>Media player is loading.</AssistiveText>
+      <AssistiveText>{text}</AssistiveText>
     </P>
   );
 }

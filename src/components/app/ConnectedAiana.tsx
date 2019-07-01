@@ -90,7 +90,7 @@ class Aiana extends Component<IAiana> {
             textTransform: this.props.fontUppercase ? 'uppercase' : 'none'
           }}
         >
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader text="Media player is loading." />}>
             <SvgFilters />
             <div
               className="aip-player-wrapper"

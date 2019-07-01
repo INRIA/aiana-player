@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { ComponentType, Component } from 'react';
 import {
   DIRECTION_BOTTOM,
   DIRECTION_LEFT,
@@ -115,11 +115,8 @@ const defaultProps: Partial<IWrappedComponentProps> = {
   minimumWidth: 20
 };
 
-function withWidget(WrappedComponent: React.ComponentType<any>) {
-  return class WithWidget extends React.Component<
-    IWrappedComponentProps,
-    IHOCState
-  > {
+function withWidget(WrappedComponent: ComponentType<any>) {
+  return class WithWidget extends Component<IWrappedComponentProps, IHOCState> {
     static readonly defaultProps = defaultProps;
 
     elementRef = React.createRef<HTMLDivElement>();
