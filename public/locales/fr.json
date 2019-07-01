@@ -17,6 +17,8 @@
   "controls.unmute": "Activer le son",
   "controls.volume.label": "Volume sonore",
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
+  "transcript.download.label": "Télécharger la transcription",
+  "transcript.title": "Transcription",
   "media.rating.slider.label": "Attribuer une note au contenu",
   "media.rating.slider.current_value": "Vous avez attribué à ce contenu la note de {{ currentRating }} sur {{ maxRating }}.",
   "preferences.chapterstrack.label": "Langue des chapitres",

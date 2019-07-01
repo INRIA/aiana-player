@@ -17,6 +17,8 @@
   "controls.unmute": "Unmute",
   "controls.volume.label": "Volume level",
   "controls.volume.valuetext": "{{ volumePct }}% volume",
+  "transcript.download.label": "Download transcript",
+  "transcript.title": "Transcript",
   "languages.en": "English",
   "languages.fr": "Français",
   "media.rating.slider.label": "Rate this content",

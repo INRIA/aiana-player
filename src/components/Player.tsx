@@ -7,7 +7,8 @@ import {
   WIDGET_ID_SLIDES,
   WIDGET_ID_VIDEO,
   WIDGET_ID_TIME_MANAGEMENT,
-  WIDGET_ID_SUBTITLES
+  WIDGET_ID_SUBTITLES,
+  WIDGET_ID_TRANSCRIPT
 } from '../constants/widgets';
 import { IAianaState } from '../reducers';
 import { IWidget } from '../reducers/preferences';
@@ -20,6 +21,7 @@ import TimelineBar from './timeline/Timeline';
 import MediaPlayer from './media/MediaPlayer';
 import VideoPlayerControls from './media/VideoPlayerControls';
 import TimeSpent from './time-management/TimeSpent';
+import InteractiveTranscript from './transcript/Transcript';
 
 const StyledDiv = styled.div`
   height: 100%;
@@ -79,6 +81,7 @@ function Player(props: IPlayerProps) {
   const timeManagementWidget = widgets.find(byName(WIDGET_ID_TIME_MANAGEMENT));
   const videoWidget = widgets.find(byName(WIDGET_ID_VIDEO));
   const subtitlesWidget = widgets.find(byName(WIDGET_ID_SUBTITLES));
+  const transcriptWidget = widgets.find(byName(WIDGET_ID_TRANSCRIPT));
 
   return (
     <StyledDiv>
@@ -126,6 +129,15 @@ function Player(props: IPlayerProps) {
             toggleDraggable={setDraggable}
             uiUpdateHandler={updateWidgetHandler}
             {...timeManagementWidget}
+          />
+        )}
+
+        {transcriptWidget && (
+          <InteractiveTranscript
+            isDraggable={isDraggable}
+            toggleDraggable={setDraggable}
+            uiUpdateHandler={updateWidgetHandler}
+            {...transcriptWidget}
           />
         )}
 
