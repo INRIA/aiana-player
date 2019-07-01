@@ -80,12 +80,3 @@ export function setChapterText(text?: string): IStdAction {
     type: UPDATE_CHAPTER_TEXT
   };
 }
-
-export function setChaptersMenu(enabled: boolean): IStdAction {
-  return {
-    payload: {
-      enabled
-    },
-    type: TOGGLE_CHAPTERS_MENU
-  };
-}

@@ -74,7 +74,7 @@ export const DEFAULT_WIDGETS: IWidget[] = [
     locked: DEFAULT_WIDGETS_LOCK,
     name: WIDGET_ID_TRANSCRIPT,
     top: 0,
-    visible: DEFAULT_WIDGET_VISIBILITY,
+    visible: false,
     width: 50
   }
 ];

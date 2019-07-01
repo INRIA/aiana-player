@@ -1,9 +1,11 @@
 import { IPreset } from '../reducers/presets';
+import { DEFAULT_WIDGETS } from './widgets';
 
 export const BASE_PRESETS: Partial<IPreset>[] = [
   {
     locked: true,
-    name: 'default'
+    name: 'default',
+    widgets: [...DEFAULT_WIDGETS]
   },
   {
     fontFace: 'system',
@@ -74,6 +76,15 @@ export const BASE_PRESETS: Partial<IPreset>[] = [
         top: 75,
         visible: true,
         width: 100
+      },
+      {
+        height: 100,
+        left: 50,
+        locked: false,
+        name: 'transcript',
+        top: 0,
+        visible: false,
+        width: 50
       }
     ]
   },
@@ -146,6 +157,15 @@ export const BASE_PRESETS: Partial<IPreset>[] = [
         top: 75,
         visible: true,
         width: 100
+      },
+      {
+        height: 100,
+        left: 50,
+        locked: false,
+        name: 'transcript',
+        top: 0,
+        visible: false,
+        width: 50
       }
     ]
   },
@@ -219,6 +239,15 @@ export const BASE_PRESETS: Partial<IPreset>[] = [
         top: 75,
         visible: true,
         width: 100
+      },
+      {
+        height: 100,
+        left: 50,
+        locked: false,
+        name: 'transcript',
+        top: 0,
+        visible: false,
+        width: 50
       }
     ]
   }

@@ -47,7 +47,6 @@ const StyledDiv = styled.div`
 
 interface IStateProps {
   additionalInformationText?: string;
-  chaptersMenu: boolean;
   widgets: IWidget[];
 }
 
@@ -66,12 +65,7 @@ function byName(name: string): Filter {
 function Player(props: IPlayerProps) {
   const [isDraggable, setDraggable] = useState(true);
 
-  const {
-    additionalInformationText,
-    chaptersMenu,
-    widgets,
-    updateWidgetHandler
-  } = props;
+  const { additionalInformationText, widgets, updateWidgetHandler } = props;
 
   const chaptersWidget = widgets.find(byName(WIDGET_ID_CHAPTERS));
   const additionalInformationWidget = widgets.find(
@@ -86,7 +80,7 @@ function Player(props: IPlayerProps) {
   return (
     <StyledDiv>
       <div className="aip-widgets">
-        {chaptersWidget && chaptersMenu && (
+        {chaptersWidget && chaptersWidget.visible && (
           <ChaptersMenu
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
@@ -104,7 +98,7 @@ function Player(props: IPlayerProps) {
           />
         )}
 
-        {slidesWidget && (
+        {slidesWidget && slidesWidget.visible && (
           <Slides
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
@@ -113,7 +107,7 @@ function Player(props: IPlayerProps) {
           />
         )}
 
-        {additionalInformationWidget && (
+        {additionalInformationWidget && additionalInformationWidget.visible && (
           <AdditionalInformation
             isDraggable={isDraggable}
             text={additionalInformationText}
@@ -123,7 +117,7 @@ function Player(props: IPlayerProps) {
           />
         )}
 
-        {timeManagementWidget && (
+        {timeManagementWidget && timeManagementWidget.visible && (
           <TimeSpent
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
@@ -132,7 +126,7 @@ function Player(props: IPlayerProps) {
           />
         )}
 
-        {transcriptWidget && (
+        {transcriptWidget && transcriptWidget.visible && (
           <InteractiveTranscript
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
@@ -141,7 +135,7 @@ function Player(props: IPlayerProps) {
           />
         )}
 
-        {subtitlesWidget && (
+        {subtitlesWidget && subtitlesWidget.visible && (
           <MediaSubtitles
             isDraggable={isDraggable}
             toggleDraggable={setDraggable}
@@ -159,7 +153,6 @@ function Player(props: IPlayerProps) {
 function mapState(state: IAianaState) {
   return {
     additionalInformationText: state.player.additionalInformationText,
-    chaptersMenu: state.chapters.menuEnabled,
     widgets: state.preferences.widgets
   };
 }

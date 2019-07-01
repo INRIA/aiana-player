@@ -6,7 +6,6 @@ import { uid } from '../../utils/uniqueId';
 import AssistiveText from '../a11y/AssistiveText';
 import StyledSvg from '../shared/styled-svg';
 import SvgSettings from '../svg/Settings';
-import ChaptersMenuToggle from './ChaptersMenuToggle';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import FontFaceSelector from './FontFaceSelector';
 import FontUppercaseToggle from './FontUppercaseToggle';
@@ -163,9 +162,6 @@ function PreferencesPanel(props: IPreferencesPanel) {
           </li>
           <li className="aip-slides-track">
             <SlidesTrackSelector />
-          </li>
-          <li className="aip-chapters-menu">
-            <ChaptersMenuToggle />
           </li>
           <li className="aip-widgets-lock">
             <WidgetsLockToggle />
