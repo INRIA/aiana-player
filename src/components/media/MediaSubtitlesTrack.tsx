@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { addSubtitlesTrack, setSubtitlesText } from '../../actions/subtitles';
 import {
@@ -34,13 +34,13 @@ interface IDispatchProps {
 
 interface ITrackProps extends ITrack, IStateProps, IDispatchProps {}
 
-class MediaSubtitlesTrack extends React.Component<ITrackProps> {
+class MediaSubtitlesTrack extends Component<ITrackProps> {
   static defaultProps: ITrack = {
     isDefault: false,
     kind: TRACK_KIND_SUBTITLES
   };
 
-  trackRef = React.createRef<HTMLTrackElement>();
+  trackRef = createRef<HTMLTrackElement>();
 
   render() {
     return (

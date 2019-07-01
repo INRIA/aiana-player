@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeLanguage } from '../../actions/preferences';
@@ -24,7 +24,7 @@ function LanguageSelector(props: ILanguageSelector) {
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>{t('preferences.UILanguage.label')}</span>
       <select
         aria-labelledby={props.uid}
@@ -38,7 +38,7 @@ function LanguageSelector(props: ILanguageSelector) {
             </option>
           ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

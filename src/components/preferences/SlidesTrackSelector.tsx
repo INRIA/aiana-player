@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';
@@ -28,7 +28,7 @@ function SlidesTrackSelector({
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={uid}>{t('preferences.slidestrack.label')}</span>
       <select
         aria-labelledby={uid}
@@ -41,7 +41,7 @@ function SlidesTrackSelector({
           </option>
         ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import {
   changeVolume,
@@ -97,7 +97,7 @@ function getCurrentSourceWithFallback(sources: ISource[]): ISource | void {
 }
 
 class MediaPlayer extends Component<IProps> {
-  media = React.createRef<HTMLVideoElement>();
+  media = createRef<HTMLVideoElement>();
 
   render() {
     const selectedSource = getCurrentSourceWithFallback(this.props.sources);

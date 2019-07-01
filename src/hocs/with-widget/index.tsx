@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ComponentType, Component } from 'react';
+import React, { ComponentType, Component, createRef } from 'react';
 import {
   DIRECTION_BOTTOM,
   DIRECTION_LEFT,
@@ -119,7 +119,7 @@ function withWidget(WrappedComponent: ComponentType<any>) {
   return class WithWidget extends Component<IWrappedComponentProps, IHOCState> {
     static readonly defaultProps = defaultProps;
 
-    elementRef = React.createRef<HTMLDivElement>();
+    elementRef = createRef<HTMLDivElement>();
     containerWidth = 0;
     containerHeight = 0;
 

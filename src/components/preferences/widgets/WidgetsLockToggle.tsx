@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWidgetsLock } from '../../../actions/preferences';
@@ -19,7 +19,7 @@ function WidgetsLockToggle(props: IWidgetsLockToggle) {
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>{t('preferences.widgets_locked.label')}</span>
       <ToggleButton
         isOn={locked}
@@ -29,7 +29,7 @@ function WidgetsLockToggle(props: IWidgetsLockToggle) {
           props.setWidgetsLock(!locked);
         }}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }
 

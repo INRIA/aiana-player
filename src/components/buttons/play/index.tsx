@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
@@ -25,7 +25,7 @@ const StyledPlayButton = styled(GhostButton)`
   width: calc(2.25em + 2 * 6px);
 `;
 
-class PlayButton extends React.Component<IProps> {
+class PlayButton extends Component<IProps> {
   render() {
     return (
       <StyledPlayButton onClick={this.clickHandler} type="button">

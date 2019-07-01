@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleFullscreen } from '../../../actions/player';
@@ -22,7 +22,7 @@ interface IFullscreenButton
     IDispatchProps,
     WithTranslation {}
 
-class FullscreenButton extends React.Component<IFullscreenButton> {
+class FullscreenButton extends Component<IFullscreenButton> {
   render() {
     if (!isFullscreenEnabled()) {
       return null;

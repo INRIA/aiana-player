@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeActivePreset } from '../../actions/presets';
@@ -30,7 +30,7 @@ function PresetsSelector({
   const activePresetName = activePreset ? activePreset.name : '';
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={uid}>{t('preferences.presets_selector.label')}</span>
       <select
         aria-labelledby={uid}
@@ -47,7 +47,7 @@ function PresetsSelector({
           </option>
         ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

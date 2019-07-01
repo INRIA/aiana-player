@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateFontSizeMultiplier } from '../../actions/preferences';
@@ -21,7 +21,7 @@ function FontSizeSelector(props: IProps) {
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>{t('preferences.font_size_multiplier.label')}</span>
       <select
         aria-labelledby={props.uid}
@@ -35,7 +35,7 @@ function FontSizeSelector(props: IProps) {
             </option>
           ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

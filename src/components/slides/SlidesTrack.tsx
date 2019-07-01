@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { addSlidesTrack, setSlidesText } from '../../actions/slides';
 import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants/tracks';
@@ -27,8 +27,8 @@ interface IDispatchProps {
 
 interface ISlideTrackProps extends IProps, IStateProps, IDispatchProps {}
 
-class SlidesTrack extends React.Component<ISlideTrackProps> {
-  trackRef = React.createRef<HTMLTrackElement>();
+class SlidesTrack extends Component<ISlideTrackProps> {
+  trackRef = createRef<HTMLTrackElement>();
 
   render() {
     const { label, src, srcLang } = this.props;

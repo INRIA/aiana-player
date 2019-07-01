@@ -31,7 +31,7 @@ function ChaptersTrackSelector({
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={uid}>{t('preferences.chapterstrack.label')}</span>
       <select
         aria-labelledby={uid}
@@ -44,7 +44,7 @@ function ChaptersTrackSelector({
           </option>
         ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

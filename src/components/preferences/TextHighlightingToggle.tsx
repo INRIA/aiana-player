@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setTextHighlighting } from '../../actions/preferences';
@@ -20,14 +20,14 @@ function TextHighlightingToggle(props: IProps) {
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>{t('preferences.text_highlighting.label')}</span>
       <ToggleButton
         isOn={props.textHighlighting}
         labelledBy={props.uid}
         onClick={() => props.setTextHighlighting(!props.textHighlighting)}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }
 

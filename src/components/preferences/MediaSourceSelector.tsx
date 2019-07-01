@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { changeMediaSource } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
@@ -22,7 +22,7 @@ function MediaSourceSelector(props: IProps) {
   const selectedSource = getSelectedMediaSource(props.sources);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>{t('preferences.media_source.label')}</span>
       <select
         aria-labelledby={props.uid}
@@ -35,7 +35,7 @@ function MediaSourceSelector(props: IProps) {
           </option>
         ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

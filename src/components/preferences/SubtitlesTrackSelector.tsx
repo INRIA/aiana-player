@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSubtitlesTrack } from '../../actions/subtitles';
@@ -32,7 +32,7 @@ function SubtitlesTrackSelector({
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={uid}>{t('preferences.subtitlestrack.label')}</span>
       <select
         aria-labelledby={uid}
@@ -46,7 +46,7 @@ function SubtitlesTrackSelector({
           </option>
         ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

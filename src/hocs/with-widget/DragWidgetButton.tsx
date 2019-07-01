@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import GhostButton from '../../components/shared/GhostButton';
 import StyledSvg from '../../components/shared/styled-svg';
@@ -44,8 +44,8 @@ const defaultState: IState = {
   isDragging: false
 };
 
-class DragWidgetButton extends React.Component<IDragWidgetButton, IState> {
-  controlsRef = React.createRef<HTMLButtonElement>();
+class DragWidgetButton extends Component<IDragWidgetButton, IState> {
+  controlsRef = createRef<HTMLButtonElement>();
   baseX = 0;
   baseY = 0;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { addChaptersTrack, setChapterText } from '../../actions/chapters';
 import { TRACK_KIND_CHAPTERS, TRACK_MODE_HIDDEN } from '../../constants/tracks';
@@ -26,8 +26,8 @@ export interface IMediaChapterTrack
     IChaptersTrack,
     IDispatchProps {}
 
-class MediaChapterTrack extends React.Component<IMediaChapterTrack> {
-  trackRef = React.createRef<HTMLTrackElement>();
+class MediaChapterTrack extends Component<IMediaChapterTrack> {
+  trackRef = createRef<HTMLTrackElement>();
 
   render() {
     return (

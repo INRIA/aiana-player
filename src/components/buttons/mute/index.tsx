@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { muteMedia, unmuteMedia } from '../../../actions/player';
@@ -31,7 +31,7 @@ interface IDispatchProps {
 
 interface IMuteButton extends IStateProps, IDispatchProps, WithTranslation {}
 
-class MuteButton extends React.Component<IMuteButton> {
+class MuteButton extends Component<IMuteButton> {
   render() {
     return (
       <StyledMuteButton type="button" onClick={this.clickHandler}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { connect } from 'react-redux';
 import {
   addAdditionalInformationTrack,
@@ -29,8 +29,8 @@ interface IDispatchProps {
 
 export interface IChapterTrack extends IProps, IStateProps, IDispatchProps {}
 
-class AdditionalInfosTrack extends React.Component<IChapterTrack> {
-  trackRef = React.createRef<HTMLTrackElement>();
+class AdditionalInfosTrack extends Component<IChapterTrack> {
+  trackRef = createRef<HTMLTrackElement>();
 
   render() {
     const { label, src, srcLang } = this.props;

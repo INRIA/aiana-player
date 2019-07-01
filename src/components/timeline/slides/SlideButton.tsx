@@ -15,22 +15,16 @@ const FilteredSvg = styled(StyledSvg)`
   filter: url('#aip-filter-dropshadow');
 `;
 
-class SlideButton extends React.Component<IProps> {
-  render() {
-    return (
-      <GhostButton
-        aria-label={this.props.label}
-        onClick={this.clickHandler}
-        type="button"
-      >
-        <FilteredSvg as={SlideIcon} aria-hidden="true" />
-      </GhostButton>
-    );
-  }
-
-  clickHandler = () => {
-    this.props.onClick(this.props.mediaSelector, this.props.time);
-  };
+function SlideButton(props: IProps) {
+  return (
+    <GhostButton
+      aria-label={props.label}
+      onClick={() => props.onClick(props.mediaSelector, props.time)}
+      type="button"
+    >
+      <FilteredSvg as={SlideIcon} aria-hidden="true" />
+    </GhostButton>
+  );
 }
 
 export default SlideButton;

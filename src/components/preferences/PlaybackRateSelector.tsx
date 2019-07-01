@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
@@ -21,34 +21,31 @@ interface IPlaybackRateSelector
     IDispatchProps,
     WithTranslation {}
 
-class PlaybackRateSelector extends React.Component<IPlaybackRateSelector> {
-  render() {
-    const { playbackRates, currentPlaybackRate, t, uid } = this.props;
+function PlaybackRateSelector(props: IPlaybackRateSelector) {
+  const { playbackRates, currentPlaybackRate, t, uid } = props;
 
-    return (
-      <React.Fragment>
-        <span id={uid}>{t('preferences.playbackrate.label')}</span>
-        <select
-          aria-labelledby={uid}
-          onChange={this.onPlayRateChange}
-          value={currentPlaybackRate}
-        >
-          {playbackRates &&
-            playbackRates.map((playbackRate) => (
-              <option key={playbackRate} value={playbackRate}>
-                ×{playbackRate}
-              </option>
-            ))}
-        </select>
-      </React.Fragment>
-    );
-  }
-
-  onPlayRateChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    const playbackRateValue = Number(evt.currentTarget.value);
-
-    this.props.changePlaybackRate(this.props.mediaSelector, playbackRateValue);
-  };
+  return (
+    <Fragment>
+      <span id={uid}>{t('preferences.playbackrate.label')}</span>
+      <select
+        aria-labelledby={uid}
+        onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => {
+          props.changePlaybackRate(
+            props.mediaSelector,
+            Number(evt.currentTarget.value)
+          );
+        }}
+        value={currentPlaybackRate}
+      >
+        {playbackRates &&
+          playbackRates.map((playbackRate) => (
+            <option key={playbackRate} value={playbackRate}>
+              ×{playbackRate}
+            </option>
+          ))}
+      </select>
+    </Fragment>
+  );
 }
 
 function mapState(state: IAianaState) {

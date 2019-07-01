@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestSeek } from '../../actions/player';
@@ -49,7 +49,7 @@ const defaultState: IState = {
   sliderWidth: 0
 };
 
-class SeekBarSlider extends React.Component<ISeekBarSlider, IState> {
+class SeekBarSlider extends Component<ISeekBarSlider, IState> {
   readonly state = defaultState;
 
   render() {

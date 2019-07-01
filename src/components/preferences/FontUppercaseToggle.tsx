@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setFontUppercase } from '../../actions/preferences';
@@ -20,14 +20,14 @@ function FontUppercaseToggle(props: IProps) {
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>{t('preferences.font_uppercase.label')}</span>
       <ToggleButton
         isOn={props.fontUppercase}
         labelledBy={props.uid}
         onClick={() => props.setFontUppercase(!props.fontUppercase)}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }
 

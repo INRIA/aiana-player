@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { Component } from 'react';
 import GhostButton from '../../components/shared/GhostButton';
 import { ESCAPE_KEY } from '../../constants/keys';
 import { Direction } from '../../types';
@@ -119,7 +119,7 @@ const StyledResizeButton = styled(GhostButton)`
   }
 `;
 
-class ResizeButton extends React.Component<IProps> {
+class ResizeButton extends Component<IProps> {
   static defaultProps: Partial<IProps> = {
     type: 'border'
   };

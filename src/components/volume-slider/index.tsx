@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { requestChangeVolume } from '../../actions/player';
@@ -44,7 +44,7 @@ const defaultState: IState = {
   isActive: false
 };
 
-class VolumeSlider extends React.Component<IVolumeSliderProps, IState> {
+class VolumeSlider extends Component<IVolumeSliderProps, IState> {
   sliderPosition = 0;
   sliderWidth = 0;
 

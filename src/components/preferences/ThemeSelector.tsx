@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeActiveTheme } from '../../actions/preferences';
@@ -29,7 +29,7 @@ function ThemeSelector({
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={uid}>{t('preferences.theme_selector.label')}</span>
       <select
         aria-labelledby={uid}
@@ -41,7 +41,7 @@ function ThemeSelector({
             <option key={themeName}>{themeName}</option>
           ))}
       </select>
-    </React.Fragment>
+    </Fragment>
   );
 }
 

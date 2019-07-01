@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWidgetVisibility } from '../../../../actions/preferences';
@@ -26,7 +26,7 @@ function WidgetVisibilityToggle(props: IWidgetVisibilityToggle) {
   const [t] = useTranslation();
 
   return (
-    <React.Fragment>
+    <Fragment>
       <span id={props.uid}>
         {t('preferences.widgets_visibility.label', {
           widgetName: props.widgetName
@@ -37,7 +37,7 @@ function WidgetVisibilityToggle(props: IWidgetVisibilityToggle) {
         labelledBy={props.uid}
         onClick={props.clickHandler}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }
 
