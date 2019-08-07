@@ -24,7 +24,6 @@ import StyledDiv from './Styles';
 const { round } = Math;
 
 interface IState {
-  sliderPosition: number;
   sliderWidth: number;
 }
 
@@ -44,13 +43,10 @@ interface IDispatchProps {
 
 interface ISeekBarSlider extends IStateProps, IDispatchProps, WithTranslation {}
 
-const defaultState: IState = {
-  sliderPosition: 0,
-  sliderWidth: 0
-};
-
 class SeekBarSlider extends Component<ISeekBarSlider, IState> {
-  readonly state = defaultState;
+  readonly state = {
+    sliderWidth: 0
+  };
 
   render() {
     const { currentTime, duration, isSeeking, seekingTime, t } = this.props;
@@ -156,25 +152,24 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    const { left, width } = sliderEl.getBoundingClientRect();
-
     this.setState({
-      sliderPosition: left,
-      sliderWidth: width
+      sliderWidth: sliderEl.getBoundingClientRect().width
     });
   };
 
-  clickHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+  clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
     // Force focus when element in being interacted with a pointer device.
     // This triggers `:focus` state and prevents from hiding it from the user.
     evt.currentTarget.focus();
   };
 
-  mouseDownHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+  mouseDownHandler = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
+    this.setPosition();
 
     // trigger first recomputation to simulate simple click.
-    const el = document.querySelector('.aip-progress')! as HTMLDivElement;
+    const el = document.querySelector('.aip-progress')! as HTMLElement;
+
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
@@ -182,8 +177,8 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
   };
 
   mouseUpHandler = (evt: MouseEvent) => {
-    (document.querySelector('.aip-progress__slider') as HTMLDivElement)!.blur();
-    const el = document.querySelector('.aip-progress')! as HTMLDivElement;
+    (document.querySelector('.aip-progress__slider') as HTMLElement)!.blur();
+    const el = document.querySelector('.aip-progress')! as HTMLElement;
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
 
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
@@ -191,7 +186,7 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
   };
 
   mouseMoveHandler = (evt: MouseEvent) => {
-    const el = document.querySelector('.aip-progress')! as HTMLDivElement;
+    const el = document.querySelector('.aip-progress')! as HTMLElement;
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
   };
 
@@ -203,11 +198,8 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
       requestSeek: requestSeekAction
     } = this.props;
 
-    const positionDifference = bounded(
-      mouseX,
-      this.state.sliderPosition,
-      this.state.sliderWidth
-    );
+    const positionDifference = bounded(mouseX, 0, this.state.sliderWidth);
+
     const newCurrentTime = round(
       duration * unitToRatio(positionDifference, this.state.sliderWidth)
     );
@@ -217,7 +209,7 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
     }
   };
 
-  keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
+  keyDownHandler = (evt: React.KeyboardEvent<HTMLElement>) => {
     const {
       currentTime,
       duration,
