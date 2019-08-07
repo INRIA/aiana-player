@@ -1,6 +1,6 @@
 import styled from '../../utils/styled-components';
 import classNames from 'classnames';
-import React, { Component, Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { handleFullscreenChange } from '../../actions/player';
 import { handleFetchInitialData } from '../../actions/shared';
@@ -76,48 +76,56 @@ const StyledAiana = styled.div`
   }
 `;
 
-class Aiana extends Component<IAiana> {
-  render() {
-    return (
-      <ThemeProvider theme={themes[this.props.theme]}>
-        <StyledAiana
-          className={classNames('aip-app', {
-            'aip-app__fullscreen': isDocumentFullscreen()
-          })}
-          style={{
-            fontFamily: this.props.fontFace,
-            lineHeight: this.props.lineHeight,
-            textTransform: this.props.fontUppercase ? 'uppercase' : 'none'
-          }}
-        >
-          <Suspense fallback={<Loader text="Media player is loading." />}>
-            <SvgFilters />
-            <div
-              className="aip-player-wrapper"
-              style={{
-                fontSize: `${this.props.fontSizeMultiplier}em`
-              }}
-            >
-              <Player />
-            </div>
-          </Suspense>
-        </StyledAiana>
-      </ThemeProvider>
-    );
-  }
+function Aiana(props: IAiana) {
+  const {
+    theme,
+    fontFace,
+    lineHeight,
+    fontUppercase,
+    fontSizeMultiplier,
+    handleFetchInitialData,
+    handleFullscreenChange
+  } = props;
 
-  componentDidMount() {
-    this.props.handleFetchInitialData();
-    addFullscreenChangeEventListener(this.fullscreenHandler);
-  }
+  useEffect(() => {
+    function fullscreenHandler() {
+      handleFullscreenChange(isDocumentFullscreen());
+    }
 
-  componentWillUnmount() {
-    removeFullscreenChangeEventListener(this.fullscreenHandler);
-  }
+    handleFetchInitialData();
+    addFullscreenChangeEventListener(fullscreenHandler);
 
-  fullscreenHandler = () => {
-    this.props.handleFullscreenChange(isDocumentFullscreen());
-  };
+    return function() {
+      removeFullscreenChangeEventListener(fullscreenHandler);
+    };
+  }, [handleFetchInitialData, handleFullscreenChange]);
+
+  return (
+    <ThemeProvider theme={themes[theme]}>
+      <StyledAiana
+        className={classNames('aip-app', {
+          'aip-app__fullscreen': isDocumentFullscreen()
+        })}
+        style={{
+          fontFamily: fontFace,
+          lineHeight: lineHeight,
+          textTransform: fontUppercase ? 'uppercase' : 'none'
+        }}
+      >
+        <Suspense fallback={<Loader text="Media player is loading." />}>
+          <SvgFilters />
+          <div
+            className="aip-player-wrapper"
+            style={{
+              fontSize: `${fontSizeMultiplier}em`
+            }}
+          >
+            <Player />
+          </div>
+        </Suspense>
+      </StyledAiana>
+    </ThemeProvider>
+  );
 }
 
 function mapState(state: IAianaState) {

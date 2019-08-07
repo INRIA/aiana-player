@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { muteMedia, unmuteMedia } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
@@ -29,31 +29,26 @@ interface IDispatchProps {
   unmuteMedia(mediaSelector: string): void;
 }
 
-interface IMuteButton extends IStateProps, IDispatchProps, WithTranslation {}
+interface IMuteButton extends IStateProps, IDispatchProps {}
 
-class MuteButton extends Component<IMuteButton> {
-  render() {
-    return (
-      <StyledMuteButton type="button" onClick={this.clickHandler}>
-        <ControlIcon isMuted={this.props.isMuted} />
-        <AssistiveText>{this.getControlText()}</AssistiveText>
-      </StyledMuteButton>
-    );
-  }
+function MuteButton(props: IMuteButton) {
+  const [t] = useTranslation();
 
-  clickHandler = () => {
-    if (this.props.isMuted) {
-      this.props.unmuteMedia(this.props.mediaSelector);
-    } else {
-      this.props.muteMedia(this.props.mediaSelector);
-    }
-  };
+  const { isMuted, unmuteMedia, muteMedia, mediaSelector } = props;
 
-  getControlText = () => {
-    const { t, isMuted } = this.props;
-
-    return isMuted ? t('controls.unmute') : t('controls.mute');
-  };
+  return (
+    <StyledMuteButton
+      type="button"
+      onClick={() => {
+        isMuted ? unmuteMedia(mediaSelector) : muteMedia(mediaSelector);
+      }}
+    >
+      <ControlIcon isMuted={isMuted} />
+      <AssistiveText>
+        {isMuted ? t('controls.unmute') : t('controls.mute')}
+      </AssistiveText>
+    </StyledMuteButton>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -71,4 +66,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(MuteButton));
+)(MuteButton);

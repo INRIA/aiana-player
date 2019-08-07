@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleFullscreen } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
@@ -17,38 +17,35 @@ interface IDispatchProps {
   toggleFullscreen(selector: string): void;
 }
 
-interface IFullscreenButton
-  extends IStateProps,
-    IDispatchProps,
-    WithTranslation {}
+interface IFullscreenButton extends IStateProps, IDispatchProps {}
 
-class FullscreenButton extends Component<IFullscreenButton> {
-  render() {
-    if (!isFullscreenEnabled()) {
-      return null;
-    }
+function FullscreenButton({
+  isFullscreen,
+  playerSelector,
+  toggleFullscreen
+}: IFullscreenButton) {
+  const [t] = useTranslation();
 
-    return (
-      <GhostButton type="button" onClick={this.clickHandler}>
-        <ControlIcon isFullscreen={this.props.isFullscreen} />
-        <AssistiveText>{this.getControlText()}</AssistiveText>
-      </GhostButton>
-    );
+  if (!isFullscreenEnabled()) {
+    return null;
   }
 
-  clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
+  const controlText = isFullscreen
+    ? t('controls.fullscreen.exit')
+    : t('controls.fullscreen.enter');
 
-    this.props.toggleFullscreen(this.props.playerSelector);
-  };
-
-  getControlText = (): string => {
-    if (this.props.isFullscreen) {
-      return this.props.t('controls.fullscreen.exit');
-    }
-
-    return this.props.t('controls.fullscreen.enter');
-  };
+  return (
+    <GhostButton
+      type="button"
+      onClick={(evt) => {
+        evt.preventDefault();
+        toggleFullscreen(playerSelector);
+      }}
+    >
+      <ControlIcon isFullscreen={isFullscreen} />
+      <AssistiveText>{controlText}</AssistiveText>
+    </GhostButton>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -65,4 +62,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(FullscreenButton));
+)(FullscreenButton);
