@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Aiana from './components/Aiana';
-import registerServiceWorker from './registerServiceWorker';
 import 'focus-visible';
 import './i18n';
 import { CONTAINER_SELECTOR } from './constants';
@@ -17,4 +16,3 @@ function getRootElement(conf: any = {}) {
 ReactDOM.render(<Aiana />, getRootElement(
   (window as any).aiana
 ) as HTMLElement);
-registerServiceWorker();
