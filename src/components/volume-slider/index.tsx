@@ -150,7 +150,7 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
 
   mouseUpHandler = () => {
     this.setState({ isActive: false });
-    (document.querySelector('.aip-volume') as HTMLDivElement)!.blur();
+    (document.querySelector('.aip-volume') as HTMLElement)!.blur();
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };

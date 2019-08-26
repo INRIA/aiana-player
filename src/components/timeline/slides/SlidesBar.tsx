@@ -17,7 +17,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  requestSeek: any;
+  requestSeek(mediaSelector: string, seekingTime: number): void;
 }
 
 interface ISlidesBar extends IStateProps, IDispatchProps {}

@@ -14,8 +14,8 @@ export interface IPlayButtonProps {
 }
 
 interface IDispatchProps {
-  requestMediaPause: any;
-  requestMediaPlay: any;
+  requestMediaPause(mediaSelector: string): void;
+  requestMediaPlay(mediaSelector: string): void;
 }
 
 interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}

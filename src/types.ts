@@ -18,14 +18,14 @@ interface IDocument {
   msFullScreenElement: HTMLElement;
   webkitFullscreenElement: HTMLElement;
 
-  msExitFullscreen(): any;
-  webkitExitFullscreen(): any;
-  mozCancelFullScreen(): any;
+  msExitFullscreen(): void;
+  webkitExitFullscreen(): void;
+  mozCancelFullScreen(): void;
 }
 
 interface IHTMLElement {
-  msRequestFullscreen(): any;
-  webkitRequestFullscreen(): any;
+  msRequestFullscreen(): void;
+  webkitRequestFullscreen(): void;
 }
 
 export type ThunkResult<R> = ThunkAction<R, IAianaState, undefined, any>;

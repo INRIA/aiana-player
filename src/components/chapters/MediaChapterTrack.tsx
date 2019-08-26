@@ -18,7 +18,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   addChaptersTrack(chaptersTrack: IRawChaptersTrack): void;
-  setChapterText(text?: string): any;
+  setChapterText(text?: string): void;
 }
 
 export interface IMediaChapterTrack

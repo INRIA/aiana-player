@@ -14,7 +14,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  requestSeek: any;
+  requestSeek(mediaSelector: string, seekingTime: number): void;
 }
 
 interface IBookmarksBar extends IStateProps, IDispatchProps {}

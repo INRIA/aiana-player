@@ -9,7 +9,7 @@ import withUniqueId, {
 import ToggleButton from '../../shared/toggle-button';
 
 interface IDispatchProps {
-  setWidgetsLock(locked: boolean): any;
+  setWidgetsLock(locked: boolean): void;
 }
 
 interface IWidgetsLockToggle extends IDispatchProps, IInjectedUniqueIdProps {}
