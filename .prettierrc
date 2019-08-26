@@ -1,7 +1,7 @@
 {
   "arrowParens": "always",
+  "endOfLine": "lf",
   "proseWrap": "always",
-  "semi": true,
   "singleQuote": true,
   "tabWidth": 2
 }
