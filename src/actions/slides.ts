@@ -1,6 +1,6 @@
 import { CDispatch } from '../store';
 import { ThunkResult, ICueBoundaries } from '../types';
-import { IRawSlidesTrack } from '../utils/media';
+import { IRawTrack } from '../utils/media';
 import { requestSeek } from './player';
 import { createAction } from 'redux-starter-kit';
 
@@ -36,7 +36,7 @@ export const setSlidesText = createAction<string | undefined>(
   'SET_SLIDES_TEXT'
 );
 
-export const addSlidesTrack = createAction<IRawSlidesTrack>('ADD_SLIDES_TRACK');
+export const addSlidesTrack = createAction<IRawTrack>('ADD_SLIDES_TRACK');
 
 export const updateActiveSlidesTrack = createAction<string>(
   'UPDATE_ACTIVE_SLIDES_TRACK'

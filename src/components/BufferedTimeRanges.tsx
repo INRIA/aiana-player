@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../reducers';
 import { hexToHsla } from '../utils/colors';
-import { BufferedRanges } from '../utils/media';
+import { ITimeRange } from '../utils/media';
 import styled from '../utils/styled-components';
 
 interface IStateProps {
-  bufferedRanges: BufferedRanges;
+  bufferedRanges: ITimeRange[];
   duration: number;
 }
 
@@ -31,8 +31,11 @@ function BufferedTimeRanges({ bufferedRanges, duration }: IStateProps) {
         viewBox={`0 0 ${Math.floor(duration)} 10`}
         preserveAspectRatio="none"
       >
-        {bufferedRanges.map(({ end, start }, idx) => (
-          <path key={idx} d={`M${start} 0 H${end} V10 H${start} z`} />
+        {bufferedRanges.map(({ endTime, startTime }, idx) => (
+          <path
+            key={idx}
+            d={`M${startTime} 0 H${endTime} V10 H${startTime} z`}
+          />
         ))}
       </svg>
     </StyledTimeRanges>

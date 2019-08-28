@@ -26,7 +26,7 @@ import {
   DEFAULT_AUTOPLAY,
   MEDIA_SELECTOR
 } from '../constants/player';
-import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
+import { IRawTrackExt, ITimeRange } from '../utils/media';
 import { changeMediaSource } from '../actions/preferences';
 import { safeDump, safeLoad } from 'js-yaml';
 import { cloneDeep } from 'lodash';
@@ -37,7 +37,7 @@ export interface IPlayerState {
   additionalInformationText?: string;
   additionalInformationTracks: ITrack[];
   autoPlay: boolean;
-  bufferedRanges: BufferedRanges;
+  bufferedRanges: ITimeRange[];
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -53,7 +53,7 @@ export interface IPlayerState {
   mediaSelector: string;
   mediaId: string;
 
-  metadataTracks: IRawMetadataTrack[];
+  metadataTracks: IRawTrackExt[];
 
   /**
    * The current rate of speed for the media resource to play. This speed is

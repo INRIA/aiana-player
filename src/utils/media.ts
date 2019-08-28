@@ -6,50 +6,32 @@ import {
   TRACK_KIND_CHAPTERS
 } from '../constants/tracks';
 
-export interface ILightCue {
-  startTime: number;
-  endTime: number;
-  text: string;
-}
-
-export interface IRawSubtitlesTrack {
-  active: boolean;
-  readonly activeCues: any; // TODO: type this
-  readonly cues: ILightCue[];
-  readonly kind: string;
-  readonly label?: string;
-  readonly language: string;
-  mode: TextTrackMode | number;
-}
-
-export interface IRawChaptersTrack {
+export interface IRawTrack {
   active: boolean;
   readonly cues: IMediaCue[];
-  readonly label: string;
+  readonly label?: string;
   readonly language: string;
 }
 
-export type IRawMetadataTrack = IRawSubtitlesTrack;
+export interface IRawTrackExt extends IRawTrack {
+  readonly activeCues?: IMediaCue[];
+  readonly kind?: string;
+  mode?: TextTrackMode | number;
+}
 
-export type IRawSlidesTrack = IRawChaptersTrack;
-
-export interface IMediaCue {
+export interface ITimeRange {
   endTime: number;
   startTime: number;
+}
+
+export interface IMediaCue extends ITimeRange {
   text: string;
 }
-
-export interface IBufferedRange {
-  end: number;
-  start: number;
-}
-
-export type BufferedRanges = IBufferedRange[];
 
 export function rawSubtitlesTrack(
   textTrack: TextTrack,
   subtitlesLanguage?: string
-): IRawSubtitlesTrack {
+): IRawTrackExt {
   const { activeCues, cues, kind, label, language } = textTrack;
 
   return {
@@ -80,7 +62,7 @@ export const rawTextTrack = rawSubtitlesTrack;
 export function rawChaptersTrack(
   track: TextTrack,
   currentLanguage?: string
-): IRawChaptersTrack {
+): IRawTrack {
   const { cues: trackCues, label, language } = track;
 
   const cues: IMediaCue[] = [...trackCues].map((cue: TextTrackCue) => ({
@@ -97,9 +79,13 @@ export function rawChaptersTrack(
   };
 }
 
-export function rawSlidesTrack(track: TextTrack): IRawSlidesTrack {
-  const rawTrack: IRawSlidesTrack = rawChaptersTrack(track);
+export function rawSlidesTrack(track: TextTrack): IRawTrack {
+  const rawTrack: IRawTrack = rawChaptersTrack(track);
   return rawTrack;
+}
+
+interface IWithKind {
+  kind?: string;
 }
 
 /**
@@ -107,9 +93,7 @@ export function rawSlidesTrack(track: TextTrack): IRawSlidesTrack {
  *
  * @param track
  */
-export function isDisplayableTrack(
-  track: TextTrack | IRawSubtitlesTrack | ITrack
-): boolean {
+export function isDisplayableTrack(track: IWithKind): boolean {
   return (
     track.kind === undefined ||
     track.kind === TRACK_KIND_SUBTITLES ||
@@ -121,17 +105,15 @@ export function isDisplayableTrack(
  * Tests if a track should be used as a collection of chapters.
  * @param track
  */
-export function isChapterTrack(track: TextTrack | ITrack) {
+export function isChapterTrack(track: IWithKind) {
   return track.kind === TRACK_KIND_CHAPTERS;
 }
 
 /**
  * Tests if a subtitles track is active
- * @param track {IRawSubtitlesTrack}
+ * @param track {IRawTrackExt}
  */
-export function isActiveTrack(
-  track: IRawSubtitlesTrack | IRawChaptersTrack
-): boolean {
+export function isActiveTrack(track: IRawTrack): boolean {
   return track.active === true;
 }
 
@@ -139,14 +121,14 @@ export function isDefaultTrack(track: ITrack): boolean {
   return track.isDefault === true;
 }
 
-export function convertTimeRanges(timeRanges: TimeRanges): BufferedRanges {
+export function convertTimeRanges(timeRanges: TimeRanges): ITimeRange[] {
   const { length } = timeRanges;
   const ranges = [];
 
   for (let i = 0; i < length; i++) {
     ranges.push({
-      end: timeRanges.end(i),
-      start: timeRanges.start(i)
+      endTime: timeRanges.end(i),
+      startTime: timeRanges.start(i)
     });
   }
 
@@ -154,19 +136,19 @@ export function convertTimeRanges(timeRanges: TimeRanges): BufferedRanges {
 }
 
 // TODO: type this properly
-export function getLastActiveCue(track: TextTrack): any {
+export function getLastActiveCue(track: TextTrack): IMediaCue | undefined {
   const cue = track.activeCues[track.activeCues.length - 1];
 
-  if (cue) {
-    return {
-      endTime: cue.endTime,
-      startTime: cue.startTime,
-      text: cue.text
-    };
-  }
+  if (!cue) return;
+
+  return {
+    endTime: cue.endTime,
+    startTime: cue.startTime,
+    text: cue.text
+  };
 }
 
-export function getCueText(cue?: TextTrackCue): string | undefined {
+export function getCueText(cue?: IMediaCue): string | undefined {
   if (cue) {
     return cue.text;
   }

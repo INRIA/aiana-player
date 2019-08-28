@@ -5,7 +5,7 @@ import { requestSeek } from '../../../actions/player';
 import { DEFAULT_LANG } from '../../../constants/preferences';
 import { IAianaState } from '../../../reducers';
 import { unitToPercent } from '../../../utils/math';
-import { IRawSlidesTrack } from '../../../utils/media';
+import { IRawTrack } from '../../../utils/media';
 import styled from '../../../utils/styled-components';
 import SlideButton from './SlideButton';
 
@@ -13,7 +13,7 @@ interface IStateProps {
   duration: number;
   language: string;
   mediaSelector: string;
-  slidesTracks: IRawSlidesTrack[];
+  slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {

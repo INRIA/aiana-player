@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import withWidget from '../../hocs/with-widget';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
-import { IRawChaptersTrack, isActiveTrack } from '../../utils/media';
+import { IRawTrack, isActiveTrack } from '../../utils/media';
 import AssistiveText from '../a11y/AssistiveText';
 import ChaptersList from './ChaptersList';
 import StyledChapters from './Styles';
 
 export interface IMediaChapters {
   chaptersText?: string;
-  chaptersTracks: IRawChaptersTrack[];
+  chaptersTracks: IRawTrack[];
 }
 
 interface IProps extends IMediaChapters, IInjectedUniqueIdProps {}

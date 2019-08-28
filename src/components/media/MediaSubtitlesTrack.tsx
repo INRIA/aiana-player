@@ -7,7 +7,7 @@ import {
 } from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import {
-  IRawSubtitlesTrack,
+  IRawTrackExt,
   getLastActiveCueText,
   isActiveTrack,
   rawSubtitlesTrack
@@ -24,11 +24,11 @@ export interface ITrack {
 
 interface IStateProps {
   subtitlesLanguage?: string;
-  subtitlesTracks: IRawSubtitlesTrack[];
+  subtitlesTracks: IRawTrackExt[];
 }
 
 interface IDispatchProps {
-  addSubtitlesTrack(track: IRawSubtitlesTrack): void;
+  addSubtitlesTrack(track: IRawTrackExt): void;
   setSubtitlesText(text?: string): void;
 }
 

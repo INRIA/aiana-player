@@ -3,7 +3,7 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { seekNextSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
-import { IRawSlidesTrack } from '../../../utils/media';
+import { IRawTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
@@ -14,7 +14,7 @@ interface IStateProps {
   duration: number;
   language: string;
   mediaSelector: string;
-  slidesTracks: IRawSlidesTrack[];
+  slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
@@ -40,7 +40,7 @@ class NextSlide extends Component<INextSlide> {
 
   clickHandler = () => {
     const activeSlidesTrack = this.props.slidesTracks.find(
-      (track: IRawSlidesTrack) => {
+      (track: IRawTrack) => {
         return track.language === this.props.language;
       }
     );

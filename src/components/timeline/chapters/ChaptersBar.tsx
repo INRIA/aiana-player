@@ -3,13 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../../reducers';
 import { unitToPercent } from '../../../utils/math';
-import { IRawChaptersTrack } from '../../../utils/media';
+import { IRawTrackExt } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import { IMediaChapters } from '../../chapters/ChaptersMenu';
 import StyledChaptersBar from './Styles';
 
 interface IStateProps extends IMediaChapters {
-  chaptersTracks: IRawChaptersTrack[];
+  chaptersTracks: IRawTrackExt[];
   duration: number;
   language: string;
 }

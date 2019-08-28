@@ -1,6 +1,6 @@
 import { CDispatch } from '../store';
 import { ThunkResult, ICueBoundaries } from '../types';
-import { IRawChaptersTrack } from '../utils/media';
+import { IRawTrack } from '../utils/media';
 import { requestSeek } from './player';
 import { createAction } from 'redux-starter-kit';
 
@@ -8,9 +8,7 @@ export const previousChapter = createAction<ICueBoundaries>('PREVIOUS_CHAPTER');
 
 export const nextChapter = createAction<ICueBoundaries>('NEXT_CHAPTER');
 
-export const addChaptersTrack = createAction<IRawChaptersTrack>(
-  'ADD_CHAPTER_TRACK'
-);
+export const addChaptersTrack = createAction<IRawTrack>('ADD_CHAPTER_TRACK');
 
 export const updateActiveChaptersTrack = createAction<string>(
   'UPDATE_ACTIVE_CHAPTERS_TRACK'

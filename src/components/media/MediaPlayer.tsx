@@ -19,10 +19,10 @@ import { IChaptersTrack } from '../../reducers/chapters';
 import { ISource, getSelectedMediaSource } from '../../reducers/player';
 import { ISlidesTrack } from '../../reducers/slides';
 import {
-  IRawSubtitlesTrack,
+  IRawTrackExt,
   isDisplayableTrack,
   convertTimeRanges,
-  IBufferedRange
+  ITimeRange
 } from '../../utils/media';
 import styled from '../../utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
@@ -39,10 +39,10 @@ interface IDispatchProps {
   startSeeking(): void;
   stopSeeking(): void;
   toggleMute(): void;
-  updateBufferedRanges(timeRanges: IBufferedRange[]): void;
+  updateBufferedRanges(timeRanges: ITimeRange[]): void;
   updateCurrentTime(time: number): void;
   updateMediaDuration(duration: number): void;
-  updateSubtitlesTracksList(subtitlesTracks: IRawSubtitlesTrack[]): void;
+  updateSubtitlesTracksList(subtitlesTracks: IRawTrackExt[]): void;
 }
 
 interface IStateProps {
@@ -60,7 +60,7 @@ interface IStateProps {
   slidesTracksSources: ISlidesTrack[];
   sources: ISource[];
   subtitlesSources: ITrack[];
-  subtitlesTracks: IRawSubtitlesTrack[];
+  subtitlesTracks: IRawTrackExt[];
   volume: number;
 }
 

@@ -6,7 +6,7 @@ import {
 import { loadConfiguration } from '../actions/shared/configuration';
 import { DEFAULT_MENU_ENABLED } from '../constants';
 import { DEFAULT_LANG } from '../constants/preferences';
-import { IRawChaptersTrack } from '../utils/media';
+import { IRawTrackExt } from '../utils/media';
 import { createReducer } from 'redux-starter-kit';
 
 export interface IChaptersTrack {
@@ -16,7 +16,7 @@ export interface IChaptersTrack {
 }
 
 export interface IChaptersState {
-  chaptersTracks: IRawChaptersTrack[];
+  chaptersTracks: IRawTrackExt[];
   language: string;
   menuEnabled: boolean;
   sources: IChaptersTrack[];

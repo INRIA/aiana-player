@@ -3,14 +3,14 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { seekPreviousChapter } from '../../../actions/chapters';
 import { IAianaState } from '../../../reducers';
-import { IRawChaptersTrack, isActiveTrack } from '../../../utils/media';
+import { IRawTrack, isActiveTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import SkipPrevious from '../../svg/SkipPrevious';
 
 interface IStateProps {
-  chaptersTracks: IRawChaptersTrack[];
+  chaptersTracks: IRawTrack[];
   currentTime: number;
   mediaSelector: string;
   seekThreshold: number;

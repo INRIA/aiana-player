@@ -6,18 +6,18 @@ import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
 import {
   getLastActiveCueText,
-  IRawChaptersTrack,
+  IRawTrackExt,
   isActiveTrack,
   rawChaptersTrack
 } from '../../utils/media';
 
 interface IStateProps {
-  chaptersTracks: IRawChaptersTrack[];
+  chaptersTracks: IRawTrackExt[];
   language: string;
 }
 
 interface IDispatchProps {
-  addChaptersTrack(chaptersTrack: IRawChaptersTrack): void;
+  addChaptersTrack(chaptersTrack: IRawTrackExt): void;
   setChapterText(text?: string): void;
 }
 

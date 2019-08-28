@@ -6,11 +6,10 @@ import {
   updateActiveSubtitles
 } from '../actions/subtitles';
 import {
-  IRawSubtitlesTrack,
+  IRawTrackExt,
   isActiveTrack,
   isDisplayableTrack,
-  IMediaCue,
-  ILightCue
+  IMediaCue
 } from '../utils/media';
 import { ITrack } from '../components/media/MediaSubtitlesTrack';
 import { createReducer } from 'redux-starter-kit';
@@ -33,7 +32,7 @@ export interface ISubtitlesState {
    * `textTracks` is a collection of lightweight objects with properties from
    * `sources` and `sourceTracks`.
    */
-  subtitlesTracks: IRawSubtitlesTrack[];
+  subtitlesTracks: IRawTrackExt[];
 
   sources: ISubtitlesTrack[];
 }
@@ -68,7 +67,7 @@ const subtitlesReducer = createReducer(initialState, {
 });
 
 function toggleTrackActive(language: string) {
-  return function(track: IRawSubtitlesTrack): IRawSubtitlesTrack {
+  return function(track: IRawTrackExt): IRawTrackExt {
     if (track.language === language) {
       return {
         ...track,
@@ -90,15 +89,13 @@ function toggleTrackActive(language: string) {
 }
 
 function toggleSubtitlesTracks(
-  tracks: IRawSubtitlesTrack[],
+  tracks: IRawTrackExt[],
   language: string
-): IRawSubtitlesTrack[] {
+): IRawTrackExt[] {
   return tracks.map(toggleTrackActive(language));
 }
 
-export function getSelectedSubtitlesTrack(
-  subtitlesTracks: IRawSubtitlesTrack[]
-) {
+export function getSelectedSubtitlesTrack(subtitlesTracks: IRawTrackExt[]) {
   return subtitlesTracks.find(isActiveTrack);
 }
 
@@ -109,7 +106,7 @@ export function getSelectedSubtitlesTrackCues(
 
   return !track
     ? undefined
-    : [...track.cues].map((cue: ILightCue) => ({
+    : [...track.cues].map((cue: IMediaCue) => ({
         endTime: cue.endTime,
         startTime: cue.startTime,
         text: cue.text
@@ -123,7 +120,7 @@ export function getSelectedSubtitlesLanguage(state: ISubtitlesState): string {
 
 export function getDisplayableSubtitlesTracks(
   state: ISubtitlesState
-): IRawSubtitlesTrack[] {
+): IRawTrackExt[] {
   return state.subtitlesTracks.filter(isDisplayableTrack);
 }
 
