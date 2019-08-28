@@ -6,10 +6,16 @@ import {
   TRACK_KIND_CHAPTERS
 } from '../constants/tracks';
 
+export interface ILightCue {
+  startTime: number;
+  endTime: number;
+  text: string;
+}
+
 export interface IRawSubtitlesTrack {
   active: boolean;
-  readonly activeCues: TextTrackCueList;
-  readonly cues: TextTrackCueList;
+  readonly activeCues: any; // TODO: type this
+  readonly cues: ILightCue[];
   readonly kind: string;
   readonly label?: string;
   readonly language: string;
@@ -48,8 +54,16 @@ export function rawSubtitlesTrack(
 
   return {
     active: language === subtitlesLanguage,
-    activeCues,
-    cues,
+    activeCues: [...activeCues].map((cue) => ({
+      endTime: cue.endTime,
+      startTime: cue.startTime,
+      text: cue.text
+    })),
+    cues: [...cues].map((cue) => ({
+      startTime: cue.startTime,
+      endTime: cue.endTime,
+      text: cue.text
+    })),
     kind,
     label,
     language,
@@ -69,13 +83,11 @@ export function rawChaptersTrack(
 ): IRawChaptersTrack {
   const { cues: trackCues, label, language } = track;
 
-  const cues: IMediaCue[] = [...trackCues[Symbol.iterator]()].map(
-    (cue: TextTrackCue) => ({
-      endTime: cue.endTime,
-      startTime: cue.startTime,
-      text: cue.text
-    })
-  );
+  const cues: IMediaCue[] = [...trackCues].map((cue: TextTrackCue) => ({
+    endTime: cue.endTime,
+    startTime: cue.startTime,
+    text: cue.text
+  }));
 
   return {
     active: language === currentLanguage,
@@ -141,8 +153,17 @@ export function convertTimeRanges(timeRanges: TimeRanges): BufferedRanges {
   return ranges;
 }
 
-export function getLastActiveCue(track: TextTrack): TextTrackCue | undefined {
-  return track.activeCues[track.activeCues.length - 1];
+// TODO: type this properly
+export function getLastActiveCue(track: TextTrack): any {
+  const cue = track.activeCues[track.activeCues.length - 1];
+
+  if (cue) {
+    return {
+      endTime: cue.endTime,
+      startTime: cue.startTime,
+      text: cue.text
+    };
+  }
 }
 
 export function getCueText(cue?: TextTrackCue): string | undefined {

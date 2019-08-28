@@ -11,6 +11,7 @@ import { IPreset } from '../reducers/presets';
 import { BASE_PRESETS } from '../constants/presets';
 import md5 from 'md5';
 import { getLocalPlayerState } from '../reducers/player';
+import { createAction } from 'redux-starter-kit';
 
 export const LOAD_CONFIGURATION = 'aiana/LOAD_CONFIGURATION';
 export const CHANGE_WIDGETS = 'aiana/CHANGE_WIDGETS';
@@ -165,20 +166,21 @@ function getLocalConfiguration() {
   );
 }
 
-function loadConfiguration(configuration: any): IStdAction {
-  return {
-    payload: {
-      bookmarks: configuration.bookmarks,
-      chapters: configuration.chapters,
-      player: configuration.player,
-      preferences: configuration.preferences,
-      presets: configuration.presets,
-      slides: configuration.slides,
-      subtitles: configuration.subtitles
-    },
-    type: LOAD_CONFIGURATION
-  };
-}
+export const loadConfiguration = createAction(LOAD_CONFIGURATION);
+// function loadConfiguration(configuration: any): IStdAction {
+//   return {
+//     payload: {
+//       bookmarks: configuration.bookmarks,
+//       chapters: configuration.chapters,
+//       player: configuration.player,
+//       preferences: configuration.preferences,
+//       presets: configuration.presets,
+//       slides: configuration.slides,
+//       subtitles: configuration.subtitles
+//     },
+//     type: LOAD_CONFIGURATION
+//   };
+// }
 
 export function updateWidget(
   widgetName: string,

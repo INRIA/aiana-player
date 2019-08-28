@@ -10,7 +10,8 @@ import {
   IRawSubtitlesTrack,
   isActiveTrack,
   isDisplayableTrack,
-  IMediaCue
+  IMediaCue,
+  ILightCue
 } from '../utils/media';
 import { IStdAction } from '../types';
 import { ITrack } from '../components/media/MediaSubtitlesTrack';
@@ -132,7 +133,7 @@ export function getSelectedSubtitlesTrackCues(
 
   return !track
     ? undefined
-    : [...track.cues].map((cue: TextTrackCue) => ({
+    : [...track.cues].map((cue: ILightCue) => ({
         endTime: cue.endTime,
         startTime: cue.startTime,
         text: cue.text
