@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setWidgetVisibility } from '../../../../actions/preferences';
+import { toggleWidgetVisibility } from '../../../../actions/preferences';
 import withUniqueId, {
   IInjectedUniqueIdProps
 } from '../../../../hocs/withUniqueId';
@@ -44,7 +44,7 @@ function WidgetVisibilityToggle(props: IWidgetVisibilityToggle) {
 function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
-      dispatch(setWidgetVisibility(ownProps.widgetName, !ownProps.visible));
+      dispatch(toggleWidgetVisibility(ownProps.widgetName));
     }
   };
 }

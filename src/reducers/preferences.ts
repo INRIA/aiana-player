@@ -1,45 +1,23 @@
 import cloneDeep from 'lodash.clonedeep';
 import { safeDump, safeLoad } from 'js-yaml';
-import { Reducer, DeepPartial } from 'redux';
+import { DeepPartial } from 'redux';
+import { createReducer } from 'redux-starter-kit';
+import { loadConfiguration } from '../actions/shared/configuration';
 import {
-  CHANGE_LANGUAGE,
-  CHANGE_TEXT_HIGHLIGHTING,
-  CHANGE_TEXT_UPPERCASE,
-  CHANGE_THEME,
-  CHANGE_WIDGET_VISIBILITY,
-  UPDATE_ACTIVE_FONT_FACE,
-  UPDATE_FONT_SIZE_MULTIPLIER,
-  UPDATE_LINE_HEIGHT,
-  WIDGETS_LOCK,
-  IMPORT_PREFERENCES
+  toggleFontUppercase,
+  toggleTextHighlighting,
+  setWidgetsLock,
+  updateLineHeight,
+  updateFontSizeMultiplier,
+  updateActiveFontFace,
+  toggleWidgetVisibility
 } from '../actions/preferences';
-import { CHANGE_WIDGETS, LOAD_CONFIGURATION } from '../actions/shared';
-import {
-  AVAILABLE_PLAYBACK_RATES,
-  AVAILABLE_THEMES,
-  AVAILABLE_LANGUAGES,
-  SELECTABLE_FONT_FACES,
-  FONT_SIZE_MULTIPLIERS,
-  SELECTABLE_LINE_HEIGHTS
-} from '../constants';
-import {
-  DEFAULT_FONT_FACE,
-  DEFAULT_FONT_UPPERCASE,
-  DEFAULT_FONT_SIZE_MULTIPLIER,
-  DEFAULT_LANG,
-  DEFAULT_LINE_HEIGHT,
-  DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
-  DEFAULT_SEEK_STEP,
-  DEFAULT_SEEK_STEP_MULTIPLIER,
-  DEFAULT_TEXT_HIGHLIGHTING,
-  DEFAULT_THEME,
-  DEFAULT_VOLUME_STEP,
-  DEFAULT_VOLUME_STEP_MULTIPLIER
-} from '../constants/preferences';
-import { DEFAULT_WIDGETS } from '../constants/widgets';
-import { CHANGE_ACTIVE_PRESET } from '../actions/presets';
+import { changeUILanguage, changeActiveTheme } from '../actions/preferences';
+import { importPreferencesAction } from '../actions/preferences';
+import { updateWidget } from '../actions/shared/remote-loader';
+import { updateActivePreset } from '../actions/presets';
 import { IPreset } from './presets';
-import { IStdAction } from '../types';
+import { initialPreferencesState } from '../constants/default-preferences-state';
 
 export interface IWidget {
   ghost?: boolean;
@@ -79,122 +57,95 @@ export interface IPreferencesState {
   widgets: IWidget[];
 }
 
-export const initialPreferencesState: IPreferencesState = {
-  fontFace: DEFAULT_FONT_FACE,
-  fontFaces: SELECTABLE_FONT_FACES,
-  fontSizeMultiplier: DEFAULT_FONT_SIZE_MULTIPLIER,
-  fontSizeMultipliers: FONT_SIZE_MULTIPLIERS,
-  fontUppercase: DEFAULT_FONT_UPPERCASE,
-  language: DEFAULT_LANG,
-  languages: AVAILABLE_LANGUAGES,
-  lineHeight: DEFAULT_LINE_HEIGHT,
-  lineHeightValues: SELECTABLE_LINE_HEIGHTS,
-  playbackRates: AVAILABLE_PLAYBACK_RATES,
-  previousChapterSeekThreshold: DEFAULT_PREVIOUS_CHAPTER_SEEK_THRESHOLD,
-  seekStep: DEFAULT_SEEK_STEP,
-  seekStepMultiplier: DEFAULT_SEEK_STEP_MULTIPLIER,
-  textHighlighting: DEFAULT_TEXT_HIGHLIGHTING,
-  theme: DEFAULT_THEME,
-  themes: AVAILABLE_THEMES,
-  volumeStep: DEFAULT_VOLUME_STEP,
-  volumeStepMultiplier: DEFAULT_VOLUME_STEP_MULTIPLIER,
-  widgets: DEFAULT_WIDGETS
-};
+const preferencesReducer = createReducer(initialPreferencesState, {
+  [importPreferencesAction.toString()]: (state, action) => {
+    return action.payload;
+  },
+  [updateActivePreset.toString()]: (state, action) => {
+    return {
+      fontFace: action.payload.fontFace,
+      fontFaces: [...action.payload.fontFaces],
+      fontUppercase: action.payload.fontUppercase,
+      fontSizeMultiplier: action.payload.fontSizeMultiplier,
+      fontSizeMultipliers: [...action.payload.fontSizeMultipliers],
+      language: action.payload.language,
+      languages: [...action.payload.languages],
+      lineHeight: action.payload.lineHeight,
+      lineHeightValues: [...action.payload.lineHeightValues],
+      playbackRates: [...action.payload.playbackRates],
+      previousChapterSeekThreshold: action.payload.previousChapterSeekThreshold,
+      seekStep: action.payload.seekStep,
+      seekStepMultiplier: action.payload.seekStepMultiplier,
+      textHighlighting: action.payload.textHighlighting,
+      theme: action.payload.theme,
+      themes: [...action.payload.themes],
+      volumeStep: action.payload.volumeStep,
+      volumeStepMultiplier: action.payload.volumeStepMultiplier,
+      widgets: [...action.payload.widgets]
+    };
+  },
+  [changeUILanguage.toString()]: (state, action) => {
+    state.language = action.payload;
+  },
+  [changeActiveTheme.toString()]: (state, action) => {
+    state.theme = action.payload;
+  },
+  [loadConfiguration.toString()]: (state, action) => {
+    const activePreset = action.payload.presets.find(
+      (p: IPreset) => p.selected
+    );
 
-const preferences: Reducer<IPreferencesState, IStdAction> = (
-  state = initialPreferencesState,
-  action
-) => {
-  switch (action.type) {
-    case IMPORT_PREFERENCES:
-      return action.payload;
-    case CHANGE_ACTIVE_PRESET:
-      return action.payload.preset;
-    case CHANGE_LANGUAGE:
-      return {
-        ...state,
-        language: action.payload.language
-      };
-    case CHANGE_THEME:
-      return {
-        ...state,
-        theme: action.payload.theme
-      };
-    case LOAD_CONFIGURATION: {
-      const activePreset = action.payload.presets.find(
-        (p: IPreset) => p.selected
-      );
-
-      return Object.assign(
-        cloneDeep(initialPreferencesState),
-        cloneDeep(activePreset),
-        cloneDeep(state)
-      );
-    }
-    case CHANGE_WIDGETS:
-      return {
-        ...state,
-        widgets: state.widgets.map((widget: IWidget) => {
-          if (widget.name === action.payload.widgetName) {
-            return {
-              ...widget,
-              ...action.payload.widget
-            };
-          }
-
-          return widget;
-        })
-      };
-    case WIDGETS_LOCK:
-      return {
-        ...state,
-        widgets: state.widgets.map((widget: IWidget) => ({
+    return Object.assign(
+      cloneDeep(initialPreferencesState),
+      cloneDeep(activePreset),
+      cloneDeep(state)
+    );
+  },
+  [updateWidget.toString()]: (state, action) => {
+    state.widgets = state.widgets.map((widget) => {
+      if (widget.name === action.payload.name) {
+        return {
           ...widget,
-          locked: action.payload.locked
-        }))
-      };
-    case CHANGE_WIDGET_VISIBILITY:
-      return {
-        ...state,
-        widgets: state.widgets.map((widget: IWidget) => ({
-          ...widget,
-          visible:
-            widget.name === action.payload.widgetName
-              ? action.payload.visible
-              : widget.visible
-        }))
-      };
-    case UPDATE_ACTIVE_FONT_FACE:
-      return {
-        ...state,
-        fontFace: action.payload.fontFace
-      };
-    case UPDATE_FONT_SIZE_MULTIPLIER:
-      return {
-        ...state,
-        fontSizeMultiplier: action.payload.fontSizeMultiplier
-      };
-    case CHANGE_TEXT_HIGHLIGHTING:
-      return {
-        ...state,
-        textHighlighting: action.payload.textHighlighting
-      };
-    case CHANGE_TEXT_UPPERCASE:
-      return {
-        ...state,
-        fontUppercase: action.payload.fontUppercase
-      };
-    case UPDATE_LINE_HEIGHT:
-      return {
-        ...state,
-        lineHeight: action.payload.lineHeight
-      };
-    default:
-      return state;
+          ...action.payload.widget
+        };
+      }
+
+      return widget;
+    });
+  },
+  [setWidgetsLock.toString()]: (state, action) => {
+    state.widgets = state.widgets.map((widget: IWidget) => ({
+      ...widget,
+      locked: action.payload
+    }));
+  },
+  [toggleWidgetVisibility.toString()]: (state, action) => {
+    state.widgets = state.widgets.map((widget: IWidget) => {
+      const w = { ...widget };
+
+      if (w === action.payload) {
+        w.visible = !w.visible;
+      }
+
+      return w;
+    });
+  },
+  [updateActiveFontFace.toString()]: (state, action) => {
+    state.fontFace = action.payload;
+  },
+  [updateFontSizeMultiplier.toString()]: (state, action) => {
+    state.fontSizeMultiplier = action.payload;
+  },
+  [toggleTextHighlighting.toString()]: (state) => {
+    state.textHighlighting = !state.textHighlighting;
+  },
+  [toggleFontUppercase.toString()]: (state) => {
+    state.fontUppercase = !state.fontUppercase;
+  },
+  [updateLineHeight.toString()]: (state, action) => {
+    state.lineHeight = action.payload;
   }
-};
-
-export default preferences;
+});
 
 export function preferencesToYAML(state: DeepPartial<IPreferencesState>) {
   const exportedKeys = [
@@ -237,3 +188,5 @@ export function getLocalPreferencesState() {
     return undefined;
   }
 }
+
+export default preferencesReducer;

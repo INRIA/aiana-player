@@ -1,19 +1,19 @@
-import { Reducer } from 'redux';
-import { LOAD_CONFIGURATION } from '../actions/shared';
+import { loadConfiguration } from '../actions/shared/configuration';
 import {
-  ADD_SUBTITLES_TRACK,
-  SET_SUBTITLE_TEXT,
-  UPDATE_ACTIVE_SUBTITLES_TRACK,
-  UPDATE_SUBTITLES_TRACKS_LIST
+  setSubtitlesText,
+  addSubtitlesTrack,
+  updateSubtitlesTracksList,
+  updateActiveSubtitles
 } from '../actions/subtitles';
 import {
   IRawSubtitlesTrack,
   isActiveTrack,
   isDisplayableTrack,
-  IMediaCue
+  IMediaCue,
+  ILightCue
 } from '../utils/media';
-import { IStdAction } from '../types';
 import { ITrack } from '../components/media/MediaSubtitlesTrack';
+import { createReducer } from 'redux-starter-kit';
 
 export interface ISubtitlesTrack {
   label?: string;
@@ -43,52 +43,29 @@ const initialState = {
   subtitlesTracks: []
 };
 
-const subtitles: Reducer<ISubtitlesState, IStdAction> = (
-  state = initialState,
-  action
-) => {
-  switch (action.type) {
-    case ADD_SUBTITLES_TRACK: {
-      const subtitlesTracks = ([] as IRawSubtitlesTrack[]).concat(
-        state.subtitlesTracks,
-        action.payload.subtitlesTrack
-      );
-
-      return {
-        ...state,
-        subtitlesTracks
-      };
-    }
-    case UPDATE_SUBTITLES_TRACKS_LIST:
-      return {
-        ...state,
-        subtitlesTracks: action.payload.subtitlesTracks
-      };
-    case UPDATE_ACTIVE_SUBTITLES_TRACK: {
-      return {
-        ...state,
-        subtitlesTracks: toggleSubtitlesTracks(
-          state.subtitlesTracks,
-          action.payload.subtitlesTrackLanguage
-        )
-      };
-    }
-    case SET_SUBTITLE_TEXT:
-      return {
-        ...state,
-        subtitlesText: action.payload.subtitlesText
-      };
-    case LOAD_CONFIGURATION:
-      return {
-        ...state,
-        ...action.payload.subtitles
-      };
-    default:
-      return state;
+const subtitlesReducer = createReducer(initialState, {
+  [addSubtitlesTrack.toString()]: (state: ISubtitlesState, action) => {
+    state.subtitlesTracks.push(action.payload);
+  },
+  [updateSubtitlesTracksList.toString()]: (state: ISubtitlesState, action) => {
+    state.subtitlesTracks = action.payload;
+  },
+  [updateActiveSubtitles.toString()]: (state: ISubtitlesState, action) => {
+    state.subtitlesTracks = toggleSubtitlesTracks(
+      state.subtitlesTracks,
+      action.payload
+    );
+  },
+  [setSubtitlesText.toString()]: (state: ISubtitlesState, action) => {
+    state.subtitlesText = action.payload;
+  },
+  [loadConfiguration.toString()]: (state: ISubtitlesState, action) => {
+    return {
+      ...state,
+      ...action.payload.subtitles
+    };
   }
-};
-
-export default subtitles;
+});
 
 function toggleTrackActive(language: string) {
   return function(track: IRawSubtitlesTrack): IRawSubtitlesTrack {
@@ -132,7 +109,7 @@ export function getSelectedSubtitlesTrackCues(
 
   return !track
     ? undefined
-    : [...track.cues].map((cue: TextTrackCue) => ({
+    : [...track.cues].map((cue: ILightCue) => ({
         endTime: cue.endTime,
         startTime: cue.startTime,
         text: cue.text
@@ -153,3 +130,5 @@ export function getDisplayableSubtitlesTracks(
 export function getDisplayableSubtitlesSources(tracks: ITrack[]) {
   return tracks.filter(isDisplayableTrack);
 }
+
+export default subtitlesReducer;

@@ -37,3 +37,8 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
 export interface IStdAction extends AnyAction {
   payload: any;
 }
+
+export interface ICueBoundaries {
+  from: number;
+  to: number;
+}

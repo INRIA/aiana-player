@@ -2,8 +2,8 @@ import styled from '../../utils/styled-components';
 import classNames from 'classnames';
 import React, { Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { handleFullscreenChange } from '../../actions/player';
-import { handleFetchInitialData } from '../../actions/shared';
+import { toggleFullscreenChangeAction } from '../../actions/player';
+import { handleFetchInitialData } from '../../actions/shared/remote-loader';
 import SvgFilters from '../../components/shared/filters';
 import { IAianaState } from '../../reducers';
 import themes from '../../themes';
@@ -141,7 +141,7 @@ function mapState(state: IAianaState) {
 
 const mapDispatch = {
   handleFetchInitialData,
-  handleFullscreenChange
+  handleFullscreenChange: toggleFullscreenChangeAction
 };
 
 export default connect(

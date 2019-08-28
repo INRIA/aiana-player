@@ -106,6 +106,7 @@ class MediaSubtitlesTrack extends Component<ITrackProps> {
       this.trackRef.current!.track,
       this.props.subtitlesLanguage
     );
+
     this.props.addSubtitlesTrack(chaptersTrack);
   };
 

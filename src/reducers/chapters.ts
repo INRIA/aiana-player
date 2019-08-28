@@ -1,15 +1,13 @@
-import { Reducer } from 'redux';
 import {
-  ADD_CHAPTER_TRACK,
-  TOGGLE_CHAPTERS_MENU,
-  UPDATE_ACTIVE_CHAPTERS_TRACK,
-  UPDATE_CHAPTER_TEXT
+  addChaptersTrack,
+  setChapterText,
+  updateActiveChaptersTrack
 } from '../actions/chapters';
-import { LOAD_CONFIGURATION } from '../actions/shared';
+import { loadConfiguration } from '../actions/shared/configuration';
 import { DEFAULT_MENU_ENABLED } from '../constants';
 import { DEFAULT_LANG } from '../constants/preferences';
 import { IRawChaptersTrack } from '../utils/media';
-import { IStdAction } from '../types';
+import { createReducer } from 'redux-starter-kit';
 
 export interface IChaptersTrack {
   label: string;
@@ -32,58 +30,29 @@ const initialState: IChaptersState = {
   sources: []
 };
 
-const chapters: Reducer<IChaptersState, IStdAction> = (
-  state = initialState,
-  action
-) => {
-  switch (action.type) {
-    case TOGGLE_CHAPTERS_MENU:
-      return {
-        ...state,
-        menuEnabled: action.payload.enabled
-      };
-    case UPDATE_CHAPTER_TEXT:
-      return {
-        ...state,
-        currentText: action.payload.text
-      };
-    case ADD_CHAPTER_TRACK: {
-      const chaptersTracks = ([] as IRawChaptersTrack[]).concat(
-        state.chaptersTracks,
-        action.payload.chaptersTrack as IRawChaptersTrack
-      );
+export const chaptersReducer = createReducer(initialState, {
+  [setChapterText.toString()]: (state: IChaptersState, action) => {
+    state.currentText = action.payload;
+  },
+  [addChaptersTrack.toString()]: (state: IChaptersState, action) => {
+    state.chaptersTracks.push(action.payload);
+  },
+  [updateActiveChaptersTrack.toString()]: (state: IChaptersState, action) => {
+    const lang = action.payload;
 
-      return {
-        ...state,
-        chaptersTracks
-      };
-    }
-    case UPDATE_ACTIVE_CHAPTERS_TRACK: {
-      const chaptersTracks = state.chaptersTracks.map((track) => {
-        if (track.language === action.payload.language) {
-          return { ...track, active: true };
-        }
-        if (track.active === true) {
-          return { ...track, active: false };
-        }
-        return { ...track };
-      });
-
-      return {
-        ...state,
-        chaptersTracks,
-        language: action.payload.language
-      };
-    }
-    case LOAD_CONFIGURATION:
-      return {
-        ...state,
-        ...action.payload.chapters
-      };
-    default:
-      return state;
+    state.language = lang;
+    state.chaptersTracks = state.chaptersTracks.map((track) => ({
+      ...track,
+      active: track.language === lang
+    }));
+  },
+  [loadConfiguration.toString()]: (state: IChaptersState, action) => {
+    return {
+      ...state,
+      ...action.payload.chapters
+    };
   }
-};
+});
 
 export function getSelectedChaptersTrack(state: IChaptersState) {
   return state.chaptersTracks.find(
@@ -102,4 +71,4 @@ export function getSelectedChaptersLanguage(state: IChaptersState): string {
   return selectedTrack ? selectedTrack.language : '';
 }
 
-export default chapters;
+export default chaptersReducer;

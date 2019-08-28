@@ -3,9 +3,8 @@ import { IPreset } from '../reducers/presets';
 import { ThunkResult } from '../types';
 import { changeLanguage } from './preferences';
 import { CDispatch } from '../store';
-import { initialPreferencesState } from '../reducers/preferences';
-
-export const CHANGE_ACTIVE_PRESET = 'aiana/CHANGE_ACTIVE_PRESET';
+import { initialPreferencesState } from '../constants/default-preferences-state';
+import { createAction } from 'redux-starter-kit';
 
 export function changeActivePreset(preset?: IPreset): ThunkResult<void> {
   return (dispatch: CDispatch) => {
@@ -15,12 +14,8 @@ export function changeActivePreset(preset?: IPreset): ThunkResult<void> {
     );
 
     dispatch(changeLanguage(safePreset.language));
-
-    dispatch({
-      payload: {
-        preset: safePreset
-      },
-      type: CHANGE_ACTIVE_PRESET
-    });
+    dispatch(updateActivePreset(safePreset));
   };
 }
+
+export const updateActivePreset = createAction<IPreset>('CHANGE_ACTIVE_PRESET');

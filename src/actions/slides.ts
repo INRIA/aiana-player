@@ -1,11 +1,8 @@
 import { CDispatch } from '../store';
-import { ThunkResult, IStdAction } from '../types';
+import { ThunkResult, ICueBoundaries } from '../types';
 import { IRawSlidesTrack } from '../utils/media';
 import { requestSeek } from './player';
-
-export const SET_SLIDES_TEXT = 'aiana/SET_SLIDES_TEXT';
-export const ADD_SLIDES_TRACK = 'aiana/ADD_SLIDES_TRACK';
-export const UPDATE_ACTIVE_SLIDES_TRACK = 'aiana/UPDATE_ACTIVE_SLIDES_TRACK';
+import { createAction } from 'redux-starter-kit';
 
 export const PREVIOUS_SLIDE = 'aiana/PREVIOUS_SLIDE';
 export const NEXT_SLIDE = 'aiana/NEXT_SLIDE';
@@ -17,7 +14,7 @@ export function seekNextSlide(
 ): ThunkResult<void> {
   return (dispatch: CDispatch) => {
     dispatch(requestSeek(mediaSelector, to));
-    dispatch(nextSlide(from, to));
+    dispatch(nextSlide({ from, to }));
   };
 }
 
@@ -28,53 +25,19 @@ export function seekPreviousSlide(
 ): ThunkResult<void> {
   return (dispatch: CDispatch) => {
     dispatch(requestSeek(mediaSelector, to));
-    dispatch(previousSlide(from, to));
+    dispatch(previousSlide({ from, to }));
   };
 }
 
-function previousSlide(from: number, to: number): IStdAction {
-  return {
-    payload: {
-      from,
-      to
-    },
-    type: PREVIOUS_SLIDE
-  };
-}
+export const previousSlide = createAction<ICueBoundaries>('PREVIOUS_SLIDE');
+export const nextSlide = createAction<ICueBoundaries>('NEXT_SLIDE');
 
-function nextSlide(from: number, to: number): IStdAction {
-  return {
-    payload: {
-      from,
-      to
-    },
-    type: NEXT_SLIDE
-  };
-}
+export const setSlidesText = createAction<string | undefined>(
+  'SET_SLIDES_TEXT'
+);
 
-export function setSlidesText(text?: string) {
-  return {
-    payload: {
-      text
-    },
-    type: SET_SLIDES_TEXT
-  };
-}
+export const addSlidesTrack = createAction<IRawSlidesTrack>('ADD_SLIDES_TRACK');
 
-export function addSlidesTrack(track: IRawSlidesTrack): IStdAction {
-  return {
-    payload: {
-      track
-    },
-    type: ADD_SLIDES_TRACK
-  };
-}
-
-export function updateActiveSlidesTrack(language: string): IStdAction {
-  return {
-    payload: {
-      language
-    },
-    type: UPDATE_ACTIVE_SLIDES_TRACK
-  };
-}
+export const updateActiveSlidesTrack = createAction<string>(
+  'UPDATE_ACTIVE_SLIDES_TRACK'
+);

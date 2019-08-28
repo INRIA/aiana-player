@@ -1,9 +1,8 @@
-import { Reducer } from 'redux';
-import { LOAD_CONFIGURATION } from '../actions/shared';
 import { IWidget } from './preferences';
-import { CHANGE_ACTIVE_PRESET } from '../actions/presets';
-import { IStdAction } from '../types';
+import { updateActivePreset } from '../actions/presets';
 import { BASE_PRESETS } from '../constants/presets';
+import { createReducer } from 'redux-starter-kit';
+import { loadConfiguration } from '../actions/shared/configuration';
 
 export interface IPreset {
   fontFace: string;
@@ -51,34 +50,29 @@ function concatPresets(...presets: IPreset[][]): IPreset[] {
   return emptyPresetsList().concat(...presets);
 }
 
-const presets: Reducer<IPreset[], IStdAction> = (state = [], action) => {
-  switch (action.type) {
-    case CHANGE_ACTIVE_PRESET:
-      return state.map((preset) => ({
-        ...preset,
-        selected: action.payload.preset
-          ? preset.name === action.payload.preset.name
-          : false
-      }));
-    case LOAD_CONFIGURATION: {
-      const { presets: actionPresets = [] } = action.payload;
+const presetsReducer = createReducer([] as IPreset[], {
+  [updateActivePreset.toString()]: (state: IPreset[], action) => {
+    return state.map((preset) => ({
+      ...preset,
+      selected: action.payload ? preset.name === action.payload.name : false
+    }));
+  },
+  [loadConfiguration.toString()]: (state: IPreset[], action) => {
+    const { presets: actionPresets = [] } = action.payload;
 
-      const prevPresets = concatPresets(
-        [...(BASE_PRESETS as IPreset[])],
-        [...state]
-      );
+    const prevPresets = concatPresets(
+      [...(BASE_PRESETS as IPreset[])],
+      [...state]
+    );
 
-      const deduped = dedupPresets(prevPresets, actionPresets);
+    const deduped = dedupPresets(prevPresets, actionPresets);
 
-      return concatPresets(prevPresets, deduped);
-    }
-    default:
-      return state;
+    return concatPresets(prevPresets, deduped);
   }
-};
+});
 
 export function getActivePreset(state: IPreset[]): IPreset | undefined {
   return state.find((p) => p.selected === true);
 }
 
-export default presets;
+export default presetsReducer;

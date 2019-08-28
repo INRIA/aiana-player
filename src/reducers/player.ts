@@ -1,22 +1,22 @@
-import { Reducer, DeepPartial } from 'redux';
+import { DeepPartial } from 'redux';
 import {
-  ADD_METADATA_TRACK,
-  MEDIA_PAUSE,
-  MEDIA_PLAY,
-  MEDIA_PLAYBACK_RATE,
-  MEDIA_REQUEST_SEEK,
-  MEDIA_REQUEST_VOLUME_CHANGE,
-  MEDIA_SEEK_TOGGLE,
-  MEDIA_TOGGLE_MUTE,
-  MEDIA_UPDATE_DURATION,
-  MEDIA_UPDATE_TIME,
-  MEDIA_VOLUME_CHANGE,
-  SET_ADDITIONAL_INFO_TEXT,
-  SET_BUFFERED_RANGES,
-  TOGGLE_FULLSCREEN,
-  UPDATE_RATING
+  updateRating,
+  updateBufferedRanges,
+  setAdditionalInformationText,
+  addAdditionalInformationTrack,
+  startSeeking,
+  stopSeeking,
+  seek,
+  setCurrentTime,
+  toggleFullscreenChangeAction,
+  playMedia,
+  pauseMedia,
+  updateMediaDuration,
+  changeVolume,
+  toggleMute,
+  changePlaybackRate
 } from '../actions/player';
-import { LOAD_CONFIGURATION } from '../actions/shared';
+import { loadConfiguration } from '../actions/shared/configuration';
 import { ITrack } from '../components/media/MediaSubtitlesTrack';
 import {
   DEFAULT_MUTED,
@@ -26,12 +26,12 @@ import {
   DEFAULT_AUTOPLAY,
   MEDIA_SELECTOR
 } from '../constants/player';
-import { IStdAction } from '../types';
 import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
-import { CHANGE_MEDIA_SOURCE } from '../actions/preferences';
+import { changeMediaSource } from '../actions/preferences';
 import { safeDump, safeLoad } from 'js-yaml';
 import { cloneDeep } from 'lodash';
 import { APP_ROOT_SELECTOR } from '../constants';
+import { createReducer } from 'redux-starter-kit';
 
 export interface IPlayerState {
   additionalInformationText?: string;
@@ -103,110 +103,66 @@ export const initialPlayerState: IPlayerState = {
   volume: DEFAULT_VOLUME
 };
 
-const player: Reducer<IPlayerState, IStdAction> = (
-  state = initialPlayerState,
-  action
-) => {
-  const { payload, type } = action;
-
-  switch (type) {
-    case UPDATE_RATING:
-      return {
-        ...state,
-        rating: payload.rating
-      };
-    case SET_BUFFERED_RANGES:
-      return {
-        ...state,
-        bufferedRanges: payload.bufferedRanges
-      };
-    case TOGGLE_FULLSCREEN:
-      return {
-        ...state,
-        isFullscreen: payload.isFullscreen
-      };
-    case MEDIA_PLAY:
-    case MEDIA_PAUSE:
-      return {
-        ...state,
-        isPlaying: payload.isPlaying
-      };
-    case MEDIA_PLAYBACK_RATE:
-      return {
-        ...state,
-        playbackRate: payload.playbackRate
-      };
-    case MEDIA_TOGGLE_MUTE:
-      return {
-        ...state,
-        isMuted: payload.isMuted
-      };
-    case MEDIA_REQUEST_VOLUME_CHANGE:
-    case MEDIA_VOLUME_CHANGE:
-      return {
-        ...state,
-        volume: payload.volume
-      };
-    case MEDIA_UPDATE_DURATION:
-      return {
-        ...state,
-        duration: payload.duration
-      };
-    case MEDIA_UPDATE_TIME:
-      return {
-        ...state,
-        currentTime: payload.currentTime
-      };
-    case MEDIA_REQUEST_SEEK:
-      return {
-        ...state,
-        seekingTime: payload.seekingTime
-      };
-    case MEDIA_SEEK_TOGGLE:
-      return {
-        ...state,
-        isSeeking: payload.isSeeking,
-        seekingTime: payload.isSeeking ? state.seekingTime : 0
-      };
-    case SET_ADDITIONAL_INFO_TEXT:
-      return {
-        ...state,
-        additionalInformationText: payload.text
-      };
-    case ADD_METADATA_TRACK:
-      const metadataTracks = [].concat(
-        state.metadataTracks as any,
-        payload.track
-      );
-
-      return {
-        ...state,
-        metadataTracks
-      };
-    case LOAD_CONFIGURATION: {
-      return Object.assign(
-        cloneDeep(initialPlayerState),
-        cloneDeep(payload.player)
-      );
-    }
-    case CHANGE_MEDIA_SOURCE: {
-      const sources = state.sources.map((source: ISource) => {
-        return {
-          ...source,
-          selected: source.src === payload.mediaSource
-        };
-      });
-      return {
-        ...state,
-        sources
-      };
-    }
-    default:
-      return state;
+export const playerReducer = createReducer(initialPlayerState, {
+  [updateRating.toString()]: (state: IPlayerState, action) => {
+    state.rating = action.payload;
+  },
+  [updateBufferedRanges.toString()]: (state: IPlayerState, action) => {
+    state.bufferedRanges = action.payload;
+  },
+  [toggleFullscreenChangeAction.toString()]: (state: IPlayerState, action) => {
+    state.isFullscreen = action.payload;
+  },
+  [playMedia.toString()]: (state: IPlayerState) => {
+    state.isPlaying = true;
+  },
+  [pauseMedia.toString()]: (state: IPlayerState) => {
+    state.isPlaying = false;
+  },
+  [changePlaybackRate.toString()]: (state: IPlayerState, action) => {
+    state.playbackRate = action.payload;
+  },
+  [toggleMute.toString()]: (state: IPlayerState) => {
+    state.isMuted = !state.isMuted;
+  },
+  [changeVolume.toString()]: (state: IPlayerState, action) => {
+    state.volume = action.payload;
+  },
+  [updateMediaDuration.toString()]: (state: IPlayerState, action) => {
+    state.duration = action.payload;
+  },
+  [setCurrentTime.toString()]: (state: IPlayerState, action) => {
+    state.currentTime = action.payload;
+  },
+  [seek.toString()]: (state: IPlayerState, action) => {
+    state.seekingTime = action.payload;
+  },
+  [startSeeking.toString()]: (state: IPlayerState) => {
+    state.isSeeking = true;
+  },
+  [stopSeeking.toString()]: (state: IPlayerState) => {
+    state.isSeeking = false;
+    state.seekingTime = 0;
+  },
+  [setAdditionalInformationText.toString()]: (state: IPlayerState, action) => {
+    state.additionalInformationText = action.payload;
+  },
+  [addAdditionalInformationTrack.toString()]: (state: IPlayerState, action) => {
+    state.metadataTracks.push(action.payload);
+  },
+  [loadConfiguration.toString()]: (state: IPlayerState, action) => {
+    return Object.assign(
+      cloneDeep(initialPlayerState),
+      cloneDeep(action.payload.player)
+    );
+  },
+  [changeMediaSource.toString()]: (state: IPlayerState, action) => {
+    state.sources = state.sources.map((source: ISource) => ({
+      ...source,
+      selected: source.src === action.payload
+    }));
   }
-};
-
-export default player;
+});
 
 export function getLocalPlayerState(mid: string) {
   try {
@@ -250,3 +206,5 @@ export function isSelectedSource(source: ISource): boolean {
 export function getSelectedMediaSource(sources: ISource[]) {
   return sources.find(isSelectedSource);
 }
+
+export default playerReducer;
