@@ -1,5 +1,5 @@
 import { addBookmark } from '../actions/bookmarks';
-import { loadConfiguration } from '../actions/shared';
+import { loadConfiguration } from '../actions/shared/configuration';
 import { createReducer } from 'redux-starter-kit';
 
 export interface IBookmark {
@@ -8,38 +8,21 @@ export interface IBookmark {
 
 type IBookmarkState = IBookmark[];
 
-function hasBookmark(time: number, state: IBookmarkState): boolean {
-  return state.find((b) => b.time === time) ? true : false;
+function hasBookmarked(time: number, state: IBookmarkState): boolean {
+  return state.some((b) => b.time === time);
 }
 
-const bookmarksReducer = createReducer([], {
+export const bookmarksReducer = createReducer([] as any, {
   [addBookmark.toString()]: (state: IBookmarkState, action) => {
-    const { time } = action.payload;
+    const time = action.payload;
 
-    if (hasBookmark(time, state)) {
-      return state;
+    if (!hasBookmarked(time, state)) {
+      state.push({ time });
     }
-
-    return state.push({ time });
   },
   [loadConfiguration.toString()]: (state: IBookmarkState, action) => {
-    return state.push(action.payload.bookmarks);
+    return ([] as IBookmarkState).concat(...state, action.payload.bookmarks);
   }
 });
-// const bookmarks: Reducer<IBookmarkState, IStdAction> = (state = [], action) => {
-//   switch (action.type) {
-//     case ADD_BOOKMARK: {
-//       if (hasBookmark(action.payload, state)) {
-//         return state;
-//       }
-//       return ([] as IBookmark[]).concat(state, { time: action.payload });
-//     }
-//     case LOAD_CONFIGURATION: {
-//       return ([] as IBookmark[]).concat(state, action.payload.bookmarks);
-//     }
-//     default:
-//       return state;
-//   }
-// };
 
 export default bookmarksReducer;

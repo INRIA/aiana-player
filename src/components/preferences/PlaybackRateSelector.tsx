@@ -12,7 +12,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  changePlaybackRate(mediaSelector: string, playbackRate: number): void;
+  changePlaybackRate(playbackRate: number): void;
 }
 
 interface IPlaybackRateSelector
@@ -30,10 +30,16 @@ function PlaybackRateSelector(props: IPlaybackRateSelector) {
       <select
         aria-labelledby={uid}
         onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => {
-          props.changePlaybackRate(
-            props.mediaSelector,
-            Number(evt.currentTarget.value)
-          );
+          const playbackRate = Number(evt.currentTarget.value);
+          const media = document.querySelector(
+            props.mediaSelector
+          ) as HTMLMediaElement;
+
+          if (media) {
+            media.playbackRate = playbackRate;
+          }
+
+          props.changePlaybackRate(playbackRate);
         }}
         value={currentPlaybackRate}
       >

@@ -56,7 +56,12 @@ class MediaChapterTrack extends Component<IMediaChapterTrack> {
     const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
 
     // this track is active, but wasn't so at previous state.
-    if (prevActiveTrack && prevActiveTrack.label !== activeTrack!.label) {
+    if (
+      (activeTrack && !prevActiveTrack) ||
+      (activeTrack &&
+        prevActiveTrack &&
+        prevActiveTrack.label !== activeTrack.label)
+    ) {
       this.cueChangeHandler();
     }
   }

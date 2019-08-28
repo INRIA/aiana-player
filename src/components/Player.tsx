@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { updateWidget } from '../actions/shared';
+import { updateWidget } from '../actions/shared/remote-loader';
 import {
   WIDGET_ID_ADDITIONAL_INFORMATION,
   WIDGET_ID_CHAPTERS,

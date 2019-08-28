@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setWidgetVisibility } from '../../actions/preferences';
+import { toggleWidgetVisibility } from '../../actions/preferences';
 import GhostButton from '../../components/shared/GhostButton';
 import StyledSvg from '../../components/shared/styled-svg';
 import SvgCross from '../../components/svg/Cross';
@@ -63,7 +63,7 @@ function CloseWidgetButton(props: IProps) {
 function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
   return {
     clickHandler() {
-      dispatch(setWidgetVisibility(ownProps.widgetName, false));
+      dispatch(toggleWidgetVisibility(ownProps.widgetName));
     }
   };
 }

@@ -140,9 +140,7 @@ function withWidget(WrappedComponent: ComponentType<any>) {
             height: `${this.props.height + this.state.heightDiff}%`,
             left: `${this.props.left}%`,
             top: `${this.props.top}%`,
-            transform: `translate3d(${this.state.leftDiff}px, ${
-              this.state.topDiff
-            }px, 0)`,
+            transform: `translate3d(${this.state.leftDiff}px, ${this.state.topDiff}px, 0)`,
             width: `${this.props.width + this.state.widthDiff}%`
           }}
         >

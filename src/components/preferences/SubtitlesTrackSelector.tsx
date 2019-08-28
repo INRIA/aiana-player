@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { updateActiveSubtitlesTrack } from '../../actions/subtitles';
+import {
+  updateActiveSubtitles,
+  setSubtitlesText
+} from '../../actions/subtitles';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
@@ -61,7 +64,13 @@ function mapDispatch(dispatch: CDispatch) {
     selectedTrackChangedHandler: (
       evt: React.ChangeEvent<HTMLSelectElement>
     ) => {
-      dispatch(updateActiveSubtitlesTrack(evt.currentTarget.value));
+      const subtitlesTrackLanguage = evt.currentTarget.value;
+
+      dispatch(updateActiveSubtitles(subtitlesTrackLanguage));
+
+      if (subtitlesTrackLanguage === '') {
+        dispatch(setSubtitlesText());
+      }
     }
   };
 }

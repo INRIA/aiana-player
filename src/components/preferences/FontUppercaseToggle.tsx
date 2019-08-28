@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setFontUppercase } from '../../actions/preferences';
+import { toggleFontUppercase } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import ToggleButton from '../shared/toggle-button';
@@ -11,7 +11,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  setFontUppercase(fontUppercase: boolean): void;
+  toggleFontUppercase(): void;
 }
 
 interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
@@ -25,7 +25,7 @@ function FontUppercaseToggle(props: IProps) {
       <ToggleButton
         isOn={props.fontUppercase}
         labelledBy={props.uid}
-        onClick={() => props.setFontUppercase(!props.fontUppercase)}
+        onClick={() => props.toggleFontUppercase()}
       />
     </Fragment>
   );
@@ -38,7 +38,7 @@ function mapState(state: IAianaState) {
 }
 
 const mapDispatch: IDispatchProps = {
-  setFontUppercase
+  toggleFontUppercase
 };
 
 export default connect(

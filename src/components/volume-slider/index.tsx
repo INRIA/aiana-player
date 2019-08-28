@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestChangeVolume } from '../../actions/player';
+import { changeVolume } from '../../actions/player';
 import { VOLUME_MAXIMUM, VOLUME_MINIMUM } from '../../constants';
 import { DEFAULT_VOLUME_STEP_MULTIPLIER } from '../../constants/preferences';
 import {
@@ -28,7 +28,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  updateVolume(mediaSelector: string, volume: number): void;
+  updateVolumeHandler(mediaSelector: string, volume: number): void;
 }
 
 interface IVolumeSliderProps
@@ -90,34 +90,45 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
   }
 
   keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
-    const { mediaSelector, updateVolume, volume, volumeStep } = this.props;
+    const {
+      mediaSelector,
+      updateVolumeHandler,
+      volume,
+      volumeStep
+    } = this.props;
 
     switch (evt.key) {
       case ARROW_RIGHT_KEY:
       case ARROW_UP_KEY:
-        updateVolume(mediaSelector, this.safeVolume(volume + volumeStep));
+        updateVolumeHandler(
+          mediaSelector,
+          this.safeVolume(volume + volumeStep)
+        );
         break;
       case ARROW_LEFT_KEY:
       case ARROW_DOWN_KEY:
-        updateVolume(mediaSelector, this.safeVolume(volume - volumeStep));
+        updateVolumeHandler(
+          mediaSelector,
+          this.safeVolume(volume - volumeStep)
+        );
         break;
       case PAGE_UP_KEY:
-        updateVolume(
+        updateVolumeHandler(
           mediaSelector,
           this.safeVolume(volume + DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
         );
         break;
       case PAGE_DOWN_KEY:
-        updateVolume(
+        updateVolumeHandler(
           mediaSelector,
           this.safeVolume(volume - DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
         );
         break;
       case HOME_KEY:
-        updateVolume(mediaSelector, VOLUME_MINIMUM);
+        updateVolumeHandler(mediaSelector, VOLUME_MINIMUM);
         break;
       case END_KEY:
-        updateVolume(mediaSelector, VOLUME_MAXIMUM);
+        updateVolumeHandler(mediaSelector, VOLUME_MAXIMUM);
         break;
     }
   };
@@ -142,7 +153,7 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
     this.sliderWidth = width;
 
     // trigger first recomputation to simulate simple click.
-    this.updateVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
+    this.mousePosToVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
@@ -156,11 +167,11 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
   };
 
   mouseMoveHandler = (evt: MouseEvent) => {
-    this.updateVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
+    this.mousePosToVolume(evt.pageX, this.sliderPosition, this.sliderWidth);
   };
 
-  updateVolume = (mouseX: number, sliderX: number, sliderWidth: number) => {
-    const { mediaSelector, updateVolume, volume } = this.props;
+  mousePosToVolume = (mouseX: number, sliderX: number, sliderWidth: number) => {
+    const { mediaSelector, updateVolumeHandler, volume } = this.props;
 
     try {
       const sliderXMax = sliderX + sliderWidth;
@@ -169,7 +180,7 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
       const newVolume = unitToRatio(positionDifference, sliderWidth);
 
       if (newVolume !== volume) {
-        updateVolume(mediaSelector, this.safeVolume(newVolume));
+        updateVolumeHandler(mediaSelector, this.safeVolume(newVolume));
       }
     } catch (error) {
       //
@@ -196,8 +207,14 @@ function mapState(state: IAianaState) {
 
 function mapDispatch(dispatch: CDispatch) {
   return {
-    updateVolume: (mediaSelector: string, volume: number) => {
-      dispatch(requestChangeVolume(mediaSelector, volume));
+    updateVolumeHandler: (mediaSelector: string, volume: number) => {
+      const media = document.querySelector(mediaSelector);
+
+      if (media) {
+        (media as HTMLMediaElement).volume = volume;
+      }
+
+      dispatch(changeVolume(volume));
     }
   };
 }

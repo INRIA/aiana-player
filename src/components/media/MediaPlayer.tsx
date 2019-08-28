@@ -9,7 +9,7 @@ import {
   stopSeeking,
   toggleMute,
   updateBufferedRanges,
-  updateCurrentTime,
+  setCurrentTime,
   updateMediaDuration
 } from '../../actions/player';
 import { updateSubtitlesTracksList } from '../../actions/subtitles';
@@ -18,7 +18,12 @@ import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
 import { ISource, getSelectedMediaSource } from '../../reducers/player';
 import { ISlidesTrack } from '../../reducers/slides';
-import { IRawSubtitlesTrack, isDisplayableTrack } from '../../utils/media';
+import {
+  IRawSubtitlesTrack,
+  isDisplayableTrack,
+  convertTimeRanges,
+  IBufferedRange
+} from '../../utils/media';
 import styled from '../../utils/styled-components';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
 import SlidesTrack from '../slides/SlidesTrack';
@@ -33,8 +38,8 @@ interface IDispatchProps {
   requestSeek(mediaSelector: string, seekingTime: number): void;
   startSeeking(): void;
   stopSeeking(): void;
-  toggleMute(muted: boolean): void;
-  updateBufferedRanges(timeRanges: TimeRanges): void;
+  toggleMute(): void;
+  updateBufferedRanges(timeRanges: IBufferedRange[]): void;
   updateCurrentTime(time: number): void;
   updateMediaDuration(duration: number): void;
   updateSubtitlesTracksList(subtitlesTracks: IRawSubtitlesTrack[]): void;
@@ -180,7 +185,8 @@ class MediaPlayer extends Component<IProps> {
   }
 
   progressHandler = () => {
-    this.props.updateBufferedRanges(this.media.current!.buffered);
+    const bufferedRanges = convertTimeRanges(this.media.current!.buffered);
+    this.props.updateBufferedRanges(bufferedRanges);
   };
 
   clickHandler = () => {
@@ -223,7 +229,8 @@ class MediaPlayer extends Component<IProps> {
 
     // only dispatch `toggleMute` when state is behind video object property
     if ((!isMuted && media.muted) || (isMuted && !media.muted)) {
-      this.props.toggleMute(media.muted);
+      // this.props.toggleMute(media.muted);
+      this.props.toggleMute();
     }
 
     if (media.volume !== volume) {
@@ -262,7 +269,7 @@ const mapDispatch = {
   stopSeeking,
   toggleMute,
   updateBufferedRanges,
-  updateCurrentTime,
+  updateCurrentTime: setCurrentTime,
   updateMediaDuration,
   updateSubtitlesTracksList
 };

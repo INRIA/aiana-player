@@ -66,9 +66,7 @@ class AdditionalInfosTrack extends Component<IChapterTrack> {
 
   loadHandler = () => {
     const metadataTrack = rawTextTrack(this.trackRef.current!.track);
-    console.log(metadataTrack);
-
-    // this.props.addMetadataTrack(metadataTrack);
+    this.props.addMetadataTrack(metadataTrack);
   };
 
   cueChangeHandler = () => {

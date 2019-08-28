@@ -4,7 +4,7 @@ import GhostButton from '../../shared/GhostButton';
 interface IPanelToggleProps {
   children: ReactNode;
   isExpanded: boolean;
-  clickHandler: () => void;
+  clickHandler(): void;
 }
 
 function PanelToggle(props: IPanelToggleProps) {

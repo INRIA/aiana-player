@@ -2,7 +2,7 @@ import throttle from 'lodash.throttle';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from 'redux-starter-kit';
-import reducers, { IAianaState } from '../../reducers';
+import rootReducer, { IAianaState } from '../../reducers';
 import ConnectedAiana from './ConnectedAiana';
 import i18n from '../../i18n';
 import {
@@ -12,13 +12,13 @@ import {
 import { stateToYAML as playerToYAML } from '../../reducers/player';
 
 const store = configureStore({
-  reducer: reducers,
+  reducer: rootReducer,
   preloadedState: loadState()
 });
 
 store.subscribe(
   throttle(() => {
-    saveStateToLocalStorage(store.getState());
+    saveStateToLocalStorage(store.getState() as IAianaState);
   }, 1000)
 );
 
@@ -37,6 +37,10 @@ function loadState() {
   }
 }
 
+function genStoragePlayerKey(mediaId: string) {
+  return `aiana-media-${mediaId}`;
+}
+
 function saveStateToLocalStorage(state: IAianaState) {
   try {
     const serializedPreferences = preferencesToYAML(state.preferences);
@@ -46,7 +50,7 @@ function saveStateToLocalStorage(state: IAianaState) {
       const serializedPlayer = playerToYAML(state.player);
 
       localStorage.setItem(
-        `aiana-media-${state.player.mediaId}`,
+        genStoragePlayerKey(state.player.mediaId),
         serializedPlayer
       );
     }
