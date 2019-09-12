@@ -1,70 +1,70 @@
-import React, { Component } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestMediaPause, requestMediaPlay } from '../../../actions/player';
+import { pauseMedia, playMedia } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import PlayControlIcon from './ControlIcon';
+import MediaContext from '../../../contexts/MediaContext';
 
 export interface IPlayButtonProps {
   isPlaying: boolean;
-  mediaSelector: string;
 }
 
 interface IDispatchProps {
-  requestMediaPause(mediaSelector: string): void;
-  requestMediaPlay(mediaSelector: string): void;
+  pauseMedia(): void;
+  playMedia(): void;
 }
 
-interface IProps extends IPlayButtonProps, IDispatchProps, WithTranslation {}
+interface IProps extends IPlayButtonProps, IDispatchProps {}
 
 const StyledPlayButton = styled(GhostButton)`
   padding: 0 6px;
   width: calc(2.25em + 2 * 6px);
 `;
 
-class PlayButton extends Component<IProps> {
-  render() {
-    return (
-      <StyledPlayButton onClick={this.clickHandler} type="button">
-        <PlayControlIcon isPlaying={this.props.isPlaying} />
-        <AssistiveText>{this.getControlText()}</AssistiveText>
-      </StyledPlayButton>
-    );
-  }
+function PlayButton(props: IProps) {
+  const [media] = useContext(MediaContext);
 
-  clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
+  const [t] = useTranslation();
 
-    if (this.props.isPlaying) {
-      this.props.requestMediaPause(this.props.mediaSelector);
-    } else if (!this.props.isPlaying) {
-      this.props.requestMediaPlay(this.props.mediaSelector);
-    }
-  };
+  return (
+    <StyledPlayButton
+      type="button"
+      onClick={(evt) => {
+        evt.preventDefault();
 
-  getControlText = () => {
-    const { t, isPlaying } = this.props;
-
-    return isPlaying ? t('controls.pause') : t('controls.play');
-  };
+        if (props.isPlaying) {
+          media.pause();
+          props.pauseMedia();
+        } else if (!props.isPlaying) {
+          media.play();
+          props.playMedia();
+        }
+      }}
+    >
+      <PlayControlIcon isPlaying={props.isPlaying} />
+      <AssistiveText>
+        {props.isPlaying ? t('controls.pause') : t('controls.play')}
+      </AssistiveText>
+    </StyledPlayButton>
+  );
 }
 
 function mapState(state: IAianaState) {
   return {
-    isPlaying: state.player.isPlaying,
-    mediaSelector: state.player.mediaSelector
+    isPlaying: state.player.isPlaying
   };
 }
 
 const mapDispatch = {
-  requestMediaPause,
-  requestMediaPlay
+  pauseMedia,
+  playMedia
 };
 
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(PlayButton));
+)(PlayButton);

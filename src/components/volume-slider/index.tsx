@@ -16,19 +16,18 @@ import {
   PAGE_UP_KEY
 } from '../../constants/keys';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import { unitToRatio } from '../../utils/math';
 import { bounded } from '../../utils/ui';
 import StyledVolumeSlider from './Styles';
+import MediaContext from '../../contexts/MediaContext';
 
 interface IStateProps {
-  mediaSelector: string;
   volume: number;
   volumeStep: number;
 }
 
 interface IDispatchProps {
-  updateVolumeHandler(mediaSelector: string, volume: number): void;
+  changeVolume(volume: number): void;
 }
 
 interface IVolumeSliderProps
@@ -44,7 +43,10 @@ const defaultState: IState = {
   isActive: false
 };
 
+// @TODO: refactor to improve readability
 class VolumeSlider extends Component<IVolumeSliderProps, IState> {
+  static contextType = MediaContext;
+
   sliderPosition = 0;
   sliderWidth = 0;
 
@@ -90,45 +92,35 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
   }
 
   keyDownHandler = (evt: React.KeyboardEvent<HTMLDivElement>) => {
-    const {
-      mediaSelector,
-      updateVolumeHandler,
-      volume,
-      volumeStep
-    } = this.props;
+    const { volume, volumeStep } = this.props;
 
     switch (evt.key) {
       case ARROW_RIGHT_KEY:
       case ARROW_UP_KEY:
-        updateVolumeHandler(
-          mediaSelector,
-          this.safeVolume(volume + volumeStep)
-        );
+        this.updateVolumeHandler(this.safeVolume(volume + volumeStep));
         break;
       case ARROW_LEFT_KEY:
       case ARROW_DOWN_KEY:
-        updateVolumeHandler(
-          mediaSelector,
-          this.safeVolume(volume - volumeStep)
-        );
+        this.updateVolumeHandler(this.safeVolume(volume - volumeStep));
+
         break;
       case PAGE_UP_KEY:
-        updateVolumeHandler(
-          mediaSelector,
+        this.updateVolumeHandler(
           this.safeVolume(volume + DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
         );
+
         break;
       case PAGE_DOWN_KEY:
-        updateVolumeHandler(
-          mediaSelector,
+        this.updateVolumeHandler(
           this.safeVolume(volume - DEFAULT_VOLUME_STEP_MULTIPLIER * volumeStep)
         );
+
         break;
       case HOME_KEY:
-        updateVolumeHandler(mediaSelector, VOLUME_MINIMUM);
+        this.updateVolumeHandler(VOLUME_MINIMUM);
         break;
       case END_KEY:
-        updateVolumeHandler(mediaSelector, VOLUME_MAXIMUM);
+        this.updateVolumeHandler(VOLUME_MAXIMUM);
         break;
     }
   };
@@ -171,7 +163,7 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
   };
 
   mousePosToVolume = (mouseX: number, sliderX: number, sliderWidth: number) => {
-    const { mediaSelector, updateVolumeHandler, volume } = this.props;
+    const { volume } = this.props;
 
     try {
       const sliderXMax = sliderX + sliderWidth;
@@ -180,11 +172,18 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
       const newVolume = unitToRatio(positionDifference, sliderWidth);
 
       if (newVolume !== volume) {
-        updateVolumeHandler(mediaSelector, this.safeVolume(newVolume));
+        this.updateVolumeHandler(this.safeVolume(newVolume));
       }
     } catch (error) {
       //
     }
+  };
+
+  updateVolumeHandler = (volume: number) => {
+    const [media] = this.context;
+
+    media.volume = volume;
+    this.props.changeVolume(volume);
   };
 
   /**
@@ -199,25 +198,14 @@ class VolumeSlider extends Component<IVolumeSliderProps, IState> {
 
 function mapState(state: IAianaState) {
   return {
-    mediaSelector: state.player.mediaSelector,
     volume: state.player.volume,
     volumeStep: state.preferences.volumeStep
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    updateVolumeHandler: (mediaSelector: string, volume: number) => {
-      const media = document.querySelector(mediaSelector);
-
-      if (media) {
-        (media as HTMLMediaElement).volume = volume;
-      }
-
-      dispatch(changeVolume(volume));
-    }
-  };
-}
+const mapDispatch = {
+  changeVolume
+};
 
 export default connect(
   mapState,

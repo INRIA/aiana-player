@@ -23,8 +23,7 @@ import {
   DEFAULT_PLAYBACK_RATE,
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME,
-  DEFAULT_AUTOPLAY,
-  MEDIA_SELECTOR
+  DEFAULT_AUTOPLAY
 } from '../constants/player';
 import { IRawTrackExt, ITimeRange } from '../utils/media';
 import { changeMediaSource } from '../actions/preferences';
@@ -50,7 +49,6 @@ export interface IPlayerState {
 
   isSeeking: boolean;
 
-  mediaSelector: string;
   mediaId: string;
 
   metadataTracks: IRawTrackExt[];
@@ -92,7 +90,6 @@ export const initialPlayerState: IPlayerState = {
   isPlaying: false,
   isSeeking: false,
   mediaId: '__unset__',
-  mediaSelector: MEDIA_SELECTOR,
   metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
   playerSelector: APP_ROOT_SELECTOR,
@@ -122,8 +119,8 @@ export const playerReducer = createReducer(initialPlayerState, {
   [changePlaybackRate.toString()]: (state: IPlayerState, action) => {
     state.playbackRate = action.payload;
   },
-  [toggleMute.toString()]: (state: IPlayerState) => {
-    state.isMuted = !state.isMuted;
+  [toggleMute.toString()]: (state: IPlayerState, action) => {
+    state.isMuted = action.payload;
   },
   [changeVolume.toString()]: (state: IPlayerState, action) => {
     state.volume = action.payload;

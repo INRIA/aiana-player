@@ -15,6 +15,7 @@ import {
 import { ThemeProvider } from '../../utils/styled-components';
 import Player from '../Player';
 import Loader from '../Loader';
+import { MediaContextProvider } from '../../contexts/MediaContext';
 
 interface IStateProps {
   fontFace: string;
@@ -120,7 +121,9 @@ function Aiana(props: IAiana) {
               fontSize: `${fontSizeMultiplier}em`
             }}
           >
-            <Player />
+            <MediaContextProvider>
+              <Player />
+            </MediaContextProvider>
           </div>
         </Suspense>
       </StyledAiana>

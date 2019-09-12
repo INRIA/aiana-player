@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestSeek } from '../../../actions/player';
+import { seek } from '../../../actions/player';
 import { DEFAULT_LANG } from '../../../constants/preferences';
 import { IAianaState } from '../../../reducers';
 import { unitToPercent } from '../../../utils/math';
@@ -12,12 +12,11 @@ import SlideButton from './SlideButton';
 interface IStateProps {
   duration: number;
   language: string;
-  mediaSelector: string;
   slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
-  requestSeek(mediaSelector: string, seekingTime: number): void;
+  seek(seekingTime: number): void;
 }
 
 interface ISlidesBar extends IStateProps, IDispatchProps {}
@@ -59,13 +58,7 @@ const StyledSlidesBar = styled.nav`
   }
 `;
 
-function SlidesBar({
-  slidesTracks,
-  duration,
-  language,
-  mediaSelector,
-  requestSeek: requestSeekAction
-}: ISlidesBar) {
+function SlidesBar({ slidesTracks, duration, language, seek }: ISlidesBar) {
   const [t] = useTranslation();
 
   const activeSlidesTrack =
@@ -90,8 +83,7 @@ function SlidesBar({
               label={t('timeline.goto_and_play_slide', {
                 index: idx
               })}
-              mediaSelector={mediaSelector}
-              onClick={requestSeekAction}
+              onClick={seek}
               time={startTime}
             />
           </li>
@@ -105,13 +97,12 @@ function mapState(state: IAianaState) {
   return {
     duration: state.player.duration,
     language: state.slides.language,
-    mediaSelector: state.player.mediaSelector,
     slidesTracks: state.slides.slidesTracks
   };
 }
 
 const mapDispatch = {
-  requestSeek
+  seek
 };
 
 export default connect(

@@ -159,3 +159,314 @@ export function getCueText(cue?: IMediaCue): string | undefined {
 export function getLastActiveCueText(track: TextTrack): string | undefined {
   return getCueText(getLastActiveCue(track));
 }
+
+export interface IMedia {
+  buffered: any[];
+  currentTime: number;
+  duration: number;
+  muted: boolean;
+  paused: boolean;
+  playbackRate: number;
+  type: string;
+  volume: number;
+  pause(): void;
+  play(): void;
+}
+
+export class HTMLMedia {
+  type = 'html';
+  selector: string;
+
+  constructor(selector: string) {
+    this.selector = selector;
+  }
+
+  get buffered() {
+    const el = this.getElement();
+    if (!el) return [] as any[];
+    return (el as HTMLMediaElement).buffered;
+  }
+
+  get currentTime() {
+    const el = this.getElement();
+    if (!el) return 0;
+    return (el as HTMLMediaElement).currentTime;
+  }
+
+  set currentTime(t: number) {
+    const el = this.getElement();
+    if (el) {
+      (el as HTMLMediaElement).currentTime = t;
+    }
+  }
+
+  get duration() {
+    const el = this.getElement();
+    if (!el) return 0;
+    return (el as HTMLMediaElement).duration;
+  }
+
+  get muted() {
+    const el = this.getElement();
+    if (!el) return false;
+    return (el as HTMLMediaElement).muted;
+  }
+
+  set muted(m: boolean) {
+    const el = this.getElement();
+    if (el) {
+      (el as HTMLMediaElement).muted = m;
+    }
+  }
+
+  get paused() {
+    const el = this.getElement();
+    if (!el) return true;
+    return (el as HTMLMediaElement).paused;
+  }
+
+  get playbackRate() {
+    const el = this.getElement();
+    if (!el) return 1;
+    return (el as HTMLMediaElement).playbackRate;
+  }
+
+  set playbackRate(p: number) {
+    const el = this.getElement();
+    if (el) {
+      (el as HTMLMediaElement).playbackRate = p;
+    }
+  }
+
+  get volume() {
+    const el = this.getElement();
+    if (!el) return 0;
+    return (el as HTMLMediaElement).volume;
+  }
+
+  set volume(v: number) {
+    const el = this.getElement();
+    if (el) {
+      (el as HTMLMediaElement).volume = v;
+    }
+  }
+
+  getElement() {
+    return document.querySelector(this.selector);
+  }
+
+  pause() {
+    const el = this.getElement();
+    if (!el) return;
+    (el as HTMLMediaElement).pause();
+  }
+
+  play() {
+    const el = this.getElement();
+    if (!el) return;
+    (el as HTMLMediaElement).play();
+  }
+}
+
+interface IInitParams {
+  isPlaying: boolean;
+  lang: string;
+  listeners: {
+    onReady(duration: number): void;
+  };
+  currentTimeUpdatedHandler: (time: number) => void;
+  seek: (time: number) => void;
+  startSeeking: () => void;
+  stopSeeking: () => void;
+  updateBufferedRanges: (timeRanges: ITimeRange[]) => void;
+}
+
+/**
+ * Wrapper for YT.Player object.
+ *
+ * @see https://developers.google.com/youtube/iframe_api_reference
+ */
+export class YouTubeMedia {
+  type = 'youtube';
+
+  videoId: string;
+  isPlaying: boolean = false;
+
+  player?: YT.Player;
+  isReady: boolean = false;
+  timer?: number;
+  currentTimeUpdatedHandler?(time: number): void;
+  seek = (t: number) => {};
+  startSeeking = () => {};
+  stopSeeking = () => {};
+  updateBufferedRanges = (timeRanges: ITimeRange[]) => {};
+
+  constructor(videoId: string) {
+    this.videoId = videoId;
+  }
+
+  init = (params: IInitParams) => {
+    this.currentTimeUpdatedHandler = params.currentTimeUpdatedHandler;
+    this.updateBufferedRanges = params.updateBufferedRanges;
+    this.isPlaying = params.isPlaying;
+    this.seek = params.seek;
+    this.startSeeking = params.startSeeking;
+    this.stopSeeking = params.stopSeeking;
+
+    // FIXME: use `cueVideoById` if video isn't played automatically
+    this.player = new YT.Player('aip-yt-container', {
+      height: '100%',
+      width: '100%',
+      videoId: this.videoId,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        enablejsapi: 1,
+        fs: 0,
+        hl: params.lang,
+        iv_load_policy: 3, // eslint-disable-line
+        modestbranding: 1,
+        playsinline: 1,
+        rel: 0,
+        showinfo: 0
+      },
+      events: {
+        onReady: (evt) => {
+          this.isReady = true;
+          params.listeners.onReady(evt.target.getDuration());
+          params.updateBufferedRanges([]);
+
+          if (this.isPlaying) {
+            evt.target.playVideo();
+          } else {
+            evt.target.pauseVideo();
+          }
+        },
+        onStateChange: (evt) => {
+          if (evt.data === 1) {
+            const ee = evt.target.getIframe();
+            (window as any).ee = ee;
+
+            evt.target.getIframe().querySelector('video');
+            // play state
+            this.currentTimeUpdateTicker();
+          } else if (evt.data === 2) {
+            // pause state
+            clearTimeout(this.timer);
+          }
+        }
+      }
+    });
+  };
+
+  /**
+   * TODO: current subtitles text should be updated here.
+   */
+  currentTimeUpdateTicker = () => {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      if (this.player && this.currentTimeUpdatedHandler) {
+        const loadedFraction = this.player.getVideoLoadedFraction();
+        const loadedDuration = loadedFraction * this.player.getDuration();
+        this.updateBufferedRanges([{ startTime: 0, endTime: loadedDuration }]);
+        this.currentTimeUpdatedHandler(this.player.getCurrentTime());
+      }
+      this.currentTimeUpdateTicker();
+    }, 250);
+  };
+
+  /**
+   * Cleanup function.
+   * It should be called before unmounting YouTube container.
+   */
+  destroy = () => {
+    clearTimeout(this.timer);
+    if (this.player) this.player.destroy();
+  };
+
+  play() {
+    if (!this.player || !this.isReady) return;
+    this.player.playVideo();
+  }
+
+  pause() {
+    if (!this.player || !this.isReady) return;
+    this.player.pauseVideo();
+    clearTimeout(this.timer);
+  }
+
+  /**
+   * TODO: to be implemented
+   */
+  get buffered() {
+    return [] as any[];
+  }
+
+  get currentTime() {
+    if (!this.player || !this.isReady) return 0;
+    return this.player.getCurrentTime();
+  }
+
+  set currentTime(t: number) {
+    if (!this.player || !this.isReady || !this.currentTimeUpdatedHandler)
+      return;
+
+    this.seek(t);
+    this.startSeeking();
+    this.player.seekTo(t, true);
+    if (!this.isPlaying) {
+      this.pause();
+    }
+    this.currentTimeUpdatedHandler(t);
+
+    this.stopSeeking();
+  }
+
+  get duration() {
+    if (!this.player || !this.isReady) return 0;
+    return this.player.getDuration();
+  }
+
+  get muted() {
+    if (!this.player || !this.isReady) return false;
+    return this.player.isMuted();
+  }
+
+  set muted(m: boolean) {
+    if (!this.player || !this.isReady) return;
+
+    if (m) {
+      this.player.mute();
+    } else {
+      this.player.unMute();
+    }
+  }
+
+  get paused() {
+    if (!this.player || !this.isReady) return true;
+    // see YT.PlayerState.PAUSED
+    return this.player.getPlayerState() === 2;
+  }
+
+  get playbackRate() {
+    if (!this.player || !this.isReady) return 1;
+    return this.player.getPlaybackRate();
+  }
+
+  set playbackRate(p: number) {
+    if (!this.player || !this.isReady) return;
+    this.player.setPlaybackRate(p);
+  }
+
+  get volume() {
+    if (!this.player || !this.isReady) return 0;
+    // volume is always between 0 and 1
+    return this.player.getVolume() / 100;
+  }
+
+  set volume(v: number) {
+    if (!this.player || !this.isReady) return;
+    this.player.setVolume(100 * v);
+  }
+}

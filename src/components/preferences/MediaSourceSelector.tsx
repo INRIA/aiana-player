@@ -5,14 +5,13 @@ import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { ISource, getSelectedMediaSource } from '../../reducers/player';
 import { useTranslation } from 'react-i18next';
-import { CDispatch } from '../../store';
 
 interface IStateProps {
   sources: ISource[];
 }
 
 interface IDispatchProps {
-  changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  changeMediaSource(src: string): void;
 }
 
 interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
@@ -26,8 +25,10 @@ function MediaSourceSelector(props: IProps) {
       <span id={props.uid}>{t('preferences.media_source.label')}</span>
       <select
         aria-labelledby={props.uid}
-        onChange={props.changeHandler}
         value={selectedSource ? selectedSource.src : undefined}
+        onChange={(evt) => {
+          props.changeMediaSource(evt.currentTarget.value);
+        }}
       >
         {props.sources.map((mediaSource) => (
           <option key={mediaSource.src} value={mediaSource.src}>
@@ -45,13 +46,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(changeMediaSource(evt.currentTarget.value));
-    }
-  };
-}
+const mapDispatch = {
+  changeMediaSource
+};
 
 export default connect(
   mapState,

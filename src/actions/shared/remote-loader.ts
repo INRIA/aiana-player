@@ -100,7 +100,7 @@ async function getConfigurationData() {
     );
 
     const mergedPreferences = Object.assign(
-      cloneDeep(config.preferences),
+      cloneDeep(config.preferences) || {},
       getLocalConfiguration()
     );
 

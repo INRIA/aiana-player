@@ -29,7 +29,7 @@ import ExportPreferences from './ExportPreferences';
 import { IPreferencesState } from '../../reducers/preferences';
 import ImportPreferences from './ImportPreferences';
 
-interface IPreferencesPanel {
+interface IProps {
   preferences: IPreferencesState;
   presets: IPreset[];
 }
@@ -94,7 +94,7 @@ const StyledPreferences = styled.div`
   }
 `;
 
-function PreferencesPanel(props: IPreferencesPanel) {
+function PreferencesPanel(props: IProps) {
   const [t] = useTranslation();
   const [isOpen, togglePanel] = useState(false);
   const ariaLabelId = uid();

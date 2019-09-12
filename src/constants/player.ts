@@ -8,3 +8,5 @@ export const DEFAULT_VOLUME = VOLUME_MAXIMUM;
 
 export const MEDIA_CLASSNAME = 'aip-media';
 export const MEDIA_SELECTOR = `.${MEDIA_CLASSNAME}`;
+
+export const YOUTUBE_MEDIA_ID = /^yt--.+$/;

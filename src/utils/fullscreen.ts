@@ -85,3 +85,14 @@ function handleFullscreenChangeEventListener(
     callback(eventName, eventHandler);
   });
 }
+
+export function toggleFullscreen(selector: string) {
+  if (isDocumentFullscreen()) {
+    exitFullscreen();
+  } else {
+    const el = document.querySelector(selector);
+    if (el) {
+      enterFullscreen(el as ExtendedHTMLElement);
+    }
+  }
+}

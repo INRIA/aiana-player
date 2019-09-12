@@ -1,10 +1,10 @@
-import React, { Component, createRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { connect } from 'react-redux';
 import {
   changeVolume,
-  requestMediaPause,
-  requestMediaPlay,
-  requestSeek,
+  pauseMedia,
+  playMedia,
+  seek,
   startSeeking,
   stopSeeking,
   toggleMute,
@@ -18,29 +18,24 @@ import { IAianaState } from '../../reducers';
 import { IChaptersTrack } from '../../reducers/chapters';
 import { ISource, getSelectedMediaSource } from '../../reducers/player';
 import { ISlidesTrack } from '../../reducers/slides';
-import {
-  IRawTrackExt,
-  isDisplayableTrack,
-  convertTimeRanges,
-  ITimeRange
-} from '../../utils/media';
+import { IRawTrackExt, ITimeRange } from '../../utils/media';
 import styled from '../../utils/styled-components';
-import MediaChapterTrack from '../chapters/MediaChapterTrack';
-import SlidesTrack from '../slides/SlidesTrack';
-import AdditionalInfosTrack from './AdditionalInfosTrack';
-import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
-import { MEDIA_CLASSNAME } from '../../constants/player';
+import { ITrack } from './MediaSubtitlesTrack';
+import StaticMedia from './StaticMedia';
+import useMedia from '../../hooks/useMedia';
+import MediaContext from '../../contexts/MediaContext';
+import YouTubeMediaContainer from './YouTubeMediaContainer';
 
 interface IDispatchProps {
   changeVolume(volume: number): void;
-  requestMediaPause(mediaSelector: string): void;
-  requestMediaPlay(mediaSelector: string): void;
-  requestSeek(mediaSelector: string, seekingTime: number): void;
+  pauseMedia(): void;
+  playMedia(): void;
+  seek(seekingTime: number): void;
+  setCurrentTime(time: number): void;
   startSeeking(): void;
   stopSeeking(): void;
   toggleMute(): void;
   updateBufferedRanges(timeRanges: ITimeRange[]): void;
-  updateCurrentTime(time: number): void;
   updateMediaDuration(duration: number): void;
   updateSubtitlesTracksList(subtitlesTracks: IRawTrackExt[]): void;
 }
@@ -53,7 +48,7 @@ interface IStateProps {
   isMuted: boolean;
   isPlaying: boolean;
   isSeeking: boolean;
-  mediaSelector: string;
+  lang: string;
   playbackRate: number;
   poster?: string;
   preload: string;
@@ -76,18 +71,13 @@ const StyledDiv = styled.div`
   height: 100%;
 `;
 
-const StyledVideo = styled.video`
-  display: block;
-
-  margin: 0;
-
-  max-width: 100%;
-  max-height: 100%;
-
-  transform: translate3d(0, 0, 0);
-`;
-
-function getCurrentSourceWithFallback(sources: ISource[]): ISource | void {
+/**
+ * Returns the first elligible media source.
+ * If no source is marked as selected, first element will be returned.
+ *
+ * @param sources {ISource[]}
+ */
+function getCurrentSourceWithFallback(sources: ISource[]): ISource | undefined {
   const selectedSource = getSelectedMediaSource(sources);
 
   if (selectedSource) {
@@ -99,144 +89,54 @@ function getCurrentSourceWithFallback(sources: ISource[]): ISource | void {
   if (fallbackSource) {
     return fallbackSource;
   }
+
+  return;
 }
 
-class MediaPlayer extends Component<IProps> {
-  media = createRef<HTMLVideoElement>();
+function MediaPlayer(props: IProps) {
+  const [media] = useContext(MediaContext);
+  const { setMedia } = useMedia();
 
-  render() {
-    const selectedSource = getCurrentSourceWithFallback(this.props.sources);
+  // `setMedia` will be redefined at every render and cannot be used as a
+  // `useEffect` dependency. This is why a ref is used here.
+  const setMediaRef = useRef(setMedia);
 
-    if (!selectedSource) {
-      return null;
+  const currentSetMediaRef = setMediaRef.current;
+  const selectedSource = getCurrentSourceWithFallback(props.sources);
+
+  useEffect(() => {
+    if (selectedSource) {
+      currentSetMediaRef(selectedSource.src);
     }
+  }, [selectedSource, currentSetMediaRef]);
 
-    return (
-      <StyledDiv>
-        <StyledVideo
-          autoPlay={this.props.autoPlay}
-          className={MEDIA_CLASSNAME}
-          ref={this.media}
-          onClick={this.clickHandler}
-          onLoadedMetadata={this.loadedMetadataHandler}
-          onProgress={this.progressHandler}
-          onSeeked={this.seekedHandler}
-          onSeeking={this.seekingHandler}
-          onTimeUpdate={this.timeUpdateHandler}
-          onVolumeChange={this.volumeChangeHandler}
-          playsInline={true}
-          poster={this.props.poster}
-          preload={this.props.preload}
-          src={selectedSource.src}
-          tabIndex={-1}
-        >
-          {this.props.subtitlesSources
-            .filter(isDisplayableTrack)
-            .map((track, idx) => (
-              <MediaSubtitlesTrack key={idx} {...track} />
-            ))}
-
-          {this.props.chaptersSources.map((track, idx) => (
-            <MediaChapterTrack key={idx} {...track} />
-          ))}
-
-          {this.props.additionalInformationTracks.map((track, idx) => (
-            <AdditionalInfosTrack key={idx} {...track} />
-          ))}
-
-          {this.props.slidesTracksSources.map((track, idx) => (
-            <SlidesTrack key={idx} {...track} />
-          ))}
-        </StyledVideo>
-      </StyledDiv>
-    );
+  if (!selectedSource || !media) {
+    return null;
   }
 
-  componentDidUpdate(prevProps: IStateProps) {
-    const currentSource = getCurrentSourceWithFallback(this.props.sources);
-    const prevSource = getCurrentSourceWithFallback(prevProps.sources);
+  return (
+    <StyledDiv>
+      {media.type === 'html' && (
+        <StaticMedia src={selectedSource.src} {...props} />
+      )}
 
-    // media source change
-    if (
-      currentSource &&
-      (!prevSource || (prevSource && currentSource.src !== prevSource.src))
-    ) {
-      this.media.current!.currentTime = prevProps.currentTime;
-
-      if (this.props.isPlaying) {
-        this.props.requestMediaPlay(this.props.mediaSelector);
-      }
-    }
-
-    // playback rate change
-    if (this.media.current!.playbackRate !== this.props.playbackRate) {
-      this.media.current!.playbackRate = this.props.playbackRate;
-    }
-
-    // volume change
-    if (this.media.current!.volume !== this.props.volume) {
-      this.media.current!.volume = this.props.volume;
-    }
-
-    // muted change
-    if (this.media.current!.muted !== this.props.isMuted) {
-      this.media.current!.muted = this.props.isMuted;
-    }
-  }
-
-  progressHandler = () => {
-    const bufferedRanges = convertTimeRanges(this.media.current!.buffered);
-    this.props.updateBufferedRanges(bufferedRanges);
-  };
-
-  clickHandler = () => {
-    if (this.media.current!.paused) {
-      this.props.requestMediaPlay(this.props.mediaSelector);
-    } else {
-      this.props.requestMediaPause(this.props.mediaSelector);
-    }
-  };
-
-  seekedHandler = () => {
-    if (this.props.isSeeking) {
-      this.props.stopSeeking();
-    }
-  };
-
-  seekingHandler = () => {
-    if (!this.props.isSeeking) {
-      this.props.startSeeking();
-    }
-  };
-
-  timeUpdateHandler = () => {
-    this.props.updateCurrentTime(this.media.current!.currentTime);
-  };
-
-  loadedMetadataHandler = () => {
-    this.props.updateMediaDuration(this.media.current!.duration);
-    this.props.requestSeek(this.props.mediaSelector, this.props.currentTime);
-  };
-
-  /**
-   * `volumechange` covers both volume level and mute toggle. A couple of checks
-   * need to be performed to catch changes and dispatch them to update the
-   * application state.
-   */
-  volumeChangeHandler = () => {
-    const media = this.media.current!;
-    const { isMuted, volume } = this.props;
-
-    // only dispatch `toggleMute` when state is behind video object property
-    if ((!isMuted && media.muted) || (isMuted && !media.muted)) {
-      // this.props.toggleMute(media.muted);
-      this.props.toggleMute();
-    }
-
-    if (media.volume !== volume) {
-      this.props.changeVolume(media.volume);
-    }
-  };
+      {media.type === 'youtube' && (
+        <YouTubeMediaContainer
+          currentTime={props.currentTime}
+          isPlaying={props.isPlaying}
+          lang={props.lang}
+          playbackRate={props.playbackRate}
+          volume={props.volume}
+          seek={props.seek}
+          setCurrentTime={props.setCurrentTime}
+          startSeeking={props.startSeeking}
+          stopSeeking={props.stopSeeking}
+          updateBufferedRanges={props.updateBufferedRanges}
+          updateMediaDuration={props.updateMediaDuration}
+        />
+      )}
+    </StyledDiv>
+  );
 }
 
 function mapState(state: IAianaState) {
@@ -248,7 +148,7 @@ function mapState(state: IAianaState) {
     isMuted: state.player.isMuted,
     isPlaying: state.player.isPlaying,
     isSeeking: state.player.isSeeking,
-    mediaSelector: state.player.mediaSelector,
+    lang: state.preferences.language,
     playbackRate: state.player.playbackRate,
     poster: state.player.poster,
     preload: state.player.preload,
@@ -262,14 +162,14 @@ function mapState(state: IAianaState) {
 
 const mapDispatch = {
   changeVolume,
-  requestMediaPause,
-  requestMediaPlay,
-  requestSeek,
+  pauseMedia,
+  playMedia,
+  seek,
   startSeeking,
   stopSeeking,
   toggleMute,
   updateBufferedRanges,
-  updateCurrentTime: setCurrentTime,
+  setCurrentTime,
   updateMediaDuration,
   updateSubtitlesTracksList
 };

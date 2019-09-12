@@ -16,7 +16,7 @@ import RatingSlider from '../rating/RatingSlider';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
 
-interface IMapSate {
+interface IProps {
   rating: number;
 }
 
@@ -39,7 +39,7 @@ const StyledControls = styled.div`
   }
 `;
 
-function MediaPlayerControls(props: IMapSate) {
+function MediaPlayerControls(props: IProps) {
   return (
     <StyledControlsWrapper>
       <SeekBarSlider />

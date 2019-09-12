@@ -1,30 +1,22 @@
 import { CDispatch } from '../store';
 import { ThunkResult, ICueBoundaries } from '../types';
 import { IRawTrack } from '../utils/media';
-import { requestSeek } from './player';
+import { seek } from './player';
 import { createAction } from 'redux-starter-kit';
 
 export const PREVIOUS_SLIDE = 'aiana/PREVIOUS_SLIDE';
 export const NEXT_SLIDE = 'aiana/NEXT_SLIDE';
 
-export function seekNextSlide(
-  mediaSelector: string,
-  from: number,
-  to: number
-): ThunkResult<void> {
+export function seekNextSlide(from: number, to: number): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    dispatch(requestSeek(mediaSelector, to));
+    dispatch(seek(to));
     dispatch(nextSlide({ from, to }));
   };
 }
 
-export function seekPreviousSlide(
-  mediaSelector: string,
-  from: number,
-  to: number
-): ThunkResult<void> {
+export function seekPreviousSlide(from: number, to: number): ThunkResult<void> {
   return (dispatch: CDispatch) => {
-    dispatch(requestSeek(mediaSelector, to));
+    dispatch(seek(to));
     dispatch(previousSlide({ from, to }));
   };
 }
