@@ -86,6 +86,7 @@
     "@types/storybook__addon-knobs": "^3.4.1",
     "@types/storybook__react": "^3.0.9",
     "@types/styled-components": "^4.1.18",
+    "@types/youtube": "0.0.38",
     "babel-core": "^6.26.3",
     "cypress": "^3.4.1",
     "enzyme": "^3.10.0",
