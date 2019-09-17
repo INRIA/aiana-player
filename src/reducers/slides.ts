@@ -6,7 +6,7 @@ import {
 } from '../actions/slides';
 import { DEFAULT_LANG } from '../constants/preferences';
 import { IRawTrack } from '../utils/media';
-import { createReducer } from 'redux-starter-kit';
+import { createReducer, PayloadAction } from 'redux-starter-kit';
 
 export interface ISlidesTrack {
   label?: string;
@@ -28,16 +28,25 @@ const initialState: ISlidesState = {
 };
 
 const slidesReducer = createReducer(initialState, {
-  [addSlidesTrack.toString()]: (state: ISlidesState, action) => {
+  [addSlidesTrack.type]: (
+    state: ISlidesState,
+    action: PayloadAction<IRawTrack>
+  ) => {
     state.slidesTracks.push(action.payload);
   },
-  [setSlidesText.toString()]: (state: ISlidesState, action) => {
+  [setSlidesText.type]: (
+    state: ISlidesState,
+    action: PayloadAction<string | undefined>
+  ) => {
     state.currentSlideText = action.payload;
   },
-  [updateActiveSlidesTrack.toString()]: (state: ISlidesState, action) => {
+  [updateActiveSlidesTrack.type]: (
+    state: ISlidesState,
+    action: PayloadAction<string>
+  ) => {
     state.language = action.payload;
   },
-  [loadConfiguration.toString()]: (state: ISlidesState, action) => {
+  [loadConfiguration.type]: (state: ISlidesState, action) => {
     return {
       ...state,
       ...action.payload.slides

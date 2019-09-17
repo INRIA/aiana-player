@@ -1,7 +1,7 @@
 import { IWidget } from './preferences';
 import { updateActivePreset } from '../actions/presets';
 import { BASE_PRESETS } from '../constants/presets';
-import { createReducer } from 'redux-starter-kit';
+import { createReducer, PayloadAction } from 'redux-starter-kit';
 import { loadConfiguration } from '../actions/shared/configuration';
 
 export interface IPreset {
@@ -51,13 +51,16 @@ function concatPresets(...presets: IPreset[][]): IPreset[] {
 }
 
 const presetsReducer = createReducer([] as IPreset[], {
-  [updateActivePreset.toString()]: (state: IPreset[], action) => {
+  [updateActivePreset.type]: (
+    state: IPreset[],
+    action: PayloadAction<IPreset | undefined>
+  ) => {
     return state.map((preset) => ({
       ...preset,
       selected: action.payload ? preset.name === action.payload.name : false
     }));
   },
-  [loadConfiguration.toString()]: (state: IPreset[], action) => {
+  [loadConfiguration.type]: (state: IPreset[], action) => {
     const { presets: actionPresets = [] } = action.payload;
 
     const prevPresets = concatPresets(

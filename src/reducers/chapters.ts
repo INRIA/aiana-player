@@ -31,13 +31,13 @@ const initialState: IChaptersState = {
 };
 
 export const chaptersReducer = createReducer(initialState, {
-  [setChapterText.toString()]: (state: IChaptersState, action) => {
+  [setChapterText.type]: (state: IChaptersState, action) => {
     state.currentText = action.payload;
   },
-  [addChaptersTrack.toString()]: (state: IChaptersState, action) => {
+  [addChaptersTrack.type]: (state: IChaptersState, action) => {
     state.chaptersTracks.push(action.payload);
   },
-  [updateActiveChaptersTrack.toString()]: (state: IChaptersState, action) => {
+  [updateActiveChaptersTrack.type]: (state: IChaptersState, action) => {
     const lang = action.payload;
 
     state.language = lang;
@@ -46,7 +46,7 @@ export const chaptersReducer = createReducer(initialState, {
       active: track.language === lang
     }));
   },
-  [loadConfiguration.toString()]: (state: IChaptersState, action) => {
+  [loadConfiguration.type]: (state: IChaptersState, action) => {
     return {
       ...state,
       ...action.payload.chapters

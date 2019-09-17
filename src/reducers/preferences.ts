@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import { safeDump, safeLoad } from 'js-yaml';
 import { DeepPartial } from 'redux';
-import { createReducer } from 'redux-starter-kit';
+import { createReducer, PayloadAction } from 'redux-starter-kit';
 import { loadConfiguration } from '../actions/shared/configuration';
 import {
   toggleFontUppercase,
@@ -58,10 +58,13 @@ export interface IPreferencesState {
 }
 
 const preferencesReducer = createReducer(initialPreferencesState, {
-  [importPreferencesAction.toString()]: (state, action) => {
+  [importPreferencesAction.type]: (
+    state,
+    action: PayloadAction<IPreferencesState>
+  ) => {
     return action.payload;
   },
-  [updateActivePreset.toString()]: (state, action) => {
+  [updateActivePreset.type]: (state, action) => {
     return {
       fontFace: action.payload.fontFace,
       fontFaces: [...action.payload.fontFaces],
@@ -84,13 +87,13 @@ const preferencesReducer = createReducer(initialPreferencesState, {
       widgets: [...action.payload.widgets]
     };
   },
-  [changeUILanguage.toString()]: (state, action) => {
+  [changeUILanguage.type]: (state, action: PayloadAction<string>) => {
     state.language = action.payload;
   },
-  [changeActiveTheme.toString()]: (state, action) => {
+  [changeActiveTheme.type]: (state, action: PayloadAction<string>) => {
     state.theme = action.payload;
   },
-  [loadConfiguration.toString()]: (state, action) => {
+  [loadConfiguration.type]: (state, action) => {
     const activePreset = action.payload.presets.find(
       (p: IPreset) => p.selected
     );
@@ -101,7 +104,7 @@ const preferencesReducer = createReducer(initialPreferencesState, {
       cloneDeep(state)
     );
   },
-  [updateWidget.toString()]: (state, action) => {
+  [updateWidget.type]: (state, action) => {
     state.widgets = state.widgets.map((widget) => {
       if (widget.name === action.payload.name) {
         return {
@@ -113,13 +116,13 @@ const preferencesReducer = createReducer(initialPreferencesState, {
       return widget;
     });
   },
-  [setWidgetsLock.toString()]: (state, action) => {
+  [setWidgetsLock.type]: (state, action: PayloadAction<boolean>) => {
     state.widgets = state.widgets.map((widget: IWidget) => ({
       ...widget,
       locked: action.payload
     }));
   },
-  [toggleWidgetVisibility.toString()]: (state, action) => {
+  [toggleWidgetVisibility.type]: (state, action: PayloadAction<string>) => {
     state.widgets = state.widgets.map((widget: IWidget) => {
       const w = { ...widget };
 
@@ -130,19 +133,19 @@ const preferencesReducer = createReducer(initialPreferencesState, {
       return w;
     });
   },
-  [updateActiveFontFace.toString()]: (state, action) => {
+  [updateActiveFontFace.type]: (state, action: PayloadAction<string>) => {
     state.fontFace = action.payload;
   },
-  [updateFontSizeMultiplier.toString()]: (state, action) => {
+  [updateFontSizeMultiplier.type]: (state, action: PayloadAction<number>) => {
     state.fontSizeMultiplier = action.payload;
   },
-  [toggleTextHighlighting.toString()]: (state) => {
+  [toggleTextHighlighting.type]: (state) => {
     state.textHighlighting = !state.textHighlighting;
   },
-  [toggleFontUppercase.toString()]: (state) => {
+  [toggleFontUppercase.type]: (state) => {
     state.fontUppercase = !state.fontUppercase;
   },
-  [updateLineHeight.toString()]: (state, action) => {
+  [updateLineHeight.type]: (state, action: PayloadAction<number>) => {
     state.lineHeight = action.payload;
   }
 });

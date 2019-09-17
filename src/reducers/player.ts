@@ -30,7 +30,7 @@ import { changeMediaSource } from '../actions/preferences';
 import { safeDump, safeLoad } from 'js-yaml';
 import { cloneDeep } from 'lodash';
 import { APP_ROOT_SELECTOR } from '../constants';
-import { createReducer } from 'redux-starter-kit';
+import { createReducer, PayloadAction } from 'redux-starter-kit';
 
 export interface IPlayerState {
   additionalInformationText?: string;
@@ -101,59 +101,83 @@ export const initialPlayerState: IPlayerState = {
 };
 
 export const playerReducer = createReducer(initialPlayerState, {
-  [updateRating.toString()]: (state: IPlayerState, action) => {
+  [updateRating.type]: (state: IPlayerState, action: PayloadAction<number>) => {
     state.rating = action.payload;
   },
-  [updateBufferedRanges.toString()]: (state: IPlayerState, action) => {
+  [updateBufferedRanges.type]: (
+    state: IPlayerState,
+    action: PayloadAction<ITimeRange[]>
+  ) => {
     state.bufferedRanges = action.payload;
   },
-  [toggleFullscreenChangeAction.toString()]: (state: IPlayerState, action) => {
+  [toggleFullscreenChangeAction.type]: (
+    state: IPlayerState,
+    action: PayloadAction<boolean>
+  ) => {
     state.isFullscreen = action.payload;
   },
-  [playMedia.toString()]: (state: IPlayerState) => {
+  [playMedia.type]: (state: IPlayerState) => {
     state.isPlaying = true;
   },
-  [pauseMedia.toString()]: (state: IPlayerState) => {
+  [pauseMedia.type]: (state: IPlayerState) => {
     state.isPlaying = false;
   },
-  [changePlaybackRate.toString()]: (state: IPlayerState, action) => {
+  [changePlaybackRate.type]: (
+    state: IPlayerState,
+    action: PayloadAction<number>
+  ) => {
     state.playbackRate = action.payload;
   },
-  [toggleMute.toString()]: (state: IPlayerState, action) => {
+  [toggleMute.type]: (state: IPlayerState, action: PayloadAction<boolean>) => {
     state.isMuted = action.payload;
   },
-  [changeVolume.toString()]: (state: IPlayerState, action) => {
+  [changeVolume.type]: (state: IPlayerState, action: PayloadAction<number>) => {
     state.volume = action.payload;
   },
-  [updateMediaDuration.toString()]: (state: IPlayerState, action) => {
+  [updateMediaDuration.type]: (
+    state: IPlayerState,
+    action: PayloadAction<number>
+  ) => {
     state.duration = action.payload;
   },
-  [setCurrentTime.toString()]: (state: IPlayerState, action) => {
+  [setCurrentTime.type]: (
+    state: IPlayerState,
+    action: PayloadAction<number>
+  ) => {
     state.currentTime = action.payload;
   },
-  [seek.toString()]: (state: IPlayerState, action) => {
+  [seek.type]: (state: IPlayerState, action: PayloadAction<number>) => {
     state.seekingTime = action.payload;
   },
-  [startSeeking.toString()]: (state: IPlayerState) => {
+  [startSeeking.type]: (state: IPlayerState) => {
     state.isSeeking = true;
   },
-  [stopSeeking.toString()]: (state: IPlayerState) => {
+  [stopSeeking.type]: (state: IPlayerState) => {
     state.isSeeking = false;
     state.seekingTime = 0;
   },
-  [setAdditionalInformationText.toString()]: (state: IPlayerState, action) => {
+  [setAdditionalInformationText.type]: (
+    state: IPlayerState,
+    action: PayloadAction<string | undefined>
+  ) => {
     state.additionalInformationText = action.payload;
   },
-  [addAdditionalInformationTrack.toString()]: (state: IPlayerState, action) => {
+  [addAdditionalInformationTrack.type]: (
+    state: IPlayerState,
+    action: PayloadAction<IRawTrackExt>
+  ) => {
     state.metadataTracks.push(action.payload);
   },
-  [loadConfiguration.toString()]: (state: IPlayerState, action) => {
+  [loadConfiguration.type]: (state: IPlayerState, action) => {
     return Object.assign(
       cloneDeep(initialPlayerState),
       cloneDeep(action.payload.player)
     );
   },
-  [changeMediaSource.toString()]: (state: IPlayerState, action) => {
+  [changeMediaSource.type]: (
+    state: IPlayerState,
+    action: PayloadAction<string>
+  ) => {
     state.sources = state.sources.map((source: ISource) => ({
       ...source,
       selected: source.src === action.payload

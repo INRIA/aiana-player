@@ -12,7 +12,7 @@ import {
   IMediaCue
 } from '../utils/media';
 import { ITrack } from '../components/media/MediaSubtitlesTrack';
-import { createReducer } from 'redux-starter-kit';
+import { createReducer, PayloadAction } from 'redux-starter-kit';
 
 export interface ISubtitlesTrack {
   label?: string;
@@ -43,22 +43,34 @@ const initialState = {
 };
 
 const subtitlesReducer = createReducer(initialState, {
-  [addSubtitlesTrack.toString()]: (state: ISubtitlesState, action) => {
+  [addSubtitlesTrack.type]: (
+    state: ISubtitlesState,
+    action: PayloadAction<IRawTrackExt>
+  ) => {
     state.subtitlesTracks.push(action.payload);
   },
-  [updateSubtitlesTracksList.toString()]: (state: ISubtitlesState, action) => {
+  [updateSubtitlesTracksList.type]: (
+    state: ISubtitlesState,
+    action: PayloadAction<IRawTrackExt[]>
+  ) => {
     state.subtitlesTracks = action.payload;
   },
-  [updateActiveSubtitles.toString()]: (state: ISubtitlesState, action) => {
+  [updateActiveSubtitles.type]: (
+    state: ISubtitlesState,
+    action: PayloadAction<string>
+  ) => {
     state.subtitlesTracks = toggleSubtitlesTracks(
       state.subtitlesTracks,
       action.payload
     );
   },
-  [setSubtitlesText.toString()]: (state: ISubtitlesState, action) => {
+  [setSubtitlesText.type]: (
+    state: ISubtitlesState,
+    action: PayloadAction<string | undefined>
+  ) => {
     state.subtitlesText = action.payload;
   },
-  [loadConfiguration.toString()]: (state: ISubtitlesState, action) => {
+  [loadConfiguration.type]: (state: ISubtitlesState, action) => {
     return {
       ...state,
       ...action.payload.subtitles

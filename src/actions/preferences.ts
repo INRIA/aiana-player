@@ -8,7 +8,9 @@ import { createAction } from 'redux-starter-kit';
 
 export const CHANGE_WIDGET_VISIBILITY = 'aiana/CHANGE_WIDGET_VISIBILITY';
 
-export const importPreferencesAction = createAction('IMPORT_PREFERENCES');
+export const importPreferencesAction = createAction<Partial<IPreferencesState>>(
+  'IMPORT_PREFERENCES'
+);
 
 export const exportPreferences = createAction('EXPORT_PREFERENCES');
 
