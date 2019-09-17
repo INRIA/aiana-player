@@ -12,7 +12,9 @@ export const importPreferencesAction = createAction<Partial<IPreferencesState>>(
   'IMPORT_PREFERENCES'
 );
 
-export const exportPreferences = createAction('EXPORT_PREFERENCES');
+export const exportPreferences = createAction<IPreferencesState>(
+  'EXPORT_PREFERENCES'
+);
 
 export const changeMediaSource = createAction<string>('CHANGE_MEDIA_SOURCE');
 

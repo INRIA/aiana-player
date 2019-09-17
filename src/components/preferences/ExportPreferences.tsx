@@ -8,18 +8,17 @@ import {
   preferencesToYAML
 } from '../../reducers/preferences';
 import { exportPreferences } from '../../actions/preferences';
-import { CDispatch } from '../../store';
 import Button from '../shared/Button';
 
-interface IOwnProps {
+interface IProps {
   preferences: IPreferencesState;
 }
 
 interface IMapDispatch {
-  clickHandler(): void;
+  exportPreferences(preferences: IPreferencesState): void;
 }
 
-interface IExportPreferences extends IOwnProps, IMapDispatch {}
+interface IExportPreferences extends IProps, IMapDispatch {}
 
 const ActionButton = styled(Button)`
   width: auto;
@@ -29,23 +28,24 @@ function ExportPreferences(props: IExportPreferences) {
   const [t] = useTranslation();
 
   return (
-    <ActionButton className="button--small" onClick={props.clickHandler}>
+    <ActionButton
+      className="button--small"
+      onClick={() => {
+        const blob = new Blob([preferencesToYAML(props.preferences)], {
+          type: 'text/plain;charset=utf-8'
+        });
+        saveAs(blob, 'aiana-preferences.txt');
+        props.exportPreferences(props.preferences);
+      }}
+    >
       {t('preferences.export.label')}
     </ActionButton>
   );
 }
 
-function mapDispatch(dispatch: CDispatch, ownProps: IOwnProps) {
-  return {
-    clickHandler: () => {
-      const blob = new Blob([preferencesToYAML(ownProps.preferences)], {
-        type: 'text/plain;charset=utf-8'
-      });
-      saveAs(blob, 'aiana-preferences.txt');
-      dispatch(exportPreferences(ownProps.preferences));
-    }
-  };
-}
+const mapDispatch = {
+  exportPreferences
+};
 
 export default connect(
   null,
