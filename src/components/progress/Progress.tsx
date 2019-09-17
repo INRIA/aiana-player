@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { Component } from 'react';
+import styled from '../../utils/styled-components';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { seek } from '../../actions/player';
@@ -18,11 +19,11 @@ import { IAianaState } from '../../reducers';
 import { unitToRatio } from '../../utils/math';
 import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { bounded } from '../../utils/ui';
-import BufferedTimeRanges from '../BufferedTimeRanges';
-import StyledDiv from './Styles';
+import BufferedTimeRanges from './BufferedTimeRanges';
 import MediaContext from '../../contexts/MediaContext';
-
-const { round } = Math;
+import ElapsedTime from './ElapsedTime';
+import SeekBarExpander from './SeekBarExpander';
+import SeekBar from './SeekBar';
 
 interface IState {
   sliderWidth: number;
@@ -43,7 +44,35 @@ interface IDispatchProps {
 
 interface ISeekBarSlider extends IStateProps, IDispatchProps, WithTranslation {}
 
-class SeekBarSlider extends Component<ISeekBarSlider, IState> {
+const { round } = Math;
+
+const Div = styled.div`
+  display: block;
+
+  height: 0.375em;
+  width: 100%;
+
+  cursor: pointer;
+
+  .aip-progress__slider {
+    height: 0.375em;
+    width: 100%;
+
+    position: relative;
+
+    cursor: pointer;
+
+    outline: none;
+
+    &[data-focus-visible-added] {
+      .aip-progress__seekbar {
+        outline: solid 2px ${(props) => props.theme.actionBg};
+      }
+    }
+  }
+`;
+
+class Progress extends Component<ISeekBarSlider, IState> {
   static contextType = MediaContext;
 
   readonly state = {
@@ -59,12 +88,11 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
     // position should be the `currentTime`.
     const sliderTime = isSeeking ? seekingTime : currentTime;
 
-    const progressRatio = unitToRatio(sliderTime, duration);
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
     return (
-      <StyledDiv
+      <Div
         className={classNames('aip-progress', {
           'no-transition': isSeeking
         })}
@@ -85,31 +113,18 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
           role="slider"
           tabIndex={0}
         >
-          <div className="aip-progress__seekbar">
-            <div className="aip-progress__seekbar__expander" />
+          <SeekBar>
+            <SeekBarExpander />
             <BufferedTimeRanges />
-          </div>
+          </SeekBar>
 
-          <div
-            className={classNames('aip-progress__elapsed', {
-              'no-transition': isSeeking
-            })}
-            style={{
-              transform: `scaleX(${progressRatio})`
-            }}
-          />
-
-          <div
-            className={classNames('aip-progress__slider-handle', {
-              'no-transition': isSeeking
-            })}
-            style={{
-              transform: `translateX(calc(${this.state.sliderWidth *
-                progressRatio}px - 50%))`
-            }}
+          <ElapsedTime
+            currentTime={sliderTime}
+            duration={duration}
+            isSeeking={isSeeking}
           />
         </div>
-      </StyledDiv>
+      </Div>
     );
   }
 
@@ -299,4 +314,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(SeekBarSlider));
+)(withTranslation()(Progress));

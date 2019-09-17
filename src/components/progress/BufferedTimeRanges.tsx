@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IAianaState } from '../reducers';
-import { hexToHsla } from '../utils/colors';
-import { ITimeRange } from '../utils/media';
-import styled from '../utils/styled-components';
+import { IAianaState } from '../../reducers';
+import { hexToHsla } from '../../utils/colors';
+import { ITimeRange } from '../../utils/media';
+import styled from '../../utils/styled-components';
 
 interface IStateProps {
   bufferedRanges: ITimeRange[];

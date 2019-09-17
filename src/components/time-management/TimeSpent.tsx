@@ -14,7 +14,7 @@ interface IStateProps {
   duration: number;
 }
 
-const StyledElement = styled.div`
+const Div = styled.div`
   height: 100%;
   width: 100%;
 
@@ -87,7 +87,7 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
   const angle = degToRad(angleDeg);
 
   return (
-    <StyledElement>
+    <Div>
       <svg viewBox="-1 -1 2 2" aria-labelledby={graphLabelId}>
         <g>
           <g>
@@ -163,7 +163,7 @@ function TimeSpent({ currentTime, duration }: IStateProps) {
       <AssistiveText id={graphLabelId}>
         {t('progression.sequence_progress', { progress: floor(progress) })}
       </AssistiveText>
-    </StyledElement>
+    </Div>
   );
 }
 

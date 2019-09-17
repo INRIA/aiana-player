@@ -1,14 +1,14 @@
 import React from 'react';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
-import AddBookmarkButton from '../buttons/add-bookmark';
-import FullscreenButton from '../buttons/fullscreen';
-import PlayButton from '../buttons/play';
-import VolumeControl from '../buttons/VolumeControl';
+import AddBookmarkButton from '../buttons/AddBookmarkButton';
+import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
+import PlayButton from '../buttons/play/PlayButton';
+import VolumeControl from './VolumeControl';
 import NextChapter from '../chapters/controls/NextChapter';
 import PreviousChapter from '../chapters/controls/PreviousChapter';
 import PreferencesPanel from '../preferences/PreferencesPanel';
-import SeekBarSlider from '../seekbar/SeekBarSlider';
+import Progress from '../progress/Progress';
 import NextSlide from '../slides/controls/NextSlide';
 import PreviousSlide from '../slides/controls/PreviousSlide';
 import TimeStatus from '../TimeStatus';
@@ -42,7 +42,7 @@ const StyledControls = styled.div`
 function MediaPlayerControls(props: IProps) {
   return (
     <StyledControlsWrapper>
-      <SeekBarSlider />
+      <Progress />
       <StyledControls>
         <div>
           <PreviousSlide />

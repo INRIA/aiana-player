@@ -6,7 +6,7 @@ import { IAianaState } from '../../reducers';
 import { IRawTrack, isActiveTrack } from '../../utils/media';
 import AssistiveText from '../a11y/AssistiveText';
 import ChaptersList from './ChaptersList';
-import StyledChapters from './Styles';
+import styled from '../../utils/styled-components';
 
 export interface IMediaChapters {
   chaptersText?: string;
@@ -14,6 +14,19 @@ export interface IMediaChapters {
 }
 
 interface IProps extends IMediaChapters, IInjectedUniqueIdProps {}
+
+const Nav = styled.nav`
+  width: 100%;
+
+  padding: 1em;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  color: ${(props) => props.theme.bg};
+  background-color: ${(props) => props.theme.fg};
+`;
 
 function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   const activeChaptersTrack = chaptersTracks.find(isActiveTrack);
@@ -23,7 +36,7 @@ function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   }
 
   return (
-    <StyledChapters aria-labelledby={uid}>
+    <Nav aria-labelledby={uid}>
       <div id={uid}>
         <AssistiveText>{activeChaptersTrack.label}</AssistiveText>
       </div>
@@ -31,7 +44,7 @@ function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
         activeText={chaptersText}
         chapters={activeChaptersTrack.cues}
       />
-    </StyledChapters>
+    </Nav>
   );
 }
 

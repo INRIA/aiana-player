@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { addBookmark } from '../../../actions/bookmarks';
-import { IAianaState } from '../../../reducers';
-import AssistiveText from '../../a11y/AssistiveText';
-import GhostButton from '../../shared/GhostButton';
-import StyledSvg from '../../shared/SvgIcon';
-import BookmarkAddIcon from '../../svg/BookmarkAdd';
+import { addBookmark } from '../../actions/bookmarks';
+import { IAianaState } from '../../reducers';
+import AssistiveText from '../a11y/AssistiveText';
+import GhostButton from '../shared/GhostButton';
+import StyledSvg from '../shared/SvgIcon';
+import BookmarkAddIcon from '../svg/BookmarkAdd';
 
 interface IStateProps {
   currentTime: number;
