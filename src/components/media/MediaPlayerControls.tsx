@@ -50,8 +50,8 @@ function MediaPlayerControls(props: IProps) {
           <NextSlide />
           <PreviousChapter />
           <NextChapter />
-          <TimeStatus />
           <VolumeControl />
+          <TimeStatus />
         </div>
         <div>
           <RatingSlider
