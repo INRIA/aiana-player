@@ -123,7 +123,7 @@ const preferencesReducer = createReducer(initialPreferencesState, {
     state.widgets = state.widgets.map((widget: IWidget) => {
       const w = { ...widget };
 
-      if (w === action.payload) {
+      if (w.name === action.payload) {
         w.visible = !w.visible;
       }
 
