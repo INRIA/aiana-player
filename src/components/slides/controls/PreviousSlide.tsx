@@ -6,7 +6,7 @@ import { IAianaState } from '../../../reducers';
 import { IRawTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
-import StyledSvg from '../../shared/styled-svg';
+import StyledSvg from '../../shared/SvgIcon';
 import ArrowBackward from '../../svg/ArrowBackward';
 import { ICueBoundaries } from '../../../types';
 import MediaContext from '../../../contexts/MediaContext';
@@ -34,7 +34,7 @@ class PreviousSlide extends Component<IPreviousSlide> {
   render() {
     return (
       <GhostButton onClick={this.clickHandler}>
-        <StyledSvg as={ArrowBackward} aria-hidden="true" />
+        <StyledSvg as={ArrowBackward} />
         <AssistiveText>
           {this.props.t('controls.play_slide_previous')}
         </AssistiveText>

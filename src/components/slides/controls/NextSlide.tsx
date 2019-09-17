@@ -6,7 +6,7 @@ import { IAianaState } from '../../../reducers';
 import { IRawTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
-import StyledSvg from '../../shared/styled-svg';
+import StyledSvg from '../../shared/SvgIcon';
 import ArrowForward from '../../svg/ArrowForward';
 import { ICueBoundaries } from '../../../types';
 import MediaContext from '../../../contexts/MediaContext';
@@ -33,7 +33,7 @@ class NextSlide extends Component<INextSlide> {
   render() {
     return (
       <GhostButton onClick={this.clickHandler}>
-        <StyledSvg as={ArrowForward} aria-hidden="true" />
+        <StyledSvg as={ArrowForward} />
         <AssistiveText>
           {this.props.t('controls.play_slide_next')}
         </AssistiveText>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleFontUppercase } from '../../actions/preferences';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
-import ToggleButton from '../shared/toggle-button';
+import ToggleButton from '../shared/ToggleButton';
 
 interface IStateProps {
   fontUppercase: boolean;

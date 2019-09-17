@@ -6,7 +6,7 @@ import { VisuallyHidden } from '../../a11y/AssistiveText';
 function SvgFilters() {
   return (
     <VisuallyHidden>
-      <svg className="aip-filters" aria-hidden="true">
+      <svg className="aip-filters">
         <defs>
           <DropShadow />
           <ErodeFilter />

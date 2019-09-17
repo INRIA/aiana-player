@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { Component, createRef } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import GhostButton from '../../components/shared/GhostButton';
-import StyledSvg from '../../components/shared/styled-svg';
+import StyledSvg from '../../components/shared/SvgIcon';
 import MoveIcon from '../../components/svg/Move';
 import { ESCAPE_KEY } from '../../constants/keys';
 import styled from '../../utils/styled-components';
@@ -67,7 +67,7 @@ class DragWidgetButton extends Component<IDragWidgetButton, IState> {
         onMouseDown={this.mouseDownHandler}
         onKeyDown={this.keyDownHandler}
       >
-        <StyledSvg as={MoveIcon} aria-hidden="true" />
+        <StyledSvg as={MoveIcon} />
       </StyledDragWidgetButton>
     );
   }

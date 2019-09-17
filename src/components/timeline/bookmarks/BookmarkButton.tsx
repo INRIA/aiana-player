@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from '../../../utils/styled-components';
 import GhostButton from '../../shared/GhostButton';
-import StyledSvg from '../../shared/styled-svg';
+import StyledSvg from '../../shared/SvgIcon';
 import BookmarkIcon from '../../svg/Bookmark';
 import MediaContext from '../../../contexts/MediaContext';
 

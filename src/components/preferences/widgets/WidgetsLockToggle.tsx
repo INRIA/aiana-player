@@ -6,7 +6,7 @@ import { DEFAULT_WIDGETS_LOCK } from '../../../constants/widgets';
 import withUniqueId, {
   IInjectedUniqueIdProps
 } from '../../../hocs/withUniqueId';
-import ToggleButton from '../../shared/toggle-button';
+import ToggleButton from '../../shared/ToggleButton';
 
 interface IDispatchProps {
   setWidgetsLock(locked: boolean): void;

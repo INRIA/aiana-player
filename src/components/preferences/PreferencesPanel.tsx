@@ -4,7 +4,7 @@ import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
 import { uid } from '../../utils/uniqueId';
 import AssistiveText from '../a11y/AssistiveText';
-import StyledSvg from '../shared/styled-svg';
+import StyledSvg from '../shared/SvgIcon';
 import SvgSettings from '../svg/Settings';
 import ChaptersTrackSelector from './ChaptersTrackSelector';
 import FontFaceSelector from './FontFaceSelector';
@@ -112,7 +112,7 @@ function PreferencesPanel(props: IProps) {
           aria-controls={prefsPanelId}
         >
           <AssistiveText>{t('preferences.title')}</AssistiveText>
-          <StyledSvg as={SvgSettings} aria-hidden="true" />
+          <StyledSvg as={SvgSettings} />
         </PanelToggle>
       </h2>
 

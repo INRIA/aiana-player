@@ -5,7 +5,7 @@ import { addBookmark } from '../../../actions/bookmarks';
 import { IAianaState } from '../../../reducers';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
-import StyledSvg from '../../shared/styled-svg';
+import StyledSvg from '../../shared/SvgIcon';
 import BookmarkAddIcon from '../../svg/BookmarkAdd';
 
 interface IStateProps {
@@ -27,7 +27,7 @@ function AddBookmarkButton(props: IAddBookmarkButton) {
         props.addBookmark(props.currentTime);
       }}
     >
-      <StyledSvg as={BookmarkAddIcon} aria-hidden="true" />
+      <StyledSvg as={BookmarkAddIcon} />
       <AssistiveText>{t('controls.add_bookmark')}</AssistiveText>
     </GhostButton>
   );

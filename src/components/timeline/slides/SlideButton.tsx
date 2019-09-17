@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from '../../../utils/styled-components';
 import GhostButton from '../../shared/GhostButton';
-import StyledSvg from '../../shared/styled-svg';
+import StyledSvg from '../../shared/SvgIcon';
 import SlideIcon from '../../svg/Slide';
 import MediaContext from '../../../contexts/MediaContext';
 
@@ -26,7 +26,7 @@ function SlideButton(props: IProps) {
         props.onClick(props.time);
       }}
     >
-      <FilteredSvg as={SlideIcon} aria-hidden="true" />
+      <FilteredSvg as={SlideIcon} />
     </GhostButton>
   );
 }

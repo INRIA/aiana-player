@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import StyledSvg from '../../components/shared/styled-svg';
+import StyledSvg from '../../components/shared/SvgIcon';
 import ResizeEw from '../../components/svg/ResizeEw';
 import ResizeNesw from '../../components/svg/ResizeNesw';
 import ResizeNs from '../../components/svg/ResizeNs';
@@ -57,7 +57,7 @@ class Resizers extends Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvg as={ResizeNs} aria-hidden="true" />
+          <StyledSvg as={ResizeNs} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_right', {
@@ -78,7 +78,7 @@ class Resizers extends Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvg as={ResizeEw} aria-hidden="true" />
+          <StyledSvg as={ResizeEw} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_right', {
@@ -99,7 +99,7 @@ class Resizers extends Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvg as={ResizeNs} aria-hidden="true" />
+          <StyledSvg as={ResizeNs} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.bottom_left', {
@@ -120,7 +120,7 @@ class Resizers extends Component<IResizers> {
           keyDownHandler={this.props.keyUpdate}
           mouseDownHandler={this.mouseDownHandler}
         >
-          <StyledSvg as={ResizeEw} aria-hidden="true" />
+          <StyledSvg as={ResizeEw} />
         </ResizeButton>
         <ResizeButton
           label={this.props.t('resizers.top_left', {
