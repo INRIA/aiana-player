@@ -9,11 +9,7 @@ interface IPanelToggleProps {
 
 function PanelToggle(props: IPanelToggleProps) {
   return (
-    <GhostButton
-      aria-expanded={props.isExpanded}
-      onClick={props.clickHandler}
-      type="button"
-    >
+    <GhostButton aria-expanded={props.isExpanded} onClick={props.clickHandler}>
       {props.children}
     </GhostButton>
   );

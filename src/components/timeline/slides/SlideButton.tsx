@@ -21,7 +21,6 @@ function SlideButton(props: IProps) {
   return (
     <GhostButton
       aria-label={props.label}
-      type="button"
       onClick={() => {
         media.currentTime = props.time;
         props.onClick(props.time);

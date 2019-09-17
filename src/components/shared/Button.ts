@@ -59,6 +59,8 @@ export const buttonMixin = css`
   }
 `;
 
-export default styled.button`
+export default styled.button.attrs((props) => ({
+  type: props.type || 'button'
+}))`
   ${buttonMixin};
 `;

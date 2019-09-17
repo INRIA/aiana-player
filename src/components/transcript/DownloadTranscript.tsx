@@ -1,6 +1,5 @@
 import React from 'react';
 import { saveAs } from 'file-saver';
-import styled from '../../utils/styled-components';
 import { useTranslation } from 'react-i18next';
 import Button from '../shared/Button';
 
@@ -9,8 +8,6 @@ interface IProps {
   selector?: string;
 }
 
-const ActionButton = styled.button``;
-
 function DownloadTranscript({
   selector = '.aip-transcript__text',
   filename = 'transcript.txt'
@@ -18,10 +15,8 @@ function DownloadTranscript({
   const [t] = useTranslation();
 
   return (
-    <ActionButton
-      type="button"
+    <Button
       className="button--small"
-      as={Button}
       onClick={() => {
         const el = document.querySelector(selector) as HTMLElement;
         const text = el.innerText;
@@ -32,7 +27,7 @@ function DownloadTranscript({
       }}
     >
       {t('transcript.download.label')}
-    </ActionButton>
+    </Button>
   );
 }
 

@@ -132,7 +132,6 @@ class ResizeButton extends Component<IProps> {
         onKeyDown={this.keyDownHandler}
         onMouseDown={this.mouseDownHandler}
         tabIndex={this.props.type === 'border' ? -1 : undefined}
-        type="button"
       >
         {this.props.children}
       </StyledResizeButton>

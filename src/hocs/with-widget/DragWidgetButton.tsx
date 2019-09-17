@@ -66,7 +66,6 @@ class DragWidgetButton extends Component<IDragWidgetButton, IState> {
         ref={this.controlsRef}
         onMouseDown={this.mouseDownHandler}
         onKeyDown={this.keyDownHandler}
-        type="button"
       >
         <StyledSvg as={MoveIcon} aria-hidden="true" />
       </StyledDragWidgetButton>

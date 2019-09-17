@@ -32,7 +32,6 @@ function PlayButton(props: IProps) {
 
   return (
     <StyledPlayButton
-      type="button"
       onClick={(evt) => {
         evt.preventDefault();
 

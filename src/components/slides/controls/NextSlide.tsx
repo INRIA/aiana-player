@@ -32,7 +32,7 @@ class NextSlide extends Component<INextSlide> {
 
   render() {
     return (
-      <GhostButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler}>
         <StyledSvg as={ArrowForward} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_slide_next')}

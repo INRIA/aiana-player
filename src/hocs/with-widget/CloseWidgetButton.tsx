@@ -53,7 +53,6 @@ function CloseWidgetButton(props: IProps) {
       })}
       className={classes}
       onClick={props.clickHandler}
-      type="button"
     >
       <StyledSvg as={SvgCross} />
     </StyledCloseWidgetButton>

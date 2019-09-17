@@ -33,7 +33,7 @@ class PreviousSlide extends Component<IPreviousSlide> {
 
   render() {
     return (
-      <GhostButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler}>
         <StyledSvg as={ArrowBackward} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_slide_previous')}

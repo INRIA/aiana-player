@@ -38,7 +38,6 @@ function MuteButton(props: IMuteButton) {
 
   return (
     <StyledMuteButton
-      type="button"
       onClick={() => {
         media.muted = !isMuted;
         toggleMute(!isMuted);

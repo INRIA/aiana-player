@@ -2,7 +2,6 @@ import React from 'react';
 import { saveAs } from 'file-saver';
 import styled from '../../utils/styled-components';
 import { useTranslation } from 'react-i18next';
-import Button from '../shared/Button';
 import { connect } from 'react-redux';
 import {
   IPreferencesState,
@@ -10,6 +9,7 @@ import {
 } from '../../reducers/preferences';
 import { exportPreferences } from '../../actions/preferences';
 import { CDispatch } from '../../store';
+import Button from '../shared/Button';
 
 interface IOwnProps {
   preferences: IPreferencesState;
@@ -21,7 +21,7 @@ interface IMapDispatch {
 
 interface IExportPreferences extends IOwnProps, IMapDispatch {}
 
-const ActionButton = styled.button`
+const ActionButton = styled(Button)`
   width: auto;
 `;
 
@@ -29,12 +29,7 @@ function ExportPreferences(props: IExportPreferences) {
   const [t] = useTranslation();
 
   return (
-    <ActionButton
-      type="button"
-      className="button--small"
-      as={Button}
-      onClick={props.clickHandler}
-    >
+    <ActionButton className="button--small" onClick={props.clickHandler}>
       {t('preferences.export.label')}
     </ActionButton>
   );

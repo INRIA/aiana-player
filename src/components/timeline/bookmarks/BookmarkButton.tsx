@@ -19,7 +19,6 @@ function BookmarkButton(props: IProps) {
 
   return (
     <GhostButton
-      type="button"
       onClick={() => {
         media.currentTime = props.time;
         props.onClick(props.time);

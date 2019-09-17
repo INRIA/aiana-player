@@ -28,7 +28,6 @@ function FullscreenButton({ isFullscreen, playerSelector }: IFullscreenButton) {
 
   return (
     <GhostButton
-      type="button"
       onClick={(evt) => {
         evt.preventDefault();
         toggleFullscreen(playerSelector);

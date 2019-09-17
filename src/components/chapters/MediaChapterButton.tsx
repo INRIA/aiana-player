@@ -27,7 +27,6 @@ function MediaChapterButton(props: IMediaChapterButton) {
   return (
     <StyledChapterButton
       aria-pressed={props.isActive}
-      type="button"
       onClick={() => {
         props.seek(props.startTime);
         media.currentTime = props.startTime;

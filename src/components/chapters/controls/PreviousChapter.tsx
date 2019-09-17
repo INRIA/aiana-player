@@ -34,7 +34,7 @@ class PreviousChapter extends Component<IPreviousChapter> {
 
   render() {
     return (
-      <GhostButton onClick={this.clickHandler} type="button">
+      <GhostButton onClick={this.clickHandler}>
         <StyledSvg as={SkipPrevious} aria-hidden="true" />
         <AssistiveText>
           {this.props.t('controls.play_chapter_previous')}

@@ -106,7 +106,6 @@ class ImportPreferences extends Component<IImportPreferences, IState> {
         {this.state.file && (
           <ActionButton
             className="button--small"
-            type="button"
             onClick={this.loadFile}
             disabled={!this.state.file}
           >

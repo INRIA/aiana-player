@@ -1,6 +1,8 @@
 import styled from '../../utils/styled-components';
 
-export default styled.button`
+export default styled.button.attrs((props) => ({
+  type: props.type || 'button'
+}))`
   display: inline-block;
   width: 2.25em;
   height: 100%;

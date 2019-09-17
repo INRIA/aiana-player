@@ -23,7 +23,6 @@ function AddBookmarkButton(props: IAddBookmarkButton) {
 
   return (
     <GhostButton
-      type="button"
       onClick={() => {
         props.addBookmark(props.currentTime);
       }}
