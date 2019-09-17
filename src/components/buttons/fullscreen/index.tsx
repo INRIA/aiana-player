@@ -1,29 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { toggleFullscreen } from '../../../actions/player';
+import {
+  isFullscreenEnabled,
+  toggleFullscreen
+} from '../../../utils/fullscreen';
 import { IAianaState } from '../../../reducers';
-import { isFullscreenEnabled } from '../../../utils/fullscreen';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import ControlIcon from './ControlIcon';
 
-interface IStateProps {
+interface IFullscreenButton {
   isFullscreen: boolean;
   playerSelector: string;
 }
 
-interface IDispatchProps {
-  toggleFullscreen(selector: string): void;
-}
-
-interface IFullscreenButton extends IStateProps, IDispatchProps {}
-
-function FullscreenButton({
-  isFullscreen,
-  playerSelector,
-  toggleFullscreen
-}: IFullscreenButton) {
+function FullscreenButton({ isFullscreen, playerSelector }: IFullscreenButton) {
   const [t] = useTranslation();
 
   if (!isFullscreenEnabled()) {
@@ -55,11 +47,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-const mapDispatch = {
-  toggleFullscreen
-};
-
-export default connect(
-  mapState,
-  mapDispatch
-)(FullscreenButton);
+export default connect(mapState)(FullscreenButton);

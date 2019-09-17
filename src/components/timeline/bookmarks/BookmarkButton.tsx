@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '../../../utils/styled-components';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import BookmarkIcon from '../../svg/Bookmark';
+import MediaContext from '../../../contexts/MediaContext';
 
 interface IProps {
-  mediaSelector: string;
   time: number;
-  onClick(mediaSelector: string, time: number): void;
+  onClick(time: number): void;
 }
 
 const FilteredSvg = styled(StyledSvg)`
@@ -15,10 +15,15 @@ const FilteredSvg = styled(StyledSvg)`
 `;
 
 function BookmarkButton(props: IProps) {
+  const [media] = useContext(MediaContext);
+
   return (
     <GhostButton
-      onClick={() => props.onClick(props.mediaSelector, props.time)}
       type="button"
+      onClick={() => {
+        media.currentTime = props.time;
+        props.onClick(props.time);
+      }}
     >
       <FilteredSvg as={BookmarkIcon} />
     </GhostButton>

@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { seekNextSlide } from '../../../actions/slides';
+import { nextSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
-import { IRawSlidesTrack } from '../../../utils/media';
+import { IRawTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import ArrowForward from '../../svg/ArrowForward';
+import { ICueBoundaries } from '../../../types';
+import MediaContext from '../../../contexts/MediaContext';
 
 interface IStateProps {
   currentTime: number;
   duration: number;
   language: string;
-  mediaSelector: string;
-  slidesTracks: IRawSlidesTrack[];
+  slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
-  seekNextSlide(mediaSelector: string, from: number, to: number): void;
+  nextSlide(boundaries: ICueBoundaries): void;
 }
 
 interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
@@ -27,6 +28,8 @@ interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
 // Disable the element? Just hide it?
 
 class NextSlide extends Component<INextSlide> {
+  static contextType = MediaContext;
+
   render() {
     return (
       <GhostButton onClick={this.clickHandler} type="button">
@@ -40,7 +43,7 @@ class NextSlide extends Component<INextSlide> {
 
   clickHandler = () => {
     const activeSlidesTrack = this.props.slidesTracks.find(
-      (track: IRawSlidesTrack) => {
+      (track: IRawTrack) => {
         return track.language === this.props.language;
       }
     );
@@ -54,11 +57,14 @@ class NextSlide extends Component<INextSlide> {
     });
 
     // If last cue is already played, seek to the end of the media.
-    this.props.seekNextSlide(
-      this.props.mediaSelector,
-      this.props.currentTime,
-      nextSlideCue ? nextSlideCue.startTime : this.props.duration
-    );
+    const [media] = this.context;
+    const to = nextSlideCue ? nextSlideCue.startTime : this.props.duration;
+
+    this.props.nextSlide({
+      from: this.props.currentTime,
+      to
+    });
+    media.currentTime = to;
   };
 }
 
@@ -67,13 +73,12 @@ function mapState(state: IAianaState) {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
     language: state.slides.language,
-    mediaSelector: state.player.mediaSelector,
     slidesTracks: state.slides.slidesTracks
   };
 }
 
 const mapDispatch = {
-  seekNextSlide
+  nextSlide
 };
 
 export default connect(

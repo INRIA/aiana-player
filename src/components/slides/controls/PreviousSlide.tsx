@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { seekPreviousSlide } from '../../../actions/slides';
+import { previousSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
-import { IRawSlidesTrack } from '../../../utils/media';
+import { IRawTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import ArrowBackward from '../../svg/ArrowBackward';
+import { ICueBoundaries } from '../../../types';
+import MediaContext from '../../../contexts/MediaContext';
 
 interface IStateProps {
   currentTime: number;
   duration: number;
   language: string;
-  mediaSelector: string;
   seekThreshold: number;
-  slidesTracks: IRawSlidesTrack[];
+  slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
-  seekPreviousSlide(mediaSelector: string, from: number, to: number): void;
+  previousSlide(boundaries: ICueBoundaries): void;
 }
 
 interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
@@ -28,6 +29,8 @@ interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
 // Disable the element? Just hide it?
 
 class PreviousSlide extends Component<IPreviousSlide> {
+  static contextType = MediaContext;
+
   render() {
     return (
       <GhostButton onClick={this.clickHandler} type="button">
@@ -41,7 +44,7 @@ class PreviousSlide extends Component<IPreviousSlide> {
 
   clickHandler = () => {
     const activeSlidesTrack = this.props.slidesTracks.find(
-      (track: IRawSlidesTrack) => {
+      (track: IRawTrack) => {
         return track.language === this.props.language;
       }
     );
@@ -59,11 +62,14 @@ class PreviousSlide extends Component<IPreviousSlide> {
       });
 
     // If there is no cue found, seek to the beginning of the media.
-    this.props.seekPreviousSlide(
-      this.props.mediaSelector,
-      this.props.currentTime,
-      previousSlideCue ? previousSlideCue.startTime : 0
-    );
+    const [media] = this.context;
+    const to = previousSlideCue ? previousSlideCue.startTime : 0;
+
+    this.props.previousSlide({
+      from: this.props.currentTime,
+      to
+    });
+    media.currentTime = to;
   };
 }
 
@@ -72,14 +78,13 @@ function mapState(state: IAianaState) {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
     language: state.slides.language,
-    mediaSelector: state.player.mediaSelector,
     seekThreshold: state.preferences.previousChapterSeekThreshold,
     slidesTracks: state.slides.slidesTracks
   };
 }
 
 const mapDispatch = {
-  seekPreviousSlide
+  previousSlide
 };
 
 export default connect(

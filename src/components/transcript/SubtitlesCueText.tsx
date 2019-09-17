@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
 import styled from '../../utils/styled-components';
 import { IMergedCues } from './Transcript';
+import MediaContext from '../../contexts/MediaContext';
 
 interface IProps {
   cue: IMergedCues;
   currentTime: number;
-  mediaSelector: string;
-  clickHandler(mediaSelector: string, seekingTime: number): void;
+  clickHandler(seekingTime: number): void;
 }
 
 const StyledSpan = styled.span`
@@ -21,12 +21,9 @@ const StyledSpan = styled.span`
   }
 `;
 
-function SubtitlesCueText({
-  cue,
-  mediaSelector,
-  clickHandler,
-  currentTime
-}: IProps) {
+function SubtitlesCueText({ cue, clickHandler, currentTime }: IProps) {
+  const [media] = useContext(MediaContext);
+
   if (!cue) {
     return null;
   }
@@ -37,7 +34,10 @@ function SubtitlesCueText({
         current: cue.startTime <= currentTime && cue.endTime >= currentTime
       })}
       key={`subtitle_${cue.startTime}_${cue.endTime}`}
-      onClick={() => clickHandler(mediaSelector, cue.startTime)}
+      onClick={() => {
+        media.currentTime = cue.startTime;
+        clickHandler(cue.startTime);
+      }}
     >
       {`${cue.text} `}
     </StyledSpan>

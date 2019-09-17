@@ -5,16 +5,10 @@ import SubtitlesCueText from './SubtitlesCueText';
 interface IProps {
   cues?: IMergedCues[];
   currentTime: number;
-  mediaSelector: string;
-  clickHandler(mediaSelector: string, seekingTime: number): void;
+  clickHandler(seekingTime: number): void;
 }
 
-function SubtitlesCues({
-  cues,
-  mediaSelector,
-  clickHandler,
-  currentTime
-}: IProps) {
+function SubtitlesCues({ cues, clickHandler, currentTime }: IProps) {
   if (!cues) {
     return null;
   }
@@ -27,7 +21,6 @@ function SubtitlesCues({
           cue={cue}
           currentTime={currentTime}
           key={`subtitle_${cue.startTime}_${cue.endTime}`}
-          mediaSelector={mediaSelector}
         />
       ))}
     </p>

@@ -23,10 +23,9 @@ import {
   DEFAULT_PLAYBACK_RATE,
   DEFAULT_PRELOAD,
   DEFAULT_VOLUME,
-  DEFAULT_AUTOPLAY,
-  MEDIA_SELECTOR
+  DEFAULT_AUTOPLAY
 } from '../constants/player';
-import { BufferedRanges, IRawMetadataTrack } from '../utils/media';
+import { IRawTrackExt, ITimeRange } from '../utils/media';
 import { changeMediaSource } from '../actions/preferences';
 import { safeDump, safeLoad } from 'js-yaml';
 import { cloneDeep } from 'lodash';
@@ -37,7 +36,7 @@ export interface IPlayerState {
   additionalInformationText?: string;
   additionalInformationTracks: ITrack[];
   autoPlay: boolean;
-  bufferedRanges: BufferedRanges;
+  bufferedRanges: ITimeRange[];
 
   /** The current position of the player, expressed in seconds */
   currentTime: number;
@@ -50,10 +49,9 @@ export interface IPlayerState {
 
   isSeeking: boolean;
 
-  mediaSelector: string;
   mediaId: string;
 
-  metadataTracks: IRawMetadataTrack[];
+  metadataTracks: IRawTrackExt[];
 
   /**
    * The current rate of speed for the media resource to play. This speed is
@@ -92,7 +90,6 @@ export const initialPlayerState: IPlayerState = {
   isPlaying: false,
   isSeeking: false,
   mediaId: '__unset__',
-  mediaSelector: MEDIA_SELECTOR,
   metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
   playerSelector: APP_ROOT_SELECTOR,
@@ -122,8 +119,8 @@ export const playerReducer = createReducer(initialPlayerState, {
   [changePlaybackRate.toString()]: (state: IPlayerState, action) => {
     state.playbackRate = action.payload;
   },
-  [toggleMute.toString()]: (state: IPlayerState) => {
-    state.isMuted = !state.isMuted;
+  [toggleMute.toString()]: (state: IPlayerState, action) => {
+    state.isMuted = action.payload;
   },
   [changeVolume.toString()]: (state: IPlayerState, action) => {
     state.volume = action.payload;

@@ -5,7 +5,7 @@ import {
   setSlidesText
 } from '../actions/slides';
 import { DEFAULT_LANG } from '../constants/preferences';
-import { IRawSlidesTrack } from '../utils/media';
+import { IRawTrack } from '../utils/media';
 import { createReducer } from 'redux-starter-kit';
 
 export interface ISlidesTrack {
@@ -17,7 +17,7 @@ export interface ISlidesTrack {
 export interface ISlidesState {
   currentSlideText?: string;
   language: string;
-  slidesTracks: IRawSlidesTrack[];
+  slidesTracks: IRawTrack[];
   sources: ISlidesTrack[];
 }
 
@@ -45,9 +45,7 @@ const slidesReducer = createReducer(initialState, {
   }
 });
 
-export function getSelectedTrack(
-  state: ISlidesState
-): IRawSlidesTrack | undefined {
+export function getSelectedTrack(state: ISlidesState): IRawTrack | undefined {
   return state.slidesTracks.find((track) => track.language === state.language);
 }
 

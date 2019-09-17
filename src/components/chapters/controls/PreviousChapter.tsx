@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { seekPreviousChapter } from '../../../actions/chapters';
+import { previousChapter } from '../../../actions/chapters';
 import { IAianaState } from '../../../reducers';
-import { IRawChaptersTrack, isActiveTrack } from '../../../utils/media';
+import { IRawTrack, isActiveTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import SkipPrevious from '../../svg/SkipPrevious';
+import { ICueBoundaries } from '../../../types';
+import MediaContext from '../../../contexts/MediaContext';
 
 interface IStateProps {
-  chaptersTracks: IRawChaptersTrack[];
+  chaptersTracks: IRawTrack[];
   currentTime: number;
-  mediaSelector: string;
   seekThreshold: number;
 }
 
 interface IDispatchProps {
-  seekPreviousChapter(mediaSelector: string, from: number, to: number): void;
+  previousChapter(boundaries: ICueBoundaries): void;
 }
 
 interface IPreviousChapter
@@ -29,6 +30,8 @@ interface IPreviousChapter
 // Disable the element? Just hide it?
 
 class PreviousChapter extends Component<IPreviousChapter> {
+  static contextType = MediaContext;
+
   render() {
     return (
       <GhostButton onClick={this.clickHandler} type="button">
@@ -56,11 +59,14 @@ class PreviousChapter extends Component<IPreviousChapter> {
       });
 
     // If there is no cue found, seek to the beginning of the media.
-    this.props.seekPreviousChapter(
-      this.props.mediaSelector,
-      this.props.currentTime,
-      previousChapterCue ? previousChapterCue.startTime : 0
-    );
+    const [media] = this.context;
+    const to = previousChapterCue ? previousChapterCue.startTime : 0;
+
+    this.props.previousChapter({
+      from: this.props.currentTime,
+      to
+    });
+    media.currentTime = to;
   };
 }
 
@@ -68,13 +74,12 @@ function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     currentTime: state.player.currentTime,
-    mediaSelector: state.player.mediaSelector,
     seekThreshold: state.preferences.previousChapterSeekThreshold
   };
 }
 
 const mapDispatch = {
-  seekPreviousChapter
+  previousChapter
 };
 
 export default connect(

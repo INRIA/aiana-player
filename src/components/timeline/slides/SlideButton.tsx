@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '../../../utils/styled-components';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/styled-svg';
 import SlideIcon from '../../svg/Slide';
+import MediaContext from '../../../contexts/MediaContext';
 
 interface IProps {
   label: string;
-  mediaSelector: string;
   time: number;
-  onClick(mediaSelector: string, time: number): void;
+  onClick(time: number): void;
 }
 
 const FilteredSvg = styled(StyledSvg)`
@@ -16,11 +16,16 @@ const FilteredSvg = styled(StyledSvg)`
 `;
 
 function SlideButton(props: IProps) {
+  const [media] = useContext(MediaContext);
+
   return (
     <GhostButton
       aria-label={props.label}
-      onClick={() => props.onClick(props.mediaSelector, props.time)}
       type="button"
+      onClick={() => {
+        media.currentTime = props.time;
+        props.onClick(props.time);
+      }}
     >
       <FilteredSvg as={SlideIcon} aria-hidden="true" />
     </GhostButton>

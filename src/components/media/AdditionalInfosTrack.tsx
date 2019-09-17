@@ -8,7 +8,7 @@ import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import {
   getLastActiveCueText,
-  IRawMetadataTrack,
+  IRawTrackExt,
   rawTextTrack
 } from '../../utils/media';
 
@@ -19,11 +19,11 @@ interface IProps {
 }
 
 interface IStateProps {
-  metadataTracks: IRawMetadataTrack[];
+  metadataTracks: IRawTrackExt[];
 }
 
 interface IDispatchProps {
-  addMetadataTrack(track: IRawMetadataTrack): void;
+  addMetadataTrack(track: IRawTrackExt): void;
   setAdditionalInformationsText(text?: string): void;
 }
 

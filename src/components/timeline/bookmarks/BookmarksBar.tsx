@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { requestSeek } from '../../../actions/player';
+import { seek } from '../../../actions/player';
 import { IAianaState } from '../../../reducers';
 import { IBookmark } from '../../../reducers/bookmarks';
 import { unitToPercent } from '../../../utils/math';
@@ -10,11 +10,10 @@ import BookmarkButton from './BookmarkButton';
 interface IStateProps {
   bookmarks: IBookmark[];
   duration: number;
-  mediaSelector: string;
 }
 
 interface IDispatchProps {
-  requestSeek(mediaSelector: string, seekingTime: number): void;
+  seek(seekingTime: number): void;
 }
 
 interface IBookmarksBar extends IStateProps, IDispatchProps {}
@@ -56,12 +55,7 @@ const StyledBookmarksBar = styled.nav`
   }
 `;
 
-function BookmarksBar({
-  bookmarks,
-  duration,
-  mediaSelector,
-  requestSeek: requestSeekAction
-}: IBookmarksBar) {
+function BookmarksBar({ bookmarks, duration, seek }: IBookmarksBar) {
   return (
     <StyledBookmarksBar>
       <ol>
@@ -72,11 +66,7 @@ function BookmarksBar({
               left: `${unitToPercent(time, duration)}%`
             }}
           >
-            <BookmarkButton
-              onClick={requestSeekAction}
-              mediaSelector={mediaSelector}
-              time={time}
-            />
+            <BookmarkButton onClick={seek} time={time} />
           </li>
         ))}
       </ol>
@@ -87,13 +77,12 @@ function BookmarksBar({
 function mapState(state: IAianaState) {
   return {
     bookmarks: state.bookmarks,
-    duration: state.player.duration,
-    mediaSelector: state.player.mediaSelector
+    duration: state.player.duration
   };
 }
 
 const mapDispatch = {
-  requestSeek
+  seek
 };
 
 export default connect(

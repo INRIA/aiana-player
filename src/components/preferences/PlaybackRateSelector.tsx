@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { Fragment, useContext } from 'react';
 import { connect } from 'react-redux';
 import { changePlaybackRate } from '../../actions/player';
 import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
+import { useTranslation } from 'react-i18next';
+import MediaContext from '../../contexts/MediaContext';
 
 interface IStateProps {
   currentPlaybackRate?: number;
-  mediaSelector: string;
   playbackRates?: number[];
 }
 
@@ -18,30 +18,26 @@ interface IDispatchProps {
 interface IPlaybackRateSelector
   extends IInjectedUniqueIdProps,
     IStateProps,
-    IDispatchProps,
-    WithTranslation {}
+    IDispatchProps {}
 
 function PlaybackRateSelector(props: IPlaybackRateSelector) {
-  const { playbackRates, currentPlaybackRate, t, uid } = props;
+  const [t] = useTranslation();
+  const [media] = useContext(MediaContext);
+
+  const { playbackRates, currentPlaybackRate, uid } = props;
 
   return (
     <Fragment>
       <span id={uid}>{t('preferences.playbackrate.label')}</span>
       <select
         aria-labelledby={uid}
+        value={currentPlaybackRate}
         onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => {
           const playbackRate = Number(evt.currentTarget.value);
-          const media = document.querySelector(
-            props.mediaSelector
-          ) as HTMLMediaElement;
 
-          if (media) {
-            media.playbackRate = playbackRate;
-          }
-
+          media.playbackRate = playbackRate;
           props.changePlaybackRate(playbackRate);
         }}
-        value={currentPlaybackRate}
       >
         {playbackRates &&
           playbackRates.map((playbackRate) => (
@@ -57,7 +53,6 @@ function PlaybackRateSelector(props: IPlaybackRateSelector) {
 function mapState(state: IAianaState) {
   return {
     currentPlaybackRate: state.player.playbackRate,
-    mediaSelector: state.player.mediaSelector,
     playbackRates: state.preferences.playbackRates
   };
 }
@@ -69,4 +64,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(withUniqueId(PlaybackRateSelector)));
+)(withUniqueId(PlaybackRateSelector));

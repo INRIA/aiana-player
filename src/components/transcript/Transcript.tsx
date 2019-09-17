@@ -14,19 +14,18 @@ import styled from '../../utils/styled-components';
 import { IMediaCue } from '../../utils/media';
 import SubtitlesCues from './SubtitlesCues';
 import { useTranslation } from 'react-i18next';
-import { requestSeek } from '../../actions/player';
+import { seek } from '../../actions/player';
 import DownloadTranscript from './DownloadTranscript';
 import ChapterCue from './ChapterCue';
 
 interface IMapState {
   chapters: IChaptersState;
   currentTime: number;
-  mediaSelector: string;
   subtitles: ISubtitlesState;
 }
 
 interface IMapDispatch {
-  requestSeek(mediaSelector: string, seekingTime: number): void;
+  seek(seekingTime: number): void;
 }
 
 interface ITranscript extends IMapState, IMapDispatch {}
@@ -101,27 +100,24 @@ function Transcript(props: ITranscript) {
           sortedCues.map((cue) => (
             <Fragment key={`chapter_${cue.startTime}_${cue.endTime}`}>
               <ChapterCue
-                clickHandler={props.requestSeek}
+                clickHandler={props.seek}
                 cue={cue}
                 currentTime={props.currentTime}
-                mediaSelector={props.mediaSelector}
               />
 
               <SubtitlesCues
-                clickHandler={props.requestSeek}
+                clickHandler={props.seek}
                 cues={cue.subtitlesCues}
                 currentTime={props.currentTime}
-                mediaSelector={props.mediaSelector}
               />
             </Fragment>
           ))}
 
         {!chaptersCues && (
           <SubtitlesCues
-            clickHandler={props.requestSeek}
+            clickHandler={props.seek}
             cues={subtitlesCues}
             currentTime={props.currentTime}
-            mediaSelector={props.mediaSelector}
           />
         )}
       </div>
@@ -133,12 +129,11 @@ function mapState(state: IAianaState) {
   return {
     chapters: state.chapters,
     currentTime: state.player.currentTime,
-    subtitles: state.subtitles,
-    mediaSelector: state.player.mediaSelector
+    subtitles: state.subtitles
   };
 }
 const mapDispatch = {
-  requestSeek
+  seek
 };
 
 export default connect(

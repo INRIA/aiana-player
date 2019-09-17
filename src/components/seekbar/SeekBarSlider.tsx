@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { requestSeek } from '../../actions/player';
+import { seek } from '../../actions/player';
 import { DEFAULT_SEEK_STEP_MULTIPLIER } from '../../constants/preferences';
 import {
   ARROW_DOWN_KEY,
@@ -20,6 +20,7 @@ import { durationTranslationKey, secondsToHMSObject } from '../../utils/time';
 import { bounded } from '../../utils/ui';
 import BufferedTimeRanges from '../BufferedTimeRanges';
 import StyledDiv from './Styles';
+import MediaContext from '../../contexts/MediaContext';
 
 const { round } = Math;
 
@@ -32,18 +33,19 @@ interface IStateProps {
   duration: number;
   isFullscreen: boolean;
   isSeeking: boolean;
-  mediaSelector: string;
   seekingTime: number;
   seekStep: number;
 }
 
 interface IDispatchProps {
-  requestSeek(mediaSelector: string, seekingTime: number): void;
+  seek(seekingTime: number): void;
 }
 
 interface ISeekBarSlider extends IStateProps, IDispatchProps, WithTranslation {}
 
 class SeekBarSlider extends Component<ISeekBarSlider, IState> {
+  static contextType = MediaContext;
+
   readonly state = {
     sliderWidth: 0
   };
@@ -191,11 +193,11 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
   };
 
   updateCurrentTime = (mouseX: number) => {
+    const [media] = this.context;
     const {
       currentTime,
-      duration,
-      mediaSelector,
-      requestSeek: requestSeekAction
+      duration
+      // , seek
     } = this.props;
 
     const positionDifference = bounded(mouseX, 0, this.state.sliderWidth);
@@ -205,17 +207,18 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
     );
 
     if (newCurrentTime !== currentTime) {
-      requestSeekAction(mediaSelector, newCurrentTime);
+      media.currentTime = newCurrentTime;
+      // seek(newCurrentTime);
     }
   };
 
   keyDownHandler = (evt: React.KeyboardEvent<HTMLElement>) => {
+    const [media] = this.context;
     const {
       currentTime,
       duration,
       isSeeking,
-      mediaSelector,
-      requestSeek: requestSeekAction,
+      seek,
       seekStep,
       seekingTime
     } = this.props;
@@ -232,14 +235,16 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
       case ARROW_UP_KEY:
         {
           const nextTime = this.safeTime(sliderTime + seekStep);
-          requestSeekAction(mediaSelector, nextTime);
+          seek(nextTime);
+          media.currentTime = nextTime;
         }
         break;
       case ARROW_LEFT_KEY:
       case ARROW_DOWN_KEY:
         {
           const nextTime = this.safeTime(sliderTime - seekStep);
-          requestSeekAction(mediaSelector, nextTime);
+          seek(nextTime);
+          media.currentTime = nextTime;
         }
         break;
       case PAGE_UP_KEY:
@@ -247,7 +252,8 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
           const nextTime = this.safeTime(
             sliderTime + DEFAULT_SEEK_STEP_MULTIPLIER * seekStep
           );
-          requestSeekAction(mediaSelector, nextTime);
+          seek(nextTime);
+          media.currentTime = nextTime;
         }
         break;
       case PAGE_DOWN_KEY:
@@ -255,14 +261,17 @@ class SeekBarSlider extends Component<ISeekBarSlider, IState> {
           const nextTime = this.safeTime(
             sliderTime - DEFAULT_SEEK_STEP_MULTIPLIER * seekStep
           );
-          requestSeekAction(mediaSelector, nextTime);
+          seek(nextTime);
+          media.currentTime = nextTime;
         }
         break;
       case HOME_KEY:
-        requestSeekAction(mediaSelector, 0);
+        seek(0);
+        media.currentTime = 0;
         break;
       case END_KEY:
-        requestSeekAction(mediaSelector, duration);
+        seek(duration);
+        media.currentTime = duration;
         break;
     }
   };
@@ -278,14 +287,13 @@ function mapState(state: IAianaState) {
     duration: state.player.duration,
     isFullscreen: state.player.isFullscreen,
     isSeeking: state.player.isSeeking,
-    mediaSelector: state.player.mediaSelector,
     seekStep: state.preferences.seekStep,
     seekingTime: state.player.seekingTime
   };
 }
 
 const mapDispatch = {
-  requestSeek
+  seek
 };
 
 export default connect(

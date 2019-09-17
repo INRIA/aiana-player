@@ -21,7 +21,8 @@ export const bookmarksReducer = createReducer([] as any, {
     }
   },
   [loadConfiguration.toString()]: (state: IBookmarkState, action) => {
-    return ([] as IBookmarkState).concat(...state, action.payload.bookmarks);
+    const { bookmarks = [] } = action.payload;
+    return ([] as IBookmarkState).concat([...state], bookmarks);
   }
 });
 

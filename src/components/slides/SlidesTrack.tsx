@@ -5,7 +5,7 @@ import { TRACK_KIND_METADATA, TRACK_MODE_HIDDEN } from '../../constants/tracks';
 import { IAianaState } from '../../reducers';
 import {
   getLastActiveCueText,
-  IRawSlidesTrack,
+  IRawTrack,
   rawSlidesTrack
 } from '../../utils/media';
 
@@ -17,11 +17,11 @@ interface IProps {
 
 interface IStateProps {
   language: string;
-  slidesTracks: IRawSlidesTrack[];
+  slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
-  addSlidesTrack(track: IRawSlidesTrack): void;
+  addSlidesTrack(track: IRawTrack): void;
   setSlidesText(text?: string): void;
 }
 
@@ -87,9 +87,7 @@ class SlidesTrack extends Component<ISlideTrackProps> {
   }
 
   loadHandler = () => {
-    const slidesTrack: IRawSlidesTrack = rawSlidesTrack(
-      this.trackRef.current!.track
-    );
+    const slidesTrack: IRawTrack = rawSlidesTrack(this.trackRef.current!.track);
     this.props.addSlidesTrack(slidesTrack);
   };
 
