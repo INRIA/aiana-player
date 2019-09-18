@@ -41,7 +41,6 @@
     "react-redux": "^7.1.1",
     "react-scripts": "3.1.1",
     "redux": "^4.0.4",
-    "redux-logger": "^3.0.6",
     "redux-starter-kit": "^0.6.3",
     "styled-components": "^4.3.2"
   },
@@ -79,7 +78,6 @@
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
     "@types/react-redux": "^6.0.10",
-    "@types/redux-logger": "^3.0.6",
     "@types/storybook-addon-jsx": "^5.4.0",
     "@types/storybook__addon-actions": "^3.4.3",
     "@types/storybook__addon-info": "^3.4.2",
