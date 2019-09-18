@@ -4,7 +4,8 @@
     "react-app",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:jsx-a11y/strict"
   ],
   "plugins": ["@typescript-eslint", "prettier"],
   "parserOptions": {
