@@ -29,6 +29,9 @@ function MediaSourceSelector(props: IProps) {
         onBlur={(evt) => {
           props.changeMediaSource(evt.currentTarget.value);
         }}
+        onChange={(evt) => {
+          props.changeMediaSource(evt.currentTarget.value);
+        }}
       >
         {props.sources.map((mediaSource) => (
           <option key={mediaSource.src} value={mediaSource.src}>

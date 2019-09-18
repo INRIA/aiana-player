@@ -26,6 +26,7 @@ function FontSizeSelector(props: IProps) {
       <select
         aria-labelledby={props.uid}
         onBlur={props.changeHandler}
+        onChange={props.changeHandler}
         value={props.activeMultiplier}
       >
         {props.availableMultipliers &&

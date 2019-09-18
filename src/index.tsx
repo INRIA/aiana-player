@@ -13,6 +13,20 @@ function getRootElement(conf: any = {}) {
   return document.querySelector(CONTAINER_SELECTOR);
 }
 
-ReactDOM.render(<Aiana />, getRootElement(
-  (window as any).aiana
-) as HTMLElement);
+function renderApp() {
+  ReactDOM.render(<Aiana />, getRootElement(
+    (window as any).aiana
+  ) as HTMLElement);
+}
+
+async function init() {
+  if (process.env.NODE_ENV !== 'production') {
+    const axe = await import('react-axe');
+    axe.default(React, ReactDOM, 1000);
+    renderApp();
+  } else {
+    renderApp();
+  }
+}
+
+init();

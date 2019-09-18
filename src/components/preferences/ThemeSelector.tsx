@@ -34,6 +34,7 @@ function ThemeSelector({
       <select
         aria-labelledby={uid}
         onBlur={selectChangeHandler}
+        onChange={selectChangeHandler}
         value={activeTheme}
       >
         {themes &&

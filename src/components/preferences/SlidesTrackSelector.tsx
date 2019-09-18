@@ -33,6 +33,7 @@ function SlidesTrackSelector({
       <select
         aria-labelledby={uid}
         onBlur={selectedTrackChangedHandler}
+        onChange={selectedTrackChangedHandler}
         value={getSelectedTrackLanguage(slides)}
       >
         {slides.slidesTracks.map(({ language }) => (

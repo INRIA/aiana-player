@@ -29,6 +29,7 @@ function LanguageSelector(props: ILanguageSelector) {
       <select
         aria-labelledby={props.uid}
         onBlur={props.changeHandler}
+        onChange={props.changeHandler}
         value={props.language}
       >
         {props.languages &&

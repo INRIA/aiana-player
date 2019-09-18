@@ -36,6 +36,7 @@ function ChaptersTrackSelector({
       <select
         aria-labelledby={uid}
         onBlur={selectedTrackChangedHandler}
+        onChange={selectedTrackChangedHandler}
         value={getSelectedChaptersLanguage(chapters)}
       >
         {chapters.chaptersTracks.map(({ language }) => (

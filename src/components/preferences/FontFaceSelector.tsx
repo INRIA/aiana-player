@@ -26,6 +26,7 @@ function FontFaceSelector(props: IProps) {
       <select
         aria-labelledby={props.uid}
         onBlur={props.changeHandler}
+        onChange={props.changeHandler}
         value={props.fontFace}
       >
         {props.fontFaces &&

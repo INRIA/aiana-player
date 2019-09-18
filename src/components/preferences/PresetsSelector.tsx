@@ -35,6 +35,7 @@ function PresetsSelector({
       <select
         aria-labelledby={uid}
         onBlur={selectChangeHandler}
+        onChange={selectChangeHandler}
         value={activePresetName}
       >
         <option key="empty_preset" value="" disabled>

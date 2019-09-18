@@ -91,6 +91,17 @@ class Progress extends Component<ISeekBarSlider, IState> {
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
 
+    const ariaValueText = this.props.t('controls.seekbar.valuetext', {
+      currentTime: t(
+        durationTranslationKey(roundedCurrentTime),
+        secondsToHMSObject(roundedCurrentTime)
+      ),
+      duration: t(
+        durationTranslationKey(roundedDuration),
+        secondsToHMSObject(roundedDuration)
+      )
+    });
+
     return (
       <Div
         className={classNames('aip-progress', {
@@ -102,10 +113,7 @@ class Progress extends Component<ISeekBarSlider, IState> {
           aria-valuemin={0}
           aria-valuemax={roundedDuration}
           aria-valuenow={roundedCurrentTime}
-          aria-valuetext={this.getAriaValueText(
-            roundedCurrentTime,
-            roundedDuration
-          )}
+          aria-valuetext={ariaValueText}
           className="aip-progress__slider"
           onClick={this.clickHandler}
           onKeyDown={this.keyDownHandler}
@@ -127,21 +135,6 @@ class Progress extends Component<ISeekBarSlider, IState> {
       </Div>
     );
   }
-
-  getAriaValueText = (currentTime: number, duration: number): string => {
-    const { t } = this.props;
-
-    return t('controls.seekbar.valuetext', {
-      currentTime: t(
-        durationTranslationKey(currentTime),
-        secondsToHMSObject(currentTime)
-      ),
-      duration: t(
-        durationTranslationKey(duration),
-        secondsToHMSObject(duration)
-      )
-    });
-  };
 
   componentDidMount() {
     window.addEventListener('resize', this.setPosition);
