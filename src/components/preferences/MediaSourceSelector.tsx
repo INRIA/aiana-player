@@ -26,7 +26,7 @@ function MediaSourceSelector(props: IProps) {
       <select
         aria-labelledby={props.uid}
         value={selectedSource ? selectedSource.src : undefined}
-        onChange={(evt) => {
+        onBlur={(evt) => {
           props.changeMediaSource(evt.currentTarget.value);
         }}
       >

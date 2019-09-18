@@ -25,7 +25,7 @@ function FontFaceSelector(props: IProps) {
       <span id={props.uid}>{t('preferences.font_face.label')}</span>
       <select
         aria-labelledby={props.uid}
-        onChange={props.changeHandler}
+        onBlur={props.changeHandler}
         value={props.fontFace}
       >
         {props.fontFaces &&

@@ -33,7 +33,7 @@ function ThemeSelector({
       <span id={uid}>{t('preferences.theme_selector.label')}</span>
       <select
         aria-labelledby={uid}
-        onChange={selectChangeHandler}
+        onBlur={selectChangeHandler}
         value={activeTheme}
       >
         {themes &&

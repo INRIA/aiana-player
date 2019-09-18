@@ -28,7 +28,7 @@ function LanguageSelector(props: ILanguageSelector) {
       <span id={props.uid}>{t('preferences.UILanguage.label')}</span>
       <select
         aria-labelledby={props.uid}
-        onChange={props.changeHandler}
+        onBlur={props.changeHandler}
         value={props.language}
       >
         {props.languages &&

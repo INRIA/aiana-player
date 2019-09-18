@@ -32,7 +32,7 @@ function SlidesTrackSelector({
       <span id={uid}>{t('preferences.slidestrack.label')}</span>
       <select
         aria-labelledby={uid}
-        onChange={selectedTrackChangedHandler}
+        onBlur={selectedTrackChangedHandler}
         value={getSelectedTrackLanguage(slides)}
       >
         {slides.slidesTracks.map(({ language }) => (

@@ -35,7 +35,7 @@ function ChaptersTrackSelector({
       <span id={uid}>{t('preferences.chapterstrack.label')}</span>
       <select
         aria-labelledby={uid}
-        onChange={selectedTrackChangedHandler}
+        onBlur={selectedTrackChangedHandler}
         value={getSelectedChaptersLanguage(chapters)}
       >
         {chapters.chaptersTracks.map(({ language }) => (

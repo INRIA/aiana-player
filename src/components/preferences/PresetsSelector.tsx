@@ -34,7 +34,7 @@ function PresetsSelector({
       <span id={uid}>{t('preferences.presets_selector.label')}</span>
       <select
         aria-labelledby={uid}
-        onChange={selectChangeHandler}
+        onBlur={selectChangeHandler}
         value={activePresetName}
       >
         <option key="empty_preset" value="" disabled>

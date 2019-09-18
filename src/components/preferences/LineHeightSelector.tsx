@@ -25,7 +25,7 @@ function LineHeightSelector(props: IProps) {
       <span id={props.uid}>{t('preferences.line_height.label')}</span>
       <select
         aria-labelledby={props.uid}
-        onChange={props.changeHandler}
+        onBlur={props.changeHandler}
         value={props.lineHeight}
       >
         {props.lineHeightValues &&

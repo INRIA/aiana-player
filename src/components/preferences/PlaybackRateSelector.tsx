@@ -32,7 +32,7 @@ function PlaybackRateSelector(props: IPlaybackRateSelector) {
       <select
         aria-labelledby={uid}
         value={currentPlaybackRate}
-        onChange={(evt: React.ChangeEvent<HTMLSelectElement>) => {
+        onBlur={(evt: React.ChangeEvent<HTMLSelectElement>) => {
           const playbackRate = Number(evt.currentTarget.value);
 
           media.playbackRate = playbackRate;

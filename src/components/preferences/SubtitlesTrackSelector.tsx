@@ -39,7 +39,7 @@ function SubtitlesTrackSelector({
       <span id={uid}>{t('preferences.subtitlestrack.label')}</span>
       <select
         aria-labelledby={uid}
-        onChange={selectedTrackChangedHandler}
+        onBlur={selectedTrackChangedHandler}
         value={getSelectedSubtitlesLanguage(subtitles)}
       >
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>

@@ -88,7 +88,7 @@ class ImportPreferences extends Component<IImportPreferences, IState> {
           id={fileInputId}
           type="file"
           accept=".txt,.yml,.yaml"
-          onChange={this.changeHandler}
+          onBlur={this.changeHandler}
         />
 
         <Label htmlFor={fileInputId} className="button--small">

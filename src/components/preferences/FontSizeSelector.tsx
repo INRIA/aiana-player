@@ -25,7 +25,7 @@ function FontSizeSelector(props: IProps) {
       <span id={props.uid}>{t('preferences.font_size_multiplier.label')}</span>
       <select
         aria-labelledby={props.uid}
-        onChange={props.changeHandler}
+        onBlur={props.changeHandler}
         value={props.activeMultiplier}
       >
         {props.availableMultipliers &&
