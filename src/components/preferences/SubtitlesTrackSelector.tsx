@@ -5,7 +5,6 @@ import {
   updateActiveSubtitles,
   setSubtitlesText
 } from '../../actions/subtitles';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import {
@@ -13,6 +12,7 @@ import {
   getSelectedSubtitlesLanguage,
   getDisplayableSubtitlesTracks
 } from '../../reducers/subtitles';
+import useId from '../../hooks/useId';
 
 interface IStateProps {
   subtitles: ISubtitlesState;
@@ -22,23 +22,20 @@ interface IDispatchProps {
   selectedTrackChangedHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface ISubtitlesTrackSelector
-  extends IInjectedUniqueIdProps,
-    IStateProps,
-    IDispatchProps {}
+interface ISubtitlesTrackSelector extends IStateProps, IDispatchProps {}
 
 function SubtitlesTrackSelector({
   selectedTrackChangedHandler,
-  subtitles,
-  uid
+  subtitles
 }: ISubtitlesTrackSelector) {
   const [t] = useTranslation();
+  const [id] = useId();
 
   return (
     <Fragment>
-      <span id={uid}>{t('preferences.subtitlestrack.label')}</span>
+      <span id={id}>{t('preferences.subtitlestrack.label')}</span>
       <select
-        aria-labelledby={uid}
+        aria-labelledby={id}
         onBlur={selectedTrackChangedHandler}
         onChange={selectedTrackChangedHandler}
         value={getSelectedSubtitlesLanguage(subtitles)}
@@ -79,4 +76,4 @@ function mapDispatch(dispatch: CDispatch) {
 export default connect(
   mapState,
   mapDispatch
-)(withUniqueId(SubtitlesTrackSelector));
+)(SubtitlesTrackSelector);

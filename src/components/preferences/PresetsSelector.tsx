@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeActivePreset } from '../../actions/presets';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IPreset, getActivePreset } from '../../reducers/presets';
 import { CDispatch } from '../../store';
+import useId from '../../hooks/useId';
 
 interface IProps {
   // TODO: can presets be null?
@@ -15,25 +15,20 @@ interface IDispatchProps {
   selectChangeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface IPresetsSelector
-  extends IInjectedUniqueIdProps,
-    IProps,
-    IDispatchProps {}
+interface IPresetsSelector extends IProps, IDispatchProps {}
 
-function PresetsSelector({
-  presets,
-  selectChangeHandler,
-  uid
-}: IPresetsSelector) {
+function PresetsSelector({ presets, selectChangeHandler }: IPresetsSelector) {
   const [t] = useTranslation();
+  const [id] = useId();
+
   const activePreset = getActivePreset(presets);
   const activePresetName = activePreset ? activePreset.name : '';
 
   return (
     <Fragment>
-      <span id={uid}>{t('preferences.presets_selector.label')}</span>
+      <span id={id}>{t('preferences.presets_selector.label')}</span>
       <select
-        aria-labelledby={uid}
+        aria-labelledby={id}
         onBlur={selectChangeHandler}
         onChange={selectChangeHandler}
         value={activePresetName}
@@ -66,6 +61,4 @@ function mapDispatch(dispatch: CDispatch, ownProps: IProps) {
 export default connect(
   null,
   mapDispatch
-)(withUniqueId(PresetsSelector));
-
-// TODO: diff preferences and preset here?
+)(PresetsSelector);

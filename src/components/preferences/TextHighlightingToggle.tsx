@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toggleTextHighlighting } from '../../actions/preferences';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import ToggleButton from '../shared/ToggleButton';
+import useId from '../../hooks/useId';
 
 interface IStateProps {
   textHighlighting: boolean;
@@ -14,17 +14,18 @@ interface IDispatchProps {
   toggleTextHighlighting(): void;
 }
 
-interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
+interface IProps extends IStateProps, IDispatchProps {}
 
 function TextHighlightingToggle(props: IProps) {
   const [t] = useTranslation();
+  const [id] = useId();
 
   return (
     <Fragment>
-      <span id={props.uid}>{t('preferences.text_highlighting.label')}</span>
+      <span id={id}>{t('preferences.text_highlighting.label')}</span>
       <ToggleButton
         isOn={props.textHighlighting}
-        labelledBy={props.uid}
+        labelledBy={id}
         onClick={() => props.toggleTextHighlighting()}
       />
     </Fragment>
@@ -44,4 +45,4 @@ const mapDispatch: IDispatchProps = {
 export default connect(
   mapState,
   mapDispatch
-)(withUniqueId(TextHighlightingToggle));
+)(TextHighlightingToggle);

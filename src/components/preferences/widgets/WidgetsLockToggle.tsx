@@ -3,27 +3,24 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setWidgetsLock } from '../../../actions/preferences';
 import { DEFAULT_WIDGETS_LOCK } from '../../../constants/widgets';
-import withUniqueId, {
-  IInjectedUniqueIdProps
-} from '../../../hocs/withUniqueId';
 import ToggleButton from '../../shared/ToggleButton';
+import useId from '../../../hooks/useId';
 
-interface IDispatchProps {
+interface IWidgetsLockToggle {
   setWidgetsLock(locked: boolean): void;
 }
-
-interface IWidgetsLockToggle extends IDispatchProps, IInjectedUniqueIdProps {}
 
 function WidgetsLockToggle(props: IWidgetsLockToggle) {
   const [locked, setLocked] = useState(DEFAULT_WIDGETS_LOCK);
   const [t] = useTranslation();
+  const [id] = useId();
 
   return (
     <Fragment>
-      <span id={props.uid}>{t('preferences.widgets_locked.label')}</span>
+      <span id={id}>{t('preferences.widgets_locked.label')}</span>
       <ToggleButton
         isOn={locked}
-        labelledBy={props.uid}
+        labelledBy={id}
         onClick={() => {
           setLocked(!locked);
           props.setWidgetsLock(!locked);
@@ -40,4 +37,4 @@ const mapDispatch = {
 export default connect(
   null,
   mapDispatch
-)(withUniqueId(WidgetsLockToggle));
+)(WidgetsLockToggle);

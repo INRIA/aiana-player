@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateLineHeight } from '../../actions/preferences';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
+import useId from '../../hooks/useId';
 
 interface IStateProps {
   lineHeight?: number;
@@ -15,16 +15,17 @@ interface IDispatchProps {
   changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface IProps extends IStateProps, IDispatchProps, IInjectedUniqueIdProps {}
+interface IProps extends IStateProps, IDispatchProps {}
 
 function LineHeightSelector(props: IProps) {
   const [t] = useTranslation();
+  const [id] = useId();
 
   return (
     <Fragment>
-      <span id={props.uid}>{t('preferences.line_height.label')}</span>
+      <span id={id}>{t('preferences.line_height.label')}</span>
       <select
-        aria-labelledby={props.uid}
+        aria-labelledby={id}
         onBlur={props.changeHandler}
         onChange={props.changeHandler}
         value={props.lineHeight}
@@ -58,4 +59,4 @@ function mapDispatch(dispatch: CDispatch) {
 export default connect(
   mapState,
   mapDispatch
-)(withUniqueId(LineHeightSelector));
+)(LineHeightSelector);

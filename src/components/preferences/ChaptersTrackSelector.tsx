@@ -2,13 +2,13 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveChaptersTrack } from '../../actions/chapters';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import {
   IChaptersState,
   getSelectedChaptersLanguage
 } from '../../reducers/chapters';
+import useId from '../../hooks/useId';
 
 interface IStateProps {
   chapters: IChaptersState;
@@ -18,23 +18,20 @@ interface IDispatchProps {
   selectedTrackChangedHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface IChaptersTrackSelector
-  extends IInjectedUniqueIdProps,
-    IStateProps,
-    IDispatchProps {}
+interface IChaptersTrackSelector extends IStateProps, IDispatchProps {}
 
 function ChaptersTrackSelector({
   chapters,
-  selectedTrackChangedHandler,
-  uid
+  selectedTrackChangedHandler
 }: IChaptersTrackSelector) {
   const [t] = useTranslation();
+  const [id] = useId();
 
   return (
     <Fragment>
-      <span id={uid}>{t('preferences.chapterstrack.label')}</span>
+      <span id={id}>{t('preferences.chapterstrack.label')}</span>
       <select
-        aria-labelledby={uid}
+        aria-labelledby={id}
         onBlur={selectedTrackChangedHandler}
         onChange={selectedTrackChangedHandler}
         value={getSelectedChaptersLanguage(chapters)}
@@ -68,4 +65,4 @@ function mapDispatch(dispatch: CDispatch) {
 export default connect(
   mapState,
   mapDispatch
-)(withUniqueId(ChaptersTrackSelector));
+)(ChaptersTrackSelector);

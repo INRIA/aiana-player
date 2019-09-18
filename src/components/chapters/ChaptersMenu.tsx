@@ -1,19 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withWidget from '../../hocs/with-widget';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { IRawTrack, isActiveTrack } from '../../utils/media';
 import AssistiveText from '../a11y/AssistiveText';
 import ChaptersList from './ChaptersList';
 import styled from '../../utils/styled-components';
+import useId from '../../hooks/useId';
 
 export interface IMediaChapters {
   chaptersText?: string;
   chaptersTracks: IRawTrack[];
 }
-
-interface IProps extends IMediaChapters, IInjectedUniqueIdProps {}
 
 const Nav = styled.nav`
   width: 100%;
@@ -28,7 +26,9 @@ const Nav = styled.nav`
   background-color: ${(props) => props.theme.fg};
 `;
 
-function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
+function ChaptersMenu({ chaptersText, chaptersTracks }: IMediaChapters) {
+  const [id] = useId();
+
   const activeChaptersTrack = chaptersTracks.find(isActiveTrack);
 
   if (!activeChaptersTrack) {
@@ -36,8 +36,8 @@ function ChaptersMenu({ chaptersText, chaptersTracks, uid }: IProps) {
   }
 
   return (
-    <Nav aria-labelledby={uid}>
-      <div id={uid}>
+    <Nav aria-labelledby={id}>
+      <div id={id}>
         <AssistiveText>{activeChaptersTrack.label}</AssistiveText>
       </div>
       <ChaptersList
@@ -55,4 +55,4 @@ function mapState(state: IAianaState) {
   };
 }
 
-export default connect(mapState)(withWidget(withUniqueId(ChaptersMenu)));
+export default connect(mapState)(withWidget(ChaptersMenu));

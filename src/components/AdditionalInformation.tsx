@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import withWidget from '../hocs/with-widget';
-import withUniqueId, { IInjectedUniqueIdProps } from '../hocs/withUniqueId';
 import { markdownToJSX } from '../utils/strings';
 import styled from '../utils/styled-components';
 import AssistiveText from './a11y/AssistiveText';
+import useId from '../hooks/useId';
 
-interface IProps extends IInjectedUniqueIdProps {
+interface IProps {
   text?: string;
 }
 
@@ -48,19 +48,20 @@ const StyledAdditionalInformation = styled.aside`
   }
 `;
 
-function AdditionalInformation({ text, uid }: IProps) {
+function AdditionalInformation({ text }: IProps) {
   const [t] = useTranslation();
+  const [id] = useId();
 
   if (!text) {
     return null;
   }
 
   return (
-    <StyledAdditionalInformation aria-labelledby={uid}>
-      <AssistiveText id={uid}>{t('additional-info.title')}</AssistiveText>
+    <StyledAdditionalInformation aria-labelledby={id}>
+      <AssistiveText id={id}>{t('additional-info.title')}</AssistiveText>
       <div className="aip-additional-info">{markdownToJSX(text)}</div>
     </StyledAdditionalInformation>
   );
 }
 
-export default withWidget(withUniqueId(AdditionalInformation));
+export default withWidget(AdditionalInformation);

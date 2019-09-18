@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';
-import withUniqueId, { IInjectedUniqueIdProps } from '../../hocs/withUniqueId';
 import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { ISlidesState, getSelectedTrackLanguage } from '../../reducers/slides';
+import useId from '../../hooks/useId';
 
 interface IStateProps {
   slides: ISlidesState;
@@ -15,23 +15,20 @@ interface IDispatchProps {
   selectedTrackChangedHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
-interface ISlidesTrackSelector
-  extends IInjectedUniqueIdProps,
-    IStateProps,
-    IDispatchProps {}
+interface ISlidesTrackSelector extends IStateProps, IDispatchProps {}
 
 function SlidesTrackSelector({
   selectedTrackChangedHandler,
-  slides,
-  uid
+  slides
 }: ISlidesTrackSelector) {
   const [t] = useTranslation();
+  const [id] = useId();
 
   return (
     <Fragment>
-      <span id={uid}>{t('preferences.slidestrack.label')}</span>
+      <span id={id}>{t('preferences.slidestrack.label')}</span>
       <select
-        aria-labelledby={uid}
+        aria-labelledby={id}
         onBlur={selectedTrackChangedHandler}
         onChange={selectedTrackChangedHandler}
         value={getSelectedTrackLanguage(slides)}
@@ -65,4 +62,4 @@ function mapDispatch(dispatch: CDispatch) {
 export default connect(
   mapState,
   mapDispatch
-)(withUniqueId(SlidesTrackSelector));
+)(SlidesTrackSelector);
