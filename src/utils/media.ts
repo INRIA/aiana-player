@@ -313,7 +313,6 @@ export class YouTubeMedia {
     this.startSeeking = params.startSeeking;
     this.stopSeeking = params.stopSeeking;
 
-    // FIXME: use `cueVideoById` if video isn't played automatically
     this.player = new YT.Player('aip-yt-container', {
       height: '100%',
       width: '100%',

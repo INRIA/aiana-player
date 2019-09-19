@@ -23,13 +23,16 @@ interface IDispatchProps {
 
 interface INextChapter extends IStateProps, IDispatchProps, WithTranslation {}
 
-// TODO: what to do when there is no chapters at all?
-// Disable the element? Just hide it?
-
 class NextChapter extends Component<INextChapter> {
   static contextType = MediaContext;
 
   render() {
+    const activeChaptersTrack = this.props.chaptersTracks.find(isActiveTrack);
+
+    if (!activeChaptersTrack) {
+      return;
+    }
+
     return (
       <GhostButton onClick={this.clickHandler}>
         <StyledSvg as={SkipNext} />

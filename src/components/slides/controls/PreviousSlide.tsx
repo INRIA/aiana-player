@@ -25,13 +25,20 @@ interface IDispatchProps {
 
 interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
 
-// TODO: what to do when there is no slides at all?
-// Disable the element? Just hide it?
-
 class PreviousSlide extends Component<IPreviousSlide> {
   static contextType = MediaContext;
 
   render() {
+    const activeSlidesTrack = this.props.slidesTracks.find(
+      (track: IRawTrack) => {
+        return track.language === this.props.language;
+      }
+    );
+
+    if (!activeSlidesTrack) {
+      return;
+    }
+
     return (
       <GhostButton onClick={this.clickHandler}>
         <StyledSvg as={ArrowBackward} />

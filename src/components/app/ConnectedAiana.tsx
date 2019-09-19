@@ -58,8 +58,6 @@ const StyledAiana = styled.div`
     font-family: inherit;
   }
 
-  /* TODO: remove debug styles */
-  input[type='checkbox'],
   select {
     &[data-focus-visible-added] {
       box-shadow: 0 0 0 2px ${(props) => props.theme.focus};
