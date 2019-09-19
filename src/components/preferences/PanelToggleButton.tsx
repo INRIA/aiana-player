@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import GhostButton from '../../shared/GhostButton';
+import GhostButton from '../shared/GhostButton';
 
 interface IPanelToggleProps {
   children: ReactNode;

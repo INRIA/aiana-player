@@ -1,16 +1,16 @@
 import React from 'react';
 import { hexToHsla } from '../../utils/colors';
 import styled from '../../utils/styled-components';
-import AddBookmarkButton from '../buttons/AddBookmarkButton';
-import FullscreenButton from '../buttons/fullscreen/FullscreenButton';
-import PlayButton from '../buttons/play/PlayButton';
-import VolumeControl from './VolumeControl';
-import NextChapter from '../chapters/controls/NextChapter';
-import PreviousChapter from '../chapters/controls/PreviousChapter';
+import AddBookmarkButton from '../controls/AddBookmarkButton';
+import FullscreenButton from '../controls/fullscreen/FullscreenButton';
+import PlayButton from '../controls/play/PlayButton';
+import VolumeControl from '../controls/VolumeControl';
+import NextChapterButton from '../controls/chapters/NextChapterButton';
+import PreviousChapterButton from '../controls/chapters/PreviousChapterButton';
 import PreferencesPanel from '../preferences/PreferencesPanel';
 import Progress from '../progress/Progress';
-import NextSlide from '../slides/controls/NextSlide';
-import PreviousSlide from '../slides/controls/PreviousSlide';
+import NextSlideButton from '../controls/slides/NextSlideButton';
+import PreviousSlide from '../controls/slides/PreviousSlideButton';
 import TimeStatus from '../TimeStatus';
 import RatingSlider from '../rating/RatingSlider';
 import { connect } from 'react-redux';
@@ -20,14 +20,14 @@ interface IProps {
   rating: number;
 }
 
-const StyledControlsWrapper = styled.div`
+const ControlsWrapper = styled.div`
   /* height: 3.5625em */
   padding: 0.8125em 1em 0.5em;
 
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 `;
 
-const StyledControls = styled.div`
+const Controls = styled.div`
   height: 2.25em;
   margin-top: 0.3125em;
 
@@ -41,15 +41,15 @@ const StyledControls = styled.div`
 
 function MediaPlayerControls(props: IProps) {
   return (
-    <StyledControlsWrapper>
+    <ControlsWrapper>
       <Progress />
-      <StyledControls>
+      <Controls>
         <div>
           <PreviousSlide />
           <PlayButton />
-          <NextSlide />
-          <PreviousChapter />
-          <NextChapter />
+          <NextSlideButton />
+          <PreviousChapterButton />
+          <NextChapterButton />
           <VolumeControl />
           <TimeStatus />
         </div>
@@ -63,8 +63,8 @@ function MediaPlayerControls(props: IProps) {
           <PreferencesPanel />
           <FullscreenButton />
         </div>
-      </StyledControls>
-    </StyledControlsWrapper>
+      </Controls>
+    </ControlsWrapper>
   );
 }
 

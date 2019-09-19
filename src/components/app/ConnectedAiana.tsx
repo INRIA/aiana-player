@@ -33,7 +33,7 @@ interface IDispatchProps {
 
 interface IAiana extends IStateProps, IDispatchProps {}
 
-const StyledAiana = styled.div`
+const StyledDiv = styled.div`
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};
 
@@ -101,7 +101,7 @@ function Aiana(props: IAiana) {
 
   return (
     <ThemeProvider theme={themes[theme]}>
-      <StyledAiana
+      <StyledDiv
         className={classNames('aip-app', {
           'aip-app__fullscreen': isDocumentFullscreen()
         })}
@@ -124,7 +124,7 @@ function Aiana(props: IAiana) {
             </MediaContextProvider>
           </div>
         </Suspense>
-      </StyledAiana>
+      </StyledDiv>
     </ThemeProvider>
   );
 }

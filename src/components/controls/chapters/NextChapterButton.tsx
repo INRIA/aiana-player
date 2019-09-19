@@ -23,14 +23,14 @@ interface IDispatchProps {
 
 interface INextChapter extends IStateProps, IDispatchProps, WithTranslation {}
 
-class NextChapter extends Component<INextChapter> {
+class NextChapterButton extends Component<INextChapter> {
   static contextType = MediaContext;
 
   render() {
     const activeChaptersTrack = this.props.chaptersTracks.find(isActiveTrack);
 
     if (!activeChaptersTrack) {
-      return;
+      return null;
     }
 
     return (
@@ -81,4 +81,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(NextChapter));
+)(withTranslation()(NextChapterButton));

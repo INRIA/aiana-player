@@ -7,8 +7,8 @@ interface IControlIcon {
   isFullscreen: boolean;
 }
 
-function ControlIcon({ isFullscreen }: IControlIcon) {
+function FullscreenButtonIcon({ isFullscreen }: IControlIcon) {
   return <StyledSvg as={isFullscreen ? FullscreenExitIcon : FullscreenIcon} />;
 }
 
-export default ControlIcon;
+export default FullscreenButtonIcon;

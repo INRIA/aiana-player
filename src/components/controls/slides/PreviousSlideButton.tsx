@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { nextSlide } from '../../../actions/slides';
+import { previousSlide } from '../../../actions/slides';
 import { IAianaState } from '../../../reducers';
 import { IRawTrack } from '../../../utils/media';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
 import StyledSvg from '../../shared/SvgIcon';
-import ArrowForward from '../../svg/ArrowForward';
+import ArrowBackward from '../../svg/ArrowBackward';
 import { ICueBoundaries } from '../../../types';
 import MediaContext from '../../../contexts/MediaContext';
 
@@ -15,16 +15,17 @@ interface IStateProps {
   currentTime: number;
   duration: number;
   language: string;
+  seekThreshold: number;
   slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
-  nextSlide(boundaries: ICueBoundaries): void;
+  previousSlide(boundaries: ICueBoundaries): void;
 }
 
-interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
+interface IPreviousSlide extends IStateProps, IDispatchProps, WithTranslation {}
 
-class NextSlide extends Component<INextSlide> {
+class PreviousSlideButton extends Component<IPreviousSlide> {
   static contextType = MediaContext;
 
   render() {
@@ -35,14 +36,14 @@ class NextSlide extends Component<INextSlide> {
     );
 
     if (!activeSlidesTrack) {
-      return;
+      return null;
     }
 
     return (
       <GhostButton onClick={this.clickHandler}>
-        <StyledSvg as={ArrowForward} />
+        <StyledSvg as={ArrowBackward} />
         <AssistiveText>
-          {this.props.t('controls.play_slide_next')}
+          {this.props.t('controls.play_slide_previous')}
         </AssistiveText>
       </GhostButton>
     );
@@ -59,15 +60,19 @@ class NextSlide extends Component<INextSlide> {
       return;
     }
 
-    const nextSlideCue = activeSlidesTrack.cues.find((cue) => {
-      return cue.startTime > this.props.currentTime;
-    });
+    const previousSlideCue = [...activeSlidesTrack.cues]
+      .reverse()
+      .find((cue) => {
+        return (
+          cue.startTime < this.props.currentTime - this.props.seekThreshold
+        );
+      });
 
-    // If last cue is already played, seek to the end of the media.
+    // If there is no cue found, seek to the beginning of the media.
     const [media] = this.context;
-    const to = nextSlideCue ? nextSlideCue.startTime : this.props.duration;
+    const to = previousSlideCue ? previousSlideCue.startTime : 0;
 
-    this.props.nextSlide({
+    this.props.previousSlide({
       from: this.props.currentTime,
       to
     });
@@ -80,15 +85,16 @@ function mapState(state: IAianaState) {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
     language: state.slides.language,
+    seekThreshold: state.preferences.previousChapterSeekThreshold,
     slidesTracks: state.slides.slidesTracks
   };
 }
 
 const mapDispatch = {
-  nextSlide
+  previousSlide
 };
 
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(NextSlide));
+)(withTranslation()(PreviousSlideButton));

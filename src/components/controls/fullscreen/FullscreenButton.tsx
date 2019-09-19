@@ -8,7 +8,7 @@ import {
 import { IAianaState } from '../../../reducers';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
-import ControlIcon from './ControlIcon';
+import FullscreenButtonIcon from './FullscreenButtonIcon';
 
 interface IFullscreenButton {
   isFullscreen: boolean;
@@ -33,7 +33,7 @@ function FullscreenButton({ isFullscreen, playerSelector }: IFullscreenButton) {
         toggleFullscreen(playerSelector);
       }}
     >
-      <ControlIcon isFullscreen={isFullscreen} />
+      <FullscreenButtonIcon isFullscreen={isFullscreen} />
       <AssistiveText>{controlText}</AssistiveText>
     </GhostButton>
   );

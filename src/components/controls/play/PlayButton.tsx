@@ -6,7 +6,7 @@ import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
-import PlayControlIcon from './ControlIcon';
+import PlayButtonIcon from './PlayButtonIcon';
 import MediaContext from '../../../contexts/MediaContext';
 
 export interface IPlayButtonProps {
@@ -44,7 +44,7 @@ function PlayButton(props: IProps) {
         }
       }}
     >
-      <PlayControlIcon isPlaying={props.isPlaying} />
+      <PlayButtonIcon isPlaying={props.isPlaying} />
       <AssistiveText>
         {props.isPlaying ? t('controls.pause') : t('controls.play')}
       </AssistiveText>

@@ -6,7 +6,7 @@ import { IAianaState } from '../../../reducers';
 import styled from '../../../utils/styled-components';
 import AssistiveText from '../../a11y/AssistiveText';
 import GhostButton from '../../shared/GhostButton';
-import ControlIcon from './ControlIcon';
+import MuteButtonIcon from './MuteButtonIcon';
 import { sliderShownMixin } from '../../volume-slider/Styles';
 import MediaContext from '../../../contexts/MediaContext';
 
@@ -43,7 +43,7 @@ function MuteButton(props: IMuteButton) {
         toggleMute(!isMuted);
       }}
     >
-      <ControlIcon isMuted={isMuted} />
+      <MuteButtonIcon isMuted={isMuted} />
       <AssistiveText>
         {isMuted ? t('controls.unmute') : t('controls.mute')}
       </AssistiveText>

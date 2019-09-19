@@ -7,8 +7,8 @@ interface IControlIcon {
   isMuted: boolean;
 }
 
-function ControlIcon({ isMuted }: IControlIcon) {
+function MuteButtonIcon({ isMuted }: IControlIcon) {
   return <StyledSvg as={isMuted ? VolumeMutedIcon : VolumeUnmutedIcon} />;
 }
 
-export default ControlIcon;
+export default MuteButtonIcon;

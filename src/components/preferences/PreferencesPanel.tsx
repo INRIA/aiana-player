@@ -12,7 +12,7 @@ import FontUppercaseToggle from './FontUppercaseToggle';
 import FontSizeSelector from './FontSizeSelector';
 import LanguageSelector from './LanguageSelector';
 import LineHeightSelector from './LineHeightSelector';
-import PanelToggle from './panel-toggle';
+import PanelToggleButton from './PanelToggleButton';
 import PlaybackRateSelector from './PlaybackRateSelector';
 import SlidesTrackSelector from './SlidesTrackSelector';
 import SubtitlesTrackSelector from './SubtitlesTrackSelector';
@@ -106,14 +106,14 @@ function PreferencesPanel(props: IProps) {
       className="aip-preferences"
     >
       <h2 id={ariaLabelId}>
-        <PanelToggle
+        <PanelToggleButton
           isExpanded={isOpen}
           clickHandler={() => togglePanel(!isOpen)}
           aria-controls={prefsPanelId}
         >
           <AssistiveText>{t('preferences.title')}</AssistiveText>
           <StyledSvg as={SvgSettings} />
-        </PanelToggle>
+        </PanelToggleButton>
       </h2>
 
       <div id={prefsPanelId} className="aip-preferences-panel" hidden={!isOpen}>

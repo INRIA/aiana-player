@@ -26,7 +26,7 @@ interface IPreviousChapter
     IDispatchProps,
     WithTranslation {}
 
-class PreviousChapter extends Component<IPreviousChapter> {
+class PreviousChapterButton extends Component<IPreviousChapter> {
   static contextType = MediaContext;
 
   render() {
@@ -88,4 +88,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(PreviousChapter));
+)(withTranslation()(PreviousChapterButton));

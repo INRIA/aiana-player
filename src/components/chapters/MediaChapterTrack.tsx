@@ -71,14 +71,12 @@ class MediaChapterTrack extends Component<IMediaChapterTrack> {
     this.trackRef.current!.removeEventListener('cuechange', this.loadHandler);
   }
 
-  isActive() {
-    const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
-
-    return activeTrack && activeTrack.label === this.trackRef.current!.label;
-  }
-
   cueChangeHandler = () => {
-    if (!this.isActive()) {
+    const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
+    const isActive =
+      activeTrack && activeTrack.label === this.trackRef.current!.label;
+
+    if (!isActive) {
       return;
     }
 

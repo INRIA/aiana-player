@@ -7,8 +7,8 @@ interface IControlIcon {
   isPlaying: boolean;
 }
 
-function PlayControlIcon({ isPlaying }: IControlIcon) {
+function PlayButtonIcon({ isPlaying }: IControlIcon) {
   return <StyledSvg as={isPlaying ? PauseIcon : PlayIcon} />;
 }
 
-export default PlayControlIcon;
+export default PlayButtonIcon;
