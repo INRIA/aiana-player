@@ -15,13 +15,6 @@ export const CONTAINER_SELECTOR = '#root';
 export const DEFAULT_CONFIGURATION_PATH = './configuration.json';
 export const AVAILABLE_LANGUAGES = ['en', 'fr'];
 
-/**
- * TODO: delete this option
- *
- * @deprecated
- */
-export const DEFAULT_MENU_ENABLED = true;
-
 export const APP_ROOT_CLASSNAME = 'aip-app';
 export const APP_ROOT_SELECTOR = `.${APP_ROOT_CLASSNAME}`;
 
