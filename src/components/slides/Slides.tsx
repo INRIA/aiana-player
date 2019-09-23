@@ -19,7 +19,7 @@ function Slides({ text, textHighlighting }: IProps) {
   }
 
   return (
-    <StyledSlides className="aip-slides">
+    <StyledSlides className="aip-slides" tabIndex={0}>
       <div className="aip-slides-content">
         {textHighlighting
           ? markdownToJSXForReadability(text)

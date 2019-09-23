@@ -35,7 +35,6 @@ interface IProps {
   pauseMedia(): void;
   playMedia(): void;
   seek(seekingTime: number): void;
-  startSeeking(): void;
   stopSeeking(): void;
   toggleMute(mute: boolean): void;
   updateBufferedRanges(timeRanges: ITimeRange[]): void;
@@ -98,10 +97,8 @@ class StaticMedia extends Component<IProps> {
 
   componentDidMount() {
     if (this.props.isPlaying) {
-      if (this.props.isPlaying) {
-        const [media] = this.context;
-        media.play();
-      }
+      const [media] = this.context;
+      media.play();
     }
   }
 
@@ -165,7 +162,6 @@ class StaticMedia extends Component<IProps> {
       const [media] = this.context;
 
       this.props.seek(media.currentTime);
-      this.props.startSeeking();
     }
   };
 

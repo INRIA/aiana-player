@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import throttle from 'lodash.throttle';
 import React, { Component } from 'react';
 import styled from '../../utils/styled-components';
 import { WithTranslation, withTranslation } from 'react-i18next';
@@ -27,6 +27,7 @@ import SeekBar from './SeekBar';
 
 interface IState {
   sliderWidth: number;
+  userInteracting: boolean;
 }
 
 interface IStateProps {
@@ -72,21 +73,53 @@ const Div = styled.div`
   }
 `;
 
+/**
+ * Progress component reflects the state of the media current time, but
+ * also allows seeking specific time. A naive implementation would read the
+ * media current time at regular intervals, and simply set it when user requires
+ * a new time.
+ * However, this implementation does not work properly for a few reasons.
+ * First, setting media current time can be resource consuming and setting it
+ * too often results in player poor overall performance.
+ * Second, setting media current time is an asynchronous operation, and
+ * additional checks should be performed to know when the media is effectively
+ * done updating its own current time.
+ *
+ * The strategy here is to let the progress follow media current time when the
+ * media is playing, and to free it from media as long as a user moves the
+ * reading head. It requires to have a property (`isSeeking`) available in the
+ * global application state that would be `true` when user is using the seek
+ * mecanism and when media current time has been properly set. This property
+ * would be `false` the rest of the time, and the component would just read
+ * from the media current time.
+ *
+ * This component will also never set the seeking property back to false, this
+ * action belongs to the media scope.
+ *
+ * A typical scenario would be:
+ *
+ * 1. seeking is false
+ * 2. user moves reading head, seeking is true
+ * 3. user stops moving reading head, media current time update is required
+ * 4. media current time is set, seeking is set back to false
+ */
 class Progress extends Component<ISeekBarSlider, IState> {
   static contextType = MediaContext;
 
   readonly state = {
-    sliderWidth: 0
+    sliderWidth: 0,
+    userInteracting: false
   };
 
   render() {
     const { currentTime, duration, isSeeking, seekingTime, t } = this.props;
+    const { userInteracting } = this.state;
 
     // If the slider is being used, its registered position should override
     // the `currentTime`. However, once media has seeked (which does not mean
     // enough data was loaded yet) and if the slider is not being used, its
     // position should be the `currentTime`.
-    const sliderTime = isSeeking ? seekingTime : currentTime;
+    const sliderTime = userInteracting || isSeeking ? seekingTime : currentTime;
 
     const roundedDuration = round(duration);
     const roundedCurrentTime = round(sliderTime);
@@ -103,11 +136,7 @@ class Progress extends Component<ISeekBarSlider, IState> {
     });
 
     return (
-      <Div
-        className={classNames('aip-progress', {
-          'no-transition': isSeeking
-        })}
-      >
+      <Div className="aip-progress">
         <div
           aria-label={t('controls.seekbar.label')}
           aria-valuemin={0}
@@ -121,16 +150,12 @@ class Progress extends Component<ISeekBarSlider, IState> {
           role="slider"
           tabIndex={0}
         >
-          <SeekBar>
+          <SeekBar className="aip-progress__seekbar">
             <SeekBarExpander />
             <BufferedTimeRanges />
           </SeekBar>
 
-          <ElapsedTime
-            currentTime={sliderTime}
-            duration={duration}
-            isSeeking={isSeeking}
-          />
+          <ElapsedTime currentTime={sliderTime} duration={duration} />
         </div>
       </Div>
     );
@@ -179,8 +204,11 @@ class Progress extends Component<ISeekBarSlider, IState> {
 
     // trigger first recomputation to simulate simple click.
     const el = document.querySelector('.aip-progress')! as HTMLElement;
+    const mouseX = evt.pageX - el.offsetLeft;
 
-    this.updateCurrentTime(evt.pageX - el.offsetLeft);
+    this.props.seek(this.getTimeFromPosition(mouseX));
+    this.setState({ userInteracting: true });
+    this.updateCurrentTime(mouseX);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
@@ -189,6 +217,9 @@ class Progress extends Component<ISeekBarSlider, IState> {
   mouseUpHandler = (evt: MouseEvent) => {
     (document.querySelector('.aip-progress__slider') as HTMLElement)!.blur();
     const el = document.querySelector('.aip-progress')! as HTMLElement;
+
+    this.setState({ userInteracting: false });
+
     this.updateCurrentTime(evt.pageX - el.offsetLeft);
 
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
@@ -197,27 +228,33 @@ class Progress extends Component<ISeekBarSlider, IState> {
 
   mouseMoveHandler = (evt: MouseEvent) => {
     const el = document.querySelector('.aip-progress')! as HTMLElement;
-    this.updateCurrentTime(evt.pageX - el.offsetLeft);
+    const mouseX = evt.pageX - el.offsetLeft;
+
+    this.props.seek(this.getTimeFromPosition(mouseX));
+    this.throttledUpdateCurrentTime(mouseX);
   };
 
   updateCurrentTime = (mouseX: number) => {
     const [media] = this.context;
-    const {
-      currentTime,
-      duration
-      // , seek
-    } = this.props;
+    const newCurrentTime = this.getTimeFromPosition(mouseX);
+
+    if (newCurrentTime !== this.props.currentTime) {
+      media.currentTime = newCurrentTime;
+    }
+  };
+
+  throttledUpdateCurrentTime = throttle(this.updateCurrentTime, 300);
+
+  getTimeFromPosition = (mouseX: number) => {
+    const { duration } = this.props;
 
     const positionDifference = bounded(mouseX, 0, this.state.sliderWidth);
 
-    const newCurrentTime = round(
+    const time = round(
       duration * unitToRatio(positionDifference, this.state.sliderWidth)
     );
 
-    if (newCurrentTime !== currentTime) {
-      media.currentTime = newCurrentTime;
-      // seek(newCurrentTime);
-    }
+    return time;
   };
 
   keyDownHandler = (evt: React.KeyboardEvent<HTMLElement>) => {
@@ -231,12 +268,14 @@ class Progress extends Component<ISeekBarSlider, IState> {
       seekingTime
     } = this.props;
 
+    const { userInteracting } = this.state;
+
     // User should be able to trigger this event multiple times before
     // the media `seeked` event is fired.
     // To do so, `seekingTime` should be used when the media is still seeking,
     // or the media `currentTime` when it is not seeking.
 
-    const sliderTime = isSeeking ? seekingTime : currentTime;
+    const sliderTime = userInteracting || isSeeking ? seekingTime : currentTime;
 
     switch (evt.key) {
       case ARROW_RIGHT_KEY:

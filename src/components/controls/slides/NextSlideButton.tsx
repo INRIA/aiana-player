@@ -10,16 +10,20 @@ import StyledSvg from '../../shared/SvgIcon';
 import ArrowForward from '../../svg/ArrowForward';
 import { ICueBoundaries } from '../../../types';
 import MediaContext from '../../../contexts/MediaContext';
+import { seek } from '../../../actions/player';
 
 interface IStateProps {
   currentTime: number;
   duration: number;
+  isSeeking: boolean;
   language: string;
+  seekingTime: number;
   slidesTracks: IRawTrack[];
 }
 
 interface IDispatchProps {
   nextSlide(boundaries: ICueBoundaries): void;
+  seek(time: number): void;
 }
 
 interface INextSlide extends IStateProps, IDispatchProps, WithTranslation {}
@@ -49,9 +53,17 @@ class NextSlideButton extends Component<INextSlide> {
   }
 
   clickHandler = () => {
+    const {
+      currentTime,
+      duration,
+      isSeeking,
+      language,
+      seekingTime
+    } = this.props;
+
     const activeSlidesTrack = this.props.slidesTracks.find(
       (track: IRawTrack) => {
-        return track.language === this.props.language;
+        return track.language === language;
       }
     );
 
@@ -59,18 +71,22 @@ class NextSlideButton extends Component<INextSlide> {
       return;
     }
 
+    const time = isSeeking ? seekingTime : currentTime;
+
     const nextSlideCue = activeSlidesTrack.cues.find((cue) => {
-      return cue.startTime > this.props.currentTime;
+      return cue.startTime > time;
     });
 
     // If last cue is already played, seek to the end of the media.
     const [media] = this.context;
-    const to = nextSlideCue ? nextSlideCue.startTime : this.props.duration;
+    const to = nextSlideCue ? nextSlideCue.startTime : duration;
 
     this.props.nextSlide({
-      from: this.props.currentTime,
+      from: time,
       to
     });
+    this.props.seek(to);
+
     media.currentTime = to;
   };
 }
@@ -79,13 +95,16 @@ function mapState(state: IAianaState) {
   return {
     currentTime: state.player.currentTime,
     duration: state.player.duration,
+    isSeeking: state.player.isSeeking,
     language: state.slides.language,
+    seekingTime: state.player.seekingTime,
     slidesTracks: state.slides.slidesTracks
   };
 }
 
 const mapDispatch = {
-  nextSlide
+  nextSlide,
+  seek
 };
 
 export default connect(

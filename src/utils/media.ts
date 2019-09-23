@@ -275,8 +275,9 @@ interface IInitParams {
     onReady(duration: number): void;
   };
   currentTimeUpdatedHandler: (time: number) => void;
+  pauseMedia: () => void;
+  playMedia: () => void;
   seek: (time: number) => void;
-  startSeeking: () => void;
   stopSeeking: () => void;
   updateBufferedRanges: (timeRanges: ITimeRange[]) => void;
 }
@@ -291,13 +292,16 @@ export class YouTubeMedia {
 
   videoId: string;
   isPlaying: boolean = false;
+  duration?: number;
 
   player?: YT.Player;
   isReady: boolean = false;
   timer?: number;
+
   currentTimeUpdatedHandler?(time: number): void;
+  pauseMedia = () => {};
+  playMedia = () => {};
   seek = (t: number) => {};
-  startSeeking = () => {};
   stopSeeking = () => {};
   updateBufferedRanges = (timeRanges: ITimeRange[]) => {};
 
@@ -310,8 +314,9 @@ export class YouTubeMedia {
     this.updateBufferedRanges = params.updateBufferedRanges;
     this.isPlaying = params.isPlaying;
     this.seek = params.seek;
-    this.startSeeking = params.startSeeking;
     this.stopSeeking = params.stopSeeking;
+    this.playMedia = params.playMedia;
+    this.pauseMedia = params.pauseMedia;
 
     this.player = new YT.Player('aip-yt-container', {
       height: '100%',
@@ -326,6 +331,7 @@ export class YouTubeMedia {
         hl: params.lang,
         iv_load_policy: 3, // eslint-disable-line
         modestbranding: 1,
+        origin: window.location.origin,
         playsinline: 1,
         rel: 0,
         showinfo: 0
@@ -333,7 +339,8 @@ export class YouTubeMedia {
       events: {
         onReady: (evt) => {
           this.isReady = true;
-          params.listeners.onReady(evt.target.getDuration());
+          this.duration = evt.target.getDuration();
+          params.listeners.onReady(this.duration);
           params.updateBufferedRanges([]);
 
           if (this.isPlaying) {
@@ -344,14 +351,12 @@ export class YouTubeMedia {
         },
         onStateChange: (evt) => {
           if (evt.data === 1) {
-            const ee = evt.target.getIframe();
-            (window as any).ee = ee;
-
-            evt.target.getIframe().querySelector('video');
             // play state
+            this.playMedia();
             this.currentTimeUpdateTicker();
           } else if (evt.data === 2) {
             // pause state
+            this.pauseMedia();
             clearTimeout(this.timer);
           }
         }
@@ -365,9 +370,9 @@ export class YouTubeMedia {
   currentTimeUpdateTicker = () => {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      if (this.player && this.currentTimeUpdatedHandler) {
+      if (this.isReady && this.player && this.currentTimeUpdatedHandler) {
         const loadedFraction = this.player.getVideoLoadedFraction();
-        const loadedDuration = loadedFraction * this.player.getDuration();
+        const loadedDuration = loadedFraction * this.duration!;
         this.updateBufferedRanges([{ startTime: 0, endTime: loadedDuration }]);
         this.currentTimeUpdatedHandler(this.player.getCurrentTime());
       }
@@ -412,7 +417,6 @@ export class YouTubeMedia {
       return;
 
     this.seek(t);
-    this.startSeeking();
     this.player.seekTo(t, true);
     if (!this.isPlaying) {
       this.pause();
@@ -420,11 +424,6 @@ export class YouTubeMedia {
     this.currentTimeUpdatedHandler(t);
 
     this.stopSeeking();
-  }
-
-  get duration() {
-    if (!this.player || !this.isReady) return 0;
-    return this.player.getDuration();
   }
 
   get muted() {

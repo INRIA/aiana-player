@@ -27,7 +27,6 @@ const StyledPlayButton = styled(GhostButton)`
 
 function PlayButton(props: IProps) {
   const [media] = useContext(MediaContext);
-
   const [t] = useTranslation();
 
   return (

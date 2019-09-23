@@ -19,8 +19,6 @@ export const addAdditionalInformationTrack = createAction<IRawTrackExt>(
   'ADD_METADATA_TRACK'
 );
 
-export const startSeeking = createAction('MEDIA_SEEK_START');
-
 export const stopSeeking = createAction('MEDIA_SEEK_STOP');
 
 export const seek = createAction<number>('MEDIA_SEEK');

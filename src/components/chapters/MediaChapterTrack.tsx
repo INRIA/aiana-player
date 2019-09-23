@@ -42,13 +42,14 @@ class MediaChapterTrack extends Component<IMediaChapterTrack> {
   }
 
   componentDidMount() {
+    const { current } = this.trackRef;
+
+    if (!current) return;
+
     // browser will set track `mode` to disabled.
-    this.trackRef.current!.track.mode = TRACK_MODE_HIDDEN;
-    this.trackRef.current!.addEventListener('load', this.loadHandler);
-    this.trackRef.current!.track.addEventListener(
-      'cuechange',
-      this.cueChangeHandler
-    );
+    current.track.mode = TRACK_MODE_HIDDEN;
+    current.addEventListener('load', this.loadHandler);
+    current.track.addEventListener('cuechange', this.cueChangeHandler);
   }
 
   componentDidUpdate(prevProps: IMediaChapterTrack) {
@@ -67,29 +68,37 @@ class MediaChapterTrack extends Component<IMediaChapterTrack> {
   }
 
   componentWillUnmount() {
-    this.trackRef.current!.removeEventListener('load', this.loadHandler);
-    this.trackRef.current!.removeEventListener('cuechange', this.loadHandler);
+    const { current } = this.trackRef;
+
+    if (!current) return;
+
+    current.removeEventListener('load', this.loadHandler);
+    current.removeEventListener('cuechange', this.loadHandler);
   }
 
   cueChangeHandler = () => {
+    const { current } = this.trackRef;
+
+    if (!current) return;
+
     const activeTrack = this.props.chaptersTracks.find(isActiveTrack);
-    const isActive =
-      activeTrack && activeTrack.label === this.trackRef.current!.label;
+    const isActive = activeTrack && activeTrack.label === current.label;
 
     if (!isActive) {
       return;
     }
 
-    const track = this.trackRef.current!.track;
+    const track = current.track;
     const currentText = getLastActiveCueText(track);
     this.props.setChapterText(currentText);
   };
 
   loadHandler = () => {
-    const chaptersTrack = rawChaptersTrack(
-      this.trackRef.current!.track,
-      this.props.language
-    );
+    const { current } = this.trackRef;
+
+    if (!current) return;
+
+    const chaptersTrack = rawChaptersTrack(current.track, this.props.language);
     this.props.addChaptersTrack(chaptersTrack);
   };
 }

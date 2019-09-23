@@ -5,7 +5,6 @@ import {
   pauseMedia,
   playMedia,
   seek,
-  startSeeking,
   stopSeeking,
   toggleMute,
   updateBufferedRanges,
@@ -32,7 +31,6 @@ interface IDispatchProps {
   playMedia(): void;
   seek(seekingTime: number): void;
   setCurrentTime(time: number): void;
-  startSeeking(): void;
   stopSeeking(): void;
   toggleMute(): void;
   updateBufferedRanges(timeRanges: ITimeRange[]): void;
@@ -108,7 +106,7 @@ function MediaPlayer(props: IProps) {
     if (selectedSource) {
       currentSetMediaRef(selectedSource.src);
     }
-  }, [selectedSource, currentSetMediaRef]);
+  }, [selectedSource]); // eslint-disable-line
 
   if (!selectedSource || !media) {
     return null;
@@ -117,7 +115,33 @@ function MediaPlayer(props: IProps) {
   return (
     <StyledDiv>
       {media.type === 'html' && (
-        <StaticMedia src={selectedSource.src} {...props} />
+        <StaticMedia
+          additionalInformationTracks={props.additionalInformationTracks}
+          autoPlay={props.autoPlay}
+          changeVolume={props.changeVolume}
+          chaptersSources={props.chaptersSources}
+          currentTime={props.currentTime}
+          isMuted={props.isMuted}
+          isPlaying={props.isPlaying}
+          isSeeking={props.isSeeking}
+          pauseMedia={props.pauseMedia}
+          playbackRate={props.playbackRate}
+          playMedia={props.playMedia}
+          poster={props.poster}
+          preload={props.preload}
+          seek={props.seek}
+          setCurrentTime={props.setCurrentTime}
+          slidesTracksSources={props.slidesTracksSources}
+          src={selectedSource.src}
+          stopSeeking={props.stopSeeking}
+          subtitlesSources={props.subtitlesSources}
+          subtitlesTracks={props.subtitlesTracks}
+          toggleMute={props.toggleMute}
+          updateBufferedRanges={props.updateBufferedRanges}
+          updateMediaDuration={props.updateMediaDuration}
+          updateSubtitlesTracksList={props.updateSubtitlesTracksList}
+          volume={props.volume}
+        />
       )}
 
       {media.type === 'youtube' && (
@@ -125,11 +149,12 @@ function MediaPlayer(props: IProps) {
           currentTime={props.currentTime}
           isPlaying={props.isPlaying}
           lang={props.lang}
+          pauseMedia={props.pauseMedia}
+          playMedia={props.playMedia}
           playbackRate={props.playbackRate}
           volume={props.volume}
           seek={props.seek}
           setCurrentTime={props.setCurrentTime}
-          startSeeking={props.startSeeking}
           stopSeeking={props.stopSeeking}
           updateBufferedRanges={props.updateBufferedRanges}
           updateMediaDuration={props.updateMediaDuration}
@@ -165,7 +190,6 @@ const mapDispatch = {
   pauseMedia,
   playMedia,
   seek,
-  startSeeking,
   stopSeeking,
   toggleMute,
   updateBufferedRanges,

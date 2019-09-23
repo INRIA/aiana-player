@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useContext, useEffect } from 'react';
 import MediaContext from '../../contexts/MediaContext';
 import { YouTubeMedia, ITimeRange } from '../../utils/media';
@@ -8,8 +10,9 @@ interface IProps {
   lang: string;
   playbackRate: number;
   volume: number;
+  pauseMedia(): void;
+  playMedia(): void;
   seek(seekingTime: number): void;
-  startSeeking(): void;
   stopSeeking(): void;
   setCurrentTime(time: number): void;
   updateBufferedRanges(timeRanges: ITimeRange[]): void;
@@ -18,16 +21,18 @@ interface IProps {
 
 function YouTubeMediaContainer(props: IProps) {
   const [media] = useContext(MediaContext);
+
   const {
     currentTime,
     volume,
     isPlaying,
     lang,
     playbackRate,
+    playMedia,
+    pauseMedia,
     updateMediaDuration,
     seek,
     setCurrentTime,
-    startSeeking,
     stopSeeking,
     updateBufferedRanges
   } = props;
@@ -50,8 +55,9 @@ function YouTubeMediaContainer(props: IProps) {
       isPlaying,
       lang,
       listeners,
+      pauseMedia,
+      playMedia,
       seek,
-      startSeeking,
       stopSeeking,
       updateBufferedRanges
     });
@@ -60,17 +66,18 @@ function YouTubeMediaContainer(props: IProps) {
       media.destroy();
     };
   }, [
+    playMedia,
+    pauseMedia,
     lang,
     updateMediaDuration,
     seek,
     setCurrentTime,
-    startSeeking,
     stopSeeking
-  ]);
+  ]); // eslint-disable-line
 
   useEffect(() => {
     media.isPlaying = isPlaying;
-  }, [isPlaying]);
+  }, [isPlaying]); // eslint-disable-line
 
   return <div id="aip-yt-container"></div>;
 }

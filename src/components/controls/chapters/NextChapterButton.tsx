@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { nextChapter } from '../../../actions/chapters';
 import { IAianaState } from '../../../reducers';
@@ -10,75 +10,80 @@ import StyledSvg from '../../shared/SvgIcon';
 import SkipNext from '../../svg/SkipNext';
 import MediaContext from '../../../contexts/MediaContext';
 import { ICueBoundaries } from '../../../types';
+import { seek } from '../../../actions/player';
 
 interface IStateProps {
   chaptersTracks: IRawTrack[];
   currentTime: number;
   duration: number;
+  isSeeking: boolean;
+  seekingTime: number;
 }
 
 interface IDispatchProps {
   nextChapter(boundaries: ICueBoundaries): void;
+  seek(time: number): void;
 }
 
-interface INextChapter extends IStateProps, IDispatchProps, WithTranslation {}
+interface INextChapter extends IStateProps, IDispatchProps {}
 
-class NextChapterButton extends Component<INextChapter> {
-  static contextType = MediaContext;
+function NextChapterButton(props: INextChapter) {
+  const [media] = useContext(MediaContext);
+  const [t] = useTranslation();
 
-  render() {
-    const activeChaptersTrack = this.props.chaptersTracks.find(isActiveTrack);
+  const activeChaptersTrack = props.chaptersTracks.find(isActiveTrack);
 
-    if (!activeChaptersTrack) {
-      return null;
-    }
-
-    return (
-      <GhostButton onClick={this.clickHandler}>
-        <StyledSvg as={SkipNext} />
-        <AssistiveText>
-          {this.props.t('controls.play_chapter_next')}
-        </AssistiveText>
-      </GhostButton>
-    );
+  if (!activeChaptersTrack) {
+    return null;
   }
 
-  clickHandler = () => {
-    const activeChaptersTrack = this.props.chaptersTracks.find(isActiveTrack);
+  const clickHandler = () => {
+    const activeChaptersTrack = props.chaptersTracks.find(isActiveTrack);
 
     if (!activeChaptersTrack) {
       return;
     }
 
+    const { currentTime, duration, isSeeking, seekingTime } = props;
+    const time = isSeeking ? seekingTime : currentTime;
+
     const nextChapterCue = activeChaptersTrack.cues.find((cue) => {
-      return cue.startTime > this.props.currentTime;
+      return cue.startTime > time;
     });
 
     // If last cue is already played, seek to the end of the media.
-    const [media] = this.context;
-    const to = nextChapterCue ? nextChapterCue.startTime : this.props.duration;
+    const to = nextChapterCue ? nextChapterCue.startTime : duration;
 
-    this.props.nextChapter({
-      from: this.props.currentTime,
-      to
-    });
+    props.nextChapter({ from: time, to });
+    props.seek(to);
+
     media.currentTime = to;
   };
+
+  return (
+    <GhostButton onClick={clickHandler}>
+      <StyledSvg as={SkipNext} />
+      <AssistiveText>{t('controls.play_chapter_next')}</AssistiveText>
+    </GhostButton>
+  );
 }
 
 function mapState(state: IAianaState) {
   return {
     chaptersTracks: state.chapters.chaptersTracks,
     currentTime: state.player.currentTime,
-    duration: state.player.duration
+    duration: state.player.duration,
+    isSeeking: state.player.isSeeking,
+    seekingTime: state.player.seekingTime
   };
 }
 
 const mapDispatch = {
-  nextChapter
+  nextChapter,
+  seek
 };
 
 export default connect(
   mapState,
   mapDispatch
-)(withTranslation()(NextChapterButton));
+)(NextChapterButton);

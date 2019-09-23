@@ -22,18 +22,20 @@ function MediaSourceSelector(props: IProps) {
 
   const selectedSource = getSelectedMediaSource(props.sources);
 
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    if (!selectedSource || evt.currentTarget.value !== selectedSource.src) {
+      props.changeMediaSource(evt.currentTarget.value);
+    }
+  };
+
   return (
     <Fragment>
       <span id={id}>{t('preferences.media_source.label')}</span>
       <select
         aria-labelledby={id}
         value={selectedSource ? selectedSource.src : undefined}
-        onBlur={(evt) => {
-          props.changeMediaSource(evt.currentTarget.value);
-        }}
-        onChange={(evt) => {
-          props.changeMediaSource(evt.currentTarget.value);
-        }}
+        onBlur={changeHandler}
+        onChange={changeHandler}
       >
         {props.sources.map((mediaSource) => (
           <option key={mediaSource.src} value={mediaSource.src}>

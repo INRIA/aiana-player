@@ -4,7 +4,6 @@ import {
   updateBufferedRanges,
   setAdditionalInformationText,
   addAdditionalInformationTrack,
-  startSeeking,
   stopSeeking,
   seek,
   setCurrentTime,
@@ -148,13 +147,10 @@ export const playerReducer = createReducer(initialPlayerState, {
   },
   [seek.type]: (state: IPlayerState, action: PayloadAction<number>) => {
     state.seekingTime = action.payload;
-  },
-  [startSeeking.type]: (state: IPlayerState) => {
     state.isSeeking = true;
   },
   [stopSeeking.type]: (state: IPlayerState) => {
     state.isSeeking = false;
-    state.seekingTime = 0;
   },
   [setAdditionalInformationText.type]: (
     state: IPlayerState,
