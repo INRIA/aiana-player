@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveSlidesTrack } from '../../actions/slides';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import { ISlidesState, getSelectedTrackLanguage } from '../../reducers/slides';
 import useId from '../../hooks/useId';
 import { getTrackKey } from '../../utils/media';
@@ -13,28 +12,33 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  selectedTrackChangedHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  updateActiveSlidesTrack(lang: string): void;
 }
 
 interface ISlidesTrackSelector extends IStateProps, IDispatchProps {}
 
-function SlidesTrackSelector({
-  selectedTrackChangedHandler,
-  slides
-}: ISlidesTrackSelector) {
+function SlidesTrackSelector(props: ISlidesTrackSelector) {
   const [t] = useTranslation();
   const [id] = useId();
+
+  const currentValue = getSelectedTrackLanguage(props.slides);
+
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    if (evt.currentTarget.value !== currentValue) {
+      props.updateActiveSlidesTrack(evt.currentTarget.value);
+    }
+  };
 
   return (
     <Fragment>
       <span id={id}>{t('preferences.slidestrack.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={selectedTrackChangedHandler}
-        onChange={selectedTrackChangedHandler}
-        value={getSelectedTrackLanguage(slides)}
+        onBlur={changeHandler}
+        onChange={changeHandler}
+        value={currentValue}
       >
-        {slides.slidesTracks.map((track) => (
+        {props.slides.slidesTracks.map((track) => (
           <option key={getTrackKey(track)} value={track.language}>
             {t(`languages.${track.language}`)}
           </option>
@@ -50,15 +54,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    selectedTrackChangedHandler: (
-      evt: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-      dispatch(updateActiveSlidesTrack(evt.currentTarget.value));
-    }
-  };
-}
+const mapDispatch = {
+  updateActiveSlidesTrack
+};
 
 export default connect(
   mapState,

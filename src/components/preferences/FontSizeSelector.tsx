@@ -3,16 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateFontSizeMultiplier } from '../../actions/preferences';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import useId from '../../hooks/useId';
 
 interface IStateProps {
-  activeMultiplier?: number;
-  availableMultipliers?: number[];
+  activeMultiplier: number;
+  availableMultipliers: number[];
 }
 
 interface IDispatchProps {
-  changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  updateFontSizeMultiplier(multiplier: any): void;
 }
 
 interface IProps extends IStateProps, IDispatchProps {}
@@ -21,21 +20,28 @@ function FontSizeSelector(props: IProps) {
   const [t] = useTranslation();
   const [id] = useId();
 
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    const multiplier = Number.parseFloat(evt.currentTarget.value);
+
+    if (multiplier !== props.activeMultiplier) {
+      props.updateFontSizeMultiplier(multiplier);
+    }
+  };
+
   return (
     <Fragment>
       <span id={id}>{t('preferences.font_size_multiplier.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={props.changeHandler}
-        onChange={props.changeHandler}
+        onBlur={changeHandler}
+        onChange={changeHandler}
         value={props.activeMultiplier}
       >
-        {props.availableMultipliers &&
-          props.availableMultipliers.map((multiplier) => (
-            <option key={multiplier} value={multiplier}>
-              ×{multiplier}
-            </option>
-          ))}
+        {props.availableMultipliers.map((multiplier) => (
+          <option key={multiplier} value={multiplier}>
+            ×{multiplier}
+          </option>
+        ))}
       </select>
     </Fragment>
   );
@@ -48,14 +54,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      const multiplier = Number.parseFloat(evt.currentTarget.value);
-      dispatch(updateFontSizeMultiplier(multiplier));
-    }
-  };
-}
+const mapDispatch = {
+  updateFontSizeMultiplier
+};
 
 export default connect(
   mapState,

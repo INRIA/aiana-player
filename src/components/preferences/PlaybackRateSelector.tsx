@@ -7,8 +7,8 @@ import MediaContext from '../../contexts/MediaContext';
 import useId from '../../hooks/useId';
 
 interface IStateProps {
-  currentPlaybackRate?: number;
-  playbackRates?: number[];
+  currentPlaybackRate: number;
+  playbackRates: number[];
 }
 
 interface IDispatchProps {
@@ -24,11 +24,13 @@ function PlaybackRateSelector(props: IPlaybackRateSelector) {
 
   const { playbackRates, currentPlaybackRate } = props;
 
-  const changeHandler = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
     const playbackRate = Number(evt.currentTarget.value);
 
-    media.playbackRate = playbackRate;
-    props.changePlaybackRate(playbackRate);
+    if (playbackRate !== currentPlaybackRate) {
+      media.playbackRate = playbackRate;
+      props.changePlaybackRate(playbackRate);
+    }
   };
 
   return (
@@ -40,12 +42,11 @@ function PlaybackRateSelector(props: IPlaybackRateSelector) {
         onBlur={changeHandler}
         onChange={changeHandler}
       >
-        {playbackRates &&
-          playbackRates.map((playbackRate) => (
-            <option key={playbackRate} value={playbackRate}>
-              ×{playbackRate}
-            </option>
-          ))}
+        {playbackRates.map((playbackRate) => (
+          <option key={playbackRate} value={playbackRate}>
+            ×{playbackRate}
+          </option>
+        ))}
       </select>
     </Fragment>
   );

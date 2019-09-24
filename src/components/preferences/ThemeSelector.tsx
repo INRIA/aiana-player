@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeActiveTheme } from '../../actions/preferences';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import useId from '../../hooks/useId';
 
 interface IStateProps {
@@ -12,30 +11,32 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  selectChangeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  changeActiveTheme(name: string): void;
 }
 
 interface IThemeSelector extends IStateProps, IDispatchProps {}
 
-function ThemeSelector({
-  activeTheme,
-  selectChangeHandler,
-  themes
-}: IThemeSelector) {
+function ThemeSelector(props: IThemeSelector) {
   const [t] = useTranslation();
   const [id] = useId();
+
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    if (evt.currentTarget.value !== props.activeTheme) {
+      props.changeActiveTheme(evt.currentTarget.value);
+    }
+  };
 
   return (
     <Fragment>
       <span id={id}>{t('preferences.theme_selector.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={selectChangeHandler}
-        onChange={selectChangeHandler}
-        value={activeTheme}
+        onBlur={changeHandler}
+        onChange={changeHandler}
+        value={props.activeTheme}
       >
-        {themes &&
-          themes.map((themeName) => (
+        {props.themes &&
+          props.themes.map((themeName) => (
             <option key={themeName}>{themeName}</option>
           ))}
       </select>
@@ -50,13 +51,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    selectChangeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(changeActiveTheme(evt.currentTarget.value));
-    }
-  };
-}
+const mapDispatch = {
+  changeActiveTheme
+};
 
 export default connect(
   mapState,

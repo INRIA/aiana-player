@@ -3,16 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateLineHeight } from '../../actions/preferences';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import useId from '../../hooks/useId';
 
 interface IStateProps {
-  lineHeight?: number;
-  lineHeightValues?: number[];
+  lineHeight: number;
+  lineHeightValues: number[];
 }
 
 interface IDispatchProps {
-  changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  updateLineHeight(height: number): void;
 }
 
 interface IProps extends IStateProps, IDispatchProps {}
@@ -21,21 +20,27 @@ function LineHeightSelector(props: IProps) {
   const [t] = useTranslation();
   const [id] = useId();
 
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    const lineHeight = Number(evt.currentTarget.value);
+    if (lineHeight !== props.lineHeight) {
+      props.updateLineHeight(lineHeight);
+    }
+  };
+
   return (
     <Fragment>
       <span id={id}>{t('preferences.line_height.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={props.changeHandler}
-        onChange={props.changeHandler}
+        onBlur={changeHandler}
+        onChange={changeHandler}
         value={props.lineHeight}
       >
-        {props.lineHeightValues &&
-          props.lineHeightValues.map((lineHeight) => (
-            <option key={lineHeight} value={lineHeight}>
-              {lineHeight}
-            </option>
-          ))}
+        {props.lineHeightValues.map((lineHeight) => (
+          <option key={lineHeight} value={lineHeight}>
+            {lineHeight}
+          </option>
+        ))}
       </select>
     </Fragment>
   );
@@ -48,13 +53,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(updateLineHeight(Number(evt.currentTarget.value)));
-    }
-  };
-}
+const mapDispatch = {
+  updateLineHeight
+};
 
 export default connect(
   mapState,

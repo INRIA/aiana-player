@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { changeActivePreset } from '../../actions/presets';
 import { IPreset, getActivePreset } from '../../reducers/presets';
-import { CDispatch } from '../../store';
 import useId from '../../hooks/useId';
 
 interface IProps {
@@ -12,32 +11,43 @@ interface IProps {
 }
 
 interface IDispatchProps {
-  selectChangeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  changeActivePreset(preset: IPreset): void;
 }
 
 interface IPresetsSelector extends IProps, IDispatchProps {}
 
-function PresetsSelector({ presets, selectChangeHandler }: IPresetsSelector) {
+function PresetsSelector(props: IPresetsSelector) {
   const [t] = useTranslation();
   const [id] = useId();
 
-  const activePreset = getActivePreset(presets);
+  const activePreset = getActivePreset(props.presets);
   const activePresetName = activePreset ? activePreset.name : '';
+
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    const presetName = evt.currentTarget.value;
+
+    if (presetName !== activePresetName) {
+      const preset = props.presets.find((v) => v.name === presetName);
+      if (preset) {
+        props.changeActivePreset(preset);
+      }
+    }
+  };
 
   return (
     <Fragment>
       <span id={id}>{t('preferences.presets_selector.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={selectChangeHandler}
-        onChange={selectChangeHandler}
+        onBlur={changeHandler}
+        onChange={changeHandler}
         value={activePresetName}
       >
         <option key="empty_preset" value="" disabled>
           {/* TODO: use an explicit option text */}
           ---
         </option>
-        {presets.map((preset) => (
+        {props.presets.map((preset) => (
           <option key={preset.name} value={preset.name}>
             {preset.name}
           </option>
@@ -47,16 +57,9 @@ function PresetsSelector({ presets, selectChangeHandler }: IPresetsSelector) {
   );
 }
 
-function mapDispatch(dispatch: CDispatch, ownProps: IProps) {
-  return {
-    selectChangeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      const presetName = evt.currentTarget.value;
-      const activePreset = ownProps.presets.find((v) => v.name === presetName);
-
-      dispatch(changeActivePreset(activePreset));
-    }
-  };
-}
+const mapDispatch = {
+  changeActivePreset
+};
 
 export default connect(
   null,

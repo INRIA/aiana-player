@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveChaptersTrack } from '../../actions/chapters';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import {
   IChaptersState,
   getSelectedChaptersLanguage
@@ -16,28 +15,33 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  selectedTrackChangedHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  updateActiveChaptersTrack(lang: string): void;
 }
 
 interface IChaptersTrackSelector extends IStateProps, IDispatchProps {}
 
-function ChaptersTrackSelector({
-  chapters,
-  selectedTrackChangedHandler
-}: IChaptersTrackSelector) {
+function ChaptersTrackSelector(props: IChaptersTrackSelector) {
   const [t] = useTranslation();
   const [id] = useId();
+
+  const currentValue = getSelectedChaptersLanguage(props.chapters);
+
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    if (evt.currentTarget.value !== currentValue) {
+      props.updateActiveChaptersTrack(evt.currentTarget.value);
+    }
+  };
 
   return (
     <Fragment>
       <span id={id}>{t('preferences.chapterstrack.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={selectedTrackChangedHandler}
-        onChange={selectedTrackChangedHandler}
-        value={getSelectedChaptersLanguage(chapters)}
+        onBlur={changeHandler}
+        onChange={changeHandler}
+        value={currentValue}
       >
-        {chapters.chaptersTracks.map((track) => (
+        {props.chapters.chaptersTracks.map((track) => (
           <option key={getTrackKey(track)} value={track.language}>
             {t(`languages.${track.language}`)}
           </option>
@@ -53,15 +57,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    selectedTrackChangedHandler: (
-      evt: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-      dispatch(updateActiveChaptersTrack(evt.currentTarget.value));
-    }
-  };
-}
+const mapDispatch = {
+  updateActiveChaptersTrack
+};
 
 export default connect(
   mapState,

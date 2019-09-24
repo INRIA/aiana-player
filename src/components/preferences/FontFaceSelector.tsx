@@ -3,16 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { updateActiveFontFace } from '../../actions/preferences';
 import { IAianaState } from '../../reducers';
-import { CDispatch } from '../../store';
 import useId from '../../hooks/useId';
 
 interface IStateProps {
-  fontFace?: string;
-  fontFaces?: string[];
+  fontFace: string;
+  fontFaces: string[];
 }
 
 interface IDispatchProps {
-  changeHandler(evt: React.ChangeEvent<HTMLSelectElement>): void;
+  updateActiveFontFace(name: string): void;
 }
 
 interface IProps extends IStateProps, IDispatchProps {}
@@ -21,21 +20,28 @@ function FontFaceSelector(props: IProps) {
   const [t] = useTranslation();
   const [id] = useId();
 
+  const changeHandler = (evt: React.SyntheticEvent<HTMLSelectElement>) => {
+    const fontFace = evt.currentTarget.value;
+
+    if (fontFace !== props.fontFace) {
+      props.updateActiveFontFace(evt.currentTarget.value);
+    }
+  };
+
   return (
     <Fragment>
       <span id={id}>{t('preferences.font_face.label')}</span>
       <select
         aria-labelledby={id}
-        onBlur={props.changeHandler}
-        onChange={props.changeHandler}
+        onBlur={changeHandler}
+        onChange={changeHandler}
         value={props.fontFace}
       >
-        {props.fontFaces &&
-          props.fontFaces.map((fontFace) => (
-            <option key={fontFace} value={fontFace}>
-              {fontFace}
-            </option>
-          ))}
+        {props.fontFaces.map((fontFace) => (
+          <option key={fontFace} value={fontFace}>
+            {fontFace}
+          </option>
+        ))}
       </select>
     </Fragment>
   );
@@ -48,13 +54,9 @@ function mapState(state: IAianaState) {
   };
 }
 
-function mapDispatch(dispatch: CDispatch) {
-  return {
-    changeHandler: (evt: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(updateActiveFontFace(evt.currentTarget.value));
-    }
-  };
-}
+const mapDispatch = {
+  updateActiveFontFace
+};
 
 export default connect(
   mapState,
