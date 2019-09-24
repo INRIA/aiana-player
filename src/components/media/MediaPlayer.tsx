@@ -98,15 +98,14 @@ function MediaPlayer(props: IProps) {
   // `setMedia` will be redefined at every render and cannot be used as a
   // `useEffect` dependency. This is why a ref is used here.
   const setMediaRef = useRef(setMedia);
-
-  const currentSetMediaRef = setMediaRef.current;
+  const setMediaRefCurrent = setMediaRef.current;
   const selectedSource = getCurrentSourceWithFallback(props.sources);
 
   useEffect(() => {
     if (selectedSource) {
-      currentSetMediaRef(selectedSource.src);
+      setMediaRefCurrent(selectedSource.src);
     }
-  }, [selectedSource]); // eslint-disable-line
+  }, [selectedSource, setMediaRefCurrent]);
 
   if (!selectedSource || !media) {
     return null;
