@@ -28,6 +28,10 @@ export interface IMediaCue extends ITimeRange {
   text: string;
 }
 
+export function getTrackKey(track: IRawTrack) {
+  return `${track.language}-${track.label || 'unlabeled'}`;
+}
+
 export function rawSubtitlesTrack(
   textTrack: TextTrack,
   subtitlesLanguage?: string

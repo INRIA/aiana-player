@@ -9,6 +9,7 @@ import {
   getSelectedChaptersLanguage
 } from '../../reducers/chapters';
 import useId from '../../hooks/useId';
+import { getTrackKey } from '../../utils/media';
 
 interface IStateProps {
   chapters: IChaptersState;
@@ -36,9 +37,9 @@ function ChaptersTrackSelector({
         onChange={selectedTrackChangedHandler}
         value={getSelectedChaptersLanguage(chapters)}
       >
-        {chapters.chaptersTracks.map(({ language }) => (
-          <option key={language} value={language}>
-            {t(`languages.${language}`)}
+        {chapters.chaptersTracks.map((track) => (
+          <option key={getTrackKey(track)} value={track.language}>
+            {t(`languages.${track.language}`)}
           </option>
         ))}
       </select>

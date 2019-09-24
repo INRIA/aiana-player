@@ -5,7 +5,7 @@ import {
   setSlidesText
 } from '../actions/slides';
 import { DEFAULT_LANG } from '../constants/preferences';
-import { IRawTrack } from '../utils/media';
+import { IRawTrack, getTrackKey } from '../utils/media';
 import { createReducer, PayloadAction } from 'redux-starter-kit';
 
 export interface ISlidesTrack {
@@ -32,7 +32,14 @@ const slidesReducer = createReducer(initialState, {
     state: ISlidesState,
     action: PayloadAction<IRawTrack>
   ) => {
-    state.slidesTracks.push(action.payload);
+    const trackKey = getTrackKey(action.payload);
+    const hasTrack = state.slidesTracks.some((track) => {
+      return getTrackKey(track) === trackKey;
+    });
+
+    if (!hasTrack) {
+      state.slidesTracks.push(action.payload);
+    }
   },
   [setSlidesText.type]: (
     state: ISlidesState,

@@ -13,6 +13,7 @@ import {
   getDisplayableSubtitlesTracks
 } from '../../reducers/subtitles';
 import useId from '../../hooks/useId';
+import { getTrackKey } from '../../utils/media';
 
 interface IStateProps {
   subtitles: ISubtitlesState;
@@ -41,9 +42,9 @@ function SubtitlesTrackSelector({
         value={getSelectedSubtitlesLanguage(subtitles)}
       >
         <option value="">{t('preferences.subtitlestrack.no_subtitle')}</option>
-        {getDisplayableSubtitlesTracks(subtitles).map(({ language }) => (
-          <option key={language} value={language}>
-            {t(`languages.${language}`)}
+        {getDisplayableSubtitlesTracks(subtitles).map((track) => (
+          <option key={getTrackKey(track)} value={track.language}>
+            {t(`languages.${track.language}`)}
           </option>
         ))}
       </select>

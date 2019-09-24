@@ -9,7 +9,8 @@ import {
   IRawTrackExt,
   isActiveTrack,
   isDisplayableTrack,
-  IMediaCue
+  IMediaCue,
+  getTrackKey
 } from '../utils/media';
 import { ITrack } from '../components/media/MediaSubtitlesTrack';
 import { createReducer, PayloadAction } from 'redux-starter-kit';
@@ -47,7 +48,14 @@ const subtitlesReducer = createReducer(initialState, {
     state: ISubtitlesState,
     action: PayloadAction<IRawTrackExt>
   ) => {
-    state.subtitlesTracks.push(action.payload);
+    const trackKey = getTrackKey(action.payload);
+    const hasTrack = state.subtitlesTracks.some((track) => {
+      return getTrackKey(track) === trackKey;
+    });
+
+    if (!hasTrack) {
+      state.subtitlesTracks.push(action.payload);
+    }
   },
   [updateSubtitlesTracksList.type]: (
     state: ISubtitlesState,

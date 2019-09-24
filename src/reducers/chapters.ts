@@ -5,8 +5,8 @@ import {
 } from '../actions/chapters';
 import { loadConfiguration } from '../actions/shared/configuration';
 import { DEFAULT_LANG } from '../constants/preferences';
-import { IRawTrackExt } from '../utils/media';
-import { createReducer } from 'redux-starter-kit';
+import { IRawTrackExt, IRawTrack, getTrackKey } from '../utils/media';
+import { createReducer, PayloadAction } from 'redux-starter-kit';
 
 export interface IChaptersTrack {
   label: string;
@@ -31,8 +31,18 @@ export const chaptersReducer = createReducer(initialState, {
   [setChapterText.type]: (state: IChaptersState, action) => {
     state.currentText = action.payload;
   },
-  [addChaptersTrack.type]: (state: IChaptersState, action) => {
-    state.chaptersTracks.push(action.payload);
+  [addChaptersTrack.type]: (
+    state: IChaptersState,
+    action: PayloadAction<IRawTrack>
+  ) => {
+    const trackKey = getTrackKey(action.payload);
+    const hasTrack = state.chaptersTracks.some((track) => {
+      return getTrackKey(track) === trackKey;
+    });
+
+    if (!hasTrack) {
+      state.chaptersTracks.push(action.payload);
+    }
   },
   [updateActiveChaptersTrack.type]: (state: IChaptersState, action) => {
     const lang = action.payload;

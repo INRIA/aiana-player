@@ -6,6 +6,7 @@ import { IAianaState } from '../../reducers';
 import { CDispatch } from '../../store';
 import { ISlidesState, getSelectedTrackLanguage } from '../../reducers/slides';
 import useId from '../../hooks/useId';
+import { getTrackKey } from '../../utils/media';
 
 interface IStateProps {
   slides: ISlidesState;
@@ -33,9 +34,9 @@ function SlidesTrackSelector({
         onChange={selectedTrackChangedHandler}
         value={getSelectedTrackLanguage(slides)}
       >
-        {slides.slidesTracks.map(({ language }) => (
-          <option key={language} value={language}>
-            {t(`languages.${language}`)}
+        {slides.slidesTracks.map((track) => (
+          <option key={getTrackKey(track)} value={track.language}>
+            {t(`languages.${track.language}`)}
           </option>
         ))}
       </select>
