@@ -1,4 +1,4 @@
-import { IRawTrackExt, ITimeRange } from '../utils/media';
+import { ITimeRange } from '../utils/media';
 import { createAction } from 'redux-starter-kit';
 
 export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
@@ -9,14 +9,6 @@ export const updateRating = createAction<number>('UPDATE_RATING');
 
 export const updateBufferedRanges = createAction<ITimeRange>(
   'SET_BUFFERED_RANGES'
-);
-
-export const setAdditionalInformationText = createAction<string>(
-  'SET_ADDITIONAL_INFO_TEXT'
-);
-
-export const addAdditionalInformationTrack = createAction<IRawTrackExt>(
-  'ADD_METADATA_TRACK'
 );
 
 export const stopSeeking = createAction('MEDIA_SEEK_STOP');

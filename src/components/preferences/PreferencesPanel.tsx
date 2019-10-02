@@ -28,6 +28,7 @@ import { IPreset } from '../../reducers/presets';
 import ExportPreferences from './ExportPreferences';
 import { IPreferencesState } from '../../reducers/preferences';
 import ImportPreferences from './ImportPreferences';
+import AdditionalInformationTrackSelector from './AdditionalInformationTrackSelector';
 
 interface IProps {
   preferences: IPreferencesState;
@@ -162,6 +163,9 @@ function PreferencesPanel(props: IProps) {
           </li>
           <li className="aip-slides-track">
             <SlidesTrackSelector />
+          </li>
+          <li>
+            <AdditionalInformationTrackSelector />
           </li>
           <li className="aip-widgets-lock">
             <WidgetsLockToggle />

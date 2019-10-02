@@ -25,8 +25,8 @@
         <track kind="metadata" src="/dev/en/slides.vtt" srclang="en" label="Presentation Slides" />
         <track kind="metadata" src="/dev/fr/slides.vtt" srclang="fr" label="Slides de Présentation" />
 
-        <track kind="metadata" src="/dev/en/additional-infos.vtt" srclang="en" label="Additional information" />
-        <track kind="metadata" src="/dev/fr/additional-infos.vtt" srclang="fr" label="Informations complémentaires" />
+        <track kind="metadata" src="/dev/en/additional-info.vtt" srclang="en" label="Additional Information" />
+        <track kind="metadata" src="/dev/fr/additional-info.vtt" srclang="fr" label="Informations Complémentaires" />
       </video>
     </div>
   </noscript>
@@ -52,21 +52,22 @@
           }
         ]
       },
-      "player": {
-        "additionalInformationTracks": [
+      "additionalInformation": {
+        "language": "fr",
+        "sources": [
           {
-            "kind": "metadata",
             "label": "Additional information",
-            "src": "/dev/en/additional-infos.vtt",
+            "src": "/dev/en/additional-info.vtt",
             "srcLang": "en"
           },
           {
-            "kind": "metadata",
             "label": "Informations complémentaires",
-            "src": "/dev/fr/additional-infos.vtt",
+            "src": "/dev/fr/additional-info.vtt",
             "srcLang": "fr"
           }
-        ],
+        ]
+      },
+      "player": {
         "mediaId": "abc1234-window",
         "poster": "/dev/media/poster.jpg",
         "rating": 4,

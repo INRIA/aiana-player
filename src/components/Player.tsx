@@ -152,7 +152,7 @@ function Player(props: IPlayerProps) {
 
 function mapState(state: IAianaState) {
   return {
-    additionalInformationText: state.player.additionalInformationText,
+    additionalInformationText: state.additionalInformation.currentText,
     widgets: state.preferences.widgets
   };
 }

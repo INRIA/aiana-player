@@ -24,6 +24,7 @@ import StaticMedia from './StaticMedia';
 import useMedia from '../../hooks/useMedia';
 import MediaContext from '../../contexts/MediaContext';
 import YouTubeMediaContainer from './YouTubeMediaContainer';
+import { IAdditionalInformationTrack } from '../../reducers/additional-information';
 
 interface IDispatchProps {
   changeVolume(volume: number): void;
@@ -39,7 +40,7 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  additionalInformationTracks: ITrack[];
+  additionalInformationSources: IAdditionalInformationTrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
   currentTime: number;
@@ -115,7 +116,7 @@ function MediaPlayer(props: IProps) {
     <StyledDiv>
       {media.type === 'html' && (
         <StaticMedia
-          additionalInformationTracks={props.additionalInformationTracks}
+          additionalInformationSources={props.additionalInformationSources}
           autoPlay={props.autoPlay}
           changeVolume={props.changeVolume}
           chaptersSources={props.chaptersSources}
@@ -165,7 +166,7 @@ function MediaPlayer(props: IProps) {
 
 function mapState(state: IAianaState) {
   return {
-    additionalInformationTracks: state.player.additionalInformationTracks,
+    additionalInformationSources: state.additionalInformation.sources,
     autoPlay: state.player.autoPlay,
     chaptersSources: state.chapters.sources,
     currentTime: state.player.currentTime,

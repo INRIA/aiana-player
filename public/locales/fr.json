@@ -19,6 +19,7 @@
   "controls.volume.valuetext": "Volume à {{ volumePct }}%",
   "media.rating.slider.label": "Attribuer une note au contenu",
   "media.rating.slider.current_value": "Vous avez attribué à ce contenu la note de {{ currentRating }} sur {{ maxRating }}.",
+  "preferences.additionalinfotrack.label": "Langue des informations supplémentaires",
   "preferences.chapterstrack.label": "Langue des chapitres",
   "preferences.export.label": "Télécharger les préférences",
   "preferences.font_face.label": "Police de caractères",

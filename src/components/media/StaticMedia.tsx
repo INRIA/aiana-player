@@ -3,7 +3,7 @@ import styled from '../../utils/styled-components';
 import { MEDIA_CLASSNAME } from '../../constants/player';
 import MediaSubtitlesTrack, { ITrack } from './MediaSubtitlesTrack';
 import MediaChapterTrack from '../chapters/MediaChapterTrack';
-import AdditionalInfosTrack from './AdditionalInfosTrack';
+import AdditionalInfoTrack from './AdditionalInfoTrack';
 import SlidesTrack from '../slides/SlidesTrack';
 import { IChaptersTrack } from '../../reducers/chapters';
 import { ISlidesTrack } from '../../reducers/slides';
@@ -14,9 +14,10 @@ import {
   isDisplayableTrack
 } from '../../utils/media';
 import MediaContext from '../../contexts/MediaContext';
+import { IAdditionalInformationTrack } from '../../reducers/additional-information';
 
 interface IProps {
-  additionalInformationTracks: ITrack[];
+  additionalInformationSources: IAdditionalInformationTrack[];
   autoPlay: boolean;
   chaptersSources: IChaptersTrack[];
   currentTime: number;
@@ -84,8 +85,8 @@ class StaticMedia extends Component<IProps> {
           <MediaChapterTrack key={idx} {...track} />
         ))}
 
-        {this.props.additionalInformationTracks.map((track, idx) => (
-          <AdditionalInfosTrack key={idx} {...track} />
+        {this.props.additionalInformationSources.map((track, idx) => (
+          <AdditionalInfoTrack key={idx} {...track} />
         ))}
 
         {this.props.slidesTracksSources.map((track, idx) => (

@@ -2,8 +2,6 @@ import { DeepPartial } from 'redux';
 import {
   updateRating,
   updateBufferedRanges,
-  setAdditionalInformationText,
-  addAdditionalInformationTrack,
   stopSeeking,
   seek,
   setCurrentTime,
@@ -16,7 +14,6 @@ import {
   changePlaybackRate
 } from '../actions/player';
 import { loadConfiguration } from '../actions/shared/configuration';
-import { ITrack } from '../components/media/MediaSubtitlesTrack';
 import {
   DEFAULT_MUTED,
   DEFAULT_PLAYBACK_RATE,
@@ -24,7 +21,7 @@ import {
   DEFAULT_VOLUME,
   DEFAULT_AUTOPLAY
 } from '../constants/player';
-import { IRawTrackExt, ITimeRange } from '../utils/media';
+import { ITimeRange } from '../utils/media';
 import { changeMediaSource } from '../actions/preferences';
 import { safeDump, safeLoad } from 'js-yaml';
 import { cloneDeep } from 'lodash';
@@ -32,8 +29,6 @@ import { APP_ROOT_SELECTOR } from '../constants';
 import { createReducer, PayloadAction } from 'redux-starter-kit';
 
 export interface IPlayerState {
-  additionalInformationText?: string;
-  additionalInformationTracks: ITrack[];
   autoPlay: boolean;
   bufferedRanges: ITimeRange[];
 
@@ -49,8 +44,6 @@ export interface IPlayerState {
   isSeeking: boolean;
 
   mediaId: string;
-
-  metadataTracks: IRawTrackExt[];
 
   /**
    * The current rate of speed for the media resource to play. This speed is
@@ -79,7 +72,6 @@ export interface ISource {
 }
 
 export const initialPlayerState: IPlayerState = {
-  additionalInformationTracks: [],
   autoPlay: DEFAULT_AUTOPLAY,
   bufferedRanges: [],
   currentTime: 0,
@@ -89,7 +81,6 @@ export const initialPlayerState: IPlayerState = {
   isPlaying: false,
   isSeeking: false,
   mediaId: '__unset__',
-  metadataTracks: [],
   playbackRate: DEFAULT_PLAYBACK_RATE,
   playerSelector: APP_ROOT_SELECTOR,
   preload: DEFAULT_PRELOAD,
@@ -151,18 +142,6 @@ export const playerReducer = createReducer(initialPlayerState, {
   },
   [stopSeeking.type]: (state: IPlayerState) => {
     state.isSeeking = false;
-  },
-  [setAdditionalInformationText.type]: (
-    state: IPlayerState,
-    action: PayloadAction<string | undefined>
-  ) => {
-    state.additionalInformationText = action.payload;
-  },
-  [addAdditionalInformationTrack.type]: (
-    state: IPlayerState,
-    action: PayloadAction<IRawTrackExt>
-  ) => {
-    state.metadataTracks.push(action.payload);
   },
   [loadConfiguration.type]: (state: IPlayerState, action) => {
     return Object.assign(
