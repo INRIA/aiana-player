@@ -3,13 +3,15 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
 
+const serverUrl = (window as any).serverUrl || '';
+
 i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     backend: {
-      loadPath: '/locales/{{lng}}.json'
+      loadPath: `${serverUrl}/locales/{{lng}}.json`
     },
     debug: false,
     fallbackLng: 'en',
