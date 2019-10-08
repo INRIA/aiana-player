@@ -46,14 +46,10 @@ export const additionalInformationReducer = createReducer(initialState, {
   ) => {
     state.language = action.payload;
   },
-  [loadConfiguration.type]: (state: IAdditionalInformationState, action) => {
-    console.log(action.payload);
-
-    return {
-      ...state,
-      ...action.payload.additionalInformation
-    };
-  }
+  [loadConfiguration.type]: (state: IAdditionalInformationState, action) => ({
+    ...state,
+    ...action.payload.additionalInformation
+  })
 });
 
 export function getSelectedTrack(
