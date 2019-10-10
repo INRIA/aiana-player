@@ -1,0 +1,21 @@
+language: node_js
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y zip
+node_js:
+  - stable
+  - 8
+before_deploy:
+  - npm install htmlparser2
+  - mkdir release
+  - node scripts/extract-scripts.js release
+  - zip -r release.zip release
+deploy:
+  provider: releases
+  api_key:
+    secure: jl/nYJ982XdGJyaAm16nCscd16CUrMIXXdS+KWv61psxb6FdemUluyiGavlsL3F0FAqwuBUux2y9UqJJHoSIJjHVC2siQlhcTOZ23qNGyaH6vkOLMTO2JKdgEyoqvg0lyIDTssNDP/zE1FQfDN6Ri65ArVG1LCDrvzVT01zz6mhBrhXsgTjZ6z7cO0l9lk2gioWqeOZCqJwbSJ89MjGZ1fGEpSFdW5z+NPDXNyM0i3pt7aysM/bN3dj5onS9rltl42kzCIVtMVr7M+TwlG85J24zCs/9bMt+j5+o+QITBX/Q7cjGJC6H7dNzBzG3k9wrjq67ye4iR9T9ArY2lMQEyFsqOABnx0/OBH6KveHnj8sOLzkLloRijC0FC5CtGAZ3ajbamX5661giW0hPVVEe7TknHrOc2Ngm7OwptImlQPTE6C9w8xsuWvxkUochpMSw+FKrs5pTARbXIBHAULpAjeoku74rJfgNbAXVei1tIBXms1HFJizxpa0cp8NaUa1VORRcaSq9urtrCu3uZmH1fBYUwBYi0aejM63Bp/RjZoN0HtO38QVPm5MrK4m70axlIX1w+b6Dm6tLNWS5OFJpNer/UeTTWqEEsrqSoszGBEOutgRjJsCsN7YU+zCyiq+LV2ncZ/dsJxZ8G87v9jr4u/EzRvCfPGSsvwEthISxkf8=
+  file: release.zip
+  skip_cleanup: true
+  on:
+    repo: dashdashzako/aiana-player
+    tags: true
