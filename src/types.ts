@@ -42,3 +42,10 @@ export interface ICueBoundaries {
   from: number;
   to: number;
 }
+
+export interface IQueryString {
+  config?: string;
+  mid?: string;
+  src?: string;
+  uid?: string;
+}

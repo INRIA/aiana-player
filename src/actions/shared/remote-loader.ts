@@ -6,7 +6,7 @@ import { DEFAULT_CONFIGURATION_PATH, CONFIGURATION_KEY } from '../../constants';
 import { IWidget } from '../../reducers/preferences';
 import { initialPreferencesState } from '../../constants/default-preferences-state';
 import { CDispatch } from '../../store';
-import { ThunkResult } from '../../types';
+import { ThunkResult, IQueryString } from '../../types';
 import { IPreset } from '../../reducers/presets';
 import { BASE_PRESETS } from '../../constants/presets';
 import md5 from 'md5';
@@ -14,12 +14,6 @@ import { getLocalPlayerState } from '../../reducers/player';
 import { createAction } from 'redux-starter-kit';
 import i18n from '../../i18n';
 import { loadConfiguration } from './configuration';
-
-interface IQueryString {
-  config?: string;
-  mid?: string;
-  src?: string;
-}
 
 // TODO: split function
 // FIXME: language and defaults handling isn't robust enough.

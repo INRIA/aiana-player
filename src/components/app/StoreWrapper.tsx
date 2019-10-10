@@ -1,7 +1,7 @@
 import throttle from 'lodash.throttle';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { configureStore } from 'redux-starter-kit';
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import rootReducer, { IAianaState } from '../../reducers';
 import ConnectedAiana from './ConnectedAiana';
 import i18n from '../../i18n';
@@ -10,10 +10,12 @@ import {
   getLocalPreferencesState
 } from '../../reducers/preferences';
 import { stateToYAML as playerToYAML } from '../../reducers/player';
+import analytics from '../../middleware/analytics';
 
 const store = configureStore({
   reducer: rootReducer,
-  preloadedState: loadState()
+  preloadedState: loadState(),
+  middleware: [...getDefaultMiddleware(), analytics]
 });
 
 store.subscribe(
