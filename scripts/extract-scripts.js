@@ -12,7 +12,7 @@ const releaseDirname = process.argv.slice(2)[0];
 const currentDir = process.cwd();
 const releaseDir = path.join(currentDir, releaseDirname);
 
-readFile('build/index.html')
+readFile(path.join(currentDir, 'build/index.html'))
   .then((content) => {
     const filenames = [];
 
