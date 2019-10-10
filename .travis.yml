@@ -5,8 +5,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y zip
 node_js:
-  - stable
-  - 8
+  - 10
 before_deploy:
   - npm install htmlparser2
   - mkdir release
