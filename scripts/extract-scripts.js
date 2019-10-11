@@ -27,6 +27,7 @@ readFile(path.join(currentDir, 'build/index.html'))
 
           fs.rename(fp, path.join(releaseDir, filename), (err) => {
             if (err) {
+              // TODO: error handling?
               throw err;
             }
 

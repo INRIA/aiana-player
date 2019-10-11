@@ -1,16 +1,26 @@
 language: node_js
-env:
-  - INLINE_RUNTIME_CHUNK=false
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y zip
 node_js:
   - 10
+env:
+  - INLINE_RUNTIME_CHUNK=false
+git:
+  quiet: true
+cache:
+  npm: true
+  directories:
+    - ~/.npm
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y zip libgconf-2-4
+install:
+  - npm ci
 before_deploy:
   - npm install htmlparser2
-  - mkdir release
-  - node scripts/extract-scripts.js release
-  - zip -r release.zip release
+  - mkdir ~/release
+  - pwd
+  - ls -lsa .
+  - node scripts/extract-scripts.js ~/aiana-player/release
+  - zip -r release.zip ~/release
 deploy:
   provider: releases
   api_key:
