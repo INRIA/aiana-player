@@ -19,7 +19,7 @@ before_deploy:
   - mkdir ~/release
   - pwd
   - ls -lsa .
-  - node scripts/extract-scripts.js ~/aiana-player/release
+  - node scripts/extract-scripts.js ~/release
   - zip -r release.zip ~/release
 deploy:
   provider: releases
