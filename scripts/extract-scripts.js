@@ -21,17 +21,16 @@ readFile(path.join(currentDir, 'build/index.html'))
         if (name === 'script' && /\/static\/js/.test(attribs.src)) {
           const fp = path.join(currentDir, 'build', attribs.src);
           const filename = path.basename(attribs.src);
+
           filenames.push(filename);
 
-          console.log(`Moving ${filename} to release directory...`);
-
-          fs.rename(fp, path.join(releaseDir, filename), (err) => {
+          fs.copyFile(fp, path.join(releaseDir, filename), (err) => {
             if (err) {
-              // TODO: error handling?
-              throw err;
+              console.error(err);
+              process.exit(1);
             }
 
-            console.log(`Successfully moved ${filename} to release directory.`);
+            console.log(`Copied ${filename} to release directory.`);
           });
         }
       }
@@ -43,13 +42,18 @@ readFile(path.join(currentDir, 'build/index.html'))
   })
   .then((filenames) => {
     const manifestPath = path.join(releaseDir, 'manifest.yml');
-    const manifestContent = filenames.reduce((filename) => `- ${filename}\n`);
+
+    const manifestContent = filenames
+      .map((filename) => `- ${filename}\n`)
+      .join('');
 
     return writeFile(manifestPath, manifestContent);
   })
   .then(() => {
-    console.log('Manifest written to release directory.\nAll done.');
+    console.log('Manifest written to release directory.\n\nAll done!');
+    process.exit(0);
   })
   .catch((err) => {
-    throw err;
+    console.error(err);
+    process.exit(1);
   });
