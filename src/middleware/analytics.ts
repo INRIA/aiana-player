@@ -29,9 +29,12 @@ const analytics: Middleware = (store) => (next) => (
       console.log(strData);
     } else {
       const loggerEndpoint = (window as any).loggerEndpoint;
+      const blob = new Blob([strData], {
+        type: 'application/json; charset=UTF-8'
+      });
 
       if (loggerEndpoint) {
-        navigator.sendBeacon(loggerEndpoint, strData);
+        navigator.sendBeacon(loggerEndpoint, blob);
       }
     }
   }
