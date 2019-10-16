@@ -13,29 +13,27 @@ const analytics: Middleware = (store) => (next) => (
 ) => {
   if (loggedActions.includes(action.type)) {
     const state: IAianaState = store.getState();
+    const partialState = {
+      ...state.player,
+      ...state.preferences
+    };
 
     const playerEvent = {
       createdAt: Date.now(),
-      payload: action.payload,
       mediaId: state.player.mediaId,
-      state,
+      payload: action.payload,
+      state: partialState,
       type: action.type,
       userId: getUserId()
     };
 
     const strData = JSON.stringify(playerEvent);
+    const loggerEndpoint = (window as any).loggerEndpoint;
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && !loggerEndpoint) {
       console.log(strData);
-    } else {
-      const loggerEndpoint = (window as any).loggerEndpoint;
-      const blob = new Blob([strData], {
-        type: 'application/json; charset=UTF-8'
-      });
-
-      if (loggerEndpoint) {
-        navigator.sendBeacon(loggerEndpoint, blob);
-      }
+    } else if (loggerEndpoint) {
+      navigator.sendBeacon(loggerEndpoint, strData);
     }
   }
 
