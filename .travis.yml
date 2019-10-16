@@ -3,6 +3,8 @@ node_js:
   - '10'
 git:
   quiet: true
+notifications:
+  email: false
 cache:
   npm: true
   directories:
