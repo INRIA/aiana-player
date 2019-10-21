@@ -6,8 +6,6 @@ import { IPreferencesState } from '../reducers/preferences';
 import { initialPreferencesState } from '../constants/default-preferences-state';
 import { createAction } from 'redux-starter-kit';
 
-export const CHANGE_WIDGET_VISIBILITY = 'aiana/CHANGE_WIDGET_VISIBILITY';
-
 export const importPreferencesAction = createAction<Partial<IPreferencesState>>(
   'IMPORT_PREFERENCES'
 );

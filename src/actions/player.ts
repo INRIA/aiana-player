@@ -1,10 +1,6 @@
 import { ITimeRange } from '../utils/media';
 import { createAction } from 'redux-starter-kit';
 
-export const TOGGLE_FULLSCREEN_REQUESTED = 'aiana/TOGGLE_FULLSCREEN_REQUESTED';
-export const MEDIA_REQUEST_PAUSE = 'aiana/MEDIA_REQUEST_PAUSE';
-export const MEDIA_REQUEST_PLAY = 'aiana/MEDIA_REQUEST_PLAY';
-
 export const updateRating = createAction<number>('UPDATE_RATING');
 
 export const updateBufferedRanges = createAction<ITimeRange>(

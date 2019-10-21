@@ -4,9 +4,6 @@ import { IRawTrack } from '../utils/media';
 import { seek } from './player';
 import { createAction } from 'redux-starter-kit';
 
-export const PREVIOUS_SLIDE = 'aiana/PREVIOUS_SLIDE';
-export const NEXT_SLIDE = 'aiana/NEXT_SLIDE';
-
 export function seekNextSlide(from: number, to: number): ThunkResult<void> {
   return (dispatch: CDispatch) => {
     dispatch(seek(to));
