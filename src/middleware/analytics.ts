@@ -91,7 +91,7 @@ const analytics: Middleware = (store) => (next) => (
     const state: IAianaState = store.getState();
 
     const playerEvent = {
-      createdAt: Date.now(),
+      createdAt: new Date().toISOString(),
       eventName: action.type,
       mediaId: state.player.mediaId,
       player: {
