@@ -14,19 +14,20 @@
 <body>
   <noscript>
     <div class="aip-app aip-app__unmounted">
-      <video src="https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4" type="video/mp4"
-        poster="/dev/media/poster.jpg" preload="auto" controls>
-        <track kind="captions" src="/dev/en/subtitles.vtt" srclang="en" label="Subtitles" />
-        <track kind="captions" src="/dev/fr/subtitles.vtt" srclang="fr" label="Sous-titres" />
+      <video src="/dev/standard.mp4" type="video/mp4" preload="auto" controls>
 
-        <track kind="chapters" src="/dev/en/chapters.vtt" srclang="en" label="Chapters" />
-        <track kind="chapters" src="/dev/fr/chapters.vtt" srclang="fr" label="Chapitres" />
+        <track kind="captions" src="/dev/subtitles_en.vtt" srclang="en" label="Subtitles" />
+        <track kind="captions" src="/dev/subtitles_fr.vtt" srclang="fr" label="Sous-titres" />
 
-        <track kind="metadata" src="/dev/en/slides.vtt" srclang="en" label="Presentation Slides" />
-        <track kind="metadata" src="/dev/fr/slides.vtt" srclang="fr" label="Slides de Présentation" />
+        <track kind="chapters" src="/dev/chapters_en.vtt" srclang="en" label="Chapters" />
+        <track kind="chapters" src="/dev/chapters_fr.vtt" srclang="fr" label="Chapitres" />
 
-        <track kind="metadata" src="/dev/en/additional-info.vtt" srclang="en" label="Additional Information" />
-        <track kind="metadata" src="/dev/fr/additional-info.vtt" srclang="fr" label="Informations Complémentaires" />
+        <track kind="metadata" src="/dev/slides_en.vtt" srclang="en" label="Presentation Slides" />
+        <track kind="metadata" src="/dev/slides_fr.vtt" srclang="fr" label="Slides de Présentation" />
+
+        <track kind="metadata" src="/dev/additional-information_en.vtt" srclang="en" label="Additional Information" />
+        <track kind="metadata" src="/dev/additional-information_fr.vtt" srclang="fr"
+          label="Informations Complémentaires" />
       </video>
     </div>
   </noscript>
@@ -43,12 +44,12 @@
         "sources": [
           {
             "label": "Chapitres",
-            "src": "/dev/fr/chapters.vtt",
+            "src": "/dev/chapters_fr.vtt",
             "srcLang": "fr"
           },
           {
             "label": "Chapters",
-            "src": "/dev/en/chapters.vtt",
+            "src": "/dev/chapters_en.vtt",
             "srcLang": "en"
           }
         ]
@@ -58,30 +59,29 @@
         "sources": [
           {
             "label": "Additional information",
-            "src": "/dev/en/additional-info.vtt",
+            "src": "/dev/additional-information_en.vtt",
             "srcLang": "en"
           },
           {
             "label": "Informations complémentaires",
-            "src": "/dev/fr/additional-info.vtt",
+            "src": "/dev/additional-information_fr.vtt",
             "srcLang": "fr"
           }
         ]
       },
       "player": {
-        "mediaId": "abc1234-window",
-        "poster": "/dev/media/poster.jpg",
+        "mediaId": "dev-w1-s1-window",
         "rating": 4,
         "sources": [
           {
             "label": "Side video (MP4)",
-            "src": "https://d381hmu4snvm3e.cloudfront.net/videos/VYDltEXDaSUk/SD.mp4",
+            "src": "/dev/side.mp4",
             "type": "video/mp4"
           },
           {
             "label": "Standard video (MP4)",
             "selected": true,
-            "src": "https://d381hmu4snvm3e.cloudfront.net/videos/oPEWrYW520x4/SD.mp4",
+            "src": "/dev/standard.mp4",
             "type": "video/mp4"
           },
           {
@@ -210,12 +210,12 @@
         "sources": [
           {
             "label": "Presentation Slides",
-            "src": "/dev/en/slides.vtt",
+            "src": "/dev/slides_en.vtt",
             "srcLang": "en"
           },
           {
             "label": "Slides de Présentation",
-            "src": "/dev/fr/slides.vtt",
+            "src": "/dev/slides_fr.vtt",
             "srcLang": "fr"
           }
         ]
@@ -225,12 +225,12 @@
         "sources": [
           {
             "label": "Subtitles",
-            "src": "/dev/en/subtitles.vtt",
+            "src": "/dev/subtitles_en.vtt",
             "srcLang": "en"
           },
           {
             "label": "Sous-titres",
-            "src": "/dev/fr/subtitles.vtt",
+            "src": "/dev/subtitles_fr.vtt",
             "srcLang": "fr"
           }
         ]
