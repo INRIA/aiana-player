@@ -48,12 +48,12 @@ const P = styled.p`
 
 function Loader({ text }: IProps) {
   return (
-    <P className="aip-loader" role="alert" aria-live="assertive">
+    <P className="aip-loader">
       <span className="aip-loader__icon" aria-hidden="true">
         <span />
         <span />
       </span>
-      <AssistiveText>{text}</AssistiveText>
+      {text && <AssistiveText>{text}</AssistiveText>}
     </P>
   );
 }
