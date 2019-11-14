@@ -16,6 +16,7 @@ install:
   - npm ci
 before_script:
   - export INLINE_RUNTIME_CHUNK=false
+  - mv --force src/index.prod.tsx src/index.tsx
 script:
   - npm run test
 before_deploy:
