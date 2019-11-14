@@ -17,7 +17,6 @@ import AdditionalInformation from './AdditionalInformation';
 import ChaptersMenu from './chapters/ChaptersMenu';
 import Slides from './slides/Slides';
 import MediaSubtitles from './Subtitles';
-import TimelineBar from './timeline/Timeline';
 import MediaPlayer from './media/MediaPlayer';
 import MediaPlayerControls from './media/MediaPlayerControls';
 import TimeSpent from './time-management/TimeSpent';
@@ -85,8 +84,6 @@ function Player(props: IPlayerProps) {
   return (
     <Main aria-label={t('application.label')}>
       <MediaPlayerControls />
-
-      <TimelineBar display={false} />
 
       <div className="aip-widgets">
         {chaptersWidget && chaptersWidget.visible && (
