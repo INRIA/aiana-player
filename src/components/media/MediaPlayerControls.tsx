@@ -24,6 +24,9 @@ const ControlsWrapper = styled.div`
   /* height: 3.5625em */
   padding: 0.8125em 1em 0.5em;
 
+  display: flex;
+  flex-direction: column-reverse;
+
   background-color: ${(props) => hexToHsla(props.theme.bg, 0.9)};
 `;
 
@@ -42,11 +45,10 @@ const Controls = styled.div`
 function MediaPlayerControls(props: IProps) {
   return (
     <ControlsWrapper>
-      <Progress />
       <Controls>
         <div>
-          <PreviousSlide />
           <PlayButton />
+          <PreviousSlide />
           <NextSlideButton />
           <PreviousChapterButton />
           <NextChapterButton />
@@ -64,6 +66,7 @@ function MediaPlayerControls(props: IProps) {
           <FullscreenButton />
         </div>
       </Controls>
+      <Progress />
     </ControlsWrapper>
   );
 }

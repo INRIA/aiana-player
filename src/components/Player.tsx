@@ -30,6 +30,9 @@ const Main = styled.main`
   max-height: 100%;
   max-width: 100%;
 
+  display: flex;
+  flex-direction: column-reverse;
+
   position: relative;
 
   background-color: ${(props) => props.theme.bg};
@@ -81,6 +84,10 @@ function Player(props: IPlayerProps) {
 
   return (
     <Main aria-label={t('application.label')}>
+      <MediaPlayerControls />
+
+      <TimelineBar display={false} />
+
       <div className="aip-widgets">
         {chaptersWidget && chaptersWidget.visible && (
           <ChaptersMenu
@@ -146,8 +153,6 @@ function Player(props: IPlayerProps) {
           />
         )}
       </div>
-      <TimelineBar display={false} />
-      <MediaPlayerControls />
     </Main>
   );
 }
