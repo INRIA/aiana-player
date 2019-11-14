@@ -10,7 +10,7 @@ interface IProps {
   text?: string;
 }
 
-const StyledAdditionalInformation = styled.div`
+const StyledAdditionalInformation = styled.section`
   width: 100%;
 
   padding: 1em;

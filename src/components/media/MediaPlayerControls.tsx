@@ -15,12 +15,13 @@ import TimeStatus from '../TimeStatus';
 import RatingSlider from '../rating/RatingSlider';
 import { connect } from 'react-redux';
 import { IAianaState } from '../../reducers';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   rating: number;
 }
 
-const ControlsWrapper = styled.div`
+const ControlsSection = styled.section`
   /* height: 3.5625em */
   padding: 0.8125em 1em 0.5em;
 
@@ -43,8 +44,10 @@ const Controls = styled.div`
 `;
 
 function MediaPlayerControls(props: IProps) {
+  const [t] = useTranslation();
+
   return (
-    <ControlsWrapper>
+    <ControlsSection aria-label={t('controls.label')}>
       <Controls>
         <div>
           <PlayButton />
@@ -67,7 +70,7 @@ function MediaPlayerControls(props: IProps) {
         </div>
       </Controls>
       <Progress />
-    </ControlsWrapper>
+    </ControlsSection>
   );
 }
 

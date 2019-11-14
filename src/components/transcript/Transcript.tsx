@@ -34,7 +34,7 @@ export interface IMergedCues extends IMediaCue {
   subtitlesCues?: IMediaCue[];
 }
 
-const StyledArticle = styled.article`
+const Section = styled.section`
   padding: 1em;
 
   color: ${(props) => props.theme.bg};
@@ -90,9 +90,7 @@ function Transcript(props: ITranscript) {
   const sortedCues = mergeCues(chaptersCues, subtitlesCues);
 
   return (
-    <StyledArticle className="aip-transcript">
-      <h2>{t('transcript.title')}</h2>
-
+    <Section className="aip-transcript" aria-label={t('transcript.title')}>
       <DownloadTranscript />
 
       <div className="aip-transcript__text">
@@ -121,7 +119,7 @@ function Transcript(props: ITranscript) {
           />
         )}
       </div>
-    </StyledArticle>
+    </Section>
   );
 }
 
