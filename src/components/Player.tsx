@@ -65,6 +65,15 @@ function byName(name: string): Filter {
   return (widget: IWidget) => widget.name === name;
 }
 
+function getPlayerTag() {
+  const { aiana: conf = {} } = window as any;
+  if ('isMainContent' in conf && conf.isMainContent === true) {
+    return 'main';
+  }
+
+  return 'section';
+}
+
 function Player(props: IPlayerProps) {
   const [isDraggable, setDraggable] = useState(true);
   const [t] = useTranslation();
@@ -82,7 +91,7 @@ function Player(props: IPlayerProps) {
   const transcriptWidget = widgets.find(byName(WIDGET_ID_TRANSCRIPT));
 
   return (
-    <Main aria-label={t('application.label')}>
+    <Main as={getPlayerTag()} aria-label={t('application.label')}>
       <MediaPlayerControls />
 
       <div className="aip-widgets">

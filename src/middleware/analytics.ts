@@ -82,6 +82,15 @@ const loggedActions = [
   updateActiveSubtitles.type
 ];
 
+function getLoggerEndpoint() {
+  const { aiana: conf = {} } = window as any;
+  if ('loggerEndpoint' in conf) {
+    return conf.loggerEndpoint as string;
+  }
+
+  return null;
+}
+
 const analytics: Middleware = (store) => (next) => (
   action: PayloadAction<any>
 ) => {
@@ -104,7 +113,7 @@ const analytics: Middleware = (store) => (next) => (
     };
 
     const strData = JSON.stringify(playerEvent);
-    const loggerEndpoint = (window as any).loggerEndpoint;
+    const loggerEndpoint = getLoggerEndpoint();
 
     if (process.env.NODE_ENV !== 'production' && !loggerEndpoint) {
       console.log(strData);
