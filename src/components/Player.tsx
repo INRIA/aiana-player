@@ -22,8 +22,9 @@ import MediaPlayer from './media/MediaPlayer';
 import MediaPlayerControls from './media/MediaPlayerControls';
 import TimeSpent from './time-management/TimeSpent';
 import InteractiveTranscript from './transcript/Transcript';
+import { useTranslation } from 'react-i18next';
 
-const StyledDiv = styled.div`
+const Main = styled.main`
   height: 100%;
   width: 100%;
   max-height: 100%;
@@ -64,6 +65,7 @@ function byName(name: string): Filter {
 
 function Player(props: IPlayerProps) {
   const [isDraggable, setDraggable] = useState(true);
+  const [t] = useTranslation();
 
   const { additionalInformationText, widgets, updateWidgetHandler } = props;
 
@@ -78,7 +80,7 @@ function Player(props: IPlayerProps) {
   const transcriptWidget = widgets.find(byName(WIDGET_ID_TRANSCRIPT));
 
   return (
-    <StyledDiv>
+    <Main aria-label={t('application.label')}>
       <div className="aip-widgets">
         {chaptersWidget && chaptersWidget.visible && (
           <ChaptersMenu
@@ -146,7 +148,7 @@ function Player(props: IPlayerProps) {
       </div>
       <TimelineBar display={false} />
       <MediaPlayerControls />
-    </StyledDiv>
+    </Main>
   );
 }
 

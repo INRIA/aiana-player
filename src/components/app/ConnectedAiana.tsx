@@ -33,7 +33,7 @@ interface IDispatchProps {
 
 interface IAiana extends IStateProps, IDispatchProps {}
 
-const StyledDiv = styled.div`
+const Div = styled.div`
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};
 
@@ -101,7 +101,7 @@ function Aiana(props: IAiana) {
 
   return (
     <ThemeProvider theme={themes[theme]}>
-      <StyledDiv
+      <Div
         className={classNames('aip-app', {
           'aip-app__fullscreen': isDocumentFullscreen()
         })}
@@ -111,7 +111,7 @@ function Aiana(props: IAiana) {
           textTransform: fontUppercase ? 'uppercase' : 'none'
         }}
       >
-        <Suspense fallback={<Loader text="Media player is loading." />}>
+        <Suspense fallback={<Loader />}>
           <SvgFilters />
           <div
             className="aip-player-wrapper"
@@ -124,7 +124,7 @@ function Aiana(props: IAiana) {
             </MediaContextProvider>
           </div>
         </Suspense>
-      </StyledDiv>
+      </Div>
     </ThemeProvider>
   );
 }
