@@ -21,8 +21,9 @@ script:
   - npm run test
 before_deploy:
   - npm run build
-  - npm install htmlparser2
   - mkdir release
+  - mv public/locales release/
+  - npm install htmlparser2
   - node scripts/extract-scripts.js release
   - zip -r release.zip release
 deploy:
