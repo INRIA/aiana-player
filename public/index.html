@@ -12,27 +12,30 @@
 </head>
 
 <body>
-  <noscript>
-    <div class="aip-app aip-app__unmounted">
-      <video src="/dev/standard.mp4" type="video/mp4" preload="auto" controls>
+  <div class="player-wrapper">
+    <noscript>
+      <div class="aip-app aip-app__unmounted">
+        <video src="/dev/standard.mp4" type="video/mp4" preload="auto" controls>
 
-        <track kind="captions" src="/dev/subtitles_en.vtt" srclang="en" label="Subtitles" />
-        <track kind="captions" src="/dev/subtitles_fr.vtt" srclang="fr" label="Sous-titres" />
+          <track kind="captions" src="/dev/subtitles_en.vtt" srclang="en" label="Subtitles" />
+          <track kind="captions" src="/dev/subtitles_fr.vtt" srclang="fr" label="Sous-titres" />
 
-        <track kind="chapters" src="/dev/chapters_en.vtt" srclang="en" label="Chapters" />
-        <track kind="chapters" src="/dev/chapters_fr.vtt" srclang="fr" label="Chapitres" />
+          <track kind="chapters" src="/dev/chapters_en.vtt" srclang="en" label="Chapters" />
+          <track kind="chapters" src="/dev/chapters_fr.vtt" srclang="fr" label="Chapitres" />
 
-        <track kind="metadata" src="/dev/slides_en.vtt" srclang="en" label="Presentation Slides" />
-        <track kind="metadata" src="/dev/slides_fr.vtt" srclang="fr" label="Slides de Présentation" />
+          <track kind="metadata" src="/dev/slides_en.vtt" srclang="en" label="Presentation Slides" />
+          <track kind="metadata" src="/dev/slides_fr.vtt" srclang="fr" label="Slides de Présentation" />
 
-        <track kind="metadata" src="/dev/additional-information_en.vtt" srclang="en" label="Additional Information" />
-        <track kind="metadata" src="/dev/additional-information_fr.vtt" srclang="fr"
-          label="Informations Complémentaires" />
-      </video>
-    </div>
-  </noscript>
+          <track kind="metadata" src="/dev/additional-information_en.vtt" srclang="en" label="Additional Information" />
+          <track kind="metadata" src="/dev/additional-information_fr.vtt" srclang="fr"
+            label="Informations Complémentaires" />
+        </video>
+      </div>
+    </noscript>
 
-  <div id="root"></div>
+    <div id="root"></div>
+
+  </div>
 
   <script>
     window.aiana = {
