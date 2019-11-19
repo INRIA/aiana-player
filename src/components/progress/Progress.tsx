@@ -26,7 +26,6 @@ import SeekBarExpander from './SeekBarExpander';
 import SeekBar from './SeekBar';
 
 interface IState {
-  sliderWidth: number;
   userInteracting: boolean;
 }
 
@@ -106,8 +105,10 @@ const Div = styled.div`
 class Progress extends Component<ISeekBarSlider, IState> {
   static contextType = MediaContext;
 
+  sliderPosition = 0;
+  sliderWidth = 0;
+
   readonly state = {
-    sliderWidth: 0,
     userInteracting: false
   };
 
@@ -179,17 +180,18 @@ class Progress extends Component<ISeekBarSlider, IState> {
   }
 
   setPosition = () => {
-    const sliderEl = document.querySelector('.aip-progress__slider');
+    const slider = document.querySelector('.aip-progress__slider');
 
-    if (!sliderEl) {
+    if (!slider) {
       return;
     }
 
     // recalculate slider element position to ensure no external
     // event (such as fullscreen or window redimension) changed it.
-    this.setState({
-      sliderWidth: sliderEl.getBoundingClientRect().width
-    });
+    const { left, width } = slider!.getBoundingClientRect();
+
+    this.sliderWidth = width;
+    this.sliderPosition = left;
   };
 
   clickHandler = (evt: React.MouseEvent<HTMLElement>) => {
@@ -203,12 +205,11 @@ class Progress extends Component<ISeekBarSlider, IState> {
     this.setPosition();
 
     // trigger first recomputation to simulate simple click.
-    const el = document.querySelector('.aip-progress')! as HTMLElement;
-    const mouseX = evt.pageX - el.offsetLeft;
+    const newTime = this.getTimeFromPosition(evt.pageX);
 
-    this.props.seek(this.getTimeFromPosition(mouseX));
+    this.props.seek(newTime);
     this.setState({ userInteracting: true });
-    this.updateCurrentTime(mouseX);
+    this.updateCurrentTime(newTime);
 
     document.addEventListener('mousemove', this.mouseMoveHandler, true);
     document.addEventListener('mouseup', this.mouseUpHandler, true);
@@ -216,30 +217,28 @@ class Progress extends Component<ISeekBarSlider, IState> {
 
   mouseUpHandler = (evt: MouseEvent) => {
     (document.querySelector('.aip-progress__slider') as HTMLElement)!.blur();
-    const el = document.querySelector('.aip-progress')! as HTMLElement;
 
     this.setState({ userInteracting: false });
+    const newTime = this.getTimeFromPosition(evt.pageX);
 
-    this.updateCurrentTime(evt.pageX - el.offsetLeft);
+    this.updateCurrentTime(newTime);
 
     document.removeEventListener('mousemove', this.mouseMoveHandler, true);
     document.removeEventListener('mouseup', this.mouseUpHandler, true);
   };
 
   mouseMoveHandler = (evt: MouseEvent) => {
-    const el = document.querySelector('.aip-progress')! as HTMLElement;
-    const mouseX = evt.pageX - el.offsetLeft;
+    const newTime = this.getTimeFromPosition(evt.pageX);
 
-    this.props.seek(this.getTimeFromPosition(mouseX));
-    this.throttledUpdateCurrentTime(mouseX);
+    this.props.seek(newTime);
+    this.throttledUpdateCurrentTime(newTime);
   };
 
-  updateCurrentTime = (mouseX: number) => {
+  updateCurrentTime = (time: number) => {
     const [media] = this.context;
-    const newCurrentTime = this.getTimeFromPosition(mouseX);
 
-    if (newCurrentTime !== this.props.currentTime) {
-      media.currentTime = newCurrentTime;
+    if (time !== this.props.currentTime) {
+      media.currentTime = time;
     }
   };
 
@@ -248,11 +247,10 @@ class Progress extends Component<ISeekBarSlider, IState> {
   getTimeFromPosition = (mouseX: number) => {
     const { duration } = this.props;
 
-    const positionDifference = bounded(mouseX, 0, this.state.sliderWidth);
-
-    const time = round(
-      duration * unitToRatio(positionDifference, this.state.sliderWidth)
-    );
+    const sliderXMax = this.sliderPosition + this.sliderWidth;
+    const boundedX = bounded(mouseX, this.sliderPosition, sliderXMax);
+    const positionDifference = boundedX - this.sliderPosition;
+    const time = duration * unitToRatio(positionDifference, this.sliderWidth);
 
     return time;
   };
