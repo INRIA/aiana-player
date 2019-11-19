@@ -47,7 +47,7 @@
   "preferences.theme_selector.label": "Interface theme",
   "preferences.title": "Preferences",
   "preferences.UILanguage.label": "Interface language",
-  "preferences.widgets_locked.label": "Allow moving and resizing widgets",
+  "preferences.widgets_editable.label": "Allow moving and resizing widgets",
   "preferences.widgets_visibility.title": "widgets visibility",
   "preferences.widgets_visibility.label": "Show the $t(widget, { \"context\": \"{{ widgetName }}\" })",
   "progression.sequence_progress": "Sequence progress : {{ progress }}%",

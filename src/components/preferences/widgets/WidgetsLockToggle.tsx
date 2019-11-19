@@ -17,9 +17,9 @@ function WidgetsLockToggle(props: IWidgetsLockToggle) {
 
   return (
     <Fragment>
-      <span id={id}>{t('preferences.widgets_locked.label')}</span>
+      <span id={id}>{t('preferences.widgets_editable.label')}</span>
       <ToggleButton
-        isOn={locked}
+        isOn={!locked}
         labelledBy={id}
         onClick={() => {
           setLocked(!locked);

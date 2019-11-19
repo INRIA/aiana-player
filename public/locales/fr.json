@@ -45,7 +45,7 @@
   "preferences.theme_selector.label": "Thème de l'interface",
   "preferences.title": "Préférences",
   "preferences.UILanguage.label": "Langue de l'interface",
-  "preferences.widgets_locked.label": "Autoriser le déplacement et le redimensionnement des widgets",
+  "preferences.widgets_editable.label": "Autoriser le déplacement et le redimensionnement des widgets",
   "preferences.widgets_visibility.title": "Visibilité des widgets",
   "preferences.widgets_visibility.label": "Afficher la $t(widget, { \"context\": \"{{ widgetName }}\" })",
   "progression.sequence_progress": "Progression dans la séquence : {{ progress }}%",
