@@ -11,3 +11,4 @@ and this project adheres to
 ### Changed
 
 - Project documentation
+- Travis deploy key
