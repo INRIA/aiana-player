@@ -33,5 +33,5 @@ deploy:
   file: release.zip
   skip_cleanup: true
   on:
-    repo: dashdashzako/aiana-player
+    repo: INRIA/aiana-player
     tags: true
