@@ -8,11 +8,13 @@ started as a research project at
 [Inria Bordeaux](https://www.inria.fr/centre/bordeaux) in the
 [POTIOC team](https://team.inria.fr/potioc/fr/). Its aim is to propose new
 design principles for MOOCs in order to let people with disabilities have a
-proper way to consume the contents.
+better experience when consuming the contents.
 
 The player focuses on trying to improve the general MOOC experience for people
 with cognitive impairments for whom accessibility standards are far from being
 established.
+
+---
 
 ## How to Use it
 
@@ -24,19 +26,48 @@ main channel releases.
 This integration lets you use your own JavaScript files and use your own servers
 to host it.
 
-First, download the target version release archive.
-[The "Releases" page](https://github.com/INRIA/aiana-player/releases/) is where
-all archives can be downloaded from.
+1. Download the target version release archive.
+   [The "Releases" page](https://github.com/INRIA/aiana-player/releases/) is
+   where all archives can be downloaded from.
 
-@TODO: link to MOOC AN
+2. Extract scripts so they can be accessed from your pages. For example,
+   `/public/js`, at the root of your web server.
 
-@TODO: note about styles
+3. Add an element with `id="root"` to your pages. The player will load its
+   content inside this element, so it is important that is remains empty, unless
+   of course you want to overwrite its content.
 
-### Other Cases
+4. Update your pages by adding `<script>` tags to include the JavaScript files.
 
-@TODO: no native environments
+[The Inria MOOC about digital accessibility](https://mooc-accessibility.inria.fr/course/)
+courses are made this way and may be a good example to get started.
 
-## Getting Started
+#### Fallback
+
+To provide content to the users who do not have JavaScript enabled, we recommend
+that you use a `noscript` tag containing a `video` tag.
+
+`public/index.html` file does provide an example of what can be provided as a
+fallback.
+
+#### A Note About Styles
+
+Needed styles are contained within the application using
+[styled components](https://www.styled-components.com/), and you should not need
+to override them.
+
+### Other Use Cases
+
+If you intend on using this player in a native environment
+([React Native](https://facebook.github.io/react-native/)), please note that the
+player was not architectured to be used outside a web browser.
+
+It may work, but some unexpected problems may happen and no support will be
+provided.
+
+---
+
+## Development
 
 ### Development Resources
 
@@ -52,7 +83,7 @@ files and does not require any update.
 
 ### Start Development Server
 
-1. Install development resources (see above).
+1. Install development resources.
 
 2. Install `npm` dependencies:
 
@@ -84,7 +115,17 @@ node scripts/extract-scripts.js
 
 ### Continuous Integration
 
-@TODO: travis ci on tag
+[Travis CI](https://travis-ci.com) is used as continuous integration platform.
+
+Whenever a Git tag is pushed, Travis will perform tests and build an archive
+containing the files for both staging and production environments.
+
+Releases can be found on
+[the project release page](https://github.com/INRIA/aiana-player/releases).
+
+Note that there is a
+[static link to the latest release](https://github.com/INRIA/aiana-player/releases/latest)
+which is used for website deployment.
 
 ## Code Status
 
