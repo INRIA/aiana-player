@@ -11,6 +11,7 @@ and this project adheres to
 ### Changed
 
 - Application styles
+- Markdown lint rules
 
 ## [v2.2.4] - 2019-11-25
 

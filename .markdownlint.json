@@ -1,6 +1,13 @@
 {
-  "line-length": false,
   "no-trailing-punctuation": {
     "punctuation": ".,;:!"
+  },
+  "first-line-h1": false,
+  "first-header-h1": false,
+  "line-length": {
+    "line_length": 80
+  },
+  "no-duplicate-header": {
+    "siblings_only": true
   }
 }
