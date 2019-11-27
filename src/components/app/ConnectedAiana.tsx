@@ -34,8 +34,30 @@ interface IDispatchProps {
 interface IAiana extends IStateProps, IDispatchProps {}
 
 const Div = styled.div`
+  display: block;
+
+  /*
+    The wanted canvas ratio is 16/9. To achieve that with a fixed width at
+    800px, height should be 450px plus the height of the controls.
+  */
+  width: 800px;
+  height: 546px;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  box-sizing: border-box;
   background-color: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.fg};
+  font-family: system, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+
+  *,
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
 
   &:fullscreen {
     @media screen and (min-width: 700px) {
@@ -56,9 +78,7 @@ const Div = styled.div`
 
   select {
     font-family: inherit;
-  }
 
-  select {
     &[data-focus-visible-added] {
       box-shadow: 0 0 0 2px ${(props) => props.theme.focus};
       outline: none;

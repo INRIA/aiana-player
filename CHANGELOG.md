@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Application styles
+
 ## [v2.2.4] - 2019-11-25
 
 ### Changed

@@ -46,13 +46,15 @@ interface IProps {
 
 const StyledVideo = styled.video`
   display: block;
-
-  margin: 0;
-
   max-width: 100%;
   max-height: 100%;
 
+  margin: 0;
+
   transform: translate3d(0, 0, 0);
+
+  cursor: pointer;
+  outline: none;
 `;
 
 class StaticMedia extends Component<IProps> {
