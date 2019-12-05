@@ -118,7 +118,11 @@ node scripts/extract-scripts.js
 [Travis CI](https://travis-ci.com) is used as continuous integration platform.
 
 Whenever a Git tag is pushed, Travis will perform tests and build an archive
-containing the files for both staging and production environments.
+containing the files to be included in web pages.
+
+Note that due to a `react-scripts` limitation and the will to not `eject` the
+project, a `manifest.yml` file is included to know what files are necessary to
+load the player.
 
 Releases can be found on
 [the project release page](https://github.com/INRIA/aiana-player/releases).
