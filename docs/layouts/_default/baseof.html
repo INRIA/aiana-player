@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+  <meta charset="utf-8">
+
+  {{ hugo.Generator }}
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:url" content="{{ .Permalink }}">
+
+  {{ if .IsHome -}}
+  <title>{{ .Site.Title }}</title>
+  <meta property="og:title" content="{{ .Site.Title }}">
+  <meta property="og:type" content="website">
+  <meta name="description" content="{{ .Site.Params.Description }}">
+  {{- else -}}
+  <title>{{ .Title }} – {{ .Site.Title }}</title>
+  <meta property="og:title" content="{{ .Title }} – {{ .Site.Title }}">
+  <meta property="og:type" content="article">
+  <meta name="description" content="{{ .Description }}">
+  {{- end }}
+
+  <link rel="stylesheet" href="{{ "css/index.css" | relURL }}">
+</head>
+
+<body>
+  <a href="#main">Skip to content</a>
+
+  <header role="banner">
+    <div>
+      <div class="intro">
+        <a class="to-index" href="/" aria-label="{{ .Site.Title }} home page">
+          {{ .Site.Title }}
+        </a>
+
+        <p class="desc">
+          {{ .Site.Params.Description }}
+        </p>
+      </div>
+
+      {{ block "nav" . }}
+      <nav role="navigation">
+        <h2 class="vh">Main navigation</h2>
+
+        {{ $current := . }}
+        {{ range $.Site.Home.Sections }}
+        <ul id="pages-list">
+          {{ range .RegularPages.ByWeight }}
+          <li class="page">
+            <a href="{{ .RelPermalink }}" {{ if eq $current.Permalink .Permalink -}} aria-current="page" {{- end }}>
+              {{ .Title }}
+            </a>
+          </li>
+          {{ end }}
+          {{ range .Sections.ByWeight }}
+          <li class="moooo">
+            <h3>{{ .Title }}</h3>
+            <ul>
+              {{ range .RegularPages.ByWeight }}
+              <li class="pageeeee">
+                <a href="{{ .RelPermalink }}" {{ if eq $current.Title .Title -}} aria-current="page" {{- end }}>
+                  {{ .Title }}
+                </a>
+              </li>
+              {{ end }}
+            </ul>
+          </li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </nav>
+      {{ end }}
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    {{ block "main" . }}{{ end }}
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Aiana Player Documentation"
+disableKinds = ["section", "taxonomy", "taxonomyTerm", "sitemap"]

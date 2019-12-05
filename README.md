@@ -131,6 +131,12 @@ Note that there is a
 [static link to the latest release](https://github.com/INRIA/aiana-player/releases/latest)
 which is used for website deployment.
 
+---
+
+## Project Documentation
+
+---
+
 ## Code Status
 
 [![Build Status](https://travis-ci.com/INRIA/aiana-player.svg?branch=master)](https://travis-ci.com/INRIA/aiana-player)

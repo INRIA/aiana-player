@@ -1,0 +1,71 @@
+:root {
+  --palette-white: #fafafa;
+  --palette-light-gray: #e5e5e5;
+  --palette-black: #111111;
+  --palette-blue: #0070d5;
+  --palette-gray: #aaaaaa;
+  --palette-silver: #dddddd;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: system;
+  src: local('system-ui'), local('.SFNSText-Light'), local('Segoe UI'),
+    local('Roboto'), local('Oxygen-Sans'), local('Ubuntu'), local('Cantarell'),
+    local('Helvetica Neue');
+}
+
+html {
+  font-family: system, Arial, sans-serif;
+  font-size: 100%;
+  color: var(--palette-black);
+  background-color: var(--palette-white);
+}
+
+@media screen and (min-width: 800px) {
+  html {
+    font-size: calc((100% * (9 / 16)) + 1vw);
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  html {
+    font-size: calc(100% * (27 / 16));
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  line-height: 1.5;
+}
+
+hr {
+  display: block;
+  width: 33%;
+  min-width: 10rem;
+  height: 1px;
+  margin: 2rem auto;
+
+  border: 0;
+  background: var(--palette-gray);
+}
+
+a {
+  color: var(--palette-blue);
+  cursor: pointer;
+}
+
+:focus {
+  outline: solid 2px var(--palette-blue);
+  outline-offset: 2px;
+}
