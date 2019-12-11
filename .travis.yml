@@ -12,6 +12,8 @@ cache:
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y zip libgconf-2-4
+  - wget https://github.com/gohugoio/hugo/releases/download/v0.61.0/hugo_0.61.0_Linux-64bit.deb -O hugo.deb
+  - sudo dpkg -i hugo.deb
 install:
   - npm ci
 before_script:
@@ -26,12 +28,22 @@ before_deploy:
   - npm install htmlparser2
   - node scripts/extract-scripts.js release
   - zip -r release.zip release
+  - cd docs
+  - hugo
 deploy:
-  provider: releases
-  api_key:
-    secure: L5vuQwPyQ11zxCjPe4pMIMS+9YAyaZDl+V5FB18+1nfLndElSJExvkfenXQCwVJ7bKMDM8gpvtwQPXRWwdt6BECcq64ndlyi0n91ehCeVGml38HL/LPKhWwTxfCPjpWM0/HlSKE1svWHlMLLvDmeKAUHTFrUO3O7+pmrCsXty1B03BMGzzYohY0lv1oGWYye+//fn/bOUe2p1wcVVDBnFw31PpfbJluX3F3tyPR2pg+N+5lfXuqwjZ17/d5pBKZsg2fLdp2jQwu9V3c0yrXut+xeRn9mtXNh6zwMzQifvL8GpnQe8zCIsI+GvNBtiV7dJypCCNvImrOL2LnYR8H6Q6jIlJRMNenq9EFuhfy2A0jefgK636xkoRrf0oewk/duB6nKheFqoRYD7NzOMC0/vmaLjOhvzWQUGXdEZisJZe8IMty0W17EeNTlypmupmiMsrB5ZtWJdhkWhb1n3ZJjvORlU+4vuFUlsR0P11yNYwjVH9tksbkVpDWH6+efw7UyUE9O7gzttlzSt+O/wgqGZ3QR64VV/vHrPit5NXIP+LNpWx7jDvkdf6CWzimrXV1M9MeFEVUao1BFuCcttmzLydf3nf4eGUw/4OdpPLySLwx81U3MNi+5zmpfhv/5NxjMDxL0XzldWzsNm9HlTJ3Gs9ravidsBY3qhOH+XtoZGzY=
-  file: release.zip
-  skip_cleanup: true
-  on:
-    repo: INRIA/aiana-player
-    tags: true
+  - provider: releases
+    edge: true
+    file: release.zip
+    on:
+      repo: INRIA/aiana-player
+      tags: true
+    token:
+      secure: L5vuQwPyQ11zxCjPe4pMIMS+9YAyaZDl+V5FB18+1nfLndElSJExvkfenXQCwVJ7bKMDM8gpvtwQPXRWwdt6BECcq64ndlyi0n91ehCeVGml38HL/LPKhWwTxfCPjpWM0/HlSKE1svWHlMLLvDmeKAUHTFrUO3O7+pmrCsXty1B03BMGzzYohY0lv1oGWYye+//fn/bOUe2p1wcVVDBnFw31PpfbJluX3F3tyPR2pg+N+5lfXuqwjZ17/d5pBKZsg2fLdp2jQwu9V3c0yrXut+xeRn9mtXNh6zwMzQifvL8GpnQe8zCIsI+GvNBtiV7dJypCCNvImrOL2LnYR8H6Q6jIlJRMNenq9EFuhfy2A0jefgK636xkoRrf0oewk/duB6nKheFqoRYD7NzOMC0/vmaLjOhvzWQUGXdEZisJZe8IMty0W17EeNTlypmupmiMsrB5ZtWJdhkWhb1n3ZJjvORlU+4vuFUlsR0P11yNYwjVH9tksbkVpDWH6+efw7UyUE9O7gzttlzSt+O/wgqGZ3QR64VV/vHrPit5NXIP+LNpWx7jDvkdf6CWzimrXV1M9MeFEVUao1BFuCcttmzLydf3nf4eGUw/4OdpPLySLwx81U3MNi+5zmpfhv/5NxjMDxL0XzldWzsNm9HlTJ3Gs9ravidsBY3qhOH+XtoZGzY=
+  - provider: pages:git
+    edge: true
+    local_dir: docs/public
+    on:
+      repo: INRIA/aiana-player
+      branch: master
+    token:
+      secure: L5vuQwPyQ11zxCjPe4pMIMS+9YAyaZDl+V5FB18+1nfLndElSJExvkfenXQCwVJ7bKMDM8gpvtwQPXRWwdt6BECcq64ndlyi0n91ehCeVGml38HL/LPKhWwTxfCPjpWM0/HlSKE1svWHlMLLvDmeKAUHTFrUO3O7+pmrCsXty1B03BMGzzYohY0lv1oGWYye+//fn/bOUe2p1wcVVDBnFw31PpfbJluX3F3tyPR2pg+N+5lfXuqwjZ17/d5pBKZsg2fLdp2jQwu9V3c0yrXut+xeRn9mtXNh6zwMzQifvL8GpnQe8zCIsI+GvNBtiV7dJypCCNvImrOL2LnYR8H6Q6jIlJRMNenq9EFuhfy2A0jefgK636xkoRrf0oewk/duB6nKheFqoRYD7NzOMC0/vmaLjOhvzWQUGXdEZisJZe8IMty0W17EeNTlypmupmiMsrB5ZtWJdhkWhb1n3ZJjvORlU+4vuFUlsR0P11yNYwjVH9tksbkVpDWH6+efw7UyUE9O7gzttlzSt+O/wgqGZ3QR64VV/vHrPit5NXIP+LNpWx7jDvkdf6CWzimrXV1M9MeFEVUao1BFuCcttmzLydf3nf4eGUw/4OdpPLySLwx81U3MNi+5zmpfhv/5NxjMDxL0XzldWzsNm9HlTJ3Gs9ravidsBY3qhOH+XtoZGzY=
