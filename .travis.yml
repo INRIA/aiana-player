@@ -30,6 +30,7 @@ before_deploy:
   - zip -r release.zip release
   - cd docs
   - hugo
+  - cd ..
 deploy:
   - provider: releases
     edge: true
