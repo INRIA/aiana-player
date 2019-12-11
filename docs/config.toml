@@ -1,7 +1,7 @@
 baseURL = "https://inria.github.io/mooc-accessibility-player/"
 languageCode = "en-us"
 title = "Aiana Player Documentation"
-disableKinds = ["section", "taxonomy", "taxonomyTerm", "sitemap"]
+disableKinds = ["section", "taxonomy", "taxonomyTerm", "sitemap", "RSS"]
 
 [params]
 description = "Documentation description"
