@@ -25,27 +25,27 @@
 </head>
 
 <body>
-  <a href="#main">Skip to content</a>
+  <a href="#main">Skip to main content</a>
 
-  <header role="banner">
+  <header class="site-navigation" role="banner">
     <div>
-      <div class="intro">
+      <div class="presentation">
         <a class="to-index" href="/" aria-label="{{ .Site.Title }} home page">
           {{ .Site.Title }}
         </a>
 
-        <p class="desc">
+        <p class="site-description">
           {{ .Site.Params.Description }}
         </p>
       </div>
 
       {{ block "nav" . }}
-      <nav role="navigation">
-        <h2 class="vh">Main navigation</h2>
+      <nav class="pages-nav" role="navigation" aria-labelledby="#site-navigation-title">
+        <h2 class="visually-hidden">Main navigation</h2>
 
         {{ $current := . }}
         {{ range $.Site.Home.Sections }}
-        <ul id="pages-list">
+        <ul class="pages-list">
           {{ range .RegularPages.ByWeight }}
           <li class="page">
             <a href="{{ .RelPermalink }}" {{ if eq $current.Permalink .Permalink -}} aria-current="page" {{- end }}>
@@ -54,11 +54,11 @@
           </li>
           {{ end }}
           {{ range .Sections.ByWeight }}
-          <li class="moooo">
+          <li>
             <h3>{{ .Title }}</h3>
             <ul>
               {{ range .RegularPages.ByWeight }}
-              <li class="pageeeee">
+              <li class="page">
                 <a href="{{ .RelPermalink }}" {{ if eq $current.Title .Title -}} aria-current="page" {{- end }}>
                   {{ .Title }}
                 </a>
@@ -75,7 +75,9 @@
   </header>
 
   <div class="main-wrapper">
-    {{ block "main" . }}{{ end }}
+    <div>
+      {{ block "main" . }}{{ end }}
+    </div>
   </div>
 
 </body>
