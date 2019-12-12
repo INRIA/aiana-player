@@ -6,6 +6,7 @@
   --palette-gray: #aaaaaa;
   --palette-silver: #dddddd;
   --nav-width: 16rem;
+  --link-outline-size: 3px;
 }
 
 *,
@@ -54,8 +55,8 @@ a {
 }
 
 :focus {
-  outline: solid 2px var(--palette-blue);
-  outline-offset: 2px;
+  outline: solid var(--link-outline-size) var(--palette-blue);
+  outline-offset: var(--link-outline-size);
 }
 
 /* visually hidden helper */
@@ -123,6 +124,10 @@ a {
   overflow: auto;
 }
 
+.pages-list {
+  padding: 0.5rem 0;
+}
+
 .pages-list ul {
   margin: 0.5rem 0 0 0.5rem;
 }
@@ -154,6 +159,15 @@ a {
 
   font-weight: bold;
   border: 0 none;
+}
+
+.page a:focus {
+  outline: 0;
+}
+
+.page a:focus .text {
+  outline: solid var(--link-outline-size) var(--palette-blue);
+  outline-offset: var(--link-outline-size);
 }
 
 /* main wrapper */
