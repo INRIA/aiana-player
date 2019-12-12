@@ -27,59 +27,64 @@
 <body>
   <a href="#main">Skip to main content</a>
 
-  <header class="site-navigation" role="banner">
-    <div>
-      <div class="presentation">
-        <a class="to-index" href="{{ .Site.BaseURL }}" aria-label="{{ .Site.Title }} home page">
-          {{ .Site.Title }}
-        </a>
+  <div class="container">
+    <header class="site-navigation" role="banner">
+      <div>
+        <div class="presentation">
+          <a class="index-link" href="{{ .Site.BaseURL }}" aria-label="{{ .Site.Title }} home page">
+            {{ .Site.Title }}
+          </a>
 
-        <p class="site-description">
-          {{ .Site.Params.Description }}
-        </p>
-      </div>
+          <p class="site-description">
+            {{ .Site.Params.Description }}
+          </p>
+        </div>
 
-      {{ block "nav" . }}
-      <nav class="pages-nav" role="navigation" aria-labelledby="#site-navigation-title">
-        <h2 class="visually-hidden">Main navigation</h2>
+        {{ block "nav" . }}
+        <nav class="pages-nav" role="navigation" aria-labelledby="#site-navigation-title">
+          <h2 class="visually-hidden">Main navigation</h2>
 
-        {{ $current := . }}
-        {{ range $.Site.Home.Sections }}
-        <ul class="pages-list">
-          {{ range .RegularPages.ByWeight }}
-          <li class="page">
-            <a href="{{ .RelPermalink }}" {{ if eq $current.Permalink .Permalink -}} aria-current="page" {{- end }}>
-              <span class="text">{{ .Title }}</span>
-            </a>
-          </li>
+          <button id="menu-btn" aria-expanded="false">Menu</button>
+
+          {{ $current := . }}
+          {{ range $.Site.Home.Sections }}
+          <ul class="pages-list">
+            {{ range .RegularPages.ByWeight }}
+            <li class="page">
+              <a href="{{ .RelPermalink }}" {{ if eq $current.Permalink .Permalink -}} aria-current="page" {{- end }}>
+                <span class="text">{{ .Title }}</span>
+              </a>
+            </li>
+            {{ end }}
+            {{ range .Sections.ByWeight }}
+            <li>
+              <h3>{{ .Title }}</h3>
+              <ul>
+                {{ range .RegularPages.ByWeight }}
+                <li class="page">
+                  <a href="{{ .RelPermalink }}" {{ if eq $current.Title .Title -}} aria-current="page" {{- end }}>
+                    <span class="text">{{ .Title }}</span>
+                  </a>
+                </li>
+                {{ end }}
+              </ul>
+            </li>
+            {{ end }}
+          </ul>
           {{ end }}
-          {{ range .Sections.ByWeight }}
-          <li>
-            <h3>{{ .Title }}</h3>
-            <ul>
-              {{ range .RegularPages.ByWeight }}
-              <li class="page">
-                <a href="{{ .RelPermalink }}" {{ if eq $current.Title .Title -}} aria-current="page" {{- end }}>
-                  <span class="text">{{ .Title }}</span>
-                </a>
-              </li>
-              {{ end }}
-            </ul>
-          </li>
-          {{ end }}
-        </ul>
+        </nav>
         {{ end }}
-      </nav>
-      {{ end }}
-    </div>
-  </header>
+      </div>
+    </header>
 
-  <div class="main-wrapper">
-    <div>
-      {{ block "main" . }}{{ end }}
+    <div class="main-wrapper">
+      <div>
+        {{ block "main" . }}{{ end }}
+      </div>
     </div>
   </div>
 
+  <script src="{{ "js/index.js" | relURL }}"></script>
 </body>
 
 </html>
