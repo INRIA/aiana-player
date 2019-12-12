@@ -8,11 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Project documentation
+
 ### Changed
 
 - Application styles
 - Markdown lint rules
-- Project documentation
 
 ## [v2.2.4] - 2019-11-25
 
