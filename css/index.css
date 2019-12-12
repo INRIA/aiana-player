@@ -124,7 +124,11 @@ a {
 }
 
 .pages-list ul {
-  margin: 0.8rem 0 0 1rem;
+  margin: 0.5rem 0 0 0.5rem;
+}
+
+.pages-list ul ul {
+  margin-left: 0.75rem;
 }
 
 .pages-list li {
@@ -133,17 +137,20 @@ a {
 }
 
 .pages-list li + li {
-  margin-top: 0.8rem;
+  margin-top: 0.75rem;
 }
 
 .pages-list li li {
-  list-style-type: disc;
-  list-style-position: inside;
+  list-style-type: none;
+}
+
+.pages-list li li::before {
+  content: '–';
 }
 
 .page a {
   display: inline-block;
-  padding: 0.25rem 0.5rem;
+  padding: 0 0.75rem;
 
   font-weight: bold;
   border: 0 none;
